@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mapa Musical 3D — prueba UMAP</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main id="app">
+    <div id="map"></div>
+
+    <header class="title">
+      <span>MAPA MUSICAL 3D</span>
+      <h1>Espacio latente</h1>
+      <p>Prueba exploratoria · UMAP 3D</p>
+    </header>
+
+    <aside class="panel">
+
+      <div class="panel-section">
+        <h2>Géneros primarios</h2>
+        <div id="genreLegend" class="genre-legend"></div>
+      </div>
+
+      <label class="switch">
+      <input type="checkbox" id="timeToggle">
+        Tiempo
+      </label>
+
+      <div class="panel-section">
+        <h2>Discos <small id="count"></small></h2>
+        <input id="search" type="search" placeholder="Buscar álbum o artista…">
+        <template id="albumList"></template>
+        <div id="searchResults" class="search-results"></div>
+      </div>
+
+
+      <div class="panel-section legend">
+        <h2>Lectura</h2>
+        <p><b>Posición:</b> reducción UMAP de géneros + descriptores.</p>
+        <p><b>Color:</b> firma de géneros principales compartidos.</p>
+        <p><b>Orden:</b> los géneros principales pesan más; los secundarios disminuyen progresivamente.</p>
+        <p><b>Ejes:</b> X, Y y Z son dimensiones latentes sin significado semántico directo.</p>
+      </div>
+
+    </aside>
+
+    <div id="tooltip" class="tooltip"></div>
+    <div class="status" id="status">Cargando datos…</div>
+  </main>
+
+  <script src="./bundle.js"></script>
+</body>
+</html>
