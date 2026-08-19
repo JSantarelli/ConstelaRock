@@ -2740,93 +2740,752 @@
       "breakup"
     ]
   },
-{
-    "id": "los-violadores",
-    "album": "Los Violadores",
-    "artist": "Los Violadores",
-    "year": 1983,
-    "genres": {
-      "primary": ["Punk Rock"],
-      "secondary": ["Hardcore Punk", "Post-Punk"]
-    },
-    "descriptors": ["rebellious", "urban", "energetic", "conscious", "rhythmic", "male vocalist", "satirical", "heavy", "political"]
-  },
   {
-    "id": "y-ahora-que-pasa-eh",
-    "album": "Y ahora qué pasa, eh?",
-    "artist": "Los Violadores",
+    "id": "del-63",
+    "album": "Del 63'",
+    "artist": "Fito Páez",
+    "year": 1984,
+    "genres": {
+    "primary": [
+    "Piano Rock",
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Synthpop",
+    "Sophisti-Pop",
+    "Progressive Pop"
+    ]
+    },
+    "descriptors": [
+    "political",
+    "bittersweet",
+    "violence",
+    "male vocalist",
+    "abstract",
+    "angry",
+    "optimistic",
+    "anxious",
+    "ominous",
+    "passionate",
+    "crime",
+    "melancholic",
+    "eclectic",
+    "playful",
+    "melodic"
+    ]
+    },
+    {
+    "id": "giros",
+    "album": "Giros",
+    "artist": "Fito Páez",
     "year": 1985,
     "genres": {
-      "primary": ["Punk Rock"],
-      "secondary": ["Pop Punk", "Hard Rock"]
+    "primary": [
+    "Pop Rock",
+    "Sophisti-Pop"
+    ],
+    "secondary": [
+    "Art Pop",
+    "Singer-Songwriter",
+    "New Wave",
+    "Synthpop",
+    "Tango nuevo"
+    ]
     },
-    "descriptors": ["political", "rebellious"]
-  },
-  {
-    "id": "mercado-indio",
-    "album": "Mercado indio",
-    "artist": "Los Violadores",
+    "descriptors": [
+    "male vocalist",
+    "melodic",
+    "urban",
+    "conscious",
+    "introspective",
+    "melancholic",
+    "poetic",
+    "love",
+    "passionate",
+    "nocturnal"
+    ]
+    },
+    {
+    "id": "la-la-la",
+    "album": "La la la",
+    "artist": "Spinetta-Páez",
+    "year": 1986,
+    "genres": {
+    "primary": [
+    "Art Pop",
+    "Pop Rock",
+    "Sophisti-Pop"
+    ],
+    "secondary": [
+    "Baroque Pop",
+    "Progressive Pop",
+    "Jazz Pop"
+    ]
+    },
+    "descriptors": [
+    "poetic",
+    "melodic",
+    "male vocalist",
+    "urban",
+    "mellow",
+    "soft",
+    "melancholic",
+    "lush",
+    "violence"
+    ]
+    },
+    {
+    "id": "ciudad-de-pobres-corazones",
+    "album": "Ciudad de pobres corazones",
+    "artist": "Fito Páez",
     "year": 1987,
     "genres": {
-      "primary": ["Hard Rock", "Punk Rock"],
-      "secondary": ["Big Music", "Post-Punk"]
+    "primary": [
+    "New Wave",
+    "Pop Rock",
+    "Art Pop"
+    ],
+    "secondary": [
+    "Hard Rock",
+    "Sophisti-Pop",
+    "Synth Funk",
+    "Art Rock",
+    "Darkwave"
+    ]
+    },
+    "descriptors": [
+    "aggressive",
+    "depressive",
+    "male vocalist",
+    "angry",
+    "pessimistic",
+    "urban",
+    "atmospheric",
+    "anxious",
+    "crime",
+    "drugs",
+    "alienation",
+    "homicide",
+    "sombre",
+    "protest",
+    "grief",
+    "family",
+    "cynical",
+    "introspective",
+    "nocturnal",
+    "serious",
+    "misanthropic",
+    "dark",
+    "hateful",
+    "death",
+    "lonely",
+    "hazy",
+    "suicide",
+    "nihilistic",
+    "passionate",
+    "fame",
+    "manic"
+    ]
+    },
+    {
+    "id": "ey",
+    "album": "Ey!",
+    "artist": "Fito Páez",
+    "year": 1988,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "New Wave"
+    ],
+    "secondary": [
+    "Art Pop",
+    "Funk Rock",
+    "Noise Pop"
+    ]
+    },
+    "descriptors": [
+    "male vocalist",
+    "nocturnal",
+    "urban",
+    "playful",
+    "cryptic",
+    "love",
+    "drugs",
+    "psychedelic"
+    ]
+    },
+    {
+    "id": "tercer-mundo",
+    "album": "Tercer mundo",
+    "artist": "Fito Páez",
+    "year": 1990,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Art Pop",
+    "Rock & Roll",
+    "Singer-Songwriter",
+    "New Wave",
+    "Piano Rock"
+    ]
+    },
+    "descriptors": [
+    "male vocalist",
+    "urban",
+    "playful",
+    "surreal",
+    "conscious",
+    "love",
+    "energetic"
+    ]
+    },
+    {
+    "id": "el-amor-despues-del-amor",
+    "album": "El amor después del amor",
+    "artist": "Fito Páez",
+    "year": 1992,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Singer-Songwriter",
+    "Sophisti-Pop",
+    "Art Pop",
+    "Piano Rock"
+    ]
+    },
+    "descriptors": [
+    "melodic",
+    "male vocalist",
+    "love",
+    "uplifting",
+    "anthemic",
+    "romantic",
+    "poetic",
+    "warm",
+    "melancholic",
+    "lush",
+    "passionate",
+    "spring",
+    "bittersweet",
+    "urban",
+    "eclectic",
+    "ballad"
+    ]
+    },
+    {
+    "id": "circo-beat",
+    "album": "Circo Beat",
+    "artist": "Fito Páez",
+    "year": 1994,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Psychedelic Pop",
+    "Baroque Pop",
+    "Art Pop",
+    "Sunshine Pop",
+    "Piano Rock"
+    ]
+    },
+    "descriptors": [
+    "male vocalist",
+    "playful",
+    "lush",
+    "warm",
+    "uplifting",
+    "concept album",
+    "melodic",
+    "summer",
+    "anthemic",
+    "love"
+    ]
+    },
+    {
+    "id": "enemigos-intimos",
+    "album": "Enemigos íntimos",
+    "artist": "Sabina y Páez",
+    "year": 1998,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Adult Contemporary"
+    ]
+    },
+    "descriptors": [
+    "humorous",
+    "male vocalist",
+    "poetic"
+    ]
+    },
+    {
+    "id": "abre",
+    "album": "Abre",
+    "artist": "Fito Páez",
+    "year": 1999,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter",
+    "Soft Rock"
+    ],
+    "secondary": [
+    "Piano Rock",
+    "Art Rock",
+    "Baroque Pop",
+    "Adult Contemporary"
+    ]
+    },
+    "descriptors": [
+    "male vocalist",
+    "calm",
+    "alcohol",
+    "aggressive",
+    "conscious",
+    "complex",
+    "romantic",
+    "autumn",
+    "ballad",
+    "breakup",
+    "epic",
+    "bittersweet"
+    ]
+    },
+    {
+    "id": "rey-sol",
+    "album": "Rey sol",
+    "artist": "Fito Páez",
+    "year": 2000,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": []
+    },
+    "descriptors": [
+    "playful",
+    "happy",
+    "eclectic",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "naturaleza-sangre",
+    "album": "Naturaleza sangre",
+    "artist": "Fito Páez",
+    "year": 2003,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Hard Rock",
+    "Downtempo"
+    ]
+    },
+    "descriptors": [
+    "male vocalist",
+    "breakup",
+    "love",
+    "rhythmic",
+    "angry",
+    "introspective",
+    "energetic",
+    "hedonism"
+    ]
+    },
+    {
+    "id": "moda-y-pueblo",
+    "album": "Moda y pueblo",
+    "artist": "Fito Páez",
+    "year": 2005,
+    "genres": {
+    "primary": [
+    "Contemporary Folk",
+    "Pop Rock",
+    "Classical Music"
+    ],
+    "secondary": [
+    "Singer-Songwriter",
+    "Piano Rock"
+    ]
     },
     "descriptors": []
-  },
-  {
-    "id": "y-que-dios-nos-perdone",
-    "album": "Y que Dios nos perdone",
-    "artist": "Los Violadores",
-    "year": 1989,
-    "genres": {
-      "primary": ["Hard Rock"],
-      "secondary": ["Post-Punk"]
     },
-    "descriptors": []
-  },
-  {
-    "id": "otro-festival-de-la-exageracion",
-    "album": "Otro festival de la exageración",
-    "artist": "Los Violadores",
-    "year": 1991,
-    "genres": {
-      "primary": ["Hard Rock"],
-      "secondary": []
-    },
-    "descriptors": ["rebellious", "male vocalist"]
-  },
-  {
-    "id": "otra-patada-en-los-huevos",
-    "album": "Otra patada en los huevos",
-    "artist": "Los Violadores",
-    "year": 1996,
-    "genres": {
-      "primary": ["Hard Rock"],
-      "secondary": []
-    },
-    "descriptors": []
-  },
-  {
-    "id": "bajo-un-sol-feliz",
-    "album": "Bajo un sol feliz",
-    "artist": "Los Violadores",
+    {
+    "id": "el-mundo-cabe-en-una-cancion",
+    "album": "El mundo cabe en una canción",
+    "artist": "Fito Páez",
     "year": 2006,
     "genres": {
-      "primary": ["Hard Rock", "Punk Rock", "Heavy Metal"],
-      "secondary": []
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Piano Rock",
+    "Soft Rock"
+    ]
     },
-    "descriptors": []
-  },
-  {
-    "id": "rey-o-reina",
-    "album": "Rey o Reina",
-    "artist": "Los Violadores",
-    "year": 2009,
+    "descriptors": [
+    "male vocalist",
+    "mellow",
+    "happy",
+    "melodic",
+    "love"
+    ]
+    },
+    {
+    "id": "rodolfo",
+    "album": "Rodolfo",
+    "artist": "Fito Páez",
+    "year": 2007,
     "genres": {
-      "primary": ["Hard Rock"],
-      "secondary": []
+    "primary": [
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Piano Rock",
+    "Adult Contemporary",
+    "Piano Blues"
+    ]
+    },
+    "descriptors": [
+    "introspective",
+    "acoustic",
+    "sentimental",
+    "minimalistic",
+    "male vocalist",
+    "soft"
+    ]
+    },
+    {
+    "id": "confia",
+    "album": "Confiá",
+    "artist": "Fito Páez",
+    "year": 2010,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Art Pop"
+    ]
+    },
+    "descriptors": [
+    "introspective",
+    "mellow",
+    "happy",
+    "uplifting",
+    "male vocalist",
+    "soft"
+    ]
+    },
+    {
+    "id": "canciones-para-aliens",
+    "album": "Canciones para aliens",
+    "artist": "Fito Páez",
+    "year": 2011,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Canción melódica",
+    "Tango nuevo"
+    ]
     },
     "descriptors": []
+    },
+    {
+    "id": "dreaming-rosario",
+    "album": "Dreaming Rosario",
+    "artist": "Fito Páez",
+    "year": 2013,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Chamber Pop"
+    ]
+    },
+    "descriptors": [
+    "calm",
+    "melancholic",
+    "urban",
+    "lush",
+    "happy",
+    "romantic",
+    "uplifting",
+    "ballad",
+    "poetic",
+    "passionate",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "yo-te-amo",
+    "album": "Yo te amo",
+    "artist": "Fito Páez",
+    "year": 2013,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Synthpop",
+    "Pop"
+    ]
+    },
+    "descriptors": [
+    "energetic",
+    "happy",
+    "romantic",
+    "melodic",
+    "love",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "rock-and-roll-revolution",
+    "album": "Rock and Roll Revolution",
+    "artist": "Fito Páez",
+    "year": 2014,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Singer-Songwriter",
+    "Blues Rock",
+    "Hard Rock"
+    ]
+    },
+    "descriptors": [
+    "rebellious",
+    "raw",
+    "breakup",
+    "love",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "locura-total",
+    "album": "Locura total",
+    "artist": "Fito Páez & Moska",
+    "year": 2015,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Samba",
+    "Bossa nova"
+    ]
+    },
+    "descriptors": [
+    "tropical",
+    "happy",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "la-ciudad-liberada",
+    "album": "La ciudad liberada",
+    "artist": "Fito Páez",
+    "year": 2017,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "New Wave",
+    "Synthpop"
+    ]
+    },
+    "descriptors": [
+    "political",
+    "anthemic",
+    "eclectic",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "la-conquista-del-espacio",
+    "album": "La conquista del espacio",
+    "artist": "Fito Páez",
+    "year": 2020,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Rock",
+    "Country Rock"
+    ]
+    },
+    "descriptors": [
+    "melodic",
+    "playful",
+    "poetic",
+    "love",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "los-anos-salvajes",
+    "album": "Los años salvajes",
+    "artist": "Fito Páez",
+    "year": 2021,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Singer-Songwriter"
+    ],
+    "secondary": [
+    "Rock",
+    "Hard Rock"
+    ]
+    },
+    "descriptors": [
+    "male vocalist",
+    "humorous",
+    "lush",
+    "sentimental",
+    "mellow",
+    "conscious",
+    "melodic",
+    "love",
+    "energetic"
+    ]
+    },
+    {
+    "id": "futurologia-arlt",
+    "album": "Futurología Arlt",
+    "artist": "Fito Páez",
+    "year": 2022,
+    "genres": {
+    "primary": [
+    "Classical Crossover"
+    ],
+    "secondary": [
+    "Piano Rock",
+    "Latin American Classical Music",
+    "Modern Classical",
+    "Tango nuevo",
+    "Poetry"
+    ]
+    },
+    "descriptors": [
+    "orchestral",
+    "instrumental",
+    "concept album",
+    "lush"
+    ]
+    },
+    {
+    "id": "the-golden-light",
+    "album": "The Golden Light",
+    "artist": "Fito Páez",
+    "year": 2022,
+    "genres": {
+    "primary": [
+    "Modern Classical",
+    "Free Improvisation"
+    ],
+    "secondary": [
+    "Spoken Word",
+    "Piano Rock"
+    ]
+    },
+    "descriptors": [
+    "improvisation",
+    "calm",
+    "acoustic",
+    "suspenseful",
+    "male vocalist",
+    "mysterious"
+    ]
+    },
+    {
+    "id": "eadda9223",
+    "album": "EADDA9223",
+    "artist": "Fito Páez",
+    "year": 2023,
+    "genres": {
+    "primary": [
+    "Art Pop"
+    ],
+    "secondary": [
+    "Progressive Pop",
+    "Pop Rock"
+    ]
+    },
+    "descriptors": [
+    "romantic",
+    "love"
+    ]
+    },
+    {
+    "id": "novela",
+    "album": "Novela",
+    "artist": "Fito Páez",
+    "year": 2025,
+    "genres": {
+    "primary": [
+    "Pop Rock",
+    "Rock Opera"
+    ],
+    "secondary": [
+    "Psychedelic Rock",
+    "Spoken Word"
+    ]
+    },
+    "descriptors": [
+    "concept album",
+    "lush",
+    "love",
+    "male vocalist"
+    ]
+    },
+    {
+    "id": "shine",
+    "album": "Shine",
+    "artist": "Fito Páez",
+    "year": 2026,
+    "genres": {
+    "primary": [
+    "Pop Rock"
+    ],
+    "secondary": [
+    "Piano Rock",
+    "Blues Rock"
+    ]
+    },
+    "descriptors": [
+    "existential",
+    "male vocalist",
+    "introspective",
+    "melodic",
+    "love"
+    ]
   },
   {
     "id": "sol-lucet-omnibus",
@@ -3459,7 +4118,7 @@
   {
     "id": "mbugi",
     "album": "Mbugi",
-    "artist": "Mississippi Blues Band",
+    "artist": "La Mississippi",
     "year": 1993,
     "genres": {
       "primary": [

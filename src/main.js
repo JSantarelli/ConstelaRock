@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { LineGeometry } from "three/examples/jsm/lines/LineGeometry.js";
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
+import { Line2 } from "three/examples/jsm/lines/Line2.js";
 import { UMAP } from "umap-js";
 
 const scene = new THREE.Scene();
@@ -24,6 +27,9 @@ scene.add(root);
 
 const labelGroup = new THREE.Group();
 scene.add(labelGroup);
+
+const connectionGroup = new THREE.Group();
+scene.add(connectionGroup);
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -54,7 +60,7 @@ const WEIGHTS = {
 
 const MODEL_CONFIG = {
   descriptorWeight: 0.75,
-  nNeighbors: 6,
+  nNeighbors: 4,
   minDist: 0.5
 };
 
@@ -80,6 +86,24 @@ const GENRE_LABEL_CONFIG = {
   overlapScreenDist: 46   // px mínimos entre dos etiquetas en pantalla antes de considerarlas solapadas
 };
 
+const CONNECTION_CONFIG = {
+  sameArtistLineOpacity: 0.9,
+  level1LineOpacity: 0.65,
+  level2LineOpacity: 0.5,
+  level1NodeOpacity: 0.65,
+  level2NodeOpacity: 0.5,
+  level1Count: 2,
+  level2Count: 2,
+  stageDelay: 220,      // ms antes de que empiece a "encender" cada etapa
+  siblingStagger: 90,   // ms extra entre hermanos dentro de la misma etapa
+  fadeSpeed: 0.09,
+  sameArtistLineWidth: 3.2, // px (líneas gruesas vía Line2/LineMaterial)
+  level1LineWidth: 2.4,
+  level2LineWidth: 1.8,
+  dashSize: 0.35,  // trazo corto...
+  gapSize: 0.18    // ...y gap corto = punteado fino y denso
+};
+
 let timeMode = false;
 let animating = false;
 let animStart = 0;
@@ -99,6 +123,11 @@ const cameraToTarget = new THREE.Vector3();
 let outlineRing = null;   // aro (RingGeometry) que siempre mira a cámara
 let outlineTarget = null; 
 let pinnedIndex = null;
+
+let connectionLines = [];     // [{ line, fromMesh, toMesh }]
+let connectionNodeFades = []; // [{ mesh, targetOpacity, appearAt }]
+let activeGraphIndices = new Set(); // idx de todos los discos involucrados en el grafo actual
+let hoverPreviewIndex = null;       // idx sobre el que se está mostrando un preview de hover (con panel fijo activo)
 
 function average(arr) {
   return arr.reduce((s,v) => s+v, 0) / arr.length;
@@ -517,8 +546,6 @@ function computeTimeLayout() {
     const angle = Math.atan2(pz - cz, px - cx);
     const baseRadius = Math.hypot(px - cx, pz - cz);
 
-    // UMAP_Y no se descarta: se pliega como modulación del radio, así
-    // sigue empujando el punto dentro/fuera del cluster.
     const foldedRadius = baseRadius + TIME_LAYOUT.foldWeight * (py - cy);
 
     const timeX = cx + foldedRadius * Math.cos(angle);
@@ -606,6 +633,7 @@ function clearScene() {
   orbitRings = [];
 
   clearGenreLabels();
+  clearConnections();
   clearSelectionOutline();
   disposeOutlineMeshes();
 
@@ -669,8 +697,8 @@ function makeYearSprite(text) {
   canvas.width = 256;
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
-  ctx.font = "bold 48px sans-serif";
-  ctx.fillStyle = "#333333";
+  ctx.font = "regular 36px sans-serif";
+  ctx.fillStyle = "#848484";
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   ctx.fillText(text, 8, 48);
@@ -777,10 +805,6 @@ function computeGenreLabelData() {
     const dir = centroid.clone().sub(globalCentroid);
 
     if (dir.lengthSq() < 1e-6) {
-      // Cluster centrado casi exactamente en el centro global: sin
-      // dirección "hacia afuera" natural. Se usa una dirección estable
-      // derivada del nombre del género (no aleatoria) para no saltar de
-      // posición en cada recálculo.
       const h = (hueForGenre(genre) / 360) * Math.PI * 2;
       dir.set(Math.cos(h), 0.2, Math.sin(h));
     }
@@ -837,8 +861,6 @@ function updateGenreLabels() {
       g.screenY = (-genreLabelProjection.y * 0.5 + 0.5) * innerHeight;
     });
 
-    // Prioridad: géneros con más álbumes ganan el espacio en pantalla
-    // cuando dos etiquetas caen demasiado cerca entre sí.
     const sorted = [...genreLabelSprites].sort((a, b) => b.count - a.count);
     const kept = [];
     sorted.forEach(g => {
@@ -874,9 +896,7 @@ function setTimeMode(on) {
 
   yearSprites.forEach(s => { s.userData.targetOpacity = timeMode ? 1 : 0; });
   orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? 0.4 : 0; });
-  // Las etiquetas de género describen clusters estilísticos que se rompen
-  // en modo temporal; updateGenreLabels() ya las apaga solas mientras
-  // timeMode=true.
+
 }
 
 function tickAnimation() {
@@ -908,13 +928,17 @@ function highlightPoint(mesh) {
 
   pointMeshes.forEach(m => {
     const sameArtist = artist && m.userData.album?.artist === artist;
-    m.material.opacity = (m === mesh || sameArtist) ? 1 : 0.25;
+    m.material.opacity = (m === mesh || sameArtist) ? 1 : 0.35;
   });
+
+  const idx = mesh.userData.index;
+  if (idx !== undefined) buildDiscoveryGraph(idx);
 }
 
 function clearHighlight() {
   pointMeshes.forEach(m => { m.material.opacity = 1; });
   selected = null;
+  clearConnections();
   clearSelectionOutline();
   unpinTooltip();
 }
@@ -1137,9 +1161,6 @@ function selectAlbum(idx) {
   pinTooltip(idx);
 }
 
-// Álbumes más cercanos en el espacio de similitud (distancia euclídea sobre
-// umapVec, no sobre el layout temporal), excluyendo al propio álbum y a
-// cualquier otro del mismo artista.
 function computeNearestAlbums(idx, k = 3) {
   const origin = points[idx];
   if (!origin) return [];
@@ -1150,6 +1171,148 @@ function computeNearestAlbums(idx, k = 3) {
     .sort((a, b) => a.d - b.d)
     .slice(0, k)
     .map(entry => entry.p);
+}
+
+function nearestOtherArtist(originVec, excludeArtist, excludeIdx, k) {
+  return points
+    .filter(p => p.idx !== excludeIdx && p.artist !== excludeArtist)
+    .map(p => ({ p, d: p.umapVec.distanceTo(originVec) }))
+    .sort((a, b) => a.d - b.d)
+    .slice(0, k)
+    .map(e => e.p);
+}
+
+function createConnectionLine(colorHex, dashed, lineWidth) {
+  const geometry = new LineGeometry();
+  geometry.setPositions([0, 0, 0, 0, 0, 0]);
+
+  const material = new LineMaterial({
+    color: colorHex,
+    transparent: true,
+    opacity: 0,
+    linewidth: lineWidth, // px de pantalla (worldUnits: false por defecto)
+    depthWrite: false,
+    dashed,
+    dashSize: dashed ? CONNECTION_CONFIG.dashSize : 0,
+    gapSize: dashed ? CONNECTION_CONFIG.gapSize : 0
+  });
+  material.resolution.set(innerWidth, innerHeight);
+
+  const line = new Line2(geometry, material);
+  line.computeLineDistances();
+  line.frustumCulled = false;
+  return line;
+}
+
+function addConnection(fromMesh, toMesh, colorHex, targetOpacity, dashed, appearAt, lineWidth) {
+  const line = createConnectionLine(colorHex, dashed, lineWidth);
+  line.userData.targetOpacity = targetOpacity;
+  line.userData.appearAt = appearAt;
+  line.userData.dashed = dashed;
+  connectionGroup.add(line);
+  connectionLines.push({ line, fromMesh, toMesh });
+}
+
+function fadeNodeIn(mesh, targetOpacity, appearAt) {
+  connectionNodeFades.push({ mesh, targetOpacity, appearAt });
+}
+
+function clearConnections() {
+  connectionLines.forEach(c => {
+    c.line.geometry.dispose();
+    c.line.material.dispose();
+    connectionGroup.remove(c.line);
+  });
+  connectionLines = [];
+  connectionNodeFades = [];
+  activeGraphIndices = new Set();
+  hoverPreviewIndex = null;
+}
+
+function buildDiscoveryGraph(originIdx) {
+  clearConnections();
+
+  const origin = points[originIdx];
+  if (!origin) return;
+
+  const now = performance.now();
+  activeGraphIndices.add(origin.idx);
+
+  // --- Hilo cronológico entre discos del mismo artista ---
+  const sameArtistChain = points
+    .filter(p => p.artist === origin.artist)
+    .sort((a, b) => a.year - b.year);
+
+  sameArtistChain.forEach(p => activeGraphIndices.add(p.idx));
+
+  for (let i = 0; i < sameArtistChain.length - 1; i++) {
+    addConnection(
+      pointMeshes[sameArtistChain[i].idx],
+      pointMeshes[sameArtistChain[i + 1].idx],
+      origin.color.getHex(),
+      CONNECTION_CONFIG.sameArtistLineOpacity,
+      false,
+      now,
+      CONNECTION_CONFIG.sameArtistLineWidth
+    );
+  }
+
+  // --- Nivel 1: discos más afines, de otro artista ---
+  const level1Delay = now + CONNECTION_CONFIG.stageDelay;
+  const level1 = nearestOtherArtist(
+    origin.umapVec, origin.artist, origin.idx, CONNECTION_CONFIG.level1Count
+  );
+
+  level1.forEach((node, i) => {
+    const appearAt = level1Delay + i * CONNECTION_CONFIG.siblingStagger;
+    const nodeMesh = pointMeshes[node.idx];
+    activeGraphIndices.add(node.idx);
+
+    addConnection(
+      pointMeshes[origin.idx], nodeMesh, 0x9a9a9a, CONNECTION_CONFIG.level1LineOpacity, true, appearAt,
+      CONNECTION_CONFIG.level1LineWidth
+    );
+    fadeNodeIn(nodeMesh, CONNECTION_CONFIG.level1NodeOpacity, appearAt);
+
+    // --- Nivel 2: hijos de cada nodo de nivel 1 ---
+    const level2Delay = appearAt + CONNECTION_CONFIG.stageDelay;
+    const level2 = nearestOtherArtist(
+      node.umapVec, node.artist, node.idx, CONNECTION_CONFIG.level2Count
+    );
+
+    level2.forEach((child, j) => {
+      const childAppearAt = level2Delay + j * CONNECTION_CONFIG.siblingStagger;
+      const childMesh = pointMeshes[child.idx];
+      activeGraphIndices.add(child.idx);
+
+      addConnection(
+        nodeMesh, childMesh, 0xc4c4c4, CONNECTION_CONFIG.level2LineOpacity, true, childAppearAt,
+        CONNECTION_CONFIG.level2LineWidth
+      );
+      fadeNodeIn(childMesh, CONNECTION_CONFIG.level2NodeOpacity, childAppearAt);
+    });
+  });
+}
+
+function updateConnections() {
+  if (!connectionLines.length && !connectionNodeFades.length) return;
+
+  const now = performance.now();
+
+  connectionLines.forEach(c => {
+    const from = c.fromMesh.position;
+    const to = c.toMesh.position;
+    c.line.geometry.setPositions([from.x, from.y, from.z, to.x, to.y, to.z]);
+    if (c.line.userData.dashed) c.line.computeLineDistances();
+
+    const target = now >= c.line.userData.appearAt ? c.line.userData.targetOpacity : 0;
+    c.line.material.opacity += (target - c.line.material.opacity) * CONNECTION_CONFIG.fadeSpeed;
+  });
+
+  connectionNodeFades.forEach(n => {
+    if (now < n.appearAt) return;
+    n.mesh.material.opacity += (n.targetOpacity - n.mesh.material.opacity) * CONNECTION_CONFIG.fadeSpeed;
+  });
 }
 
 function focusCameraOnPoint(mesh) {
@@ -1254,15 +1417,6 @@ function fitCamera() {
   camera.position.set(center.x + size.x*.2, center.y + size.y*.35, center.z + Math.max(size.length()*1.25, 80));
   controls.update();
 }
-
-// ---------- Panel de detalle: preview al hover, fijo al clickear ----------
-// Dos modos sobre el mismo elemento `ui.tooltip`:
-// - Hover (sin selección activa): preview liviano, sigue al mouse, se
-//   oculta al sacar el cursor. No es interactivo.
-// - Fijado (`pinnedIndex` seteado por click/selección): panel persistente
-//   anclado en una esquina fija de la pantalla — no sigue al mouse ni se
-//   oculta al mover el cursor — con los 3 discos más cercanos (excluyendo
-//   al mismo artista) como filas clickeables, y un botón para cerrarlo.
 
 function showTooltipForPoint(i, x, y) {
   const a = points[i];
@@ -1370,11 +1524,6 @@ function renderDetailPanel(i, x, y) {
     nearest.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
   }
 
-  // Misma lógica de posicionamiento que el hover (pegado al punto en
-  // pantalla), sólo que acá se calcula una vez al fijar y no se vuelve a
-  // mover con el mouse. El panel es más alto que el preview de hover
-  // (suma la lista de cercanos), así que se le da más margen vertical
-  // para no cortarse contra el borde inferior.
   ui.tooltip.style.right = "auto";
   ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
   ui.tooltip.style.top = `${Math.min(y+16, innerHeight-300)}px`;
@@ -1410,7 +1559,19 @@ function pointerMove(e) {
     renderer.domElement.style.cursor = "default";
   }
 
-  if (pinnedIndex !== null) return; // panel fijo: el hover no lo pisa
+  if (pinnedIndex !== null) {
+    const hitIdx = hit?.object.userData.index;
+    const showPreview = hit && hitIdx !== pinnedIndex && activeGraphIndices.has(hitIdx);
+
+    if (showPreview) {
+      hoverPreviewIndex = hitIdx;
+      showTooltipForPoint(hitIdx, e.clientX, e.clientY);
+    } else if (hoverPreviewIndex !== null) {
+      hoverPreviewIndex = null;
+      pinTooltip(pinnedIndex); // restaura el panel fijado
+    }
+    return;
+  }
 
   if (hit) {
     showTooltipForPoint(hit.object.userData.index, e.clientX, e.clientY);
@@ -1481,6 +1642,7 @@ window.addEventListener("resize",()=>{
   camera.aspect = innerWidth/innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth,innerHeight);
+  connectionLines.forEach(c => c.line.material.resolution.set(innerWidth, innerHeight));
 });
 
 function animate() {
@@ -1489,6 +1651,7 @@ function animate() {
   tickCameraFocus();
   updateSelectionOutline();
   updateGenreLabels();
+  updateConnections();
   controls.update();
   renderer.render(scene,camera);
 }
