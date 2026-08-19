@@ -4116,6 +4116,669 @@
     "descriptors": []
   },
   {
+    "id": "fabrico-cuero",
+    "album": "Fabrico cuero",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Mid-School Hip Hop"
+      ],
+      "secondary": [
+        "Latin Rap",
+        "Rap Rock",
+        "Funk Rock",
+        "Funk"
+      ]
+    },
+    "descriptors": [
+      "sampling",
+      "sarcastic",
+      "male vocalist",
+      "humorous",
+      "rebellious",
+      "urban",
+      "playful",
+      "energetic",
+      "quirky",
+      "conscious",
+      "rhythmic",
+      "vulgar",
+      "raw"
+    ]
+  },
+  {
+    "id": "horno-para-calentar-los-mares",
+    "album": "Horno para calentar los mares",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Rap Rock"
+      ],
+      "secondary": [
+        "Latin Rap",
+        "Rap Metal",
+        "Alternative Rock",
+        "Funk Rock",
+        "Funk Metal",
+        "Hip Hop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "chaco",
+    "album": "Chaco",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Latin Rap"
+      ],
+      "secondary": [
+        "Funk",
+        "Alternative Rock",
+        "Rap Rock",
+        "Funk Rock",
+        "Acoustic Rock",
+        "Conscious Hip Hop",
+        "Boom Bap",
+        "G-Funk"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "eclectic",
+      "urban",
+      "humorous",
+      "sexual",
+      "rhythmic",
+      "playful",
+      "conscious",
+      "psychedelic",
+      "cryptic",
+      "mellow",
+      "vulgar",
+      "protest",
+      "rebellious",
+      "spiritual"
+    ]
+  },
+  {
+    "id": "versus",
+    "album": "Versus",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Latin Rap"
+      ],
+      "secondary": [
+        "Funk",
+        "Latin Soul",
+        "Rap Rock",
+        "Psychedelic Soul",
+        "Smooth Soul",
+        "Hip Hop Soul",
+        "Latin Funk",
+        "Acid Jazz",
+        "Classical Crossover",
+        "Neo-Soul"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "eclectic",
+      "sexual",
+      "progressive",
+      "lush",
+      "hedonism",
+      "sensual",
+      "quirky",
+      "rhythmic",
+      "vulgar",
+      "warm",
+      "psychedelic",
+      "melodic",
+      "poetic",
+      "complex",
+      "sampling",
+      "playful",
+      "passionate",
+      "boastful"
+    ]
+  },
+  {
+    "id": "leche",
+    "album": "Leche",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Acid Jazz"
+      ],
+      "secondary": [
+        "Funk",
+        "Funk Rock",
+        "Latin Funk",
+        "Disco Rap",
+        "Latin Soul"
+      ]
+    },
+    "descriptors": [
+      "vulgar",
+      "hedonism",
+      "sexual",
+      "rhythmic",
+      "male vocalist",
+      "sarcastic",
+      "humorous",
+      "drugs"
+    ]
+  },
+  {
+    "id": "kuryakistan",
+    "album": "Kuryakistán",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 2001,
+    "genres": {
+      "primary": [
+        "Hip Hop"
+      ],
+      "secondary": [
+        "Funk",
+        "Contemporary R&B",
+        "Latin Rap",
+        "Funk Rock",
+        "Latin Funk",
+        "Acid Jazz"
+      ]
+    },
+    "descriptors": [
+      "provocative",
+      "warm",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "chances",
+    "album": "Chances",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Funk"
+      ],
+      "secondary": [
+        "Hip Hop",
+        "Acid Jazz",
+        "Pop Rock",
+        "Latin Rap",
+        "Funk Rock",
+        "Synth Funk",
+        "Latin Funk"
+      ]
+    },
+    "descriptors": [
+      "sensual",
+      "warm",
+      "sexual",
+      "uplifting",
+      "urban",
+      "party",
+      "playful",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "lhon",
+    "album": "L.H.O.N.",
+    "artist": "Illya Kuryaki & the Valderramas",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Funk"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Soul",
+        "Latin Funk"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-otro-yo-1994-traka-traka",
+    "album": "Traka Traka",
+    "artist": "El Otro Yo",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Punk Rock",
+        "Post-Hardcore"
+      ],
+      "secondary": [
+        "Grunge",
+        "Hardcore Punk",
+        "Noise Rock"
+      ]
+    },
+    "descriptors": [
+      "noisy",
+      "rebellious",
+      "energetic",
+      "male vocalist",
+      "vulgar",
+      "chaotic",
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "raw",
+      "sexual",
+      "sarcastic",
+      "eclectic",
+      "angry",
+      "manic",
+      "humorous",
+      "urban",
+      "playful",
+      "aggressive"
+    ]
+  },
+  {
+    "id": "el-otro-yo-1995-mundo",
+    "album": "Mundo",
+    "artist": "El Otro Yo",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Noise Rock",
+        "Alternative Rock",
+        "Slacker Rock"
+      ],
+      "secondary": [
+        "Noise Pop",
+        "Punk Rock",
+        "Post-Hardcore",
+        "Grunge",
+        "Experimental Rock",
+        "Art Punk",
+        "Pigfuck"
+      ]
+    },
+    "descriptors": [
+      "manic",
+      "humorous",
+      "urban",
+      "aggressive",
+      "energetic",
+      "dissonant",
+      "noisy",
+      "lo-fi",
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "rebellious",
+      "psychedelic",
+      "satirical",
+      "eclectic",
+      "chaotic",
+      "sexual",
+      "male vocalist",
+      "introspective",
+      "misanthropic",
+      "female vocalist",
+      "political",
+      "existential",
+      "surreal",
+      "dark",
+      "melancholic",
+      "pessimistic",
+      "self-hatred",
+      "playful",
+      "adolescence",
+      "raw"
+    ]
+  },
+  {
+    "id": "el-otro-yo-1996-los-hijos-de-alien",
+    "album": "Los hijos de Alien",
+    "artist": "El Otro Yo",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Slacker Rock",
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Noise Rock",
+        "Punk Rock",
+        "Neo-Psychedelia",
+        "Post-Punk"
+      ]
+    },
+    "descriptors": [
+      "raw",
+      "humorous",
+      "urban",
+      "playful",
+      "energetic",
+      "chaotic",
+      "noisy",
+      "lo-fi",
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "rebellious",
+      "sexual",
+      "psychedelic",
+      "sarcastic",
+      "eclectic",
+      "male vocalist",
+      "female vocalist",
+      "manic"
+    ]
+  },
+  {
+    "id": "el-otro-yo-1997-aldana",
+    "album": "Aldana",
+    "artist": "El Otro Yo",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Slacker Rock",
+        "Neo-Psychedelia"
+      ],
+      "secondary": [
+        "Noise Pop",
+        "Indietronica",
+        "Psychedelic Folk",
+        "Experimental Rock",
+        "Synth Punk"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "political",
+      "surreal",
+      "humorous",
+      "urban",
+      "playful",
+      "dissonant",
+      "chaotic",
+      "noisy",
+      "lo-fi",
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "raw",
+      "rebellious",
+      "psychedelic",
+      "sarcastic",
+      "eclectic",
+      "male vocalist",
+      "manic"
+    ]
+  },
+  {
+    "id": "el-otro-yo-1997-esencia",
+    "album": "Esencia",
+    "artist": "El Otro Yo del Otro Yo",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Electronic",
+        "Indie Rock",
+        "Neo-Psychedelia"
+      ],
+      "secondary": [
+        "Slacker Rock",
+        "Experimental Rock",
+        "Ambient",
+        "Experimental",
+        "Psychedelic Folk",
+        "Indietronica",
+        "Ambient Pop",
+        "Post-Rock",
+        "Minimal Synth",
+        "Indie Pop",
+        "Chamber Jazz"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "cryptic",
+      "mellow",
+      "female vocalist",
+      "political",
+      "surreal",
+      "nocturnal",
+      "longing",
+      "melancholic",
+      "abstract",
+      "humorous",
+      "urban",
+      "playful",
+      "sentimental",
+      "cold",
+      "chaotic",
+      "noisy",
+      "lo-fi",
+      "lonely",
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "raw",
+      "rebellious",
+      "psychedelic",
+      "minimalistic",
+      "sarcastic",
+      "atmospheric",
+      "bittersweet",
+      "passionate",
+      "eclectic",
+      "male vocalist",
+      "mysterious",
+      "manic"
+    ]
+  },
+  {
+    "id": "el-otro-yo-1999-abrecaminos",
+    "album": "Abrecaminos",
+    "artist": "El Otro Yo",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Noise Pop",
+        "Punk Rock"
+      ]
+    },
+    "descriptors": [
+      "bittersweet",
+      "melodic",
+      "male vocalist",
+      "melancholic",
+      "urban",
+      "playful",
+      "sentimental",
+      "energetic",
+      "conscious",
+      "rhythmic",
+      "introspective",
+      "rebellious",
+      "romantic",
+      "autumn",
+      "nihilistic",
+      "breakup",
+      "passionate",
+      "raw",
+      "female vocalist",
+      "longing"
+    ]
+  },
+  {
+    "id": "el-otro-yo-2002-colmena",
+    "album": "Colmena",
+    "artist": "El Otro Yo",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Power Pop",
+        "Pop Punk",
+        "Indie Pop"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "conscious",
+      "female vocalist",
+      "male vocalist",
+      "melodic",
+      "lonely",
+      "rhythmic",
+      "rebellious",
+      "warm",
+      "summer",
+      "bittersweet",
+      "passionate",
+      "introspective",
+      "optimistic",
+      "political",
+      "melancholic",
+      "urban",
+      "playful"
+    ]
+  },
+  {
+    "id": "el-otro-yo-2004-espejismos",
+    "album": "Espejismos",
+    "artist": "El Otro Yo",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Power Pop",
+        "Hardcore Punk"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "political",
+      "longing",
+      "urban",
+      "playful",
+      "sentimental",
+      "energetic",
+      "conscious",
+      "rhythmic",
+      "rebellious",
+      "uplifting",
+      "melodic",
+      "bittersweet",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-otro-yo-2007-fuera-del-tiempo",
+    "album": "Fuera del tiempo",
+    "artist": "El Otro Yo",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Power Pop",
+        "Post-Punk Revival",
+        "Indie Pop",
+        "Pop Punk"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "longing",
+      "urban",
+      "playful",
+      "sentimental",
+      "energetic",
+      "rhythmic",
+      "rebellious",
+      "romantic",
+      "uplifting",
+      "melodic",
+      "sarcastic",
+      "love",
+      "bittersweet",
+      "passionate",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-otro-yo-2010-ailabiu-eoy",
+    "album": "AILABIU EOY",
+    "artist": "El Otro Yo",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Indie Pop",
+        "Pop Punk",
+        "Post-Punk Revival"
+      ]
+    },
+    "descriptors": [
+      "love",
+      "melodic",
+      "rebellious",
+      "mellow",
+      "male vocalist",
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "el-otro-yo-2012-5ta-dimension",
+    "album": "5ta dimensión",
+    "artist": "El Otro Yo",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Hardcore Punk"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "male vocalist"
+    ]
+  },
+  {
     "id": "mbugi",
     "album": "Mbugi",
     "artist": "La Mississippi",
@@ -4521,6 +5184,226 @@
       ]
     },
     "descriptors": []
+  },
+  {
+    "id": "oconnor-hay-un-lugar-1999",
+    "album": "Hay un lugar",
+    "artist": "O'Connor",
+    "year": 1999,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Hard Rock", "Groove Metal"]
+    },
+    "descriptors": ["heavy", "male vocalist", "conscious"]
+  },
+  {
+    "id": "oconnor-yerba-mala-nunca-muere-2000",
+    "album": "Yerba mala nunca muere",
+    "artist": "O'Connor",
+    "year": 2000,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Hard Rock"]
+    },
+    "descriptors": ["heavy", "male vocalist"]
+  },
+  {
+    "id": "oconnor-dolorizacion-2002",
+    "album": "Dolorización",
+    "artist": "O'Connor",
+    "year": 2002,
+    "genres": {
+      "primary": ["Heavy Metal", "Groove Metal"],
+      "secondary": ["Hard Rock"]
+    },
+    "descriptors": ["heavy", "political", "conscious", "male vocalist"]
+  },
+  {
+    "id": "oconnor-el-tiempo-es-tan-pequeno-2004",
+    "album": "El tiempo es tan pequeño",
+    "artist": "O'Connor",
+    "year": 2004,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Groove Metal"]
+    },
+    "descriptors": ["heavy", "male vocalist"]
+  },
+  {
+    "id": "oconnor-estamos-pariendo-2006",
+    "album": "Estamos pariendo",
+    "artist": "O'Connor",
+    "year": 2006,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Groove Metal", "Alternative Metal"]
+    },
+    "descriptors": ["male vocalist"]
+  },
+  {
+    "id": "oconnor-naturaleza-muerta-2008",
+    "album": "Naturaleza muerta",
+    "artist": "O'Connor",
+    "year": 2008,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Groove Metal", "Alternative Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "oconnor-rio-extrano-2010",
+    "album": "Río extraño",
+    "artist": "O'Connor",
+    "year": 2010,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "oconnor-un-poco-de-respeto-2012",
+    "album": "Un poco de respeto",
+    "artist": "O'Connor",
+    "year": 2012,
+    "genres": {
+      "primary": ["Hard Rock", "Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "oconnor-la-grieta-2016",
+    "album": "La grieta",
+    "artist": "O'Connor",
+    "year": 2016,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Hard Rock", "Alternative Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-7-delfines-l7d-1992",
+    "album": "L7D",
+    "artist": "Los 7 Delfines",
+    "year": 1992,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Neo-Psychedelia", "Shoegaze", "Post-Punk"]
+    },
+    "descriptors": ["male vocalist", "noisy"]
+  },
+  {
+    "id": "los-7-delfines-nada-memorable-1993",
+    "album": "Nada memorable",
+    "artist": "Los 7 Delfines",
+    "year": 1993,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Neo-Psychedelia"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-7-delfines-desierto-1995",
+    "album": "Desierto",
+    "artist": "Los 7 Delfines",
+    "year": 1995,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Post-Punk"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-7-delfines-dark-1997",
+    "album": "Dark",
+    "artist": "Los 7 Delfines",
+    "year": 1997,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Post-Punk", "Gothic Rock", "Dark Rock"]
+    },
+    "descriptors": ["Dark", "Atmospheric", "Underground"]
+  },
+  {
+    "id": "los-7-delfines-dudosa-estrella-1999",
+    "album": "Dudosa estrella",
+    "artist": "Los 7 Delfines",
+    "year": 1999,
+    "genres": {
+      "primary": ["Alternative Rock", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-7-delfines-aventura-2001",
+    "album": "Aventura",
+    "artist": "Los 7 Delfines",
+    "year": 2001,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Noise Pop", "Alternative Dance"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-7-delfines-carnaval-de-fantasmas-2008",
+    "album": "Carnaval de fantasmas",
+    "artist": "Los 7 Delfines",
+    "year": 2008,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "richard-coleman-2011",
+    "album": "Richard Coleman",
+    "artist": "Richard Coleman",
+    "year": 2011,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "richard-coleman-incandescente-2013",
+    "album": "Incandescente",
+    "artist": "Richard Coleman",
+    "year": 2013,
+    "genres": {
+      "primary": ["Pop Rock", "Latin Alternative"],
+      "secondary": []
+    },
+    "descriptors": ["energetic", "warm", "melodic", "poetic", "male vocalist"]
+  },
+  {
+    "id": "richard-coleman-facil-2017",
+    "album": "F–A–C–I–L",
+    "artist": "Richard Coleman",
+    "year": 2017,
+    "genres": {
+      "primary": ["Indie Pop", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "richard-coleman-el-in-correcto-uso-de-la-metafora-2025",
+    "album": "El (in) correcto uso de la metáfora",
+    "artist": "Richard Coleman",
+    "year": 2025,
+    "genres": {
+      "primary": ["Post-Punk"],
+      "secondary": ["Alternative Rock", "Dark Rock", "Experimental Rock"]
+    },
+    "descriptors": ["Dark", "Atmospheric", "Experimental", "Guitar-Driven", "Underground"]
   },
   {
     "id": "rosas-rojas",
