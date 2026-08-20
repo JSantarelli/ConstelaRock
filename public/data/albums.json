@@ -5186,6 +5186,1108 @@
     "descriptors": []
   },
   {
+    "id": "delmar",
+    "album": "Delmar",
+    "artist": "Los Natas",
+    "year": 1998,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Psychedelic Rock"]
+    },
+    "descriptors": [
+      "psychedelic",
+      "hypnotic",
+      "desert",
+      "warm",
+      "summer",
+      "atmospheric",
+      "male vocalist",
+      "heavy",
+      "introspective",
+      "urban",
+      "dense",
+      "poetic",
+      "rhythmic",
+      "raw",
+      "meditative"
+    ]
+  },
+  {
+    "id": "ciudad-de-brahman",
+    "album": "Ciudad de Brahman",
+    "artist": "Los Natas",
+    "year": 1999,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": [
+        "Psychedelic Rock",
+        "Space Rock",
+        "Progressive Rock",
+        "Heavy Psych"
+      ]
+    },
+    "descriptors": [
+      "psychedelic",
+      "desert",
+      "male vocalist",
+      "heavy",
+      "summer",
+      "atmospheric",
+      "dense",
+      "warm",
+      "progressive",
+      "uncommon time signatures",
+      "space",
+      "rhythmic"
+    ]
+  },
+  {
+    "id": "natas-dragonauta",
+    "album": "Los Natas",
+    "artist": "Los Natas",
+    "year": 2000,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Psychedelic Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "corsario-negro",
+    "album": "Corsario negro",
+    "artist": "Los Natas",
+    "year": 2002,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": [
+        "Psychedelic Rock",
+        "Stoner Metal",
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "psychedelic",
+      "progressive",
+      "dense",
+      "desert",
+      "raw",
+      "warm",
+      "space",
+      "atmospheric",
+      "heavy",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "toba-trance",
+    "album": "Toba trance",
+    "artist": "Los Natas",
+    "year": 2003,
+    "genres": {
+      "primary": ["Psychedelic Rock"],
+      "secondary": [
+        "Stoner Rock",
+        "Post-Rock",
+        "Jam Band",
+        "Space Rock"
+      ]
+    },
+    "descriptors": [
+      "psychedelic",
+      "instrumental"
+    ]
+  },
+  {
+    "id": "toba-trance-ii",
+    "album": "Toba trance II",
+    "artist": "Los Natas",
+    "year": 2004,
+    "genres": {
+      "primary": ["Acid Rock"],
+      "secondary": [
+        "Stoner Rock",
+        "Drone",
+        "Experimental Rock"
+      ]
+    },
+    "descriptors": [
+      "complex",
+      "psychedelic",
+      "drugs",
+      "male vocalist",
+      "hypnotic"
+    ]
+  },
+  {
+    "id": "munchen-sessions",
+    "album": "München Sessions",
+    "artist": "Los Natas",
+    "year": 2005,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Psychedelic Rock"]
+    },
+    "descriptors": [
+      "heavy",
+      "progressive",
+      "energetic",
+      "improvisation",
+      "psychedelic",
+      "atmospheric",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-hombre-montana",
+    "album": "El hombre montaña",
+    "artist": "Los Natas",
+    "year": 2006,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Heavy Psych", "Sludge Metal"]
+    },
+    "descriptors": [
+      "heavy",
+      "raw",
+      "male vocalist",
+      "dense"
+    ]
+  },
+  {
+    "id": "nuevo-orden-de-la-libertad",
+    "album": "Nuevo orden de la libertad",
+    "artist": "Los Natas",
+    "year": 2009,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Stoner Metal", "Psychedelic Rock"]
+    },
+    "descriptors": [
+      "psychedelic",
+      "heavy",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "los-natas-solodolor",
+    "album": "Los Natas / Solodolor",
+    "artist": "Los Natas / Solodolor",
+    "year": 2010,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "heavy",
+      "energetic",
+      "warm",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "suenos-del-mundo",
+    "album": "Sueños del mundo",
+    "artist": "Alianza",
+    "year": 1994,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["AOR", "Heavy Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "alianza",
+    "album": "Alianza",
+    "artist": "Alianza",
+    "year": 1997,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["AOR"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "huellas",
+    "album": "Huellas",
+    "artist": "Alianza",
+    "year": 1999,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["AOR"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vagabundear",
+    "album": "Vagabundear",
+    "artist": "Alakrán",
+    "year": 1989,
+    "genres": {
+      "primary": ["Glam Metal"],
+      "secondary": ["Hard Rock", "Heavy Metal", "AOR"]
+    },
+    "descriptors": [
+      "energetic",
+      "anthemic",
+      "uplifting",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "otra-vez-en-las-calles",
+    "album": "Otra vez en las calles",
+    "artist": "Alakrán",
+    "year": 1991,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Glam Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "airbag-2004",
+    "album": "Airbag",
+    "artist": "Airbag",
+    "year": 2004,
+    "genres": {
+      "primary": ["Power Pop"],
+      "secondary": ["Pop Punk"]
+    },
+    "descriptors": [
+      "energetic",
+      "melodic",
+      "male vocalist",
+      "playful"
+    ]
+  },
+  {
+    "id": "blanco-y-negro",
+    "album": "Blanco y negro",
+    "artist": "Airbag",
+    "year": 2006,
+    "genres": {
+      "primary": ["Power Pop"],
+      "secondary": ["Pop Rock", "Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "una-hora-a-tokyo",
+    "album": "Una hora a Tokyo",
+    "artist": "Airbag",
+    "year": 2008,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Power Pop"]
+    },
+    "descriptors": [
+      "melodic",
+      "male vocalist",
+      "energetic"
+    ]
+  },
+  {
+    "id": "voragine",
+    "album": "Vorágine",
+    "artist": "Airbag",
+    "year": 2011,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": [
+        "Sleaze Rock",
+        "Hard Rock",
+        "Big Music"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "libertad",
+    "album": "Libertad",
+    "artist": "Airbag",
+    "year": 2013,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Power Pop",
+        "Heartland Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mentira-la-verdad",
+    "album": "Mentira la verdad",
+    "artist": "Airbag",
+    "year": 2016,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Glam Rock", "Pop Rock"]
+    },
+    "descriptors": [
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "al-parecer-todo-ha-sido-una-trampa",
+    "album": "Al parecer todo ha sido una trampa",
+    "artist": "Airbag",
+    "year": 2021,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-club-de-la-pelea-i",
+    "album": "El club de la pelea I",
+    "artist": "Airbag",
+    "year": 2025,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Pop Rock",
+        "Power Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "reinara-la-tempestad",
+    "album": "Reinará la tempestad",
+    "artist": "Horcas",
+    "year": 1990,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Heavy Metal",
+        "Speed Metal"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "aggressive",
+      "energetic",
+      "heavy",
+      "rebellious",
+      "violence",
+      "conscious"
+    ]
+  },
+  {
+    "id": "oid-mortales-el-grito-sangrado",
+    "album": "Oíd mortales el grito sangrado",
+    "artist": "Horcas",
+    "year": 1992,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Heavy Metal",
+        "Speed Metal"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "conscious",
+      "heavy",
+      "energetic",
+      "violence",
+      "rebellious",
+      "aggressive",
+      "political"
+    ]
+  },
+  {
+    "id": "vence",
+    "album": "Vence",
+    "artist": "Horcas",
+    "year": 1997,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Heavy Metal",
+        "Speed Metal",
+        "Power Metal",
+        "Groove Metal"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "eternos",
+    "album": "Eternos",
+    "artist": "Horcas",
+    "year": 1999,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Heavy Metal",
+        "Speed Metal"
+      ]
+    },
+    "descriptors": [
+      "anxious",
+      "heavy",
+      "male vocalist",
+      "energetic",
+      "aggressive"
+    ]
+  },
+  {
+    "id": "horcas-2002",
+    "album": "Horcas",
+    "artist": "Horcas",
+    "year": 2002,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Thrash Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "demencial",
+    "album": "Demencial",
+    "artist": "Horcas",
+    "year": 2004,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Groove Metal",
+        "Heavy Metal"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "asesino",
+    "album": "Asesino",
+    "artist": "Horcas",
+    "year": 2006,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Groove Metal",
+        "Heavy Metal"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "reviviendo-huestes",
+    "album": "Reviviendo huestes",
+    "artist": "Horcas",
+    "year": 2008,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Heavy Metal",
+        "Groove Metal"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "por-tu-honor",
+    "album": "Por tu honor",
+    "artist": "Horcas",
+    "year": 2013,
+    "genres": {
+      "primary": ["Groove Metal"],
+      "secondary": [
+        "Speed Metal",
+        "Thrash Metal"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "energetic",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "gritando-verdades",
+    "album": "Gritando verdades",
+    "artist": "Horcas",
+    "year": 2018,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Thrash Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-diablo",
+    "album": "El Diablo",
+    "artist": "Horcas",
+    "year": 2024,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": ["Heavy Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "chactuchac",
+    "album": "Chactuchac",
+    "artist": "Los Piojos",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "Roots Rock"
+      ],
+      "secondary": [
+        "Alternative Rock",
+        "Rock & Roll",
+        "Blues Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "anthemic",
+      "rhythmic",
+      "passionate"
+    ]
+  },
+  {
+    "id": "ay-ay-ay",
+    "album": "Ay ay ay",
+    "artist": "Los Piojos",
+    "year": 1994,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Roots Rock",
+        "Latin Alternative",
+        "Punk Rock",
+        "Candombe beat",
+        "Blues Rock"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "disturbing",
+      "aggressive",
+      "quirky",
+      "rhythmic",
+      "raw",
+      "male vocalist",
+      "anxious",
+      "manic"
+    ]
+  },
+  {
+    "id": "3er-arco",
+    "album": "3er arco",
+    "artist": "Los Piojos",
+    "year": 1996,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Roots Rock",
+        "Funk Rock",
+        "Latin Alternative"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "passionate",
+      "eclectic",
+      "male vocalist",
+      "melodic",
+      "bittersweet"
+    ]
+  },
+  {
+    "id": "azul",
+    "album": "Azul",
+    "artist": "Los Piojos",
+    "year": 1998,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": [
+        "Funk Rock",
+        "Roots Rock",
+        "Latin Alternative"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "verde-paisaje-del-infierno",
+    "album": "Verde paisaje del Infierno",
+    "artist": "Los Piojos",
+    "year": 2000,
+    "genres": {
+      "primary": ["Pop Rock", "Alternative Rock"],
+      "secondary": [
+        "Funk Rock",
+        "Latin Alternative",
+        "Alternative Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "maquina-de-sangre",
+    "album": "Máquina de sangre",
+    "artist": "Los Piojos",
+    "year": 2003,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": [
+        "Pop Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "civilizacion",
+    "album": "Civilización",
+    "artist": "Los Piojos",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Pop Rock",
+        "Pop Reggae"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Latin Alternative",
+        "Hard Rock",
+        "Garage Rock Revival"
+      ]
+    },
+    "descriptors": [
+      "urban",
+      "playful",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "buen-dia",
+    "album": "¡¡Buen día!!",
+    "artist": "Intoxicados",
+    "year": 2001,
+    "genres": {
+      "primary": ["Roots Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Blues Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "introspective",
+      "existential",
+      "conscious",
+      "rebellious",
+      "uplifting",
+      "alienation"
+    ]
+  },
+  {
+    "id": "no-es-solo-rock-n-roll",
+    "album": "No es sólo rock 'n' roll",
+    "artist": "Intoxicados",
+    "year": 2003,
+    "genres": {
+      "primary": ["Roots Rock"],
+      "secondary": [
+        "Blues Rock",
+        "Prank Call",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": [
+      "eclectic",
+      "urban",
+      "energetic",
+      "male vocalist",
+      "rebellious",
+      "alienation",
+      "drugs",
+      "concept album",
+      "sexual",
+      "satirical",
+      "friendship",
+      "conscious"
+    ]
+  },
+  {
+    "id": "otro-dia-en-el-planeta-tierra",
+    "album": "Otro día en el planeta Tierra",
+    "artist": "Intoxicados",
+    "year": 2005,
+    "genres": {
+      "primary": ["Pop Rock", "Alternative Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Reggae",
+        "Rock & Roll",
+        "Blues Rock",
+        "Hip Hop",
+        "Latin Alternative"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "urban",
+      "conscious",
+      "rebellious",
+      "uplifting",
+      "eclectic",
+      "bright",
+      "melodic",
+      "bittersweet",
+      "rhythmic"
+    ]
+  },
+  {
+    "id": "el-exilio-de-las-especies-thend",
+    "album": "El exilio de las especies (Thend)",
+    "artist": "Intoxicados",
+    "year": 2008,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": [
+        "Funk",
+        "Roots Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "buenas",
+    "album": "Buenas",
+    "artist": "Cielo Razzo",
+    "year": 2001,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Latin Alternative"
+      ]
+    },
+    "descriptors": [
+      "conscious",
+      "male vocalist",
+      "energetic"
+    ]
+  },
+  {
+    "id": "codigo-de-barras",
+    "album": "Código de barras",
+    "artist": "Cielo Razzo",
+    "year": 2003,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "cryptic",
+      "repetitive",
+      "longing",
+      "melancholic",
+      "urban",
+      "aggressive",
+      "alcohol",
+      "rhythmic",
+      "raw",
+      "rebellious",
+      "warm",
+      "melodic",
+      "poetic",
+      "passionate",
+      "eclectic",
+      "uncommon time signatures",
+      "introspective"
+    ]
+  },
+  {
+    "id": "marea",
+    "album": "Marea",
+    "artist": "Cielo Razzo",
+    "year": 2005,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "grietas",
+    "album": "Grietas",
+    "artist": "Cielo Razzo",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Latin Alternative"
+      ],
+      "secondary": [
+        "Post-Punk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "compost",
+    "album": "Compost",
+    "artist": "Cielo Razzo",
+    "year": 2010,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sideral",
+    "album": "Sideral",
+    "artist": "Cielo Razzo",
+    "year": 2013,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tierra-nueva",
+    "album": "Tierra nueva",
+    "artist": "Cielo Razzo",
+    "year": 2015,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-dia-fuera-del-tiempo",
+    "album": "El día fuera del tiempo",
+    "artist": "Cielo Razzo",
+    "year": 2024,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Pop Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "alcohol",
+      "introspective",
+      "cryptic",
+      "calm",
+      "nocturnal",
+      "longing",
+      "urban",
+      "nature",
+      "energetic",
+      "warm",
+      "melodic",
+      "minimalistic",
+      "poetic",
+      "atmospheric",
+      "bittersweet",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "friccion-consumacion-o-consumo-1986",
+    "album": "Consumación o consumo",
+    "artist": "Fricción",
+    "year": 1986,
+    "genres": {
+      "primary": ["New Wave"],
+      "secondary": ["Post-Punk", "Gothic Rock"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "nocturnal",
+      "female vocalist",
+      "melancholic",
+      "sensual",
+      "rhythmic",
+      "sexual",
+      "dark",
+      "lonely",
+      "playful",
+      "lush",
+      "energetic"
+    ]
+  },
+  {
+    "id": "friccion-para-terminar-1988",
+    "album": "Para terminar",
+    "artist": "Fricción",
+    "year": 1988,
+    "genres": {
+      "primary": ["New Wave"],
+      "secondary": ["Post-Punk", "Gothic Rock", "Big Music"]
+    },
+    "descriptors": [
+      "anxious",
+      "nocturnal",
+      "dark",
+      "energetic",
+      "lonely",
+      "rhythmic",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "billy-bond-y-la-pesada-del-rock-and-roll-1971",
+    "album": "Billy Bond y La Pesada del Rock and Roll",
+    "artist": "Billy Bond y La Pesada del Rock and Roll",
+    "year": 1971,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Psychedelic Rock", "Hard Rock", "Heavy Psych"]
+    },
+    "descriptors": [
+      "psychedelic",
+      "male vocalist",
+      "urban",
+      "playful",
+      "energetic",
+      "nature",
+      "political",
+      "protest",
+      "raw",
+      "sarcastic",
+      "satirical"
+    ]
+  },
+  {
+    "id": "billy-bond-y-la-pesada-vol-2-1972",
+    "album": "Vol. 2",
+    "artist": "Billy Bond y La Pesada del Rock and Roll",
+    "year": 1972,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Psychedelic Rock", "Heavy Psych"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "billy-bond-y-la-pesada-tontos-operita-1972",
+    "album": "Tontos (Operita)",
+    "artist": "Billy Bond y La Pesada del Rock",
+    "year": 1972,
+    "genres": {
+      "primary": ["Experimental Rock"],
+      "secondary": [
+        "Psychedelic Rock",
+        "Hard Rock",
+        "Acid Rock",
+        "Musique concrète",
+        "Tape Music",
+        "Heavy Psych",
+        "Satire"
+      ]
+    },
+    "descriptors": [
+      "improvisation",
+      "playful",
+      "avant-garde"
+    ]
+  },
+  {
+    "id": "billy-bond-y-la-pesada-vol-4-1973",
+    "album": "Vol. 4",
+    "artist": "Billy Bond y La Pesada del Rock and Roll",
+    "year": 1973,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Musical Parody",
+        "Animal Sounds",
+        "Satire",
+        "Heavy Psych"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "psychedelic",
+      "sarcastic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "dios-los-cria-1996",
+    "album": "Dios los Cría",
+    "artist": "Dios Los Cría",
+    "year": 1996,
+    "genres": {
+      "primary": ["Grunge"],
+      "secondary": ["Hard Rock", "Alternative Rock", "Post-Grunge"]
+    },
+    "descriptors": [
+      "poetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "dios-los-cria-dios-com-2000",
+    "album": "Dios.com",
+    "artist": "Dios Los Cría",
+    "year": 2000,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Post-Grunge", "Grunge"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "dios-los-cria-2003",
+    "album": "Dios los Cría",
+    "artist": "Dios Los Cría",
+    "year": 2003,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "dios-los-cria-justo-cuando-nos-estabamos-quedando-sordos-2006",
+    "album": "Justo cuando nos estábamos quedando sordos",
+    "artist": "Dios Los Cría",
+    "year": 2006,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
     "id": "oconnor-hay-un-lugar-1999",
     "album": "Hay un lugar",
     "artist": "O'Connor",
@@ -10597,6 +11699,502 @@
       "happy",
       "melodic",
       "instrumental"
+    ]
+  },
+  {
+    "id": "espiritu-combativo",
+    "album": "Espíritu combativo",
+    "artist": "Malón",
+    "year": 1995,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Groove Metal",
+        "Heavy Metal"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "conscious",
+      "rebellious",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "justicia-o-resistencia",
+    "album": "Justicia o resistencia",
+    "artist": "Malón",
+    "year": 1996,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Groove Metal",
+        "Industrial Metal"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nuevo-orden-mundial",
+    "album": "Nuevo orden mundial",
+    "artist": "Malón",
+    "year": 2015,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Groove Metal",
+        "Melodic Metalcore"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "oscuro-plan-del-poder",
+    "album": "Oscuro plan del poder",
+    "artist": "Malón",
+    "year": 2023,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": [
+        "Speed Metal",
+        "Groove Metal",
+        "Heavy Metal"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "git",
+    "album": "G.I.T.",
+    "artist": "G.I.T.",
+    "year": 1984,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": [
+        "New Wave",
+        "Post-Punk",
+        "Power Pop"
+      ]
+    },
+    "descriptors": [
+      "melodic",
+      "urban",
+      "nocturnal",
+      "rhythmic",
+      "love",
+      "passionate",
+      "introspective",
+      "male vocalist",
+      "existential",
+      "melancholic",
+      "lonely"
+    ]
+  },
+  {
+    "id": "git-volumen-2",
+    "album": "GIT Volumen 2",
+    "artist": "G.I.T.",
+    "year": 1985,
+    "genres": {
+      "primary": ["New Wave"],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": [
+      "urban",
+      "punchy",
+      "energetic",
+      "melodic",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "git-volumen-3",
+    "album": "GIT Volumen 3",
+    "artist": "G.I.T.",
+    "year": 1986,
+    "genres": {
+      "primary": ["New Wave"],
+      "secondary": [
+        "Pop Rock",
+        "Synthpop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "primera-sangre",
+    "album": "Primera sangre",
+    "artist": "G.I.T.",
+    "year": 1988,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": [
+        "Power Pop",
+        "New Wave",
+        "Funk Rock"
+      ]
+    },
+    "descriptors": [
+      "repetitive",
+      "playful",
+      "rhythmic",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "distorsion",
+    "album": "Distorsión",
+    "artist": "G.I.T.",
+    "year": 1992,
+    "genres": {
+      "primary": ["Roots Rock"],
+      "secondary": [
+        "New Wave",
+        "Hard Rock",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "obediencia-debida",
+    "album": "Obediencia debida",
+    "artist": "Instrucción Cívica",
+    "year": 1986,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": [
+        "New Wave",
+        "2 Tone"
+      ]
+    },
+    "descriptors": [
+      "political",
+      "quirky",
+      "rhythmic",
+      "satirical",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "instruccion-civica",
+    "album": "Instrucción Cívica",
+    "artist": "Instrucción Cívica",
+    "year": 1987,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": [
+        "New Wave",
+        "Post-Punk",
+        "Big Music"
+      ]
+    },
+    "descriptors": [
+      "nocturnal",
+      "dark",
+      "sensual",
+      "rhythmic",
+      "melodic",
+      "satirical",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "cadena-perpetua",
+    "album": "Cadena Perpetua",
+    "artist": "Cadena Perpetua",
+    "year": 1995,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Punk Rock"
+      ]
+    },
+    "descriptors": [
+      "angry",
+      "political",
+      "urban",
+      "protest",
+      "antireligious",
+      "energetic",
+      "passionate"
+    ]
+  },
+  {
+    "id": "buscando-salidas",
+    "album": "Buscando salidas",
+    "artist": "Cadena Perpetua",
+    "year": 1997,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": [
+        "Melodic Hardcore"
+      ]
+    },
+    "descriptors": [
+      "political",
+      "energetic",
+      "protest",
+      "angry"
+    ]
+  },
+  {
+    "id": "largas-noches",
+    "album": "Largas Noches",
+    "artist": "Cadena Perpetua",
+    "year": 2000,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": [
+        "Melodic Hardcore"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "malas-costumbres",
+    "album": "Malas costumbres",
+    "artist": "Cadena Perpetua",
+    "year": 2003,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": [
+        "Alternative Rock"
+      ]
+    },
+    "descriptors": [
+      "passionate",
+      "angry",
+      "conscious",
+      "political",
+      "protest",
+      "urban",
+      "energetic",
+      "sarcastic",
+      "optimistic",
+      "breakup",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "demasiada-intimidad",
+    "album": "Demasiada intimidad",
+    "artist": "Cadena Perpetua",
+    "year": 2006,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": [
+        "Melodic Hardcore",
+        "Power Pop"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "plaga",
+    "album": "Plaga",
+    "artist": "Cadena Perpetua",
+    "year": 2010,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Punk Rock"
+      ]
+    },
+  "descriptors": []
+  },
+  {
+    "id": "eterna-inocencia-juggling-jugulars",
+    "album": "Juggling Jugulars",
+    "artist": "Eterna Inocencia",
+    "year": 1997,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "recycle",
+    "album": "Recycle",
+    "artist": "Eterna Inocencia",
+    "year": 1999,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Hardcore Punk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-los-que-se-han-apagado",
+    "album": "A los que se han apagado",
+    "artist": "Eterna Inocencia",
+    "year": 2001,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Emocore"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "energetic",
+      "protest",
+      "raw",
+      "male vocalist",
+      "lo-fi"
+    ]
+  },
+  {
+    "id": "dias-tristes",
+    "album": "Días tristes",
+    "artist": "Eterna Inocencia",
+    "year": 2001,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Hardcore Punk",
+        "Skate Punk",
+        "Emocore",
+        "Pop Punk"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist",
+      "political"
+    ]
+  },
+  {
+    "id": "punkypatin",
+    "album": "Punkypatin",
+    "artist": "Eterna Inocencia",
+    "year": 2001,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Emocore",
+        "Skate Punk"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "sentimental",
+      "energetic",
+      "sad",
+      "melancholic",
+      "lonely",
+      "raw",
+      "passionate",
+      "lo-fi"
+    ]
+  },
+  {
+    "id": "las-palabras-y-los-rios",
+    "album": "Las palabras y los ríos",
+    "artist": "Eterna Inocencia",
+    "year": 2004,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Emo",
+        "Emocore",
+        "Indie Rock"
+      ]
+    },
+    "descriptors": [
+      "longing",
+      "melancholic",
+      "introspective",
+      "male vocalist",
+      "breakup",
+      "passionate",
+      "sad",
+      "love",
+      "melodic",
+      "lonely",
+      "anxious",
+      "cold",
+      "energetic",
+      "anthemic",
+      "raw",
+      "winter",
+      "nostalgia"
+    ]
+  },
+  {
+    "id": "la-resistencia",
+    "album": "La Resistencia",
+    "artist": "Eterna Inocencia",
+    "year": 2006,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Emo",
+        "Punk Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ei",
+    "album": "Ei",
+    "artist": "Eterna Inocencia",
+    "year": 2009,
+    "genres": {
+      "primary": ["Hardcore Punk"],
+      "secondary": [
+        "Melodic Hardcore",
+        "Punk Rock"
+      ]
+    },
+    "descriptors": []
+    },
+  {
+    "id": "entre-llanos-y-antigales",
+    "album": "Entre llanos y antigales",
+    "artist": "Eterna Inocencia",
+    "year": 2014,
+    "genres": {
+      "primary": ["Melodic Hardcore"],
+      "secondary": [
+        "Hardcore Punk"
+      ]
+    },
+    "descriptors": [
+      "optimistic",
+      "male vocalist",
+      "energetic",
+      "passionate",
+      "protest"
+    ]
+  },
+  {
+    "id": "no-bien-abran-las-flores",
+    "album": "No bien abran las flores",
+    "artist": "Eterna Inocencia",
+    "year": 2022,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Melodic Hardcore"
+      ]
+    },
+    "descriptors": [
+      "melancholic"
     ]
   },
   {
