@@ -3904,6 +3904,1240 @@
     ]
   },
   {
+    "id": "electronauta",
+    "album": "Electronauta",
+    "artist": "Juana La Loca",
+    "year": 1993,
+    "genres": {
+      "primary": ["Shoegaze"],
+      "secondary": ["Noise Pop", "Neo-Psychedelia", "Dream Pop", "Baggy"]
+    },
+    "descriptors": ["ethereal", "surreal", "lush", "atmospheric", "sensual", "psychedelic", "hedonistic", "abstract", "noisy", "melodic", "poetic"]
+  },
+  {
+    "id": "revolucion",
+    "album": "Revolución",
+    "artist": "Juana La Loca",
+    "year": 1995,
+    "genres": {
+      "primary": ["Shoegaze"],
+      "secondary": ["Noise Pop", "Britpop", "Neo-Psychedelia"]
+    },
+    "descriptors": ["psychedelic", "hedonistic", "noisy", "energetic", "playful", "melodic"]
+  },
+  {
+    "id": "vida-modelo",
+    "album": "Vida modelo",
+    "artist": "Juana La Loca",
+    "year": 1997,
+    "genres": {
+      "primary": ["Britpop"],
+      "secondary": ["Alternative Rock", "Alternative Dance", "Glam Rock", "Power Pop"]
+    },
+    "descriptors": ["energetic", "hedonistic", "pessimistic"]
+  },
+  {
+    "id": "planeta-juana-la-loca",
+    "album": "Planeta Juana La Loca",
+    "artist": "Juana La Loca",
+    "year": 1998,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Shoegaze", "Britpop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "belleza",
+    "album": "Belleza",
+    "artist": "Juana La Loca",
+    "year": 2002,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "casablanca",
+    "album": "Casablanca",
+    "artist": "Juana La Loca",
+    "year": 2005,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pastillas-para-el-dolor",
+    "album": "Pastillas para el dolor",
+    "artist": "Juana La Loca",
+    "year": 2012,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "resplandece",
+    "album": "Resplandece",
+    "artist": "Juana La Loca",
+    "year": 2018,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "endorfina",
+    "album": "Endorfina",
+    "artist": "Juana La Loca",
+    "year": 2022,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "avant-press",
+    "album": "Avant Press",
+    "artist": "Avant Press",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Indie Pop",
+        "Power Pop"
+      ],
+      "secondary": [
+        "Indie Rock",
+        "Britpop"
+      ]
+    },
+    "descriptors": [
+      "optimistic",
+      "longing",
+      "romantic",
+      "melodic",
+      "playful",
+      "poetic",
+      "summer",
+      "rhythmic",
+      "bittersweet",
+      "energetic"
+    ]
+  },
+  {
+    "id": "los-calzones-rotos",
+    "album": "Los Calzones Rotos",
+    "artist": "Los Calzones Rotos",
+    "year": 1991,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": ["Reggae"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "porrompompero",
+    "album": "Porrompompero",
+    "artist": "Los Calzones Rotos",
+    "year": 1993,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "jungla-ska",
+    "album": "Jungla Ska",
+    "artist": "Los Calzones Rotos",
+    "year": 1995,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "aconcagua-el-gobierno-de-las-tribus",
+    "album": "Aconcagua: El gobierno de las tribus",
+    "artist": "Los Calzones",
+    "year": 1997,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mugre",
+    "album": "Mugre",
+    "artist": "Los Calzones",
+    "year": 1999,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "plastico",
+    "album": "Plástico",
+    "artist": "Los Calzones",
+    "year": 2001,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "frecuencia-extrema",
+    "album": "Frecuencia extrema",
+    "artist": "Los Calzones",
+    "year": 2004,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": ["Ska Punk", "Reggae"]
+    },
+    "descriptors": [
+      "energetic",
+      "rhythmic",
+      "rebellious",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "cabeza",
+    "album": "Cabeza",
+    "artist": "Pez",
+    "year": 1994,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Post-Hardcore", "Hardcore Punk", "Heavy Psych"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "heavy",
+      "uncommon time signatures",
+      "energetic",
+      "raw",
+      "psychedelic",
+      "lo-fi"
+    ]
+  },
+  {
+    "id": "quemado",
+    "album": "Quemado",
+    "artist": "Pez",
+    "year": 1996,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Post-Hardcore", "Psychedelic Rock", "Heavy Psych"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "poetic",
+      "rebellious",
+      "conscious",
+      "progressive",
+      "angry",
+      "introspective",
+      "technical",
+      "cryptic",
+      "eclectic"
+    ]
+  },
+  {
+    "id": "pez-1998",
+    "album": "Pez",
+    "artist": "Pez",
+    "year": 1998,
+    "genres": {
+      "primary": ["Post-Hardcore"],
+      "secondary": ["Alternative Rock", "Progressive Rock", "Heavy Psych", "Punk Rock"]
+    },
+    "descriptors": [
+      "raw",
+      "hateful",
+      "anxious",
+      "energetic",
+      "male vocalist",
+      "uncommon time signatures",
+      "pessimistic",
+      "progressive",
+      "playful",
+      "rebellious",
+      "melodic",
+      "depressive",
+      "poetic",
+      "sad",
+      "lo-fi"
+    ]
+  },
+  {
+    "id": "fragilinvencible",
+    "album": "Frágilinvencible",
+    "artist": "Pez",
+    "year": 2000,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Progressive Rock", "Post-Hardcore", "Stoner Rock", "Heavy Psych"]
+    },
+    "descriptors": [
+      "heavy",
+      "raw",
+      "male vocalist",
+      "uncommon time signatures",
+      "progressive",
+      "energetic",
+      "rhythmic",
+      "conscious"
+    ]
+  },
+  {
+    "id": "convivencia-sagrada",
+    "album": "Convivencia sagrada",
+    "artist": "Pez",
+    "year": 2001,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Jazz-Rock", "Folk Rock"]
+    },
+    "descriptors": [
+      "progressive",
+      "existential",
+      "male vocalist",
+      "poetic",
+      "uncommon time signatures",
+      "philosophical",
+      "complex"
+    ]
+  },
+  {
+    "id": "el-sol-detras-del-sol",
+    "album": "El sol detrás del sol",
+    "artist": "Pez",
+    "year": 2002,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Art Rock", "Jazz-Rock", "Psychedelic Rock"]
+    },
+    "descriptors": [
+      "introspective",
+      "melancholic",
+      "psychedelic",
+      "male vocalist",
+      "melodic",
+      "soft"
+    ]
+  },
+  {
+    "id": "folklore",
+    "album": "Folklore",
+    "artist": "Pez",
+    "year": 2004,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Psychedelic Rock", "Heavy Psych", "Space Rock", "Art Rock"]
+    },
+    "descriptors": [
+      "psychedelic",
+      "male vocalist",
+      "progressive",
+      "melodic",
+      "uncommon time signatures",
+      "technical",
+      "surreal",
+      "heavy",
+      "poetic",
+      "atmospheric"
+    ]
+  },
+  {
+    "id": "hoy",
+    "album": "Hoy",
+    "artist": "Pez",
+    "year": 2006,
+    "genres": {
+      "primary": ["Folk Rock"],
+      "secondary": ["Pop Rock", "Psychedelic Rock", "Jazz-Rock"]
+    },
+    "descriptors": [
+      "melodic",
+      "psychedelic",
+      "male vocalist",
+      "autumn",
+      "mellow",
+      "poetic",
+      "optimistic",
+      "soft",
+      "happy",
+      "uplifting",
+      "nostalgia",
+      "family"
+    ]
+  },
+  {
+    "id": "los-orfebres",
+    "album": "Los orfebres",
+    "artist": "Pez",
+    "year": 2007,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Psychedelic Rock", "Stoner Rock", "Jazz-Rock", "Hard Rock", "Post-Hardcore"]
+    },
+    "descriptors": [
+      "progressive",
+      "existential",
+      "heavy",
+      "raw",
+      "male vocalist",
+      "psychedelic",
+      "dense",
+      "improvisation",
+      "philosophical",
+      "antireligious",
+      "poetic",
+      "angry",
+      "chaotic"
+    ]
+  },
+  {
+    "id": "el-porvenir",
+    "album": "El porvenir",
+    "artist": "Pez",
+    "year": 2009,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Hard Rock", "Progressive Rock", "Punk Rock", "Psychedelic Rock"]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist",
+      "concept album",
+      "uplifting",
+      "melodic",
+      "poetic"
+    ]
+  },
+  {
+    "id": "pez-2010",
+    "album": "Pez",
+    "artist": "Pez",
+    "year": 2010,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Punk Rock", "Pop Punk"]
+    },
+    "descriptors": [
+      "melodic",
+      "energetic",
+      "male vocalist",
+      "optimistic",
+      "happy",
+      "uplifting",
+      "poetic"
+    ]
+  },
+  {
+    "id": "volviendo-a-las-cavernas",
+    "album": "Volviendo a las cavernas",
+    "artist": "Pez",
+    "year": 2011,
+    "genres": {
+      "primary": ["Heavy Psych"],
+      "secondary": ["Hard Rock", "Stoner Rock", "Progressive Rock", "Psychedelic Rock"]
+    },
+    "descriptors": [
+      "heavy",
+      "energetic",
+      "raw",
+      "male vocalist",
+      "progressive",
+      "philosophical",
+      "psychedelic"
+    ]
+  },
+  {
+    "id": "nueva-era-viejas-manas",
+    "album": "Nueva era, viejas mañas",
+    "artist": "Pez",
+    "year": 2013,
+    "genres": {
+      "primary": ["Heavy Psych"],
+      "secondary": ["Hard Rock", "Stoner Metal"]
+    },
+    "descriptors": [
+      "heavy",
+      "psychedelic",
+      "male vocalist",
+      "lo-fi",
+      "raw",
+      "angry",
+      "chaotic",
+      "dense"
+    ]
+  },
+  {
+    "id": "el-manto-electrico",
+    "album": "El manto eléctrico",
+    "artist": "Pez",
+    "year": 2014,
+    "genres": {
+      "primary": ["Psychedelic Rock"],
+      "secondary": ["Acid Rock", "Progressive Rock"]
+    },
+    "descriptors": [
+      "progressive",
+      "philosophical",
+      "psychedelic",
+      "male vocalist",
+      "surreal",
+      "poetic",
+      "cryptic"
+    ]
+  },
+  {
+    "id": "rock-nacional",
+    "album": "Rock nacional",
+    "artist": "Pez",
+    "year": 2016,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Latin Rock", "Jazz-Rock", "Psychedelic Rock"]
+    },
+    "descriptors": [
+      "melodic",
+      "male vocalist",
+      "psychedelic",
+      "uplifting",
+      "optimistic"
+    ]
+  },
+  {
+    "id": "pelea-al-horror",
+    "album": "Pelea al horror",
+    "artist": "Pez",
+    "year": 2017,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Heavy Psych", "Pop Punk"]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist",
+      "political",
+      "psychedelic",
+      "uplifting",
+      "melodic"
+    ]
+  },
+  {
+    "id": "ruido-3",
+    "album": "Ruido #3",
+    "artist": "Tía Newton",
+    "year": 1993,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "jardin-frenetico",
+    "album": "Jardín frenético",
+    "artist": "Árbol",
+    "year": 1996,
+    "genres": {
+      "primary": ["Rap Metal"],
+      "secondary": ["Grunge", "Nu Metal"]
+    },
+    "descriptors": ["heavy", "energetic"]
+  },
+  {
+    "id": "arbol",
+    "album": "Árbol",
+    "artist": "Árbol",
+    "year": 1999,
+    "genres": {
+      "primary": ["Rap Metal"],
+      "secondary": ["Latin Alternative", "Alternative Metal", "Nu Metal"]
+    },
+    "descriptors": ["energetic", "manic"]
+  },
+  {
+    "id": "chapusongs",
+    "album": "Chapusongs",
+    "artist": "Árbol",
+    "year": 2002,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Punk", "Nu Metal", "Ska Punk", "Power Pop"]
+    },
+    "descriptors": ["bittersweet", "sarcastic", "eclectic", "summer", "humorous", "optimistic", "playful", "quirky", "melodic", "passionate"]
+  },
+  {
+    "id": "guau",
+    "album": "Guau!",
+    "artist": "Árbol",
+    "year": 2004,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Alternative Rock", "Comedy Rock", "Pop Punk"]
+    },
+    "descriptors": ["eclectic", "humorous", "melodic", "sarcastic", "playful", "conscious", "rebellious", "quirky", "urban", "energetic", "rhythmic"]
+  },
+  {
+    "id": "hormigas",
+    "album": "Hormigas",
+    "artist": "Árbol",
+    "year": 2007,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Latin Alternative", "Pop Rock", "Hardcore Punk", "Pop Punk", "Comedy Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "no-me-etiquetes",
+    "album": "No me etiquetes",
+    "artist": "Árbol",
+    "year": 2009,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Alternative Rock", "Electropop", "Hardcore Punk"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hongo",
+    "album": "Hongo",
+    "artist": "Árbol",
+    "year": 2022,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Funk Rock", "Art Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ruta-del-sur",
+    "album": "Ruta del sur",
+    "artist": "Aonikenk",
+    "year": 2000,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "aonikenk-2001",
+    "album": "Aonikenk",
+    "artist": "Aonikenk",
+    "year": 2001,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-mi-argentina",
+    "album": "A mi Argentina",
+    "artist": "Aonikenk",
+    "year": 2005,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "desde-adentro",
+    "album": "Desde adentro",
+    "artist": "Aonikenk",
+    "year": 2011,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sentir-metalero",
+    "album": "Sentir metalero",
+    "artist": "Aonikenk",
+    "year": 2014,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "lanza-en-mano",
+    "album": "Lanza en mano",
+    "artist": "Aonikenk",
+    "year": 2019,
+    "genres": {
+      "primary": ["Speed Metal"],
+      "secondary": ["Heavy Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "17-caramelos",
+    "album": "17 caramelos",
+    "artist": "Martes Menta",
+    "year": 1992,
+    "genres": {
+      "primary": ["Alternative Dance"],
+      "secondary": ["Baggy", "Neo-Psychedelia", "Grebo", "Noise Pop"]
+    },
+    "descriptors": [
+      "psychedelic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "una-pila-de-vida",
+    "album": "Una pila de vida",
+    "artist": "Turf",
+    "year": 1997,
+    "genres": {
+      "primary": ["Britpop"],
+      "secondary": ["Alternative Rock", "Psychedelic Pop", "Neo-Psychedelia", "Power Pop"]
+    },
+    "descriptors": [
+      "anxious",
+      "playful",
+      "energetic",
+      "hedonism",
+      "quirky",
+      "psychedelic",
+      "uplifting",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "siempre-libre",
+    "album": "Siempre libre",
+    "artist": "Turf",
+    "year": 1999,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Neo-Psychedelia", "Baggy", "Baroque Pop", "Britpop"]
+    },
+    "descriptors": [
+      "triumphant",
+      "anthemic",
+      "warm",
+      "psychedelic",
+      "uplifting",
+      "melodic",
+      "drugs",
+      "lush",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "turfshow",
+    "album": "Turfshow",
+    "artist": "Turf",
+    "year": 2001,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Psychedelic Pop", "Beat"]
+    },
+    "descriptors": [
+      "uplifting",
+      "playful",
+      "quirky",
+      "happy",
+      "energetic",
+      "eclectic",
+      "humorous",
+      "male vocalist",
+      "hedonism",
+      "romantic",
+      "bittersweet",
+      "orchestral"
+    ]
+  },
+  {
+    "id": "para-mi-para-vos",
+    "album": "Para mí para vos",
+    "artist": "Turf",
+    "year": 2004,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Alternative Rock", "Heartland Rock", "Rock & Roll"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "odisea",
+    "album": "Odisea",
+    "artist": "Turf",
+    "year": 2017,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Synthpop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "renacimiento",
+    "album": "Renacimiento",
+    "artist": "Turf",
+    "year": 2023,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Synthpop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "polvo-de-estrellas",
+    "album": "Polvo de estrellas",
+    "artist": "Turf",
+    "year": 2025,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "dias-de-suerte",
+    "album": "Días de suerte",
+    "artist": "Valle de Muñecas",
+    "year": 2005,
+    "genres": {
+      "primary": ["Indie Rock"],
+      "secondary": ["Power Pop", "Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "folk",
+    "album": "Folk",
+    "artist": "Valle de Muñecas",
+    "year": 2007,
+    "genres": {
+      "primary": ["Folk Rock"],
+      "secondary": ["Indie Rock", "Acoustic Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-autopista-corre-del-oceano-hasta-el-amanecer",
+    "album": "La autopista corre del océano hasta el amanecer",
+    "artist": "Valle de Muñecas",
+    "year": 2011,
+    "genres": {
+      "primary": ["Power Pop"],
+      "secondary": ["Indie Rock"]
+    },
+    "descriptors": [
+      "melodic",
+      "bittersweet",
+      "male vocalist",
+      "energetic",
+      "passionate",
+      "love"
+    ]
+  },
+  {
+    "id": "el-final-de-las-primaveras",
+    "album": "El final de las primaveras",
+    "artist": "Valle de Muñecas",
+    "year": 2015,
+    "genres": {
+      "primary": ["Indie Rock"],
+      "secondary": ["Power Pop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "spinetta-y-los-socios-del-desierto",
+    "album": "Spinetta y los Socios del Desierto",
+    "artist": "Spinetta y los Socios del Desierto",
+    "year": 1997,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Art Rock", "Alternative Rock", "Blues Rock", "Funk Rock", "Jazz-Rock"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "passionate",
+      "rhythmic",
+      "poetic",
+      "progressive",
+      "conscious",
+      "introspective",
+      "spiritual",
+      "breakup",
+      "summer",
+      "love",
+      "eclectic",
+      "warm",
+      "mellow",
+      "political",
+      "philosophical",
+      "urban"
+    ]
+  },
+  {
+    "id": "los-ojos",
+    "album": "Los ojos",
+    "artist": "Spinetta y los Socios del Desierto",
+    "year": 1999,
+    "genres": {
+      "primary": ["Sophisti-Pop"],
+      "secondary": ["Art Rock", "Art Pop", "Jazz-Rock", "Electronic", "Singer-Songwriter"]
+    },
+    "descriptors": [
+      "introspective",
+      "mellow",
+      "longing",
+      "melancholic",
+      "lush",
+      "sentimental",
+      "warm",
+      "melodic",
+      "poetic",
+      "atmospheric",
+      "love",
+      "passionate",
+      "male vocalist",
+      "hypnotic",
+      "soft"
+    ]
+  },
+  {
+    "id": "alma-de-diamante",
+    "album": "Alma de diamante",
+    "artist": "Spinetta Jade",
+    "year": 1980,
+    "genres": {
+      "primary": ["Jazz-Rock"],
+      "secondary": ["Jazz Fusion", "Progressive Rock"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "poetic",
+      "mellow",
+      "progressive",
+      "soothing",
+      "philosophical",
+      "complex",
+      "technical",
+      "passionate",
+      "cryptic",
+      "lush",
+      "spiritual",
+      "conscious",
+      "melancholic",
+      "nature",
+      "smooth",
+      "bright",
+      "nocturnal"
+    ]
+  },
+  {
+    "id": "los-ninos-que-escriben-en-el-cielo",
+    "album": "Los niños que escriben en el cielo",
+    "artist": "Spinetta Jade",
+    "year": 1981,
+    "genres": {
+      "primary": ["Jazz-Rock"],
+      "secondary": ["Jazz Fusion", "Progressive Pop", "Progressive Rock"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "poetic",
+      "sensual",
+      "technical",
+      "lush",
+      "bright",
+      "soft",
+      "energetic",
+      "smooth",
+      "spiritual",
+      "eclectic"
+    ]
+  },
+  {
+    "id": "bajo-belgrano",
+    "album": "Bajo Belgrano",
+    "artist": "Spinetta Jade",
+    "year": 1983,
+    "genres": {
+      "primary": ["Jazz-Rock"],
+      "secondary": ["Progressive Pop", "Sophisti-Pop", "Jazz Fusion", "Pop Rock"]
+    },
+    "descriptors": [
+      "melodic",
+      "male vocalist",
+      "poetic",
+      "urban",
+      "mellow",
+      "conscious",
+      "soothing",
+      "progressive",
+      "lush",
+      "bright",
+      "smooth",
+      "love"
+    ]
+  },
+  {
+    "id": "madre-en-anos-luz",
+    "album": "Madre en años luz",
+    "artist": "Spinetta Jade",
+    "year": 1984,
+    "genres": {
+      "primary": ["Synthpop"],
+      "secondary": ["New Wave", "Art Pop", "Sophisti-Pop", "Progressive Pop"]
+    },
+    "descriptors": [
+      "poetic",
+      "surreal",
+      "male vocalist",
+      "atmospheric",
+      "futuristic",
+      "romantic",
+      "bittersweet",
+      "ominous",
+      "love",
+      "cryptic",
+      "passionate",
+      "eclectic",
+      "lush",
+      "rhythmic",
+      "psychedelic",
+      "melodic",
+      "progressive",
+      "quirky",
+      "urban",
+      "twinkling",
+      "nocturnal",
+      "space"
+    ]
+  },
+  {
+    "id": "zas",
+    "album": "ZAS",
+    "artist": "ZAS",
+    "year": 1982,
+    "genres": {
+      "primary": ["New Wave"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "huevos",
+    "album": "Huevos",
+    "artist": "Miguel Mateos ZAS",
+    "year": 1983,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["New Wave"]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "tengo-que-parar",
+    "album": "Tengo que parar",
+    "artist": "Miguel Mateos ZAS",
+    "year": 1984,
+    "genres": {
+      "primary": ["New Wave"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": [
+      "playful",
+      "energetic",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "solos-en-america",
+    "album": "Solos en América",
+    "artist": "Miguel Mateos ZAS",
+    "year": 1986,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["New Wave"]
+    },
+    "descriptors": [
+      "mellow",
+      "love",
+      "atmospheric",
+      "bittersweet",
+      "lush",
+      "male vocalist",
+      "conscious"
+    ]
+  },
+  {
+    "id": "atado-a-un-sentimiento",
+    "album": "Atado a un sentimiento",
+    "artist": "Miguel Mateos ZAS",
+    "year": 1987,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["New Wave", "AOR", "Synthpop", "Post-Punk"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-maquina-de-hacer-pajaros",
+    "album": "La Máquina de Hacer Pájaros",
+    "artist": "La Máquina de Hacer Pájaros",
+    "year": 1976,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Jazz-Rock", "Symphonic Prog", "Progressive Folk", "Psychedelic Rock", "Jazz Fusion"]
+    },
+    "descriptors": [
+      "technical",
+      "complex",
+      "progressive",
+      "male vocalist",
+      "energetic",
+      "playful",
+      "warm",
+      "psychedelic",
+      "melodic",
+      "satirical",
+      "melancholic",
+      "lush",
+      "quirky",
+      "existential",
+      "bittersweet",
+      "passionate",
+      "hazy",
+      "poetic"
+    ]
+  },
+  {
+    "id": "peliculas",
+    "album": "Películas",
+    "artist": "La Máquina de Hacer Pájaros",
+    "year": 1977,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Jazz-Rock", "Symphonic Prog", "Jazz Fusion"]
+    },
+    "descriptors": [
+      "urban",
+      "male vocalist",
+      "complex",
+      "progressive",
+      "melodic",
+      "uncommon time signatures",
+      "technical",
+      "poetic",
+      "existential",
+      "alienation",
+      "lush",
+      "political",
+      "passionate",
+      "conscious",
+      "melancholic",
+      "quirky",
+      "atmospheric",
+      "film",
+      "satirical",
+      "longing",
+      "warm",
+      "escapism",
+      "mental health",
+      "compassionate",
+      "energetic",
+      "serious"
+    ]
+  },
+  {
+    "id": "la-torre",
+    "album": "La Torre",
+    "artist": "La Torre",
+    "year": 1982,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Pop Rock", "Heavy Metal"]
+    },
+    "descriptors": [
+      "female vocalist",
+      "energetic"
+    ]
+  },
+  {
+    "id": "viaje-a-la-libertad",
+    "album": "Viaje a la libertad",
+    "artist": "La Torre",
+    "year": 1983,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Glam Rock", "Blues Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "solo-quiero-rock-and-roll",
+    "album": "Sólo quiero rock & roll",
+    "artist": "La Torre",
+    "year": 1984,
+    "genres": {
+      "primary": ["AOR"],
+      "secondary": ["Hard Rock", "Heavy Metal", "Blues Rock"]
+    },
+    "descriptors": [
+      "female vocalist",
+      "energetic"
+    ]
+  },
+  {
+    "id": "presas-de-caza",
+    "album": "Presas de caza",
+    "artist": "La Torre",
+    "year": 1986,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["AOR", "Glam Metal", "Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "movimiento",
+    "album": "Movimiento",
+    "artist": "La Torre",
+    "year": 1988,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Glam Metal", "AOR", "Pop Rock", "Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
     "id": "sol-lucet-omnibus",
     "album": "Sol lucet omnibus",
     "artist": "Massacre",
