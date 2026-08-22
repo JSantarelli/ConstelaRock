@@ -2321,6 +2321,422 @@
       "spiritual"
     ]
   },
+{
+  "id": "los-rancheros",
+  "album": "Los Rancheros",
+  "artist": "Los Rancheros",
+  "year": 1991,
+  "genres": {
+    "primary": ["Blues Rock"],
+    "secondary": ["Roots Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "tierra-bendita",
+  "album": "Tierra bendita",
+  "artist": "Los Rancheros",
+  "year": 1993,
+  "genres": {
+    "primary": ["Blues Rock"],
+    "secondary": ["Roots Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "ni-por-todo-el-oro-del-mundo",
+  "album": "Ni por todo el oro del mundo",
+  "artist": "Los Rancheros",
+  "year": 1994,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "supernova",
+  "album": "Supernova",
+  "artist": "Los Rancheros",
+  "year": 1995,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "angeles-tatuados",
+  "album": "Ángeles tatuados",
+  "artist": "Los Rancheros",
+  "year": 1997,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "adios",
+  "album": "Adiós...",
+  "artist": "Los Rancheros",
+  "year": 1999,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "cancion-sin-tiempo",
+  "album": "Canción sin tiempo",
+  "artist": "Los Rancheros",
+  "year": 2007,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "estimulante",
+  "album": "Estimulante",
+  "artist": "Los Rancheros",
+  "year": 2010,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "tras-tus-pasos",
+  "album": "Tras tus pasos",
+  "artist": "Los Rancheros",
+  "year": 2013,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "canciones-escondidas-ii",
+  "album": "Canciones Escondidas II",
+  "artist": "Los Rancheros",
+  "year": 2022,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "rock-sudaka",
+  "album": "Rock Sudaka",
+  "artist": "Los Gardelitos",
+  "year": 1996,
+  "genres": {
+    "primary": ["Rock & Roll"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "gardeliando",
+  "album": "Gardeliando",
+  "artist": "Los Gardelitos",
+  "year": 1998,
+  "genres": {
+    "primary": ["Indie Rock"],
+    "secondary": ["Roots Rock", "Blues Rock", "Jangle Pop", "Rock & Roll", "Surf Rock", "Post-Punk"]
+  },
+  "descriptors": [
+    "melodic",
+    "bittersweet",
+    "poetic",
+    "melancholic",
+    "urban",
+    "playful",
+    "conscious",
+    "rhythmic",
+    "raw",
+    "rebellious",
+    "uplifting",
+    "poverty",
+    "male vocalist",
+    "nocturnal",
+    "longing",
+    "passionate"
+  ]
+},
+{
+  "id": "fiesta-sudaka-parte-1",
+  "album": "Fiesta sudaka Parte 1",
+  "artist": "Los Gardelitos",
+  "year": 1999,
+  "genres": {
+    "primary": ["Roots Rock"],
+    "secondary": ["Rock & Roll", "Blues Rock", "Surf Rock"]
+  },
+  "descriptors": [
+    "warm",
+    "sarcastic",
+    "poetic",
+    "drugs",
+    "male vocalist",
+    "alcohol",
+    "vulgar",
+    "repetitive",
+    "nocturnal",
+    "urban",
+    "playful",
+    "sentimental",
+    "energetic",
+    "lo-fi",
+    "hedonism",
+    "raw",
+    "rebellious"
+  ]
+},
+{
+  "id": "en-tierra-de-suenos-parte-2",
+  "album": "En tierra de sueños Parte 2",
+  "artist": "Los Gardelitos",
+  "year": 2004,
+  "genres": {
+    "primary": ["Rock & Roll"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "oxigeno",
+  "album": "Oxígeno",
+  "artist": "Los Gardelitos",
+  "year": 2008,
+  "genres": {
+    "primary": ["Hard Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "ciudad-oculta",
+  "album": "Ciudad Oculta",
+  "artist": "Los Gardelitos",
+  "year": 2014,
+  "genres": {
+    "primary": ["Hard Rock"],
+    "secondary": ["Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "enanitos-verdes",
+  "album": "Enanitos Verdes",
+  "artist": "Enanitos Verdes",
+  "year": 1984,
+  "genres": {
+    "primary": ["New Wave"],
+    "secondary": ["Pop Rock", "Power Pop"]
+  },
+  "descriptors": [
+    "mellow",
+    "nocturnal",
+    "melancholic",
+    "love",
+    "male vocalist"
+  ]
+},
+{
+  "id": "contra-reloj",
+  "album": "Contra reloj",
+  "artist": "Enanitos Verdes",
+  "year": 1986,
+  "genres": {
+    "primary": ["New Wave"],
+    "secondary": ["Pop Rock", "Big Music"]
+  },
+  "descriptors": [
+    "playful",
+    "breakup",
+    "melodic",
+    "bittersweet",
+    "male vocalist",
+    "rhythmic"
+  ]
+},
+{
+  "id": "habitaciones-extranas",
+  "album": "Habitaciones extrañas",
+  "artist": "Enanitos Verdes",
+  "year": 1987,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": ["New Wave", "Power Pop"]
+  },
+  "descriptors": [
+    "playful",
+    "melodic",
+    "male vocalist"
+  ]
+},
+{
+  "id": "carrousel",
+  "album": "Carrousel",
+  "artist": "Enanitos Verdes",
+  "year": 1988,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "habia-una-vez",
+  "album": "Había una vez",
+  "artist": "Enanitos Verdes",
+  "year": 1989,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "igual-que-ayer",
+  "album": "Igual que ayer",
+  "artist": "Enanitos Verdes",
+  "year": 1992,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": ["Alternative Rock", "Power Pop"]
+  },
+  "descriptors": [
+    "melancholic",
+    "love",
+    "male vocalist"
+  ]
+},
+{
+  "id": "big-bang",
+  "album": "Big Bang",
+  "artist": "Enanitos Verdes",
+  "year": 1994,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": ["Alternative Rock", "Power Pop", "Hard Rock"]
+  },
+  "descriptors": [
+    "heavy",
+    "longing",
+    "acoustic",
+    "aggressive",
+    "energetic",
+    "sad",
+    "noisy",
+    "melodic",
+    "bittersweet",
+    "male vocalist",
+    "soft"
+  ]
+},
+{
+  "id": "guerra-gaucha",
+  "album": "Guerra gaucha",
+  "artist": "Enanitos Verdes",
+  "year": 1996,
+  "genres": {
+    "primary": ["Latin Alternative"],
+    "secondary": ["Latin Rock", "Alternative Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "planetario",
+  "album": "Planetario",
+  "artist": "Enanitos Verdes",
+  "year": 1997,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "nectar",
+  "album": "Néctar",
+  "artist": "Enanitos Verdes",
+  "year": 1999,
+  "genres": {
+    "primary": ["Latin Rock"],
+    "secondary": ["Soft Rock", "Pop Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "amores-lejanos",
+  "album": "Amores lejanos",
+  "artist": "Enanitos Verdes",
+  "year": 2002,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": ["Latin Rock", "Alternative Rock", "AOR"]
+  },
+  "descriptors": [
+    "introspective",
+    "conscious",
+    "sad",
+    "rhythmic",
+    "love",
+    "male vocalist"
+  ]
+},
+{
+  "id": "pescado-original",
+  "album": "Pescado original",
+  "artist": "Enanitos Verdes",
+  "year": 2006,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "ineditos-ev",
+  "album": "Inéditos EV",
+  "artist": "Enanitos Verdes",
+  "year": 2009,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "tic-tac",
+  "album": "Tic tac",
+  "artist": "Enanitos Verdes",
+  "year": 2012,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "ev",
+  "album": "EV+",
+  "artist": "Enanitos Verdes",
+  "year": 2026,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
   {
     "id": "ruedas-de-metal",
     "album": "Ruedas de metal",
@@ -3906,6 +4322,354 @@
     "descriptors": ["nocturnal", "cryptic", "urban", "rhythmic", "atmospheric", "mysterious", "futuristic", "mechanical", "cold", "minimalistic", "poetic", "male vocalist", "dark", "apathetic", "deadpan", "existential", "love", "romantic", "melodic", "anxious", "sensual", "quirky"]
   },
   {
+    "id": "extrano-lugar",
+    "album": "Extraño lugar",
+    "artist": "Estelares",
+    "year": 1996,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Latin Alternative", "Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "amantes-suicidas",
+    "album": "Amantes suicidas",
+    "artist": "Estelares",
+    "year": 1998,
+    "genres": {
+      "primary": ["Power Pop"],
+      "secondary": ["Latin Alternative", "Pop Rock", "Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ardimos",
+    "album": "Ardimos",
+    "artist": "Estelares",
+    "year": 2003,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Indie Rock", "Power Pop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sistema-nervioso-central",
+    "album": "Sistema nervioso central",
+    "artist": "Estelares",
+    "year": 2006,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Power Pop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "una-temporada-en-el-amor",
+    "album": "Una temporada en el amor",
+    "artist": "Estelares",
+    "year": 2009,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Power Pop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-costado-izquierdo",
+    "album": "El costado izquierdo",
+    "artist": "Estelares",
+    "year": 2012,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "las-antenas",
+    "album": "Las antenas",
+    "artist": "Estelares",
+    "year": 2016,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Power Pop"]
+    },
+    "descriptors": [
+      "mellow",
+      "melodic",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "las-lunas",
+    "album": "Las lunas",
+    "artist": "Estelares",
+    "year": 2019,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "sentimental",
+      "male vocalist",
+      "melodic"
+    ]
+  },
+  {
+    "id": "un-mar-de-soles-rojos",
+    "album": "Un mar de soles rojos",
+    "artist": "Estelares",
+    "year": 2022,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-lobos",
+    "album": "Los lobos",
+    "artist": "Estelares",
+    "year": 2025,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "peligrosos-gorriones",
+    "album": "Peligrosos Gorriones",
+    "artist": "Peligrosos Gorriones",
+    "year": 1993,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Neo-Psychedelia", "Post-Hardcore"]
+    },
+    "descriptors": [
+      "surreal",
+      "abstract",
+      "playful",
+      "energetic",
+      "rhythmic",
+      "raw",
+      "psychedelic",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "fuga",
+    "album": "Fuga",
+    "artist": "Peligrosos Gorriones",
+    "year": 1995,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Indie Rock", "Art Punk", "Post-Punk"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "cryptic",
+      "playful",
+      "energetic",
+      "quirky",
+      "rhythmic",
+      "rebellious",
+      "melodic",
+      "poetic",
+      "bittersweet",
+      "passionate",
+      "eclectic"
+    ]
+  },
+  {
+    "id": "antiflash",
+    "album": "Antiflash",
+    "artist": "Peligrosos Gorriones",
+    "year": 1997,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "microbio",
+    "album": "Microbio",
+    "artist": "Peligrosos Gorriones",
+    "year": 2016,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "pappos-blues",
+    "album": "Pappo's Blues",
+    "artist": "Pappo's Blues",
+    "year": 1971,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Acid Rock", "Heavy Psych"]
+    },
+    "descriptors": [
+      "psychedelic",
+      "heavy",
+      "raw",
+      "male vocalist",
+      "melodic",
+      "rhythmic",
+      "passionate"
+    ]
+  },
+  {
+    "id": "pappos-blues-2",
+    "album": "Pappo's Blues 2",
+    "artist": "Pappo's Blues",
+    "year": 1972,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Acid Rock"]
+    },
+    "descriptors": [
+      "energetic",
+      "raw",
+      "male vocalist",
+      "heavy",
+      "rhythmic",
+      "psychedelic",
+      "lo-fi",
+      "dense",
+      "passionate",
+      "urban"
+    ]
+  },
+  {
+    "id": "vol-3",
+    "album": "Vol. 3",
+    "artist": "Pappo's Blues",
+    "year": 1972,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Heavy Psych", "Heavy Metal"]
+    },
+    "descriptors": [
+      "heavy",
+      "energetic",
+      "urban",
+      "male vocalist",
+      "rebellious",
+      "psychedelic",
+      "passionate",
+      "raw",
+      "rhythmic",
+      "sarcastic"
+    ]
+  },
+  {
+    "id": "volumen-4",
+    "album": "Volúmen 4",
+    "artist": "Pappo's Blues",
+    "year": 1973,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Heavy Psych"]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "triangulo",
+    "album": "Triángulo",
+    "artist": "Pappo's Blues",
+    "year": 1974,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Occult Rock",
+        "Heavy Psych",
+        "Acid Rock",
+        "Progressive Rock",
+        "Jam Band"
+      ]
+    },
+    "descriptors": [
+      "raw",
+      "heavy",
+      "improvisation",
+      "psychedelic",
+      "space"
+    ]
+  },
+  {
+    "id": "volumen-vi",
+    "album": "Volumen VI",
+    "artist": "Pappo's Blues",
+    "year": 1975,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": [
+        "Acid Rock",
+        "Blues Rock",
+        "Psychedelic Rock",
+        "Occult Rock",
+        "Heavy Psych"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "raw",
+      "male vocalist",
+      "energetic"
+    ]
+  },
+  {
+    "id": "volumen-7",
+    "album": "Volumen 7",
+    "artist": "Pappo's Blues",
+    "year": 1978,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Heavy Psych"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "caso-cerrado-volumen-8",
+    "album": "Caso cerrado: Volumen 8",
+    "artist": "Pappo's Blues",
+    "year": 1995,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Acoustic Rock", "Boogie Rock"]
+    },
+    "descriptors": [
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-auto-rojo",
+    "album": "El auto rojo",
+    "artist": "Pappo's Blues",
+    "year": 1999,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Heavy Metal"]
+    },
+    "descriptors": []
+  },
+  {
     "id": "los-tipitos",
     "album": "Los Tipitos",
     "artist": "Los Tipitos",
@@ -5370,8 +6134,8 @@
   },
   {
     "id": "los-natas-solodolor",
-    "album": "Los Natas / Solodolor",
-    "artist": "Los Natas / Solodolor",
+    "album": "Solodolor",
+    "artist": "Los Natas",
     "year": 2010,
     "genres": {
       "primary": ["Stoner Rock"],
@@ -6118,7 +6882,106 @@
     ]
   },
   {
-    "id": "friccion-consumacion-o-consumo-1986",
+    "id": "don-cornelio-y-la-zona-don-cornelio-y-la-zona",
+    "album": "Don Cornelio y La Zona",
+    "artist": "Don Cornelio y La Zona",
+    "year": 1987,
+    "genres": {
+      "primary": ["Post-Punk", "New Wave"],
+      "secondary": ["Gothic Rock", "Big Music", "Neo-Psychedelia", "Jangle Pop"]
+    },
+    "descriptors": ["passionate", "poetic", "anxious", "dark", "male vocalist", "energetic", "melancholic", "melodic", "bittersweet", "eclectic", "macabre", "introspective", "lonely", "sexual", "alienation", "disturbing", "sombre", "surreal", "abstract", "urban", "sentimental", "death"]
+  },
+  {
+    "id": "don-cornelio-y-la-zona-patria-o-muerte",
+    "album": "Patria o muerte",
+    "artist": "Don Cornelio y La Zona",
+    "year": 1988,
+    "genres": {
+      "primary": ["Post-Punk", "Alternative Rock"],
+      "secondary": ["Art Punk", "Punk Blues"]
+    },
+    "descriptors": ["male vocalist", "urban", "nocturnal", "poetic", "dark", "heavy", "rhythmic", "raw", "drugs", "eclectic", "energetic", "cryptic", "existential", "anxious"]
+  },
+  {
+    "id": "los-visitantes-salud-universal",
+    "album": "Salud Universal",
+    "artist": "Los Visitantes",
+    "year": 1993,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Latin Rock", "Art Rock", "Jangle Pop", "Post-Punk"]
+    },
+    "descriptors": ["male vocalist", "raw", "nocturnal", "dark", "sexual", "sarcastic", "poetic", "passionate", "eclectic", "existential", "dissonant"]
+  },
+  {
+    "id": "los-visitantes-espiritango",
+    "album": "Espiritango",
+    "artist": "Los Visitantes",
+    "year": 1994,
+    "genres": {
+      "primary": ["Alternative Rock", "Art Rock", "Post-Punk", "Latin Alternative"],
+      "secondary": ["Latin Alternative", "Neo-Psychedelia", "Art Rock", "Noise Rock", "Art Punk", "Post-Punk"]
+    },
+    "descriptors": ["raw", "sexual", "sarcastic", "poetic", "male vocalist"]
+  },
+  {
+    "id": "los-visitantes-maderita",
+    "album": "Maderita",
+    "artist": "Los Visitantes",
+    "year": 1996,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-visitantes-desequilibrio",
+    "album": "Desequilibrio",
+    "artist": "Los Visitantes",
+    "year": 1998,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "invisible-invisible",
+    "album": "Invisible",
+    "artist": "Invisible",
+    "year": 1974,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Hard Rock", "Jazz-Rock", "Psychedelic Rock", "Heavy Psych"]
+    },
+    "descriptors": ["poetic", "male vocalist", "progressive", "complex", "uncommon time signatures", "cryptic", "melodic", "eclectic", "abstract", "rhythmic", "sparse", "atmospheric", "passionate", "lush", "winter", "longing", "bittersweet"]
+  },
+  {
+    "id": "invisible-durazno-sangrando",
+    "album": "Durazno sangrando",
+    "artist": "Invisible",
+    "year": 1975,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Jazz-Rock", "Psychedelic Rock", "Art Rock", "Folk Rock", "Heavy Psych"]
+    },
+    "descriptors": ["poetic", "male vocalist", "melodic", "complex", "passionate", "psychedelic", "philosophical", "abstract", "progressive", "existential", "autumn", "concept album", "surreal", "spiritual", "fantasy", "mysterious", "technical", "cryptic", "nature", "melancholic", "aquatic", "sombre"]
+  },
+  {
+    "id": "invisible-el-jardin-de-los-presentes",
+    "album": "El jardín de los presentes",
+    "artist": "Invisible",
+    "year": 1976,
+    "genres": {
+      "primary": ["Progressive Rock", "Art Rock", "Space Rock"],
+      "secondary": ["Jazz-Rock", "Psychedelic Rock"]
+    },
+    "descriptors": ["poetic", "melancholic", "progressive", "mellow", "complex", "existential", "male vocalist", "passionate", "melodic", "technical", "psychedelic", "ethereal", "surreal", "autumn", "abstract", "eclectic", "urban", "lonely", "longing", "atmospheric", "bittersweet", "lush", "soothing", "space", "uncommon time signatures", "twinkling", "soft", "bright", "calm"]
+  },
+  {
+    "id": "friccion-consumacion-o-consumo",
     "album": "Consumación o consumo",
     "artist": "Fricción",
     "year": 1986,
@@ -6142,7 +7005,7 @@
     ]
   },
   {
-    "id": "friccion-para-terminar-1988",
+    "id": "friccion-para-terminar",
     "album": "Para terminar",
     "artist": "Fricción",
     "year": 1988,
@@ -6162,7 +7025,7 @@
     ]
   },
   {
-    "id": "billy-bond-y-la-pesada-del-rock-and-roll-1971",
+    "id": "billy-bond-y-la-pesada-del-rock-and-roll",
     "album": "Billy Bond y La Pesada del Rock and Roll",
     "artist": "Billy Bond y La Pesada del Rock and Roll",
     "year": 1971,
@@ -6185,7 +7048,7 @@
     ]
   },
   {
-    "id": "billy-bond-y-la-pesada-vol-2-1972",
+    "id": "billy-bond-y-la-pesada-vol-2",
     "album": "Vol. 2",
     "artist": "Billy Bond y La Pesada del Rock and Roll",
     "year": 1972,
@@ -6196,7 +7059,7 @@
     "descriptors": []
   },
   {
-    "id": "billy-bond-y-la-pesada-tontos-operita-1972",
+    "id": "billy-bond-y-la-pesada-tontos-operita",
     "album": "Tontos (Operita)",
     "artist": "Billy Bond y La Pesada del Rock",
     "year": 1972,
@@ -6219,7 +7082,7 @@
     ]
   },
   {
-    "id": "billy-bond-y-la-pesada-vol-4-1973",
+    "id": "billy-bond-y-la-pesada-vol-4",
     "album": "Vol. 4",
     "artist": "Billy Bond y La Pesada del Rock and Roll",
     "year": 1973,
@@ -6241,7 +7104,7 @@
     ]
   },
   {
-    "id": "dios-los-cria-1996",
+    "id": "dios-los-cria",
     "album": "Dios los Cría",
     "artist": "Dios Los Cría",
     "year": 1996,
@@ -6255,7 +7118,7 @@
     ]
   },
   {
-    "id": "dios-los-cria-dios-com-2000",
+    "id": "dios-los-cria-dios-com",
     "album": "Dios.com",
     "artist": "Dios Los Cría",
     "year": 2000,
@@ -6266,7 +7129,7 @@
     "descriptors": []
   },
   {
-    "id": "dios-los-cria-2003",
+    "id": "dios-los-cria",
     "album": "Dios los Cría",
     "artist": "Dios Los Cría",
     "year": 2003,
@@ -6288,7 +7151,7 @@
     "descriptors": []
   },
   {
-    "id": "oconnor-hay-un-lugar-1999",
+    "id": "oconnor-hay-un-lugar",
     "album": "Hay un lugar",
     "artist": "O'Connor",
     "year": 1999,
@@ -6299,7 +7162,7 @@
     "descriptors": ["heavy", "male vocalist", "conscious"]
   },
   {
-    "id": "oconnor-yerba-mala-nunca-muere-2000",
+    "id": "oconnor-yerba-mala-nunca-muere",
     "album": "Yerba mala nunca muere",
     "artist": "O'Connor",
     "year": 2000,
@@ -6310,7 +7173,7 @@
     "descriptors": ["heavy", "male vocalist"]
   },
   {
-    "id": "oconnor-dolorizacion-2002",
+    "id": "oconnor-dolorizacion",
     "album": "Dolorización",
     "artist": "O'Connor",
     "year": 2002,
@@ -6321,7 +7184,7 @@
     "descriptors": ["heavy", "political", "conscious", "male vocalist"]
   },
   {
-    "id": "oconnor-el-tiempo-es-tan-pequeno-2004",
+    "id": "oconnor-el-tiempo-es-tan-pequeno",
     "album": "El tiempo es tan pequeño",
     "artist": "O'Connor",
     "year": 2004,
@@ -6332,7 +7195,7 @@
     "descriptors": ["heavy", "male vocalist"]
   },
   {
-    "id": "oconnor-estamos-pariendo-2006",
+    "id": "oconnor-estamos-pariendo",
     "album": "Estamos pariendo",
     "artist": "O'Connor",
     "year": 2006,
@@ -6343,7 +7206,7 @@
     "descriptors": ["male vocalist"]
   },
   {
-    "id": "oconnor-naturaleza-muerta-2008",
+    "id": "oconnor-naturaleza-muerta",
     "album": "Naturaleza muerta",
     "artist": "O'Connor",
     "year": 2008,
@@ -6354,7 +7217,7 @@
     "descriptors": []
   },
   {
-    "id": "oconnor-rio-extrano-2010",
+    "id": "oconnor-rio-extrano",
     "album": "Río extraño",
     "artist": "O'Connor",
     "year": 2010,
@@ -6365,7 +7228,7 @@
     "descriptors": []
   },
   {
-    "id": "oconnor-un-poco-de-respeto-2012",
+    "id": "oconnor-un-poco-de-respeto",
     "album": "Un poco de respeto",
     "artist": "O'Connor",
     "year": 2012,
@@ -6376,7 +7239,7 @@
     "descriptors": []
   },
   {
-    "id": "oconnor-la-grieta-2016",
+    "id": "oconnor-la-grieta",
     "album": "La grieta",
     "artist": "O'Connor",
     "year": 2016,
@@ -6387,7 +7250,127 @@
     "descriptors": []
   },
   {
-    "id": "los-7-delfines-l7d-1992",
+    "id": "d-mente",
+    "album": "D-Mente",
+    "artist": "D-Mente",
+    "year": 2006,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Alternative Rock",
+        "Latin Rock",
+        "Alternative Metal"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "valiente-eternidad",
+    "album": "Valiente eternidad",
+    "artist": "D-Mente",
+    "year": 2008,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": [
+        "Hard Rock",
+        "Alternative Rock",
+        "Latin Rock",
+        "Alternative Metal"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "no-es-el-premio-ganar-sin-saber-lo-que-fue-perder",
+    "album": "No es el premio ganar sin saber lo que fue perder",
+    "artist": "D-Mente",
+    "year": 2011,
+    "genres": {
+      "primary": ["Groove Metal"],
+      "secondary": ["Melodic Metalcore"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "todos-tus-muertos",
+    "album": "Todos Tus Muertos",
+    "artist": "Todos Tus Muertos",
+    "year": 1988,
+    "genres": {
+      "primary": ["Hardcore Punk", "Post-Punk"],
+      "secondary": ["Reggae", "Deathrock", "Dub", "Noise Rock"]
+    },
+    "descriptors": ["political", "dark", "male vocalist", "anxious", "rebellious", "scary", "chaotic", "ominous", "noisy", "raw", "manic", "hateful", "urban", "death", "aggressive", "dissonant", "violence", "pessimistic", "eclectic", "conscious", "harsh vocals", "anticolonialism", "psychedelic", "anti-authoritarian"]
+  },
+  {
+    "id": "nena-de-hiroshima",
+    "album": "Nena de Hiroshima",
+    "artist": "Todos Tus Muertos",
+    "year": 1991,
+    "genres": {
+      "primary": ["Post-Hardcore", "Post-Punk", "Hardcore Punk"],
+      "secondary": ["Deathrock"]
+    },
+    "descriptors": ["male vocalist", "misanthropic", "political", "anxious", "dark", "urban", "death", "aggressive", "conscious", "apathetic", "raw", "rebellious", "violence", "pessimistic", "alienation", "sombre", "angry", "heavy", "manic"]
+  },
+  {
+    "id": "dale-aborigen",
+    "album": "Dale aborigen",
+    "artist": "Todos Tus Muertos",
+    "year": 1994,
+    "genres": {
+      "primary": ["Latin Alternative", "Hardcore Punk", "Reggae"],
+      "secondary": ["Rap Rock", "Dub", "Post-Hardcore", "Ska"]
+    },
+    "descriptors": ["eclectic", "political", "male vocalist", "conscious", "protest", "chaotic", "quirky", "energetic", "manic", "urban", "playful", "raw", "rebellious", "warm", "sarcastic", "war", "passionate", "spiritual", "vulgar"]
+  },
+  {
+    "id": "subversiones",
+    "album": "Subversiones",
+    "artist": "Todos Tus Muertos",
+    "year": 1997,
+    "genres": {
+      "primary": ["Latin Alternative", "Reggae"],
+      "secondary": ["Cumbia sonidera", "Guajira", "Hardcore Punk", "Dub"]
+    },
+    "descriptors": ["rhythmic", "tropical", "sampling", "urban", "playful", "passionate", "eclectic", "male vocalist"]
+  },
+  {
+    "id": "el-camino-real",
+    "album": "El camino real",
+    "artist": "Todos Tus Muertos",
+    "year": 1998,
+    "genres": {
+      "primary": ["Latin Alternative", "Reggae", "Alternative Rock"],
+      "secondary": ["Rap Rock", "Hardcore Punk", "Dub", "Post-Punk"]
+    },
+    "descriptors": ["male vocalist", "urban", "playful", "energetic", "conscious", "protest", "quirky", "rhythmic", "raw", "rebellious", "warm", "violence", "spiritual", "eclectic", "political", "bittersweet", "pessimistic", "sarcastic"]
+  },
+  {
+    "id": "crisis-mundial",
+    "album": "Crisis mundial",
+    "artist": "Todos Tus Muertos",
+    "year": 2010,
+    "genres": {
+      "primary": ["Latin Alternative", "Reggae"],
+      "secondary": ["Punk Rock", "Ska Punk", "Cumbia"]
+    },
+    "descriptors": ["rhythmic", "political", "rebellious", "longing", "urban", "party", "playful", "passionate", "eclectic", "male vocalist"]
+  },
+  {
+    "id": "demos-1985-1989",
+    "album": "Demos 1985-1989",
+    "artist": "Todos Tus Muertos",
+    "year": 2021,
+    "genres": {
+      "primary": ["Post-Punk", "Noise Rock"],
+      "secondary": ["Deathrock", "Reggae Rock", "Hardcore Punk", "Dub"]
+    },
+    "descriptors": ["noisy", "dark", "death", "energetic", "conscious", "dissonant", "lo-fi", "raw", "rebellious", "political", "male vocalist"]
+  },
+  {
+    "id": "l7d",
     "album": "L7D",
     "artist": "Los 7 Delfines",
     "year": 1992,
@@ -6398,7 +7381,7 @@
     "descriptors": ["male vocalist", "noisy"]
   },
   {
-    "id": "los-7-delfines-nada-memorable-1993",
+    "id": "nada-memorable",
     "album": "Nada memorable",
     "artist": "Los 7 Delfines",
     "year": 1993,
@@ -6409,7 +7392,7 @@
     "descriptors": []
   },
   {
-    "id": "los-7-delfines-desierto-1995",
+    "id": "desierto",
     "album": "Desierto",
     "artist": "Los 7 Delfines",
     "year": 1995,
@@ -6420,7 +7403,7 @@
     "descriptors": []
   },
   {
-    "id": "los-7-delfines-dark-1997",
+    "id": "dark",
     "album": "Dark",
     "artist": "Los 7 Delfines",
     "year": 1997,
@@ -6431,7 +7414,7 @@
     "descriptors": ["Dark", "Atmospheric", "Underground"]
   },
   {
-    "id": "los-7-delfines-dudosa-estrella-1999",
+    "id": "dudosa-estrella",
     "album": "Dudosa estrella",
     "artist": "Los 7 Delfines",
     "year": 1999,
@@ -6442,7 +7425,7 @@
     "descriptors": []
   },
   {
-    "id": "los-7-delfines-aventura-2001",
+    "id": "aventura",
     "album": "Aventura",
     "artist": "Los 7 Delfines",
     "year": 2001,
@@ -6453,7 +7436,7 @@
     "descriptors": []
   },
   {
-    "id": "los-7-delfines-carnaval-de-fantasmas-2008",
+    "id": "carnaval-de-fantasmas",
     "album": "Carnaval de fantasmas",
     "artist": "Los 7 Delfines",
     "year": 2008,
@@ -6464,7 +7447,7 @@
     "descriptors": []
   },
   {
-    "id": "richard-coleman-2011",
+    "id": "richard-coleman",
     "album": "Richard Coleman",
     "artist": "Richard Coleman",
     "year": 2011,
@@ -6475,7 +7458,7 @@
     "descriptors": []
   },
   {
-    "id": "richard-coleman-incandescente-2013",
+    "id": "incandescente",
     "album": "Incandescente",
     "artist": "Richard Coleman",
     "year": 2013,
@@ -6486,7 +7469,7 @@
     "descriptors": ["energetic", "warm", "melodic", "poetic", "male vocalist"]
   },
   {
-    "id": "richard-coleman-facil-2017",
+    "id": "facil",
     "album": "F–A–C–I–L",
     "artist": "Richard Coleman",
     "year": 2017,
@@ -6497,7 +7480,7 @@
     "descriptors": []
   },
   {
-    "id": "richard-coleman-el-in-correcto-uso-de-la-metafora-2025",
+    "id": "el-in-correcto-uso-de-la-metafora",
     "album": "El (in) correcto uso de la metáfora",
     "artist": "Richard Coleman",
     "year": 2025,
@@ -6506,6 +7489,512 @@
       "secondary": ["Alternative Rock", "Dark Rock", "Experimental Rock"]
     },
     "descriptors": ["Dark", "Atmospheric", "Experimental", "Guitar-Driven", "Underground"]
+  },
+  {
+  "id": "magico-corazon-radiofonico",
+  "album": "Mágico corazón radiofónico",
+  "artist": "Banda de Turistas",
+  "year": 2008,
+  "genres": {
+    "primary": ["Psychedelic Pop", "Indie Pop"],
+    "secondary": ["Neo-Psychedelia", "Beat"]
+  },
+  "descriptors": [
+    "introspective",
+    "mellow",
+    "surreal",
+    "playful",
+    "psychedelic",
+    "male vocalist",
+    "cryptic",
+    "warm",
+    "atmospheric"
+  ]
+},
+{
+  "id": "el-retorno",
+  "album": "El retorno",
+  "artist": "Banda de Turistas",
+  "year": 2009,
+  "genres": {
+    "primary": ["Indie Rock", "Neo-Psychedelia"],
+    "secondary": ["Psychedelic Pop", "Neo-Psychedelia", "New Rave"]
+  },
+  "descriptors": []
+},
+{
+  "id": "ya",
+  "album": "Ya",
+  "artist": "Banda de Turistas",
+  "year": 2012,
+  "genres": {
+    "primary": ["Indie Rock"],
+    "secondary": ["Electropop", "Neo-Psychedelia"]
+  },
+  "descriptors": []
+},
+{
+  "id": "lo-que-mas-queres",
+  "album": "Lo que más querés",
+  "artist": "Banda de Turistas",
+  "year": 2014,
+  "genres": {
+    "primary": ["Indie Rock", "Indie Pop"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "mancho",
+  "album": "Mancho",
+  "artist": "Banda de Turistas",
+  "year": 2017,
+  "genres": {
+    "primary": ["Psychedelic Pop", "Indie Pop"],
+    "secondary": ["Indie Rock", "Art Pop"]
+  },
+  "descriptors": [
+    "nocturnal",
+    "psychedelic",
+    "romantic",
+    "space",
+    "bittersweet",
+    "futuristic",
+    "hypnotic"
+  ]
+},
+{
+  "id": "prostitucion-y-vagancia",
+  "album": "Prostitución y vagancia",
+  "artist": "Los Guarros",
+  "year": 1989,
+  "genres": {
+    "primary": ["Hard Rock", "Pop Rock"],
+    "secondary": ["Hard Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "rosas-en-tu-pecho",
+  "album": "Rosas en tu pecho",
+  "artist": "Los Guarros",
+  "year": 1990,
+  "genres": {
+    "primary": ["Hard Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "los-guarros",
+  "album": "Los Guarros",
+  "artist": "Los Guarros",
+  "year": 1991,
+  "genres": {
+    "primary": ["Rock", "Hard Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "veneno",
+  "album": "Veneno",
+  "artist": "Los Guarros",
+  "year": 1993,
+  "genres": {
+    "primary": ["Rock", "Hard Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "acustico-y-rock-n-roll",
+  "album": "Acústico y Rock 'n' Roll",
+  "artist": "Los Guarros",
+  "year": 1994,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "pampas-lisergicas",
+  "album": "Pampas lisérgicas",
+  "artist": "Los Guarros",
+  "year": 1996,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "vilma-palma-e-vampiros",
+  "album": "Vilma Palma e Vampiros",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1991,
+  "genres": {
+    "primary": ["Pop Rock"],
+    "secondary": ["New Wave", "Ska", "Alternative Rock"]
+  },
+  "descriptors": [
+    "humorous",
+    "party",
+    "playful",
+    "sensual",
+    "sexual",
+    "male vocalist"
+  ]
+},
+{
+  "id": "3980",
+  "album": "3980",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1993,
+  "genres": {
+    "primary": ["Pop Rock", "New Wave"],
+    "secondary": ["Funk Rock"]
+  },
+  "descriptors": [
+    "male vocalist"
+  ]
+},
+{
+  "id": "fondo-profundo",
+  "album": "Fondo profundo",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1994,
+  "genres": {
+    "primary": ["New Wave", "Pop", "Pop Rock"],
+    "secondary": ["Dance-Punk"]
+  },
+  "descriptors": [
+    "female vocalist",
+    "melodic",
+    "love",
+    "bittersweet",
+    "male vocalist"
+  ]
+},
+{
+  "id": "sepia-blanco-y-negro",
+  "album": "Sepia, blanco & negro",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1995,
+  "genres": {
+    "primary": ["Rock", "Pop", "Dance-Pop"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "angeles-y-demonios",
+  "album": "Ángeles y demonios",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1997,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "hecatombe-disco",
+  "album": "Hecatombe Disco",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1998,
+  "genres": {
+    "primary": ["Pop"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "vilma-palma-e-vampiros-2000",
+  "album": "Vilma Palma e Vampiros 2000",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 1999,
+  "genres": {
+    "primary": ["Dance-Pop", "Euro House"],
+    "secondary": ["Ragga", "Eurodance"]
+  },
+  "descriptors": []
+},
+{
+  "id": "7",
+  "album": "7",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 2000,
+  "genres": {
+    "primary": ["Pop"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "vuelve-a-comenzar",
+  "album": "Vuelve a comenzar",
+  "artist": "Mario Gómez Vilma Palma",
+  "year": 2002,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "histeria",
+  "album": "Histeria",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 2005,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "2010",
+  "album": "2010",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 2010,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "agarrate-fuerte",
+  "album": "Agarrate fuerte",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 2012,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "boomerang",
+  "album": "Boomerang",
+  "artist": "Vilma Palma e Vampiros",
+  "year": 2018,
+  "genres": {
+    "primary": [],
+    "secondary": []
+  },
+  "descriptors": []
+},
+  {
+    "id": "man-ray",
+    "album": "Man Ray",
+    "artist": "Man Ray",
+    "year": 1988,
+    "genres": {
+      "primary": ["New Wave", "Pop Rock"],
+      "secondary": ["Jangle Pop"]
+    },
+    "descriptors": ["female vocalist", "energetic", "melodic"]
+  },
+  {
+    "id": "perro-de-playa",
+    "album": "Perro de playa",
+    "artist": "Man Ray",
+    "year": 1991,
+    "genres": {
+      "primary": ["Pop Rock", "Jangle Pop"],
+      "secondary": ["Neo-Acoustic"]
+    },
+    "descriptors": ["mellow", "female vocalist", "playful", "warm", "melodic", "love"]
+  },
+  {
+    "id": "hombre-rayo",
+    "album": "Hombre rayo",
+    "artist": "Man Ray",
+    "year": 1993,
+    "genres": {
+      "primary": ["Jangle Pop", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "piropo",
+    "album": "Piropo",
+    "artist": "Man Ray",
+    "year": 1995,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ultramar",
+    "album": "Ultramar",
+    "artist": "Man Ray",
+    "year": 1997,
+    "genres": {
+      "primary": ["Pop Rock", "Alternative Rock"],
+      "secondary": ["Neo-Psychedelia", "Dream Pop", "Baggy", "Jangle Pop"]
+    },
+    "descriptors": ["mellow", "female vocalist", "playful", "warm", "psychedelic", "romantic", "melodic", "bittersweet", "love"]
+  },
+  {
+    "id": "larga-distancia",
+    "album": "Larga distancia",
+    "artist": "Man Ray",
+    "year": 1999,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "gabinete-de-curiosidades",
+    "album": "Gabinete de curiosidades",
+    "artist": "Hilda Lizarazu",
+    "year": 2004,
+    "genres": {
+      "primary": ["Singer-Songwriter", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hormonal",
+    "album": "Hormonal",
+    "artist": "Hilda Lizarazu",
+    "year": 2007,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "futuro-perfecto",
+    "album": "Futuro perfecto",
+    "artist": "Hilda Lizarazu",
+    "year": 2010,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "las-vueltas-de-la-vida",
+    "album": "Las vueltas de la vida",
+    "artist": "Hilda Lizarazu",
+    "year": 2015,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-genesis",
+    "album": "La génesis",
+    "artist": "Hilda Lizarazu",
+    "year": 2018,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "antigua",
+    "album": "Antigua",
+    "artist": "Hilda Lizarazu",
+    "year": 2022,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hilda-canta-charly",
+    "album": "HILDA CANTA CHARLY",
+    "artist": "Hilda Lizarazu",
+    "year": 2024,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-dicha-en-movimiento",
+    "album": "La dicha en movimiento",
+    "artist": "Los Twist",
+    "year": 1983,
+    "genres": {
+      "primary": ["New Wave", "Pop Rock", "Twist"],
+      "secondary": ["2 Tone", "Satire", "Twist", "Rockabilly"]
+    },
+    "descriptors": ["male vocalist", "humorous", "satirical", "playful", "rhythmic", "female vocalist", "urban", "happy", "drugs", "eclectic", "uplifting", "melodic", "party", "nightlife"]
+  },
+  {
+    "id": "cachetazo-al-vicio",
+    "album": "Cachetazo al vicio",
+    "artist": "Los Twist",
+    "year": 1984,
+    "genres": {
+      "primary": ["Rockabilly", "Musical Parody", "Twist"],
+      "secondary": ["Swing Revival", "Cumbia argentina", "Pasodoble"]
+    },
+    "descriptors": ["humorous", "male vocalist"]
+  },
+  {
+    "id": "la-maquina-del-tiempo",
+    "album": "La máquina del tiempo",
+    "artist": "Los Twist",
+    "year": 1985,
+    "genres": {
+      "primary": ["New Wave", "Pop Rock", "Twist"],
+      "secondary": ["Synthpop", "Blue-Eyed Soul"]
+    },
+    "descriptors": ["female vocalist", "fantasy", "playful", "energetic", "quirky", "theatrical", "eclectic", "male vocalist"]
+  },
+  {
+    "id": "cataratas-musicales",
+    "album": "Cataratas musicales",
+    "artist": "Los Twist",
+    "year": 1991,
+    "genres": {
+      "primary": ["Rockabilly", "Comedy Rock", "Pop Rock"],
+      "secondary": ["Tango", "Cumbia argentina", "Hard Rock", "Funk Rock"]
+    },
+    "descriptors": ["humorous", "rhythmic"]
+  },
+  {
+    "id": "el-cinco-en-la-espalda",
+    "album": "El cinco en la espalda",
+    "artist": "Los Twist",
+    "year": 1994,
+    "genres": {
+      "primary": ["Rockabilly", "Comedy Rock", "Twist"],
+      "secondary": ["Blues Rock", "Tango", "Bossa nova"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "explosivo-96",
+    "album": "Explosivo 96",
+    "artist": "Los Twist",
+    "year": 1995,
+    "genres": {
+      "primary": ["Pop Rock", "Twist"],
+      "secondary": []
+    },
+    "descriptors": []
   },
   {
     "id": "rosas-rojas",
@@ -7378,6 +8867,94 @@
         "Synthpop",
         "Power Pop"
       ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ruido-del-mundo",
+    "album": "Ruido del mundo",
+    "artist": "Vetamadre",
+    "year": 1998,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "liberenme",
+    "album": "Libérenme",
+    "artist": "Vetamadre",
+    "year": 2002,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "veratraves",
+    "album": "Veratravés",
+    "artist": "Vetamadre",
+    "year": 2004,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vientre",
+    "album": "Vientre",
+    "artist": "Vetamadre",
+    "year": 2006,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "otrovaje",
+    "album": "OTROviaje",
+    "artist": "Vetamadre",
+    "year": 2010,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nocontrol",
+    "album": "Nocontrol",
+    "artist": "Vetamadre",
+    "year": 2012,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ahora",
+    "album": "Ahora",
+    "artist": "Vetamadre",
+    "year": 2014,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "incomunicacion",
+    "album": "Incomunicación",
+    "artist": "Vetamadre",
+    "year": 2019,
+    "genres": {
+      "primary": ["Alternative Rock"],
       "secondary": []
     },
     "descriptors": []
@@ -9896,8 +11473,10 @@
     "artist": "La Renga",
     "year": 2024,
     "genres": {
-    "primary": [],
-    "secondary": []
+      "primary": [
+        "Hard Rock", "Rock"
+      ],
+      "secondary": []
     },
     "descriptors": []
     },
@@ -12576,6 +14155,488 @@
   },
   "descriptors": []
 },
+  {
+    "id": "el-coctel-del-tio-pupi",
+    "album": "El cóctel del tío Pupi",
+    "artist": "Mancha de Rolando",
+    "year": 1994,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-ley-del-gomero",
+    "album": "La ley del gomero",
+    "artist": "Mancha de Rolando",
+    "year": 1996,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cabana-elderly",
+    "album": "Cabaña Elderly",
+    "artist": "Mancha de Rolando",
+    "year": 1998,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cintas-magicas",
+    "album": "Cintas mágicas",
+    "artist": "Mancha de Rolando",
+    "year": 1999,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "animal-humano",
+    "album": "Animal humano",
+    "artist": "Mancha de Rolando",
+    "year": 2000,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Funk Rock"]
+    },
+    "descriptors": [
+      "political",
+      "conscious",
+      "rhythmic",
+      "angry",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "juego-de-locos",
+    "album": "Juego de locos",
+    "artist": "Mancha de Rolando",
+    "year": 2001,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "viaje",
+    "album": "Viaje",
+    "artist": "Mancha de Rolando",
+    "year": 2004,
+    "genres": {
+      "primary": ["Roots Rock"],
+      "secondary": ["Alternative Rock"]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "espiritu",
+    "album": "Espíritu",
+    "artist": "Mancha de Rolando",
+    "year": 2006,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-cielo-abierto",
+    "album": "A cielo abierto",
+    "artist": "Mancha de Rolando",
+    "year": 2009,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-libres",
+    "album": "Los libres",
+    "artist": "Mancha de Rolando",
+    "year": 2012,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Pop Rock", "Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hielofuego",
+    "album": "Hielofuego",
+    "artist": "Mancha de Rolando",
+    "year": 2014,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Pop Rock", "Alternative Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-exceso-y-o-abuso-de-drogas-y-alcohol-es-perjudicial-para-tu-salud-cuidate-nadie-lo-hara-por-vos",
+    "album": "El exceso y/o abuso de drogas y alcohol es perjudicial para tu salud... ¡Cuidate, nadie lo hará por vos!",
+    "artist": "Flema",
+    "year": 1994,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": ["Hardcore Punk", "Crossover Thrash", "Power Pop", "Street Punk"]
+    },
+    "descriptors": [
+      "alcohol",
+      "drugs",
+      "raw",
+      "vulgar",
+      "nihilistic",
+      "violence",
+      "male vocalist",
+      "aggressive",
+      "hateful",
+      "alienation",
+      "death",
+      "rebellious",
+      "energetic",
+      "suicide",
+      "self-hatred",
+      "depressive",
+      "anarchism",
+      "hedonism",
+      "urban",
+      "anthemic",
+      "melodic",
+      "sexual",
+      "dark",
+      "protest"
+    ]
+  },
+  {
+    "id": "nunca-nos-fuimos",
+    "album": "Nunca nos fuimos",
+    "artist": "Flema",
+    "year": 1996,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": ["Rap Rock", "Hardcore Punk", "Skate Punk"]
+    },
+    "descriptors": [
+      "drugs",
+      "alcohol",
+      "sexual",
+      "male vocalist",
+      "vulgar",
+      "urban",
+      "raw",
+      "violence",
+      "energetic",
+      "humorous",
+      "rhythmic",
+      "skateboarding"
+    ]
+  },
+  {
+    "id": "si-el-placer-es-un-pecado-bienvenidos-al-infierno",
+    "album": "Si el placer es un pecado... bienvenidos al infierno",
+    "artist": "Flema",
+    "year": 1997,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": ["Hardcore Punk", "Anarcho-Punk"]
+    },
+    "descriptors": [
+      "depressive",
+      "nihilistic",
+      "alcohol",
+      "anarchism",
+      "vulgar",
+      "death",
+      "male vocalist",
+      "introspective",
+      "hateful",
+      "conscious",
+      "raw",
+      "self-hatred",
+      "sexual",
+      "protest",
+      "alienation",
+      "energetic",
+      "aggressive",
+      "drugs",
+      "rebellious"
+    ]
+  },
+  {
+    "id": "resaka",
+    "album": "Resaka",
+    "artist": "Flema",
+    "year": 1998,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": ["Hardcore Punk", "Noise Rock", "Interview", "Crossover Thrash"]
+    },
+    "descriptors": [
+      "alcohol",
+      "vulgar",
+      "urban",
+      "death",
+      "aggressive",
+      "energetic",
+      "conscious",
+      "noisy",
+      "lo-fi",
+      "rhythmic",
+      "raw",
+      "rebellious",
+      "sexual",
+      "violence",
+      "pessimistic",
+      "nihilistic",
+      "sarcastic",
+      "drugs",
+      "angry",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "caretofobia-disco-1",
+    "album": "Caretofobia: Disco 1",
+    "artist": "Flema",
+    "year": 2000,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "hedonism",
+      "raw",
+      "urban",
+      "violence",
+      "vulgar",
+      "energetic",
+      "drugs",
+      "alcohol",
+      "nihilistic",
+      "sarcastic",
+      "male vocalist",
+      "misanthropic",
+      "humorous",
+      "punchy",
+      "bouncy",
+      "conscious",
+      "noisy",
+      "rebellious"
+    ]
+  },
+  {
+    "id": "caretofobia-disco-2",
+    "album": "Caretofobia: Disco 2",
+    "artist": "Flema",
+    "year": 2001,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": ["Alternative Rock"]
+    },
+    "descriptors": [
+      "alcohol",
+      "existential",
+      "drugs",
+      "self-hatred",
+      "vulgar",
+      "male vocalist",
+      "misanthropic",
+      "depressive",
+      "pessimistic",
+      "angry",
+      "urban",
+      "nihilistic",
+      "hedonism"
+    ]
+  },
+  {
+    "id": "cinco-de-copas",
+    "album": "Cinco de copas",
+    "artist": "Flema",
+    "year": 2002,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": ["Alternative Rock", "Ska Punk", "Hardcore Punk"]
+    },
+    "descriptors": [
+      "alcohol",
+      "vulgar",
+      "urban",
+      "aggressive",
+      "energetic",
+      "depressive",
+      "hedonism",
+      "rhythmic",
+      "raw",
+      "rebellious",
+      "violence",
+      "suicide",
+      "pessimistic",
+      "nihilistic",
+      "sarcastic",
+      "anarchism",
+      "self-hatred",
+      "drugs",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "no-nos-rendimos",
+    "album": "No nos rendimos",
+    "artist": "Flema",
+    "year": 2014,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "fuera-de-control",
+    "album": "Fuera de control",
+    "artist": "Flema",
+    "year": 2024,
+    "genres": {
+      "primary": ["Punk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-codiciada",
+    "album": "La codiciada",
+    "artist": "Pier",
+    "year": 1999,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Post-Punk"]
+    },
+    "descriptors": [
+      "dark",
+      "urban",
+      "rhythmic",
+      "drugs",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-fuego-sagrado",
+    "album": "El fuego sagrado",
+    "artist": "Pier",
+    "year": 2000,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Blues Rock"]
+    },
+    "descriptors": [
+      "raw",
+      "male vocalist",
+      "nocturnal",
+      "mysterious"
+    ]
+  },
+  {
+    "id": "gladiadores-del-rock",
+    "album": "Gladiadores del Rock",
+    "artist": "Pier",
+    "year": 2001,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock", "Gothic Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "seguir-latiendo",
+    "album": "Seguir latiendo",
+    "artist": "Pier",
+    "year": 2004,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rock-en-monsterland",
+    "album": "Rock en Monsterland",
+    "artist": "Pier",
+    "year": 2007,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "popular-mistica",
+    "album": "Popular mística",
+    "artist": "Pier",
+    "year": 2009,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-codiciada-2012",
+    "album": "La codiciada 2012",
+    "artist": "Pier",
+    "year": 2012,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "brindaremos",
+    "album": "Brindaremos",
+    "artist": "Pier",
+    "year": 2014,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-emocion-de-la-oveja-negra",
+    "album": "La emoción de la oveja negra",
+    "artist": "Pier",
+    "year": 2018,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "conexion",
+    "album": "Conexión",
+    "artist": "Pier",
+    "year": 2023,
+    "genres": {
+      "primary": ["Alternative Rock", "Rock & Roll", "Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
 {
   "id": "la-veinticinco-rock-and-roll",
   "album": "La Veinticinco rock and roll",
@@ -12813,8 +14874,355 @@
   "artist": "Caballeros de la Quema",
   "year": 2025,
   "genres": {
-    "primary": [],
+    "primary": ["Alternative Rock"],
     "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "rock-2-tonos",
+  "album": "Rock 2 tonos",
+  "artist": "normA",
+  "year": 2006,
+  "genres": {
+    "primary": ["Indie Rock"],
+    "secondary": ["Post-Punk", "Post-Punk Revival"]
+  },
+  "descriptors": ["misanthropic", "angular", "anxious", "rhythmic", "minimalistic", "sarcastic", "male vocalist"]
+},
+{
+  "id": "norma",
+  "album": "NORMA",
+  "artist": "normA",
+  "year": 2008,
+  "genres": {
+    "primary": ["Indie Rock"],
+    "secondary": ["Post-Punk", "Punk Rock", "Garage Rock Revival"]
+  },
+  "descriptors": ["rhythmic", "raw", "rebellious", "male vocalist", "energetic"]
+},
+{
+  "id": "a",
+  "album": "a",
+  "artist": "normA",
+  "year": 2011,
+  "genres": {
+    "primary": ["Post-Punk"],
+    "secondary": ["Art Punk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "siguiente",
+  "album": "Siguiente",
+  "artist": "normA",
+  "year": 2015,
+  "genres": {
+    "primary": ["Post-Punk"],
+    "secondary": ["Indie Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "cro9uis",
+  "album": "CRO9UIS",
+  "artist": "normA",
+  "year": 2021,
+  "genres": {
+    "primary": ["Post-Punk"],
+    "secondary": ["Art Punk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "vida-y-vida-de-sebastian",
+  "album": "Vida y vida de Sebastián",
+  "artist": "Vivencia",
+  "year": 1972,
+  "genres": {
+    "primary": ["Progressive Folk"],
+    "secondary": ["Folk Rock", "Progressive Rock", "Folk Pop", "Chamber Folk", "Baroque Pop"]
+  },
+  "descriptors": ["male vocalist", "acoustic", "progressive"]
+},
+{
+  "id": "mi-cuarto",
+  "album": "Mi cuarto",
+  "artist": "Vivencia",
+  "year": 1973,
+  "genres": {
+    "primary": ["Contemporary Folk"],
+    "secondary": ["Folk Rock", "Acoustic Rock", "Folk Pop", "Blues Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "vivencia-1975",
+  "album": "Vivencia",
+  "artist": "Vivencia",
+  "year": 1975,
+  "genres": {
+    "primary": ["Acoustic Rock"],
+    "secondary": ["Contemporary Folk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "sensitivo",
+  "album": "Sensitivo",
+  "artist": "Vivencia",
+  "year": 1977,
+  "genres": {
+    "primary": ["Acoustic Rock"],
+    "secondary": ["Contemporary Folk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "vivencia-1979",
+  "album": "Vivencia",
+  "artist": "Vivencia",
+  "year": 1979,
+  "genres": {
+    "primary": ["Acoustic Rock"],
+    "secondary": ["Contemporary Folk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "los-siete-pecados-capitales",
+  "album": "Los siete pecados capitales",
+  "artist": "Vivencia",
+  "year": 1980,
+  "genres": {
+    "primary": ["Acoustic Rock"],
+    "secondary": []
+  },
+  "descriptors": ["concept album", "male vocalist"]
+},
+{
+  "id": "el-libro-de-las-pequenas-historias",
+  "album": "El libro de las pequeñas historias",
+  "artist": "Vivencia",
+  "year": 1981,
+  "genres": {
+    "primary": ["Soft Rock"],
+    "secondary": ["Yacht Rock", "Acoustic Rock"]
+  },
+  "descriptors": ["melancholic", "progressive", "soft"]
+},
+{
+  "id": "pare-y-escuche",
+  "album": "Pare y escuche",
+  "artist": "Vivencia",
+  "year": 1983,
+  "genres": {
+    "primary": ["Acoustic Rock"],
+    "secondary": ["Pop Rock"]
+  },
+  "descriptors": []
+},
+  {
+    "id": "color-humano-1972",
+    "album": "Color Humano",
+    "artist": "Color Humano",
+    "year": 1972,
+    "genres": {
+      "primary": [
+        "Psychedelic Rock"
+      ],
+      "secondary": [
+        "Hard Rock",
+        "Heavy Psych",
+        "Acoustic Rock"
+      ]
+    },
+    "descriptors": [
+      "psychedelic",
+      "heavy",
+      "nature"
+    ]
+  },
+  {
+    "id": "color-humano-1973",
+    "album": "Color Humano",
+    "artist": "Color Humano",
+    "year": 1973,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Heavy Psych",
+        "Blues Rock",
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "psychedelic",
+      "natural"
+    ]
+  },
+  {
+    "id": "color-humano-iii",
+    "album": "Color Humano III",
+    "artist": "Color Humano",
+    "year": 1973,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Progressive Rock",
+        "Heavy Psych"
+      ]
+    },
+    "descriptors": [
+      "psychedelic",
+      "nature"
+    ]
+  },
+{
+  "id": "fantasmas-de-lo-nuevo",
+  "album": "Fantasmas de lo nuevo",
+  "artist": "Cuentos Borgeanos",
+  "year": 2002,
+  "genres": {
+    "primary": ["Alternative Rock"],
+    "secondary": ["Punk Rock", "Power Pop"]
+  },
+  "descriptors": []
+},
+{
+  "id": "cuentos-borgeanos-2004",
+  "album": "Cuentos Borgeanos",
+  "artist": "Cuentos Borgeanos",
+  "year": 2004,
+  "genres": {
+    "primary": ["Alternative Rock"],
+    "secondary": ["Pop Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "felicidades",
+  "album": "Felicidades",
+  "artist": "Cuentos Borgeanos",
+  "year": 2007,
+  "genres": {
+    "primary": ["Power Pop"],
+    "secondary": ["Pop Rock"]
+  },
+  "descriptors": []
+},
+{
+  "id": "psicomagico",
+  "album": "Psicomágico",
+  "artist": "Cuentos Borgeanos",
+  "year": 2009,
+  "genres": {
+    "primary": ["Alternative Rock"],
+    "secondary": ["Pop Rock", "Power Pop", "Chamber Pop"]
+  },
+  "descriptors": []
+},
+{
+  "id": "postales",
+  "album": "Postales",
+  "artist": "Cuentos Borgeanos",
+  "year": 2014,
+  "genres": {
+    "primary": ["Alternative Rock"],
+    "secondary": []
+  },
+  "descriptors": []
+},
+{
+  "id": "willy-crook-funky-torinos",
+  "album": "Willy Crook & Funky Torinos",
+  "artist": "Willy Crook & Funky Torinos",
+  "year": 1997,
+  "genres": {
+    "primary": ["Funk"],
+    "secondary": ["Jazz-Funk", "Reggae"]
+  },
+  "descriptors": ["mellow", "nocturnal", "urban", "sensual", "rhythmic", "male vocalist", "soothing"]
+},
+{
+  "id": "big-bombo-mamma",
+  "album": "Big Bombo Mamma",
+  "artist": "Willy Crook",
+  "year": 1995,
+  "genres": {
+    "primary": ["Jazz-Funk"],
+    "secondary": ["Neo-Soul", "Reggae", "Psychedelic Soul"]
+  },
+  "descriptors": []
+},
+{
+  "id": "valentino",
+  "album": "Valentino",
+  "artist": "Willy Crook & Funky Torinos",
+  "year": 1998,
+  "genres": {
+    "primary": ["Funk Rock"],
+    "secondary": ["Neo-Soul", "Reggae", "Jazz-Funk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "cruk",
+  "album": "Crük",
+  "artist": "Willy Crook",
+  "year": 1999,
+  "genres": {
+    "primary": ["Funk Rock"],
+    "secondary": ["Neo-Soul"]
+  },
+  "descriptors": []
+},
+{
+  "id": "versiones-music-to-live-by",
+  "album": "Versiones: Music to Live By",
+  "artist": "Willy Crook",
+  "year": 1999,
+  "genres": {
+    "primary": ["Neo-Soul"],
+    "secondary": ["Jazz-Funk", "Funk"]
+  },
+  "descriptors": []
+},
+{
+  "id": "fuego-amigo",
+  "album": "Fuego amigo",
+  "artist": "Willy Crook",
+  "year": 2004,
+  "genres": {
+    "primary": ["Funk Rock"],
+    "secondary": ["Neo-Soul"]
+  },
+  "descriptors": []
+},
+{
+  "id": "reworked",
+  "album": "Reworked",
+  "artist": "Willy Crook & Funky Torinos",
+  "year": 2019,
+  "genres": {
+    "primary": ["Funk Rock"],
+    "secondary": ["Neo-Soul"]
+  },
+  "descriptors": []
+},
+{
+  "id": "willy-crook-2020",
+  "album": "Willy Crook",
+  "artist": "Willy Crook",
+  "year": 2020,
+  "genres": {
+    "primary": ["Funk Rock"],
+    "secondary": ["Neo-Soul"]
   },
   "descriptors": []
 },
