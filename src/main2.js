@@ -5,6 +5,9 @@ import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
 import { Line2 } from "three/examples/jsm/lines/Line2.js";
 import { UMAP } from "umap-js";
 
+let selectedGenres = new Set();
+let genreLegendItemsByGenre = new Map(); // genre -> elemento DOM de la leyenda
+
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xFFFFFF);
 
@@ -27,10 +30,6 @@ scene.add(root);
 
 const labelGroup = new THREE.Group();
 scene.add(labelGroup);
-
-// Grupo que contiene las líneas del "grafo de descubrimiento" (hilo
-// cronológico del mismo artista + conexiones de nivel 1/2 hacia discos
-// afines publicados después).
 const connectionGroup = new THREE.Group();
 scene.add(connectionGroup);
 
@@ -41,9 +40,264 @@ let points = [];
 let pointMeshes = [];
 let yearSprites = [];
 let orbitRings = [];
-let genreLabelSprites = []; // [{ sprite, genre, position, count, screenX, screenY, behindCamera, overlapHidden }]
-let selected = null;
+let genreLabelSprites = [];
 
+let selectedIndices = new Set();
+let outlineRings = new Map();
+let multiSelectPanels = new Map();
+
+function clearScene() {
+  pointMeshes.forEach(m => {
+    m.geometry.dispose();
+    m.material.dispose();
+    root.remove(m);
+  });
+  pointMeshes = [];
+
+  yearSprites.forEach(s => {
+    s.material.map?.dispose();
+    s.material.dispose();
+    root.remove(s);
+  });
+  yearSprites = [];
+
+  orbitRings.forEach(r => {
+    r.geometry.dispose();
+    r.material.dispose();
+    root.remove(r);
+  });
+  orbitRings = [];
+
+  clearGenreLabels();
+  clearConnections();
+  clearSelectionOutlines();
+  clearMultiSelectPanels();
+
+  selectedIndices.clear();
+  selectedGenres.clear();
+  selectedYear = null;
+}
+
+function clearHighlight() {
+  pointMeshes.forEach(m => { m.material.opacity = 1; });
+  selectedIndices.clear();
+  clearConnections();
+  clearSelectionOutlines();
+  clearMultiSelectPanels();
+  unpinTooltip();
+}
+
+function updateSelectionVisuals() {
+  if (selectedIndices.size === 0) {
+    pointMeshes.forEach(m => { m.material.opacity = 1; });
+    return;
+  }
+
+  const artists = new Set([...selectedIndices].map(i => points[i].artist));
+
+  pointMeshes.forEach((m, i) => {
+    const isSelected = selectedIndices.has(i);
+    const sameArtist = artists.has(points[i].artist);
+    m.material.opacity = (isSelected || sameArtist) ? 1 : 0.35;
+  });
+}
+
+function ensureOutlineRing(idx) {
+  if (outlineRings.has(idx)) return outlineRings.get(idx);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(POINT_RADIUS + 0.1, POINT_RADIUS + 0.2, OUTLINE_SEGMENTS),
+    new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      side: THREE.DoubleSide,
+      depthTest: true,
+      depthWrite: false
+    })
+  );
+  ring.renderOrder = 10;
+  root.add(ring);
+  outlineRings.set(idx, ring);
+  return ring;
+}
+
+function showSelectionOutlines() {
+  selectedIndices.forEach(idx => {
+    const mesh = pointMeshes[idx];
+    if (!mesh) return;
+    const ring = ensureOutlineRing(idx);
+    ring.material.color.copy(points[idx].color);
+    ring.visible = true;
+  });
+
+  [...outlineRings.keys()].forEach(idx => {
+    if (!selectedIndices.has(idx)) {
+      const ring = outlineRings.get(idx);
+      ring.geometry.dispose();
+      ring.material.dispose();
+      root.remove(ring);
+      outlineRings.delete(idx);
+    }
+  });
+}
+
+function clearSelectionOutlines() {
+  outlineRings.forEach(ring => {
+    ring.geometry.dispose();
+    ring.material.dispose();
+    root.remove(ring);
+  });
+  outlineRings.clear();
+}
+
+function updateSelectionOutlines() {
+  outlineRings.forEach((ring, idx) => {
+    const mesh = pointMeshes[idx];
+    if (!mesh) return;
+
+    ring.position.copy(mesh.position);
+    ring.quaternion.copy(camera.quaternion);
+
+    const distance = camera.position.distanceTo(mesh.position);
+    const vFov = camera.fov * Math.PI / 180;
+    const screenHeight = renderer.domElement.clientHeight || innerHeight;
+    const worldPerPixel = (2 * Math.tan(vFov / 2) * distance) / screenHeight;
+
+    const offsetWorld = worldPerPixel * OUTLINE_OFFSET_PX;
+    const thicknessWorld = worldPerPixel * OUTLINE_THICKNESS_PX;
+
+    const innerRadius = POINT_RADIUS + offsetWorld;
+    const outerRadius = innerRadius + thicknessWorld;
+
+    ring.geometry.dispose();
+    ring.geometry = new THREE.RingGeometry(innerRadius, outerRadius, OUTLINE_SEGMENTS);
+  });
+}
+
+function buildHoverPanelHTML(i) {
+  const a = points[i];
+  const primary = a.genres.primary.map(g=>`<span class="primary">${g}</span>`).join(" · ");
+  const secondary = a.genres.secondary.map(g=>`<span class="secondary">${g}</span>`).join(" · ");
+  return `
+    <strong>${a.album}</strong>
+    <div class="artist">${a.artist} · ${a.year}</div>
+    <div class="genres">${primary}${secondary ? "<br>"+secondary : ""}</div>
+  `;
+}
+
+function showTooltipForPoint(i, x, y) {
+  ui.tooltip.innerHTML = buildHoverPanelHTML(i);
+  ui.tooltip.style.pointerEvents = "none";
+  ui.tooltip.style.right = "auto";
+  ui.tooltip.style.display = "block";
+  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
+  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
+}
+
+function ensureMultiSelectPanel(idx) {
+  if (multiSelectPanels.has(idx)) return multiSelectPanels.get(idx);
+
+  const el = document.createElement("div");
+  el.className = ui.tooltip.className;
+  el.style.position = "absolute";
+  el.style.pointerEvents = "none";
+  el.style.display = "block";
+  document.body.appendChild(el);
+  multiSelectPanels.set(idx, el);
+  return el;
+}
+
+function clearMultiSelectPanels() {
+  multiSelectPanels.forEach(el => el.remove());
+  multiSelectPanels.clear();
+}
+
+function updateMultiSelectPanels() {
+  const keep = new Set();
+
+  selectedIndices.forEach(idx => {
+    const mesh = pointMeshes[idx];
+    if (!mesh) return;
+    keep.add(idx);
+
+    const el = ensureMultiSelectPanel(idx);
+    el.innerHTML = buildHoverPanelHTML(idx);
+
+    const { x, y } = projectToScreen(mesh.position);
+    el.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
+    el.style.top = `${Math.min(y + 16, innerHeight - 150)}px`;
+  });
+
+  [...multiSelectPanels.keys()].forEach(idx => {
+    if (!keep.has(idx)) {
+      multiSelectPanels.get(idx).remove();
+      multiSelectPanels.delete(idx);
+    }
+  });
+}
+
+function selectAlbum(idx, additive = false) {
+  const mesh = pointMeshes[idx];
+  const point = points[idx];
+  if (!mesh || !point) return;
+
+  if (additive) {
+    if (selectedIndices.has(idx)) {
+      selectedIndices.delete(idx);
+    } else {
+      selectedIndices.add(idx);
+    }
+  } else {
+    selectedIndices = new Set([idx]);
+  }
+
+  applySelection();
+
+  if (selectedIndices.size === 1) {
+    const onlyIdx = [...selectedIndices][0];
+    focusCameraOnPoint(pointMeshes[onlyIdx]);
+    scrollListToAlbum(points[onlyIdx]);
+  }
+}
+
+function pointerClick(e) {
+  if (e.target !== renderer.domElement) return;
+
+  mouse.x = e.clientX / innerWidth * 2 - 1;
+  mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse,camera);
+
+  const hit = raycaster.intersectObjects(pointMeshes)[0];
+  if (hit) {
+    const additive = e.ctrlKey || e.metaKey;
+    selectAlbum(hit.object.userData.index, additive);
+    return;
+  }
+
+  if (timeMode) {
+    const yearHit = raycaster.intersectObjects([...orbitRings, ...yearSprites])[0];
+    if (yearHit) {
+      toggleYearHighlight(yearHit.object.userData.year);
+      return;
+    }
+  }
+
+  clearHighlight();
+  clearGenreHighlight();
+  clearYearHighlight();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  tickAnimation();
+  tickCameraFocus();
+  updateSelectionOutlines();
+  updateGenreLabels();
+  updateConnections();
+  if (selectedIndices.size > 1) updateMultiSelectPanels();
+  controls.update();
+  renderer.render(scene,camera);
+}
+ 
 const ui = {
   list: document.querySelector("#albumList"),
   search: document.querySelector("#search"),
@@ -62,8 +316,8 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.5,
-  nNeighbors: 3,
+  descriptorWeight: 0.4,
+  nNeighbors: 3.5,
   minDist: 0.5
 };
 
@@ -89,13 +343,20 @@ const GENRE_LABEL_CONFIG = {
   overlapScreenDist: 46   // px mínimos entre dos etiquetas en pantalla antes de considerarlas solapadas
 };
 
-// Grafo de descubrimiento que se arma al seleccionar un disco:
-// - Nivel 0: hilo sólido cronológico entre discos del mismo artista.
-// - Nivel 1: hasta 2 discos más afines (otro artista, publicados después).
-// - Nivel 2: por cada nodo de nivel 1, hasta 2 discos afines a partir de él
-//            (otro artista respecto de ese nodo, publicados después de su año).
-// Todo se enciende de forma escalonada (stageDelay / siblingStagger) en vez
-// de aparecer de golpe.
+const EVENT_LABEL_CONFIG = {
+  offsetX: 3,           // separación horizontal respecto del borde del sprite del año
+  fontSize: 24,         // mismo tamaño que el sprite del año (ver YEAR_LABEL_CONFIG)
+  color: "#8a8a8a",
+  maxCharsPerLine: 18,  // más chico que antes: con la tipografía más grande, menos caracteres entran por línea
+  maxLines: 4,
+  lineHeight: 64,
+  dimmedOpacity: 0.2    // opacidad cuando hay otro año seleccionado
+};
+
+const YEAR_LABEL_DEFAULT_TINT = 0xffffff;
+const YEAR_LABEL_SELECTED_TINT = 0x000000;
+const ORBIT_RING_DEFAULT_COLOR = 0xc4c4c4;
+const ORBIT_RING_SELECTED_COLOR = 0x000000;
 const CONNECTION_CONFIG = {
   sameArtistLineOpacity: 0.9,
   level1LineOpacity: 0.65,
@@ -118,9 +379,9 @@ let animStart = 0;
 let animFrom = [];
 let animTo = [];
 let timeCentroid = new THREE.Vector3(); // mismo centro usado por el plegado radial, reutilizado por las órbitas
-
 let genreLabelsVisible = true;
-
+let selectedYear = null;
+let eventsByYear = new Map();
 let cameraAnimating = false;
 let cameraAnimStart = 0;
 const cameraFromPos = new THREE.Vector3();
@@ -136,6 +397,17 @@ let connectionLines = [];     // [{ line, fromMesh, toMesh }]
 let connectionNodeFades = []; // [{ mesh, targetOpacity, appearAt }]
 let activeGraphIndices = new Set(); // idx de todos los discos involucrados en el grafo actual
 let hoverPreviewIndex = null;       // idx sobre el que se está mostrando un preview de hover (con panel fijo activo)
+
+const UMAP_SEED = 12345;
+
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
 
 function average(arr) {
   return arr.reduce((s,v) => s+v, 0) / arr.length;
@@ -178,264 +450,155 @@ function vectorize(album, vocab, descriptorWeight) {
 
 const GENRE_FAMILIES = [
 
-  {
-    match: /heavy metal/i,
-    group: "Metal",
-    hueRange: [0, 0],
-    satRange: [0, 8],
-    lightRange: [18, 32]
-  },
+  // ---------- METAL ----------
+  { match: /heavy metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [18, 32] },
+  { match: /thrash metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [30, 44] },
+  { match: /alternative metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [40, 52] },
+  { match: /groove metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [50, 62] },
+  { match: /metalcore/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [60, 72] },
+  { match: /nu metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [70, 82] },
+  { match: /power metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [78, 90] },
+  { match: /speed metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [86, 98] },
+  { match: /glam metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [92, 100] },
 
-  {
-    match: /thrash metal/i,
-    group: "Metal",
-    hueRange: [0, 0],
-    satRange: [0, 8],
-    lightRange: [30, 44]
-  },
+  // ---------- ROCK ----------
+  { match: /hard rock/i, group: "Rock", hueRange: [210, 220] },
+  { match: /alternative rock/i, group: "Rock", hueRange: [220, 232] },
+  { match: /blues rock/i, group: "Rock", hueRange: [232, 242] },
+  { match: /progressive rock/i, group: "Rock", hueRange: [242, 252] },
+  { match: /art rock/i, group: "Rock", hueRange: [252, 262] },
+  { match: /rock opera/i, group: "Rock", hueRange: [262, 272] },
+  { match: /\bbig music\b/i, group: "Rock", hueRange: [272, 282] },
+  { match: /\baor\b/i, group: "Rock", hueRange: [282, 292] },
+  { match: /acoustic rock/i, group: "Rock", hueRange: [292, 302] },
+  { match: /boogie rock/i, group: "Rock", hueRange: [302, 312] },
+  { match: /britpop/i, group: "Rock", hueRange: [312, 322] },
+  { match: /experimental rock/i, group: "Rock", hueRange: [322, 332] },
+  { match: /funk rock/i, group: "Rock", hueRange: [332, 342] },
+  { match: /garage rock/i, group: "Rock", hueRange: [342, 352] },
+  { match: /grunge/i, group: "Rock", hueRange: [352, 362] },
+  { match: /indie rock/i, group: "Rock", hueRange: [362, 372] },
+  { match: /industrial rock/i, group: "Rock", hueRange: [372, 382] },
+  { match: /noise rock/i, group: "Rock", hueRange: [382, 392] },
+  { match: /piano rock/i, group: "Rock", hueRange: [392, 402] },
+  { match: /roots rock/i, group: "Rock", hueRange: [402, 412] },
+  { match: /slacker rock/i, group: "Rock", hueRange: [412, 422] },
+  { match: /soft rock/i, group: "Rock", hueRange: [422, 432] },
+  { match: /stoner rock/i, group: "Rock", hueRange: [432, 442] },
+  { match: /^rock\s*(&|and)\s*roll$/i, group: "Rock", hueRange: [442, 452] },
+  { match: /^rock$/i, group: "Rock", hueRange: [452, 462] },
+  { match: /^blues$/i, group: "Rock", hueRange: [732, 742] },
+  { match: /comedy rock/i, group: "Rock", hueRange: [742, 752] },
+  { match: /rockabilly/i, group: "Rock", hueRange: [752, 762] },
+  { match: /^twist$/i, group: "Rock", hueRange: [762, 772] },
+  { match: /^funk$/i, group: "Rock", hueRange: [772, 782] },
 
-  {
-    match: /hard rock/i,
-    group: "Rock",
-    hueRange: [210, 220]
-  },
+  // ---------- PUNK ----------
+  { match: /punk rock/i, group: "Punk", hueRange: [0, 10] },
+  { match: /melodic hardcore/i, group: "Punk", hueRange: [10, 20] },
+  { match: /post-punk revival/i, group: "Punk", hueRange: [20, 30] },
+  { match: /dance-punk revival/i, group: "Punk", hueRange: [30, 40] },
+  { match: /art punk/i, group: "Punk", hueRange: [40, 50] },
+  { match: /hardcore punk/i, group: "Punk", hueRange: [50, 60] },
+  { match: /pop punk/i, group: "Punk", hueRange: [60, 70] },
+  { match: /post-hardcore/i, group: "Punk", hueRange: [70, 80] },
+  { match: /skate punk/i, group: "Punk", hueRange: [80, 90] },
 
-  {
-    match: /alternative rock/i,
-    group: "Rock",
-    hueRange: [220, 232]
-  },
+  // ---------- POP ----------
+  { match: /synthpop/i, group: "Pop", hueRange: [265, 275] },
+  { match: /art pop/i, group: "Pop", hueRange: [275, 285] },
+  { match: /chamber pop/i, group: "Pop", hueRange: [285, 295] },
+  { match: /sophisti-pop/i, group: "Pop", hueRange: [295, 305] },
+  { match: /power pop/i, group: "Pop", hueRange: [305, 315] },
+  { match: /indie pop/i, group: "Pop", hueRange: [315, 325] },
+  { match: /twee pop/i, group: "Pop", hueRange: [325, 335] },
+  { match: /latin pop/i, group: "Pop", hueRange: [335, 345] },
+  { match: /pop rock/i, group: "Pop", hueRange: [345, 355] },
+  { match: /baroque pop/i, group: "Pop", hueRange: [355, 365] },
+  { match: /jangle pop/i, group: "Pop", hueRange: [365, 375] },
+  { match: /noise pop/i, group: "Pop", hueRange: [375, 385] },
+  { match: /progressive pop/i, group: "Pop", hueRange: [385, 395] },
+  { match: /dance-pop/i, group: "Pop", hueRange: [782, 792] },
+  { match: /^pop$/i, group: "Pop", hueRange: [792, 802] },
 
-  {
-    match: /blues rock/i,
-    group: "Rock",
-    hueRange: [232, 242]
-  },
+  // ---------- NEW WAVE ----------
+  { match: /new wave/i, group: "New Wave", hueRange: [300, 320] },
+  { match: /ethereal wave/i, group: "New Wave", hueRange: [320, 335] },
 
-  {
-    match: /progressive rock/i,
-    group: "Rock",
-    hueRange: [242, 252]
-  },
+  // ---------- POST-PUNK ----------
+  { match: /post-punk/i, group: "Post-Punk", hueRange: [350, 360] },
+  { match: /gothic rock/i, group: "Post-Punk", hueRange: [360, 372] },
 
-  {
-    match: /art rock/i,
-    group: "Rock",
-    hueRange: [252, 262]
-  },
+  // ---------- REGGAE ----------
+  { match: /reggae/i, group: "Reggae", hueRange: [100, 112] },
+  { match: /lovers rock/i, group: "Reggae", hueRange: [112, 124] },
+  { match: /\bdub\b/i, group: "Reggae", hueRange: [124, 136] },
 
-  {
-    match: /rock opera/i,
-    group: "Rock",
-    hueRange: [262, 272]
-  },
+  // ---------- SKA ----------
+  { match: /2 tone/i, group: "Ska", hueRange: [70, 80] },
+  { match: /third wave ska/i, group: "Ska", hueRange: [80, 90] },
+  { match: /\bska\b/i, group: "Ska", hueRange: [90, 102] },
 
-  {
-    match: /\bbig music\b/i,
-    group: "Rock",
-    hueRange: [272, 282]
-  },
+  // ---------- PSICODELIA ----------
+  { match: /psychedelic rock/i, group: "Psicodelia", hueRange: [145, 155] },
+  { match: /neo-psychedelia/i, group: "Psicodelia", hueRange: [155, 165] },
+  { match: /shoegaze/i, group: "Psicodelia", hueRange: [165, 175] },
+  { match: /dream pop/i, group: "Psicodelia", hueRange: [462, 472] },
+  { match: /heavy psych/i, group: "Psicodelia", hueRange: [472, 482] },
+  { match: /psychedelic folk/i, group: "Psicodelia", hueRange: [482, 492] },
+  { match: /psychedelic pop/i, group: "Psicodelia", hueRange: [492, 502] },
+  { match: /acid rock/i, group: "Psicodelia", hueRange: [812, 822] },
+  { match: /space rock/i, group: "Psicodelia", hueRange: [822, 832] },
 
-  {
-    match: /punk rock/i,
-    group: "Punk",
-    hueRange: [0, 10]
-  },
+  // ---------- ELECTRÓNICA / DANCE ----------
+  { match: /downtempo/i, group: "Electrónica / Dance", hueRange: [175, 185] },
+  { match: /alternative dance/i, group: "Electrónica / Dance", hueRange: [185, 195] },
+  { match: /new rave/i, group: "Electrónica / Dance", hueRange: [195, 205] },
+  { match: /chillout/i, group: "Electrónica / Dance", hueRange: [502, 512] },
+  { match: /^electronic$/i, group: "Electrónica / Dance", hueRange: [512, 522] },
+  { match: /synth funk/i, group: "Electrónica / Dance", hueRange: [522, 532] },
+  { match: /euro house/i, group: "Electrónica / Dance", hueRange: [802, 812] },
 
-  {
-    match: /melodic hardcore/i,
-    group: "Punk",
-    hueRange: [10, 20]
-  },
+  // ---------- HIP HOP / RAP ----------
+  { match: /rap rock/i, group: "Hip Hop / Rap", hueRange: [200, 210] },
+  { match: /pop rap/i, group: "Hip Hop / Rap", hueRange: [210, 220] },
+  { match: /abstract hip hop/i, group: "Hip Hop / Rap", hueRange: [532, 542] },
+  { match: /experimental hip hop/i, group: "Hip Hop / Rap", hueRange: [542, 552] },
+  { match: /hardcore hip hop/i, group: "Hip Hop / Rap", hueRange: [552, 562] },
+  { match: /latin rap/i, group: "Hip Hop / Rap", hueRange: [562, 572] },
+  { match: /mid-school hip hop/i, group: "Hip Hop / Rap", hueRange: [572, 582] },
+  { match: /^hip hop$/i, group: "Hip Hop / Rap", hueRange: [582, 592] },
 
-  {
-    match: /post-punk revival/i,
-    group: "Punk",
-    hueRange: [20, 30]
-  },
+  // ---------- FOLK / CANCIÓN ----------
+  { match: /folk rock/i, group: "Folk / Canción", hueRange: [35, 45] },
+  { match: /singer-songwriter/i, group: "Folk / Canción", hueRange: [45, 55] },
+  { match: /\bbeat\b/i, group: "Folk / Canción", hueRange: [55, 65] },
+  { match: /contemporary folk/i, group: "Folk / Canción", hueRange: [592, 602] },
+  { match: /progressive folk/i, group: "Folk / Canción", hueRange: [602, 612] },
+  { match: /folktronica/i, group: "Folk / Canción", hueRange: [612, 622] },
 
-  {
-    match: /dance-punk revival/i,
-    group: "Punk",
-    hueRange: [30, 40]
-  },
+  // ---------- LATIN / HISPANOAMERICANO ----------
+  { match: /latin alternative/i, group: "Latin / Hispanoamericano", hueRange: [65, 75] },
+  { match: /andean new age/i, group: "Latin / Hispanoamericano", hueRange: [622, 632] },
+  { match: /bossa nova/i, group: "Latin / Hispanoamericano", hueRange: [632, 642] },
+  { match: /chamamé/i, group: "Latin / Hispanoamericano", hueRange: [642, 652] },
+  { match: /hispanic american folk music/i, group: "Latin / Hispanoamericano", hueRange: [652, 662] },
+  { match: /indigenous andean music/i, group: "Latin / Hispanoamericano", hueRange: [662, 672] },
+  { match: /latin rock/i, group: "Latin / Hispanoamericano", hueRange: [672, 682] },
+  { match: /nuevo cancionero/i, group: "Latin / Hispanoamericano", hueRange: [682, 692] },
+  { match: /rock andino/i, group: "Latin / Hispanoamericano", hueRange: [692, 702] },
 
-  {
-    match: /synthpop/i,
-    group: "Pop",
-    hueRange: [265, 275]
-  },
+  // ---------- JAZZ ----------
+  { match: /jazz-rock/i, group: "Jazz", hueRange: [70, 80] },
+  { match: /acid jazz/i, group: "Jazz", hueRange: [702, 712] },
+  { match: /free improvisation/i, group: "Jazz", hueRange: [712, 722] },
+  { match: /jazz fusion/i, group: "Jazz", hueRange: [722, 732] },
+  { match: /rhythm (&|and) blues/i, group: "Jazz", hueRange: [832, 842] },
 
-  {
-    match: /art pop/i,
-    group: "Pop",
-    hueRange: [275, 285]
-  },
-
-  {
-    match: /chamber pop/i,
-    group: "Pop",
-    hueRange: [285, 295]
-  },
-
-  {
-    match: /sophisti-pop/i,
-    group: "Pop",
-    hueRange: [295, 305]
-  },
-
-  {
-    match: /power pop/i,
-    group: "Pop",
-    hueRange: [305, 315]
-  },
-
-  {
-    match: /indie pop/i,
-    group: "Pop",
-    hueRange: [315, 325]
-  },
-
-  {
-    match: /twee pop/i,
-    group: "Pop",
-    hueRange: [325, 335]
-  },
-
-  {
-    match: /latin pop/i,
-    group: "Pop",
-    hueRange: [335, 345]
-  },
-
-  {
-    match: /pop rock/i,
-    group: "Pop",
-    hueRange: [345, 355]
-  },
-
-  {
-    match: /new wave/i,
-    group: "New Wave",
-    hueRange: [300, 320]
-  },
-
-  {
-    match: /post-punk/i,
-    group: "Post-Punk",
-    hueRange: [350, 360]
-  },
-
-  {
-    match: /reggae/i,
-    group: "Reggae",
-    hueRange: [100, 112]
-  },
-
-  {
-    match: /lovers rock/i,
-    group: "Reggae",
-    hueRange: [112, 124]
-  },
-
-  {
-    match: /third wave ska/i,
-    group: "Ska",
-    hueRange: [80, 90]
-  },
-
-  {
-    match: /\bska\b/i,
-    group: "Ska",
-    hueRange: [90, 102]
-  },
-
-  {
-    match: /psychedelic rock/i,
-    group: "Psicodelia",
-    hueRange: [145, 155]
-  },
-
-  {
-    match: /neo-psychedelia/i,
-    group: "Psicodelia",
-    hueRange: [155, 165]
-  },
-
-  {
-    match: /shoegaze/i,
-    group: "Psicodelia",
-    hueRange: [165, 175]
-  },
-
-  {
-    match: /downtempo/i,
-    group: "Electrónica / Dance",
-    hueRange: [175, 185]
-  },
-
-  {
-    match: /alternative dance/i,
-    group: "Electrónica / Dance",
-    hueRange: [185, 195]
-  },
-
-  {
-    match: /new rave/i,
-    group: "Electrónica / Dance",
-    hueRange: [195, 205]
-  },
-
-  {
-    match: /rap rock/i,
-    group: "Hip Hop / Rap",
-    hueRange: [200, 210]
-  },
-
-  {
-    match: /pop rap/i,
-    group: "Hip Hop / Rap",
-    hueRange: [210, 220]
-  },
-
-  {
-    match: /folk rock/i,
-    group: "Folk / Canción",
-    hueRange: [35, 45]
-  },
-
-  {
-    match: /singer-songwriter/i,
-    group: "Folk / Canción",
-    hueRange: [45, 55]
-  },
-
-  {
-    match: /beat/i,
-    group: "Folk / Canción",
-    hueRange: [55, 65]
-  },
-
-  {
-    match: /latin alternative/i,
-    group: "Latin / Hispanoamericano",
-    hueRange: [65, 75]
-  },
-
-  {
-    match: /jazz-rock/i,
-    group: "Jazz",
-    hueRange: [70, 80]
-  },
-
-  {
-    match: /christian rock/i,
-    group: "Christian",
-    hueRange: [50, 60]
-  }
+  // ---------- CHRISTIAN ----------
+  { match: /christian rock/i, group: "Christian", hueRange: [50, 60] }
 
 ];
-
 const GROUP_ORDER = [
   "Metal",
   "Rock",
@@ -454,6 +617,32 @@ const GROUP_ORDER = [
   "Christian",
   "Otros"
 ];
+
+const groupColorCache = new Map();
+function colorForGroup(group) {
+  if (groupColorCache.has(group)) return groupColorCache.get(group);
+ 
+  const families = GENRE_FAMILIES.filter(f => f.group === group);
+  const c = new THREE.Color();
+ 
+  if (!families.length) {
+    c.setHSL(0, 0, 0.5);
+    groupColorCache.set(group, c);
+    return c;
+  }
+ 
+  const hueMid = f => (f.hueRange[0] + f.hueRange[1]) / 2;
+  const satMid = f => f.satRange ? (f.satRange[0] + f.satRange[1]) / 2 / 100 : 0.72;
+  const lightMid = f => f.lightRange ? (f.lightRange[0] + f.lightRange[1]) / 2 / 100 : 0.58;
+ 
+  const avgHue = (average(families.map(hueMid)) % 360) / 360;
+  const avgSat = average(families.map(satMid));
+  const avgLight = average(families.map(lightMid));
+ 
+  c.setHSL(avgHue, avgSat, avgLight);
+  groupColorCache.set(group, c);
+  return c;
+}
 
 function familyForGenre(name) {
   return GENRE_FAMILIES.find(f => f.match.test(name)) ?? null;
@@ -554,8 +743,6 @@ function computeTimeLayout() {
     const angle = Math.atan2(pz - cz, px - cx);
     const baseRadius = Math.hypot(px - cx, pz - cz);
 
-    // UMAP_Y no se descarta: se pliega como modulación del radio, así
-    // sigue empujando el punto dentro/fuera del cluster.
     const foldedRadius = baseRadius + TIME_LAYOUT.foldWeight * (py - cy);
 
     const timeX = cx + foldedRadius * Math.cos(angle);
@@ -581,7 +768,7 @@ async function calculateModel() {
     nNeighbors: Math.min(MODEL_CONFIG.nNeighbors, albums.length - 1),
     minDist: MODEL_CONFIG.minDist,
     spread: 1,
-    random: Math.random
+    random: mulberry32(UMAP_SEED)
   });
 
   const embedding = await umap.fitAsync(matrix);
@@ -620,35 +807,37 @@ async function calculateModel() {
     `${albums.length} álbumes · ${vocab.genres.length} géneros · ${vocab.descriptors.length} descriptores · UMAP 3D`;
 }
 
-function clearScene() {
-  pointMeshes.forEach(m => {
-    m.geometry.dispose();
-    m.material.dispose();
-    root.remove(m);
-  });
-  pointMeshes = [];
+// function clearScene() {
+//   pointMeshes.forEach(m => {
+//     m.geometry.dispose();
+//     m.material.dispose();
+//     root.remove(m);
+//   });
+//   pointMeshes = [];
 
-  yearSprites.forEach(s => {
-    s.material.map?.dispose();
-    s.material.dispose();
-    root.remove(s);
-  });
-  yearSprites = [];
+//   yearSprites.forEach(s => {
+//     s.material.map?.dispose();
+//     s.material.dispose();
+//     root.remove(s);
+//   });
+//   yearSprites = [];
 
-  orbitRings.forEach(r => {
-    r.geometry.dispose();
-    r.material.dispose();
-    root.remove(r);
-  });
-  orbitRings = [];
+//   orbitRings.forEach(r => {
+//     r.geometry.dispose();
+//     r.material.dispose();
+//     root.remove(r);
+//   });
+//   orbitRings = [];
 
-  clearGenreLabels();
-  clearConnections();
-  clearSelectionOutline();
-  disposeOutlineMeshes();
+//   clearGenreLabels();
+//   clearConnections();
+//   clearSelectionOutline();
+//   disposeOutlineMeshes();
 
-  selected = null;
-}
+//   selected = null;
+//   selectedGenres.clear();
+//   selectedYear = null;
+// }
 
 function createPoints() {
   points.forEach((a,i) => {
@@ -677,6 +866,25 @@ function createPoints() {
   root.add(light);
 }
 
+function wrapText(text, maxChars) {
+  const words = text.split(" ");
+  const lines = [];
+  let current = "";
+
+  words.forEach(word => {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length > maxChars && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = candidate;
+    }
+  });
+  if (current) lines.push(current);
+
+  return lines;
+}
+
 function createYearSprites() {
   const years = [...new Set(points.map(p => p.year))].sort((a,b) => a-b);
   if (!years.length) return;
@@ -696,9 +904,29 @@ function createYearSprites() {
     const sprite = makeYearSprite(String(year));
     sprite.position.set(marginX, y, cz);
     sprite.material.opacity = 0;
+    sprite.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
     sprite.userData.targetOpacity = 0;
+    sprite.userData.year = year;
     root.add(sprite);
     yearSprites.push(sprite);
+
+    const eventText = eventsByYear.get(year);
+    if (eventText) {
+      const eventSprite = makeEventLabelSprite(eventText);
+      const yearLeftEdgeX = sprite.position.x - sprite.scale.x / 2;
+      eventSprite.position.set(
+        yearLeftEdgeX - EVENT_LABEL_CONFIG.offsetX - eventSprite.scale.x / 2,
+        y,
+        cz
+      );
+      eventSprite.material.opacity = 0;
+      eventSprite.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
+      eventSprite.userData.targetOpacity = 0;
+      eventSprite.userData.year = year;
+      eventSprite.userData.isEventLabel = true;
+      root.add(eventSprite);
+      yearSprites.push(eventSprite);
+    }
   });
 }
 
@@ -707,7 +935,7 @@ function makeYearSprite(text) {
   canvas.width = 256;
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
-  ctx.font = "regular 36px sans-serif";
+  ctx.font = "regular 48px sans-serif";
   ctx.fillStyle = "#848484";
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
@@ -724,6 +952,39 @@ function makeYearSprite(text) {
   return sprite;
 }
 
+function makeEventLabelSprite(text) {
+  const { fontSize, color, maxCharsPerLine, maxLines, lineHeight } = EVENT_LABEL_CONFIG;
+  const lines = [text];
+
+  const canvasWidth = 600;
+  const canvasHeight = Math.max(lines.length * lineHeight + 20, 60);
+
+  const canvas = document.createElement("canvas");
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+  const ctx = canvas.getContext("2d");
+  ctx.font = `regular ${fontSize}px sans-serif`;
+  ctx.fillStyle = color;
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+
+  const startY = canvasHeight / 2 - (lines.length - 1) * lineHeight / 2;
+  lines.forEach((line, i) => {
+    ctx.fillText(line, canvasWidth - 8, startY + i * lineHeight);
+  });
+
+  const texture = new THREE.CanvasTexture(canvas);
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthWrite: false
+  });
+  const sprite = new THREE.Sprite(material);
+  const unitsPerPx = 14 / 256;
+  sprite.scale.set(canvasWidth * unitsPerPx, canvasHeight * unitsPerPx, 1);
+  return sprite;
+}
+
 function createYearOrbits() {
   const byYear = new Map();
   points.forEach(p => {
@@ -731,7 +992,7 @@ function createYearOrbits() {
     byYear.get(p.year).push(p);
   });
 
-  byYear.forEach((group) => {
+  byYear.forEach((group, year) => {
     const radii = group.map(p =>
       Math.hypot(p.timeVec.x - timeCentroid.x, p.timeVec.z - timeCentroid.z)
     );
@@ -740,7 +1001,7 @@ function createYearOrbits() {
 
     const geo = new THREE.TorusGeometry(radius, 0.18, 8, 64);
     const mat = new THREE.MeshBasicMaterial({
-      color: 0xc4c4c4,
+      color: ORBIT_RING_DEFAULT_COLOR,
       transparent: true,
       opacity: 0,
       depthWrite: false
@@ -750,6 +1011,7 @@ function createYearOrbits() {
     ring.rotation.x = Math.PI / 2; // acostar el anillo en el plano X/Z
     ring.position.set(timeCentroid.x, group[0].timeVec.y, timeCentroid.z);
     ring.userData.targetOpacity = 0;
+    ring.userData.year = year;
     root.add(ring);
     orbitRings.push(ring);
   });
@@ -871,8 +1133,6 @@ function updateGenreLabels() {
       g.screenY = (-genreLabelProjection.y * 0.5 + 0.5) * innerHeight;
     });
 
-    // Prioridad: géneros con más álbumes ganan el espacio en pantalla
-    // cuando dos etiquetas caen demasiado cerca entre sí.
     const sorted = [...genreLabelSprites].sort((a, b) => b.count - a.count);
     const kept = [];
     sorted.forEach(g => {
@@ -935,6 +1195,8 @@ function tickAnimation() {
 }
 
 function highlightPoint(mesh) {
+  clearGenreHighlight();
+  clearYearHighlight(); // <-- nuevo: seleccionar un disco es excluyente con un año activo
   const artist = mesh.userData.album?.artist ?? null;
   selected = artist;
 
@@ -943,19 +1205,8 @@ function highlightPoint(mesh) {
     m.material.opacity = (m === mesh || sameArtist) ? 1 : 0.35;
   });
 
-  // Arma el grafo de descubrimiento (hilo cronológico + niveles 1/2) a
-  // partir del disco seleccionado. El hover sobre otros discos activos
-  // sigue funcionando normalmente porque pointerMove no depende de esto.
   const idx = mesh.userData.index;
   if (idx !== undefined) buildDiscoveryGraph(idx);
-}
-
-function clearHighlight() {
-  pointMeshes.forEach(m => { m.material.opacity = 1; });
-  selected = null;
-  clearConnections();
-  clearSelectionOutline();
-  unpinTooltip();
 }
 
 function legendDotColor(g) {
@@ -994,6 +1245,7 @@ function renderGenreLegend() {
   ];
 
   const frag = document.createDocumentFragment();
+  genreLegendItemsByGenre = new Map(); // <-- reset en cada render
 
   orderedGroups.forEach(group => {
     const title = document.createElement("div");
@@ -1004,6 +1256,8 @@ function renderGenreLegend() {
     byGroup.get(group).forEach(g => {
       const item = document.createElement("div");
       item.className = "legend-item";
+      item.dataset.genre = g; // <-- nuevo
+      item.style.cursor = "pointer"; // <-- nuevo (fallback si no hay CSS)
 
       const dot = document.createElement("i");
       dot.className = "legend-dot";
@@ -1014,12 +1268,67 @@ function renderGenreLegend() {
 
       item.appendChild(dot);
       item.appendChild(label);
+
+      // <-- nuevo: click togglea el resaltado de este género
+      item.addEventListener("click", () => toggleGenreHighlight(g));
+
+      genreLegendItemsByGenre.set(g, item); // <-- nuevo
+
       frag.appendChild(item);
     });
   });
 
   ui.genreLegend.textContent = "";
   ui.genreLegend.appendChild(frag);
+
+  updateGenreLegendActiveState(); // <-- nuevo: por si veníamos con un género activo
+}
+
+ 
+function toggleGenreHighlight(genre) {
+  if (selectedGenres.has(genre)) {
+    selectedGenres.delete(genre);
+  } else {
+    selectedGenres.add(genre);
+  }
+ 
+  if (selectedGenres.size === 0) {
+    clearGenreHighlight();
+    return;
+  }
+ 
+  applyGenreHighlight();
+}
+ 
+function applyGenreHighlight() {
+  clearHighlight();
+  clearYearHighlight();
+ 
+  pointMeshes.forEach((m, i) => {
+    const album = points[i];
+    const has = album.genres.primary.some(g => selectedGenres.has(g)) ||
+      album.genres.secondary.some(g => selectedGenres.has(g));
+    m.material.opacity = has ? 1 : 0.25;
+  });
+ 
+  updateGenreLegendActiveState();
+}
+ 
+function clearGenreHighlight() {
+  if (selectedGenres.size === 0) return;
+  selectedGenres.clear();
+  pointMeshes.forEach(m => { m.material.opacity = 1; });
+  updateGenreLegendActiveState();
+}
+ 
+function updateGenreLegendActiveState() {
+  genreLegendItemsByGenre.forEach((el, g) => {
+    const active = selectedGenres.has(g);
+    el.classList.toggle("active", active);
+    el.style.fontWeight = active ? "700" : "400";
+    el.style.backgroundColor = active ? "rgba(0,0,0,0.06)" : "transparent";
+    el.style.borderRadius = active ? "4px" : "0";
+  });
 }
 
 function buildAlbumRow(a) {
@@ -1164,21 +1473,6 @@ function jumpToAlbum(a) {
   selectAlbum(a.idx);
 }
 
-function selectAlbum(idx) {
-  const mesh = pointMeshes[idx];
-  const point = points[idx];
-  if (!mesh || !point) return;
-
-  highlightPoint(mesh);
-  focusCameraOnPoint(mesh);
-  showSelectionOutline(mesh, point.color);
-  scrollListToAlbum(point);
-  pinTooltip(idx);
-}
-
-// Álbumes más cercanos en el espacio de similitud (distancia euclídea sobre
-// umapVec, no sobre el layout temporal), excluyendo al propio álbum y a
-// cualquier otro del mismo artista.
 function computeNearestAlbums(idx, k = 3) {
   const origin = points[idx];
   if (!origin) return [];
@@ -1191,10 +1485,6 @@ function computeNearestAlbums(idx, k = 3) {
     .map(entry => entry.p);
 }
 
-// Vecinos más cercanos que cumplen las reglas del grafo de descubrimiento:
-// de un artista que todavía no fue visitado en ningún nivel anterior del
-// recorrido (excludeArtists es el set acumulado de artistas ya usados) y
-// publicados en un año posterior o igual al del nodo de referencia (minYear).
 function nearestOtherArtist(originVec, excludeArtists, minYear, k) {
   return points
     .filter(p => !excludeArtists.has(p.artist) && p.year >= minYear)
@@ -1204,12 +1494,6 @@ function nearestOtherArtist(originVec, excludeArtists, minYear, k) {
     .map(e => e.p);
 }
 
-// Elige hasta `count` discos afines, uno por uno, agregando el artista de
-// cada elegido al set compartido `visitedArtists` antes de buscar el
-// siguiente. Así ningún disco de un artista ya transitado (en este nivel o
-// en cualquier nivel anterior de la propagación) puede volver a aparecer,
-// evitando recorridos circulares. `minYear` restringe cada elección a
-// discos publicados en el mismo año o después del nodo de referencia.
 function pickNearestUnvisited(originVec, visitedArtists, minYear, count) {
   const picked = [];
   for (let i = 0; i < count; i++) {
@@ -1268,33 +1552,13 @@ function clearConnections() {
   hoverPreviewIndex = null;
 }
 
-// Construye el grafo de descubrimiento a partir del disco seleccionado:
-//  - Hilo sólido cronológico entre discos del mismo artista.
-//  - Nivel 1: hasta 2 discos afines más cercanos, de un artista no
-//    transitado todavía, publicados en el mismo año o después del origen.
-//  - Nivel 2: por cada nodo de nivel 1, hasta 2 discos afines a partir de
-//    él, de un artista no transitado en NINGÚN nivel anterior (ni el
-//    artista original, ni el de otros nodos de nivel 1, ni el de discos ya
-//    elegidos en nivel 2), publicados en el mismo año o después de ESE
-//    nodo — esto evita que la propagación vuelva sobre artistas ya
-//    recorridos o retroceda en el tiempo, garantizando que no haya
-//    recorridos circulares.
-// Todas las líneas (sólida y punteadas) toman el color del disco
-// seleccionado y comparten el mismo grosor.
-// Todo se enciende de forma escalonada vía appearAt (ver updateConnections),
-// como una animación de propagación desde el disco seleccionado hacia afuera.
-function buildDiscoveryGraph(originIdx) {
-  clearConnections();
-
+function buildArtistChainConnections(originIdx) {
   const origin = points[originIdx];
   if (!origin) return;
 
   const now = performance.now();
-  const visitedArtists = new Set([origin.artist]); // acumula TODOS los artistas ya usados en el recorrido
   const originColor = origin.color.getHex();
-  activeGraphIndices.add(origin.idx);
 
-  // --- Hilo cronológico entre discos del mismo artista ---
   const sameArtistChain = points
     .filter(p => p.artist === origin.artist)
     .sort((a, b) => a.year - b.year);
@@ -1312,9 +1576,20 @@ function buildDiscoveryGraph(originIdx) {
       CONNECTION_CONFIG.lineWidth
     );
   }
+}
 
-  // --- Nivel 1: discos más afines, de artistas todavía no transitados,
-  //     publicados en el mismo año o después del origen ---
+function buildDiscoveryGraph(originIdx) {
+  clearConnections(); // Borra las dashed en selección múltiple
+
+  const origin = points[originIdx];
+  if (!origin) return;
+
+  const now = performance.now();
+  const visitedArtists = new Set([origin.artist]);
+  activeGraphIndices.add(origin.idx);
+
+  buildArtistChainConnections(originIdx);
+
   const level1Delay = now + CONNECTION_CONFIG.stageDelay;
   const level1 = pickNearestUnvisited(
     origin.umapVec, visitedArtists, origin.year, CONNECTION_CONFIG.level1Count
@@ -1326,13 +1601,11 @@ function buildDiscoveryGraph(originIdx) {
     activeGraphIndices.add(node.idx);
 
     addConnection(
-      pointMeshes[origin.idx], nodeMesh, originColor, CONNECTION_CONFIG.level1LineOpacity, true, appearAt,
+      pointMeshes[origin.idx], nodeMesh, origin.color.getHex(), CONNECTION_CONFIG.level1LineOpacity, true, appearAt,
       CONNECTION_CONFIG.lineWidth
     );
     fadeNodeIn(nodeMesh, CONNECTION_CONFIG.level1NodeOpacity, appearAt);
 
-    // --- Nivel 2: hijos de cada nodo de nivel 1, de artistas aún no usados,
-    //     publicados en el mismo año o después de ese nodo ---
     const level2Delay = appearAt + CONNECTION_CONFIG.stageDelay;
     const level2 = pickNearestUnvisited(
       node.umapVec, visitedArtists, node.year, CONNECTION_CONFIG.level2Count
@@ -1344,7 +1617,7 @@ function buildDiscoveryGraph(originIdx) {
       activeGraphIndices.add(child.idx);
 
       addConnection(
-        nodeMesh, childMesh, originColor, CONNECTION_CONFIG.level2LineOpacity, true, childAppearAt,
+        nodeMesh, childMesh, origin.color.getHex(), CONNECTION_CONFIG.level2LineOpacity, true, childAppearAt,
         CONNECTION_CONFIG.lineWidth
       );
       fadeNodeIn(childMesh, CONNECTION_CONFIG.level2NodeOpacity, childAppearAt);
@@ -1352,8 +1625,47 @@ function buildDiscoveryGraph(originIdx) {
   });
 }
 
-// Actualiza posiciones (por si los puntos se están moviendo, ej. toggle de
-// timeMode) y hace avanzar el fade escalonado de líneas y nodos del grafo.
+function buildMultiSelectionChains() {
+  const seenArtists = new Set();
+
+  selectedIndices.forEach(idx => {
+    const point = points[idx];
+    if (!point || seenArtists.has(point.artist)) return;
+    seenArtists.add(point.artist);
+    buildArtistChainConnections(idx);
+  });
+}
+
+function applySelection() {
+  clearYearHighlight();
+  clearGenreHighlight();
+  clearConnections();
+  unpinTooltip();
+  clearMultiSelectPanels();
+
+  updateSelectionVisuals();
+
+  if (selectedIndices.size === 0) {
+    clearSelectionOutlines();
+    return;
+  }
+
+  showSelectionOutlines();
+
+  if (selectedIndices.size === 1) {
+    const idx = [...selectedIndices][0];
+    buildDiscoveryGraph(idx);
+    pinTooltip(idx);
+  } else {
+    buildMultiSelectionChains();
+    updateMultiSelectPanels();
+  }
+  // } else {
+  //   selectedIndices.forEach(idx => buildDiscoveryGraph(idx));
+  //   updateMultiSelectPanels();
+  // }
+}
+
 function updateConnections() {
   if (!connectionLines.length && !connectionNodeFades.length) return;
 
@@ -1478,30 +1790,21 @@ function fitCamera() {
   controls.update();
 }
 
-// ---------- Panel de detalle: preview al hover, fijo al clickear ----------
-// Dos modos sobre el mismo elemento `ui.tooltip`:
-// - Hover (sin selección activa): preview liviano, sigue al mouse, se
-//   oculta al sacar el cursor. No es interactivo.
-// - Fijado (`pinnedIndex` seteado por click/selección): panel persistente
-//   anclado en una esquina fija de la pantalla — no sigue al mouse ni se
-//   oculta al mover el cursor — con los 3 discos más cercanos (excluyendo
-//   al mismo artista) como filas clickeables, y un botón para cerrarlo.
-
-function showTooltipForPoint(i, x, y) {
-  const a = points[i];
-  const primary = a.genres.primary.map(g=>`<span class="primary">${g}</span>`).join(" · ");
-  const secondary = a.genres.secondary.map(g=>`<span class="secondary">${g}</span>`).join(" · ");
-  ui.tooltip.innerHTML = `
-    <strong>${a.album}</strong>
-    <div class="artist">${a.artist} · ${a.year}</div>
-    <div class="genres">${primary}${secondary ? "<br>"+secondary : ""}</div>
-  `;
-  ui.tooltip.style.pointerEvents = "none";
-  ui.tooltip.style.right = "auto";
-  ui.tooltip.style.display = "block";
-  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
-  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
-}
+// function showTooltipForPoint(i, x, y) {
+//   const a = points[i];
+//   const primary = a.genres.primary.map(g=>`<span class="primary">${g}</span>`).join(" · ");
+//   const secondary = a.genres.secondary.map(g=>`<span class="secondary">${g}</span>`).join(" · ");
+//   ui.tooltip.innerHTML = `
+//     <strong>${a.album}</strong>
+//     <div class="artist">${a.artist} · ${a.year}</div>
+//     <div class="genres">${primary}${secondary ? "<br>"+secondary : ""}</div>
+//   `;
+//   ui.tooltip.style.pointerEvents = "none";
+//   ui.tooltip.style.right = "auto";
+//   ui.tooltip.style.display = "block";
+//   ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
+//   ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
+// }
 
 function hideTooltip() {
   ui.tooltip.style.display = "none";
@@ -1530,8 +1833,6 @@ function buildNearestRow(p) {
   return row;
 }
 
-// Proyecta una posición 3D a coordenadas de pantalla (mismo cálculo que ya
-// usan las etiquetas de género para su chequeo de solapamiento).
 const screenProjectionVector = new THREE.Vector3();
 function projectToScreen(vec3) {
   screenProjectionVector.copy(vec3).project(camera);
@@ -1593,11 +1894,6 @@ function renderDetailPanel(i, x, y) {
     nearest.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
   }
 
-  // Misma lógica de posicionamiento que el hover (pegado al punto en
-  // pantalla), sólo que acá se calcula una vez al fijar y no se vuelve a
-  // mover con el mouse. El panel es más alto que el preview de hover
-  // (suma la lista de cercanos), así que se le da más margen vertical
-  // para no cortarse contra el borde inferior.
   ui.tooltip.style.right = "auto";
   ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
   ui.tooltip.style.top = `${Math.min(y+16, innerHeight-300)}px`;
@@ -1618,28 +1914,199 @@ function unpinTooltip() {
   hideTooltip();
 }
 
+function computeYearGenreStats(year) {
+  const albumsThatYear = points.filter(p => p.year === year);
+  const total = albumsThatYear.length;
+ 
+  const groupCounts = new Map();
+ 
+  albumsThatYear.forEach(a => {
+    const groupsForAlbum = new Set(
+      a.genres.primary.map(g => cachedFamilyForGenre(g)?.group ?? "Otros")
+    );
+    groupsForAlbum.forEach(group => {
+      groupCounts.set(group, (groupCounts.get(group) ?? 0) + 1);
+    });
+  });
+ 
+  const groups = [...groupCounts.entries()]
+    .map(([group, count]) => ({ genre: group, count, pct: total ? (count / total * 100) : 0 }))
+    .sort((a, b) => b.count - a.count);
+ 
+  return {
+    year,
+    total,
+    albums: albumsThatYear,
+    groups
+  };
+}
+
+function buildGenreStatRow(entry, color) {
+  const row = document.createElement("div");
+  row.style.cssText = "display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;";
+ 
+  const label = document.createElement("span");
+  label.style.cssText = "flex:0 0 auto;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
+  label.textContent = entry.genre;
+ 
+  const barWrap = document.createElement("div");
+  barWrap.style.cssText = "flex:1 1 auto;background:#eee;border-radius:3px;height:8px;overflow:hidden;";
+ 
+  const bar = document.createElement("div");
+  bar.style.cssText = `width:${entry.pct.toFixed(0)}%;height:100%;background:${color.getStyle()};`;
+  barWrap.appendChild(bar);
+ 
+  const pctLabel = document.createElement("span");
+  pctLabel.style.cssText = "flex:0 0 auto;width:34px;text-align:right;font-size:11px;color:#999;";
+  pctLabel.textContent = `${entry.pct.toFixed(0)}%`;
+ 
+  row.appendChild(label);
+  row.appendChild(barWrap);
+  row.appendChild(pctLabel);
+  return row;
+}
+
+function renderYearStatsPanel(year, x, y) {
+  const stats = computeYearGenreStats(year);
+ 
+  ui.tooltip.textContent = "";
+  ui.tooltip.style.pointerEvents = "auto";
+ 
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
+  closeBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    clearYearHighlight();
+  });
+ 
+  const title = document.createElement("strong");
+  title.textContent = `${year}`;
+ 
+  const meta = document.createElement("div");
+  meta.className = "artist";
+  meta.textContent = `${stats.total} álbum${stats.total === 1 ? "" : "es"}`;
+ 
+  ui.tooltip.appendChild(closeBtn);
+  ui.tooltip.appendChild(title);
+  ui.tooltip.appendChild(meta);
+ 
+  const eventText = eventsByYear.get(year);
+  if (eventText) {
+    const eventLine = document.createElement("div");
+    eventLine.style.cssText = "margin-top:6px;font-size:12px;font-style:italic;color:#888;";
+    eventLine.textContent = eventText;
+    ui.tooltip.appendChild(eventLine);
+  }
+ 
+  if (stats.groups.length) {
+    const groupsTitle = document.createElement("div");
+    groupsTitle.textContent = "Géneros principales";
+    groupsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    ui.tooltip.appendChild(groupsTitle);
+    stats.groups.forEach(entry => ui.tooltip.appendChild(buildGenreStatRow(entry, colorForGroup(entry.genre))));
+  }
+ 
+  if (stats.albums.length) {
+    const albumsTitle = document.createElement("div");
+    albumsTitle.textContent = "Álbumes de este año";
+    albumsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    ui.tooltip.appendChild(albumsTitle);
+    stats.albums.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
+  }
+ 
+  ui.tooltip.style.right = "auto";
+  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
+  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-360)}px`;
+  ui.tooltip.style.display = "block";
+}
+ 
+
+function showYearStatsPanel(year) {
+  const ring = orbitRings.find(r => r.userData.year === year);
+  const { x, y } = ring
+    ? projectToScreen(ring.position)
+    : { x: innerWidth / 2, y: innerHeight / 2 };
+  renderYearStatsPanel(year, x, y);
+}
+
+function toggleYearHighlight(year) {
+  if (selectedYear === year) {
+    clearYearHighlight();
+  } else {
+    setYearHighlight(year);
+  }
+}
+
+function setYearHighlight(year) {
+  clearHighlight();
+  clearGenreHighlight();
+
+  selectedYear = year;
+
+  pointMeshes.forEach((m, i) => {
+    m.material.opacity = points[i].year === year ? 1 : 0.15;
+  });
+
+  orbitRings.forEach(r => {
+    const isSelected = r.userData.year === year;
+    r.userData.targetOpacity = isSelected ? 0.9 : 0.08;
+    r.material.color.setHex(isSelected ? ORBIT_RING_SELECTED_COLOR : ORBIT_RING_DEFAULT_COLOR);
+  });
+
+  yearSprites.forEach(s => {
+    const isSelected = s.userData.year === year;
+    s.userData.targetOpacity = isSelected ? 1 : EVENT_LABEL_CONFIG.dimmedOpacity;
+    s.material.color.setHex(isSelected ? YEAR_LABEL_SELECTED_TINT : YEAR_LABEL_DEFAULT_TINT);
+  });
+
+  showYearStatsPanel(year);
+}
+
+function clearYearHighlight() {
+  if (selectedYear === null) return;
+  selectedYear = null;
+
+  pointMeshes.forEach(m => { m.material.opacity = 1; });
+
+  orbitRings.forEach(r => {
+    r.userData.targetOpacity = timeMode ? 0.4 : 0;
+    r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
+  });
+
+  yearSprites.forEach(s => {
+    s.userData.targetOpacity = timeMode ? 1 : 0;
+    s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
+  });
+
+  hideTooltip();
+}
+
 function pointerMove(e) {
   mouse.x = e.clientX / innerWidth * 2 - 1;
   mouse.y = -(e.clientY / innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse,camera);
   const hit = raycaster.intersectObjects(pointMeshes)[0];
+  // Anillos, sprites de año y sprites de evento comparten el mismo
+  // comportamiento de selección de año, así que se prueban juntos.
+  const yearHit = timeMode ? raycaster.intersectObjects([...orbitRings, ...yearSprites])[0] : null;
 
   pointMeshes.forEach(m => m.material.emissiveIntensity = .35);
 
   if (hit) {
     hit.object.material.emissiveIntensity = 1.2;
     renderer.domElement.style.cursor = "pointer";
+  } else if (yearHit) {
+    renderer.domElement.style.cursor = "pointer";
   } else {
     renderer.domElement.style.cursor = "default";
   }
 
   if (pinnedIndex !== null) {
-    // Con un panel fijado, el hover sobre cualquier otro disco involucrado
-    // en el grafo (mismo artista, nivel 1 o nivel 2) muestra su detalle en
-    // un preview liviano, sin perder el panel fijado: al sacar el cursor
-    // de esos nodos, el panel fijado vuelve a mostrarse.
     const hitIdx = hit?.object.userData.index;
-    const showPreview = hit && hitIdx !== pinnedIndex && activeGraphIndices.has(hitIdx);
+    const compareMode = e.ctrlKey || e.metaKey;
+    const showPreview = hit && hitIdx !== pinnedIndex && (compareMode || activeGraphIndices.has(hitIdx));
 
     if (showPreview) {
       hoverPreviewIndex = hitIdx;
@@ -1651,25 +2118,16 @@ function pointerMove(e) {
     return;
   }
 
-  if (hit) {
-    showTooltipForPoint(hit.object.userData.index, e.clientX, e.clientY);
+  if (selectedYear !== null) return;
+
+  const hitIdx = hit?.object.userData.index;
+  const compareMode = (e.ctrlKey || e.metaKey) && selectedIndices.size > 0;
+
+  if (hit && (compareMode || !selectedIndices.has(hitIdx))) {
+    showTooltipForPoint(hitIdx, e.clientX, e.clientY);
   } else {
     hideTooltip();
   }
-}
-
-function pointerClick(e) {
-  if (e.target !== renderer.domElement) return; // ignora clicks fuera del mapa 3D (ej: dropdown de búsqueda)
-
-  mouse.x = e.clientX / innerWidth * 2 - 1;
-  mouse.y = -(e.clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse,camera);
-  const hit = raycaster.intersectObjects(pointMeshes)[0];
-  if (!hit) {
-    clearHighlight();
-    return;
-  }
-  selectAlbum(hit.object.userData.index);
 }
 
 function scrollListToAlbum(a) {
@@ -1711,7 +2169,10 @@ ui.search.addEventListener("blur", () => {
   setTimeout(closeTypeahead, 100);
 });
 
-ui.timeToggle?.addEventListener("change", e => setTimeMode(e.target.checked));
+ui.timeToggle?.addEventListener("change", e => {
+  setTimeMode(e.target.checked);
+  if (!e.target.checked) clearYearHighlight(); // salir de modo temporal limpia la selección de año
+});
 ui.genreLabelToggle?.addEventListener("change", e => setGenreLabelsVisible(e.target.checked));
 
 window.addEventListener("pointermove",pointerMove);
@@ -1723,21 +2184,27 @@ window.addEventListener("resize",()=>{
   connectionLines.forEach(c => c.line.material.resolution.set(innerWidth, innerHeight));
 });
 
-function animate() {
-  requestAnimationFrame(animate);
-  tickAnimation();
-  tickCameraFocus();
-  updateSelectionOutline();
-  updateGenreLabels();
-  updateConnections();
-  controls.update();
-  renderer.render(scene,camera);
+function buildEventsByYear(events) {
+  const map = new Map();
+  events.forEach(e => {
+    const existing = map.get(e.year);
+    map.set(e.year, existing ? `${existing} · ${e.event}` : e.event);
+  });
+  return map;
 }
 
-fetch("./data/albums.json")
-  .then(r => r.json())
-  .then(data => {
-    albums = data;
+Promise.all([
+  fetch("./data/albums.json").then(r => r.json()),
+  fetch("./data/eventos.json")
+    .then(r => r.json())
+    .catch(err => {
+      console.warn("No se pudo cargar data/eventos.json", err);
+      return [];
+    })
+])
+  .then(([albumsData, eventsData]) => {
+    albums = albumsData;
+    eventsByYear = buildEventsByYear(eventsData);
     return calculateModel();
   })
   .catch(err => {

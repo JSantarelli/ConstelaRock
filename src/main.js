@@ -40,9 +40,272 @@ let points = [];
 let pointMeshes = [];
 let yearSprites = [];
 let orbitRings = [];
-let genreLabelSprites = []; // [{ sprite, genre, position, count, screenX, screenY, behindCamera, overlapHidden }]
-let selected = null;
+let genreLabelSprites = [];
 
+let selectedIndices = new Set();
+let outlineRings = new Map();
+let multiSelectPanels = new Map();
+
+function clearScene() {
+  pointMeshes.forEach(m => {
+    m.geometry.dispose();
+    m.material.dispose();
+    root.remove(m);
+  });
+  pointMeshes = [];
+
+  yearSprites.forEach(s => {
+    s.material.map?.dispose();
+    s.material.dispose();
+    root.remove(s);
+  });
+  yearSprites = [];
+
+  orbitRings.forEach(r => {
+    r.geometry.dispose();
+    r.material.dispose();
+    root.remove(r);
+  });
+  orbitRings = [];
+
+  clearGenreLabels();
+  clearConnections();
+  clearSelectionOutlines();
+  clearMultiSelectPanels();
+
+  selectedIndices.clear();
+  selectedGenres.clear();
+  selectedYear = null;
+}
+
+function updateSelectionVisuals() {
+  if (selectedIndices.size === 0) {
+    pointMeshes.forEach(m => { m.material.opacity = 1; });
+    return;
+  }
+
+  const artists = new Set([...selectedIndices].map(i => points[i].artist));
+
+  pointMeshes.forEach((m, i) => {
+    const isSelected = selectedIndices.has(i);
+    const sameArtist = artists.has(points[i].artist);
+    m.material.opacity = (isSelected || sameArtist) ? 1 : 0.35;
+  });
+}
+
+function ensureOutlineRing(idx) {
+  if (outlineRings.has(idx)) return outlineRings.get(idx);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(POINT_RADIUS + 0.1, POINT_RADIUS + 0.2, OUTLINE_SEGMENTS),
+    new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      side: THREE.DoubleSide,
+      depthTest: true,
+      depthWrite: false
+    })
+  );
+  ring.renderOrder = 10;
+  root.add(ring);
+  outlineRings.set(idx, ring);
+  return ring;
+}
+
+function showSelectionOutlines() {
+  selectedIndices.forEach(idx => {
+    const mesh = pointMeshes[idx];
+    if (!mesh) return;
+    const ring = ensureOutlineRing(idx);
+    ring.material.color.copy(points[idx].color);
+    ring.visible = true;
+  });
+
+  [...outlineRings.keys()].forEach(idx => {
+    if (!selectedIndices.has(idx)) {
+      const ring = outlineRings.get(idx);
+      ring.geometry.dispose();
+      ring.material.dispose();
+      root.remove(ring);
+      outlineRings.delete(idx);
+    }
+  });
+}
+
+function clearSelectionOutlines() {
+  outlineRings.forEach(ring => {
+    ring.geometry.dispose();
+    ring.material.dispose();
+    root.remove(ring);
+  });
+  outlineRings.clear();
+}
+
+function updateSelectionOutlines() {
+  outlineRings.forEach((ring, idx) => {
+    const mesh = pointMeshes[idx];
+    if (!mesh) return;
+
+    ring.position.copy(mesh.position);
+    ring.quaternion.copy(camera.quaternion);
+
+    const distance = camera.position.distanceTo(mesh.position);
+    const vFov = camera.fov * Math.PI / 180;
+    const screenHeight = renderer.domElement.clientHeight || innerHeight;
+    const worldPerPixel = (2 * Math.tan(vFov / 2) * distance) / screenHeight;
+
+    const offsetWorld = worldPerPixel * OUTLINE_OFFSET_PX;
+    const thicknessWorld = worldPerPixel * OUTLINE_THICKNESS_PX;
+
+    const innerRadius = POINT_RADIUS + offsetWorld;
+    const outerRadius = innerRadius + thicknessWorld;
+
+    ring.geometry.dispose();
+    ring.geometry = new THREE.RingGeometry(innerRadius, outerRadius, OUTLINE_SEGMENTS);
+  });
+}
+
+function buildHoverPanelHTML(i) {
+  const a = points[i];
+  const mainGenre = a.genres.primary[0] ?? "";
+  return `
+    <strong>${a.album}</strong>
+    <div class="artist">${a.artist} · ${a.year}</div>
+    ${mainGenre ? `<div class="genres"><span class="primary">${mainGenre}</span></div>` : ""}
+  `;
+}
+
+function showTooltipForPoint(i, x, y) {
+  ui.tooltip.innerHTML = buildHoverPanelHTML(i);
+  ui.tooltip.style.pointerEvents = "none";
+  ui.tooltip.style.right = "auto";
+  ui.tooltip.style.display = "block";
+  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
+  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
+}
+
+function ensureMultiSelectPanel(idx) {
+  if (multiSelectPanels.has(idx)) return multiSelectPanels.get(idx);
+
+  const el = document.createElement("div");
+  el.className = ui.tooltip.className;
+  el.style.position = "absolute";
+  el.style.pointerEvents = "none";
+  el.style.display = "block";
+  document.body.appendChild(el);
+  multiSelectPanels.set(idx, el);
+  return el;
+}
+
+function clearMultiSelectPanels() {
+  multiSelectPanels.forEach(el => el.remove());
+  multiSelectPanels.clear();
+}
+
+function updateMultiSelectPanels() {
+  const keep = new Set();
+
+  selectedIndices.forEach(idx => {
+    const mesh = pointMeshes[idx];
+    if (!mesh) return;
+    keep.add(idx);
+
+    const el = ensureMultiSelectPanel(idx);
+    el.innerHTML = buildHoverPanelHTML(idx);
+
+    const { x, y } = projectToScreen(mesh.position);
+    el.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
+    el.style.top = `${Math.min(y + 16, innerHeight - 150)}px`;
+  });
+
+  [...multiSelectPanels.keys()].forEach(idx => {
+    if (!keep.has(idx)) {
+      multiSelectPanels.get(idx).remove();
+      multiSelectPanels.delete(idx);
+    }
+  });
+}
+
+const CLICK_DRAG_THRESHOLD_PX = 6;
+let pointerDownX = 0;
+let pointerDownY = 0;
+
+window.addEventListener("pointerdown", e => {
+  pointerDownX = e.clientX;
+  pointerDownY = e.clientY;
+});
+
+function selectAlbum(idx, additive = false) {
+  const mesh = pointMeshes[idx];
+  const point = points[idx];
+  if (!mesh || !point) return;
+
+  if (additive) {
+    if (selectedIndices.has(idx)) {
+      selectedIndices.delete(idx);
+    } else {
+      selectedIndices.add(idx);
+    }
+  } else {
+    const isOnlySelected = selectedIndices.size === 1 && selectedIndices.has(idx);
+    selectedIndices = isOnlySelected ? new Set() : new Set([idx]);
+  }
+
+  applySelection();
+
+  if (selectedIndices.size === 1) {
+    const onlyIdx = [...selectedIndices][0];
+    focusCameraOnPoint(pointMeshes[onlyIdx]);
+    scrollListToAlbum(points[onlyIdx]);
+  }
+}
+
+function pointerClick(e) {
+  if (e.target !== renderer.domElement) return;
+
+  const dx = e.clientX - pointerDownX;
+  const dy = e.clientY - pointerDownY;
+  if (Math.hypot(dx, dy) > CLICK_DRAG_THRESHOLD_PX) return;
+
+  mouse.x = e.clientX / innerWidth * 2 - 1;
+  mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse,camera);
+
+  const hit = raycaster.intersectObjects(pointMeshes)[0];
+  if (hit) {
+    const additive = e.ctrlKey || e.metaKey;
+    selectAlbum(hit.object.userData.index, additive);
+    return;
+  }
+
+  if (timeMode) {
+    const yearHit = raycaster.intersectObjects([...orbitRings, ...yearSprites])[0];
+    if (yearHit) {
+      toggleYearHighlight(yearHit.object.userData.year);
+      return;
+    }
+  }
+
+  clearHighlight();
+  clearGenreHighlight();
+  clearYearHighlight();
+}
+
+function jumpToAlbum(a) {
+  selectAlbum(a.idx, true);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  tickAnimation();
+  tickCameraFocus();
+  updateSelectionOutlines();
+  updateGenreLabels();
+  updateConnections();
+  if (selectedIndices.size > 1) updateMultiSelectPanels();
+  controls.update();
+  renderer.render(scene,camera);
+}
+ 
 const ui = {
   list: document.querySelector("#albumList"),
   search: document.querySelector("#search"),
@@ -552,37 +815,37 @@ async function calculateModel() {
     `${albums.length} álbumes · ${vocab.genres.length} géneros · ${vocab.descriptors.length} descriptores · UMAP 3D`;
 }
 
-function clearScene() {
-  pointMeshes.forEach(m => {
-    m.geometry.dispose();
-    m.material.dispose();
-    root.remove(m);
-  });
-  pointMeshes = [];
+// function clearScene() {
+//   pointMeshes.forEach(m => {
+//     m.geometry.dispose();
+//     m.material.dispose();
+//     root.remove(m);
+//   });
+//   pointMeshes = [];
 
-  yearSprites.forEach(s => {
-    s.material.map?.dispose();
-    s.material.dispose();
-    root.remove(s);
-  });
-  yearSprites = [];
+//   yearSprites.forEach(s => {
+//     s.material.map?.dispose();
+//     s.material.dispose();
+//     root.remove(s);
+//   });
+//   yearSprites = [];
 
-  orbitRings.forEach(r => {
-    r.geometry.dispose();
-    r.material.dispose();
-    root.remove(r);
-  });
-  orbitRings = [];
+//   orbitRings.forEach(r => {
+//     r.geometry.dispose();
+//     r.material.dispose();
+//     root.remove(r);
+//   });
+//   orbitRings = [];
 
-  clearGenreLabels();
-  clearConnections();
-  clearSelectionOutline();
-  disposeOutlineMeshes();
+//   clearGenreLabels();
+//   clearConnections();
+//   clearSelectionOutline();
+//   disposeOutlineMeshes();
 
-  selected = null;
-  selectedGenres.clear();
-  selectedYear = null;
-}
+//   selected = null;
+//   selectedGenres.clear();
+//   selectedYear = null;
+// }
 
 function createPoints() {
   points.forEach((a,i) => {
@@ -954,14 +1217,6 @@ function highlightPoint(mesh) {
   if (idx !== undefined) buildDiscoveryGraph(idx);
 }
 
-function clearHighlight() {
-  pointMeshes.forEach(m => { m.material.opacity = 1; });
-  selected = null;
-  clearConnections();
-  clearSelectionOutline();
-  unpinTooltip();
-}
-
 function legendDotColor(g) {
   const family = cachedFamilyForGenre(g);
 
@@ -1222,22 +1477,6 @@ function selectSuggestion(i) {
   jumpToAlbum(a);
 }
 
-function jumpToAlbum(a) {
-  selectAlbum(a.idx);
-}
-
-function selectAlbum(idx) {
-  const mesh = pointMeshes[idx];
-  const point = points[idx];
-  if (!mesh || !point) return;
-
-  highlightPoint(mesh);
-  focusCameraOnPoint(mesh);
-  showSelectionOutline(mesh, point.color);
-  scrollListToAlbum(point);
-  pinTooltip(idx);
-}
-
 function computeNearestAlbums(idx, k = 3) {
   const origin = points[idx];
   if (!origin) return [];
@@ -1317,18 +1556,13 @@ function clearConnections() {
   hoverPreviewIndex = null;
 }
 
-function buildDiscoveryGraph(originIdx) {
-  clearConnections();
-
+function buildArtistChainConnections(originIdx) {
   const origin = points[originIdx];
   if (!origin) return;
 
   const now = performance.now();
-  const visitedArtists = new Set([origin.artist]); // acumula TODOS los artistas ya usados en el recorrido
   const originColor = origin.color.getHex();
-  activeGraphIndices.add(origin.idx);
 
-  // --- Hilo cronológico entre discos del mismo artista ---
   const sameArtistChain = points
     .filter(p => p.artist === origin.artist)
     .sort((a, b) => a.year - b.year);
@@ -1346,6 +1580,19 @@ function buildDiscoveryGraph(originIdx) {
       CONNECTION_CONFIG.lineWidth
     );
   }
+}
+
+function buildDiscoveryGraph(originIdx) {
+  // clearConnections(); 
+
+  const origin = points[originIdx];
+  if (!origin) return;
+
+  const now = performance.now();
+  const visitedArtists = new Set([origin.artist]);
+  activeGraphIndices.add(origin.idx);
+
+  buildArtistChainConnections(originIdx);
 
   const level1Delay = now + CONNECTION_CONFIG.stageDelay;
   const level1 = pickNearestUnvisited(
@@ -1358,7 +1605,7 @@ function buildDiscoveryGraph(originIdx) {
     activeGraphIndices.add(node.idx);
 
     addConnection(
-      pointMeshes[origin.idx], nodeMesh, originColor, CONNECTION_CONFIG.level1LineOpacity, true, appearAt,
+      pointMeshes[origin.idx], nodeMesh, origin.color.getHex(), CONNECTION_CONFIG.level1LineOpacity, true, appearAt,
       CONNECTION_CONFIG.lineWidth
     );
     fadeNodeIn(nodeMesh, CONNECTION_CONFIG.level1NodeOpacity, appearAt);
@@ -1374,12 +1621,107 @@ function buildDiscoveryGraph(originIdx) {
       activeGraphIndices.add(child.idx);
 
       addConnection(
-        nodeMesh, childMesh, originColor, CONNECTION_CONFIG.level2LineOpacity, true, childAppearAt,
+        nodeMesh, childMesh, origin.color.getHex(), CONNECTION_CONFIG.level2LineOpacity, true, childAppearAt,
         CONNECTION_CONFIG.lineWidth
       );
       fadeNodeIn(childMesh, CONNECTION_CONFIG.level2NodeOpacity, childAppearAt);
     });
   });
+}
+
+function buildMultiSelectionChains() {
+  const seenArtists = new Set();
+
+  selectedIndices.forEach(idx => {
+    const point = points[idx];
+    if (!point || seenArtists.has(point.artist)) return;
+    seenArtists.add(point.artist);
+    buildArtistChainConnections(idx);
+  });
+}
+
+function ensureSelectedChipsContainer() {
+  if (ui.selectedChips) return ui.selectedChips;
+
+  const container = document.createElement("div");
+  container.id = "selectedChips";
+  container.style.cssText = "display:none;flex-wrap:wrap;gap:6px;margin-top:8px;";
+  ui.search.insertAdjacentElement("afterend", container);
+  ui.selectedChips = container;
+  return container;
+}
+
+function renderSelectedChips() {
+  const container = ensureSelectedChipsContainer();
+  container.textContent = "";
+
+  [...selectedIndices].forEach(idx => {
+    const point = points[idx];
+    if (!point) return;
+
+    const chip = document.createElement("span");
+    chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#f0f0f0;font-size:12px;";
+
+    const dot = document.createElement("i");
+    dot.style.cssText = `display:inline-block;width:7px;height:7px;border-radius:50%;background:${point.color.getStyle()};`;
+
+    const label = document.createElement("span");
+    label.textContent = point.album;
+
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.setAttribute("aria-label", `Quitar ${point.album}`);
+    closeBtn.style.cssText = "border:none;background:none;cursor:pointer;font-size:14px;line-height:1;color:#888;padding:0;";
+    closeBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      selectedIndices.delete(idx);
+      applySelection();
+    });
+
+    chip.appendChild(dot);
+    chip.appendChild(label);
+    chip.appendChild(closeBtn);
+    container.appendChild(chip);
+  });
+
+  container.style.display = selectedIndices.size ? "flex" : "none";
+}
+
+function applySelection() {
+  clearYearHighlight();
+  clearGenreHighlight();
+  clearConnections();
+  unpinTooltip();
+  clearMultiSelectPanels();
+
+  updateSelectionVisuals();
+  renderSelectedChips();
+
+  if (selectedIndices.size === 0) {
+    clearSelectionOutlines();
+    return;
+  }
+
+  showSelectionOutlines();
+
+  if (selectedIndices.size === 1) {
+    const idx = [...selectedIndices][0];
+    buildDiscoveryGraph(idx);
+    pinTooltip(idx);
+  } else {
+    selectedIndices.forEach(idx => buildDiscoveryGraph(idx));
+    updateMultiSelectPanels();
+  }
+}
+
+function clearHighlight() {
+  pointMeshes.forEach(m => { m.material.opacity = 1; });
+  selectedIndices.clear();
+  clearConnections();
+  clearSelectionOutlines();
+  clearMultiSelectPanels();
+  unpinTooltip();
+  renderSelectedChips();
 }
 
 function updateConnections() {
@@ -1506,21 +1848,21 @@ function fitCamera() {
   controls.update();
 }
 
-function showTooltipForPoint(i, x, y) {
-  const a = points[i];
-  const primary = a.genres.primary.map(g=>`<span class="primary">${g}</span>`).join(" · ");
-  const secondary = a.genres.secondary.map(g=>`<span class="secondary">${g}</span>`).join(" · ");
-  ui.tooltip.innerHTML = `
-    <strong>${a.album}</strong>
-    <div class="artist">${a.artist} · ${a.year}</div>
-    <div class="genres">${primary}${secondary ? "<br>"+secondary : ""}</div>
-  `;
-  ui.tooltip.style.pointerEvents = "none";
-  ui.tooltip.style.right = "auto";
-  ui.tooltip.style.display = "block";
-  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
-  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
-}
+// function showTooltipForPoint(i, x, y) {
+//   const a = points[i];
+//   const primary = a.genres.primary.map(g=>`<span class="primary">${g}</span>`).join(" · ");
+//   const secondary = a.genres.secondary.map(g=>`<span class="secondary">${g}</span>`).join(" · ");
+//   ui.tooltip.innerHTML = `
+//     <strong>${a.album}</strong>
+//     <div class="artist">${a.artist} · ${a.year}</div>
+//     <div class="genres">${primary}${secondary ? "<br>"+secondary : ""}</div>
+//   `;
+//   ui.tooltip.style.pointerEvents = "none";
+//   ui.tooltip.style.right = "auto";
+//   ui.tooltip.style.display = "block";
+//   ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
+//   ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
+// }
 
 function hideTooltip() {
   ui.tooltip.style.display = "none";
@@ -1821,7 +2163,8 @@ function pointerMove(e) {
 
   if (pinnedIndex !== null) {
     const hitIdx = hit?.object.userData.index;
-    const showPreview = hit && hitIdx !== pinnedIndex && activeGraphIndices.has(hitIdx);
+    const compareMode = e.ctrlKey || e.metaKey;
+    const showPreview = hit && hitIdx !== pinnedIndex && (compareMode || activeGraphIndices.has(hitIdx));
 
     if (showPreview) {
       hoverPreviewIndex = hitIdx;
@@ -1835,37 +2178,14 @@ function pointerMove(e) {
 
   if (selectedYear !== null) return;
 
-  if (hit) {
-    showTooltipForPoint(hit.object.userData.index, e.clientX, e.clientY);
+  const hitIdx = hit?.object.userData.index;
+  const compareMode = (e.ctrlKey || e.metaKey) && selectedIndices.size > 0;
+
+  if (hit && (compareMode || !selectedIndices.has(hitIdx))) {
+    showTooltipForPoint(hitIdx, e.clientX, e.clientY);
   } else {
     hideTooltip();
   }
-}
-
-function pointerClick(e) {
-  if (e.target !== renderer.domElement) return; // ignora clicks fuera del mapa 3D (ej: dropdown de búsqueda)
-
-  mouse.x = e.clientX / innerWidth * 2 - 1;
-  mouse.y = -(e.clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse,camera);
-
-  const hit = raycaster.intersectObjects(pointMeshes)[0];
-  if (hit) {
-    selectAlbum(hit.object.userData.index);
-    return;
-  }
-
-  if (timeMode) {
-    const yearHit = raycaster.intersectObjects([...orbitRings, ...yearSprites])[0];
-    if (yearHit) {
-      toggleYearHighlight(yearHit.object.userData.year);
-      return;
-    }
-  }
-
-  clearHighlight();
-  clearGenreHighlight();
-  clearYearHighlight();
 }
 
 function scrollListToAlbum(a) {
@@ -1921,17 +2241,6 @@ window.addEventListener("resize",()=>{
   renderer.setSize(innerWidth,innerHeight);
   connectionLines.forEach(c => c.line.material.resolution.set(innerWidth, innerHeight));
 });
-
-function animate() {
-  requestAnimationFrame(animate);
-  tickAnimation();
-  tickCameraFocus();
-  updateSelectionOutline();
-  updateGenreLabels();
-  updateConnections();
-  controls.update();
-  renderer.render(scene,camera);
-}
 
 function buildEventsByYear(events) {
   const map = new Map();

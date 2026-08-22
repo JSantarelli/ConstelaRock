@@ -772,7 +772,7 @@
   {
     "id": "tango_4",
     "album": "Tango 4",
-    "artist": "Charly García - Pedro Aznar",
+    "artist": "Charly García",
     "year": 1991,
     "genres": {
       "primary": [
@@ -3225,7 +3225,7 @@
     {
     "id": "la-la-la",
     "album": "La la la",
-    "artist": "Spinetta-Páez",
+    "artist": "Fito Páez",
     "year": 1986,
     "genres": {
     "primary": [
@@ -15022,6 +15022,720 @@
   },
   "descriptors": []
 },
+  {
+    "id": "musica-pep",
+    "album": "Música Pep",
+    "artist": "Los Helicópteros",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Jangle Pop",
+        "Surf Rock",
+        "Twee Pop"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "rhythmic",
+      "romantic",
+      "uplifting",
+      "melodic",
+      "love"
+    ]
+  },
+  {
+    "id": "tic-tic",
+    "album": "Tic-Tic",
+    "artist": "Los Helicópteros",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Surf Rock",
+        "Jangle Pop",
+        "Beat",
+        "Twee Pop"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "humorous",
+      "playful",
+      "lush",
+      "energetic",
+      "hedonism",
+      "rhythmic",
+      "melodic",
+      "sarcastic",
+      "eclectic"
+    ]
+  },
+  {
+    "id": "los-helicopteros",
+    "album": "Los Helicópteros",
+    "artist": "Los Helicópteros",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Rockabilly"
+      ]
+    },
+    "descriptors": [
+      "humorous",
+      "rhythmic",
+      "satirical",
+      "eclectic"
+    ]
+  },
+  {
+    "id": "fuego-y-cemento",
+    "album": "Fuego & cemento",
+    "artist": "Los Helicópteros",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "Synthpop"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "girasoles",
+    "album": "Girasoles",
+    "artist": "Los Helicópteros",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Synthpop"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "jovenes-pordioseros-2001",
+    "album": "Jóvenes Pordioseros",
+    "artist": "Jóvenes Pordioseros",
+    "year": 2001,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Blues Rock"]
+    },
+    "descriptors": ["alcohol", "hedonism", "male vocalist", "party"]
+  },
+  {
+    "id": "vicio",
+    "album": "Vicio",
+    "artist": "Jóvenes Pordioseros",
+    "year": 2004,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Blues Rock", "Hard Rock"]
+    },
+    "descriptors": ["boastful", "alcohol", "energetic", "drugs", "hedonism", "male vocalist"]
+  },
+  {
+    "id": "sangre",
+    "album": "Sangre",
+    "artist": "Jóvenes Pordioseros",
+    "year": 2006,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "abstinencia",
+    "album": "Abstinencia",
+    "artist": "Jóvenes Pordioseros",
+    "year": 2011,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "panico",
+    "album": "Pánico",
+    "artist": "Jóvenes Pordioseros",
+    "year": 2014,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Blues Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "late",
+    "album": "Late",
+    "artist": "Jóvenes Pordioseros",
+    "year": 2017,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-cerebro",
+    "album": "El cerebro",
+    "artist": "Érica García",
+    "year": 1997,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Latin Rock", "Latin Alternative", "Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-bestia",
+    "album": "La bestia",
+    "artist": "Érica García",
+    "year": 1998,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "amorama",
+    "album": "Amorama",
+    "artist": "Érica García",
+    "year": 2001,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Alternative Rock"]
+    },
+    "descriptors": ["female vocalist", "energetic", "quirky", "breakup", "melodic", "love", "bittersweet", "passionate"]
+  },
+  {
+    "id": "canciones-del-huracan",
+    "album": "Canciones del huracán",
+    "artist": "Tan Biónica",
+    "year": 2007,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Power Pop", "Alternative Rock", "Latin Alternative"]
+    },
+    "descriptors": ["anxious", "nocturnal", "dark", "melancholic", "sentimental", "sad", "chaotic", "raw", "violence", "breakup", "bittersweet", "drugs", "male vocalist"]
+  },
+  {
+    "id": "obsesionario",
+    "album": "Obsesionario",
+    "artist": "Tan Biónica",
+    "year": 2010,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Electropop", "Synthpop", "Post-Britpop"]
+    },
+    "descriptors": ["melodic", "love", "bittersweet", "nocturnal", "male vocalist", "anthemic", "romantic", "passionate"]
+  },
+  {
+    "id": "destinologia",
+    "album": "Destinología",
+    "artist": "Tan Biónica",
+    "year": 2013,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Electropop", "Synthpop", "Dance-Pop"]
+    },
+    "descriptors": ["nocturnal", "anthemic", "melodic", "male vocalist"]
+  },
+  {
+    "id": "hola-mundo",
+    "album": "Hola mundo",
+    "artist": "Tan Biónica",
+    "year": 2015,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Synthpop", "Electropop", "Alt-Pop", "Art Pop", "Indietronica"]
+    },
+    "descriptors": ["nocturnal", "urban", "lush", "energetic", "rhythmic", "uplifting", "melodic", "love", "male vocalist"]
+  },
+  {
+    "id": "el-regreso",
+    "album": "El regreso",
+    "artist": "Tan Biónica",
+    "year": 2025,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Synthpop", "Alt-Pop"]
+    },
+    "descriptors": ["male vocalist"]
+  },
+  {
+    "id": "el-milagro-argentino",
+    "album": "El milagro argentino",
+    "artist": "Los Auténticos Decadentes",
+    "year": 1989,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": ["Pop Rock", "Third Wave Ska", "Murga"]
+    },
+    "descriptors": ["male vocalist", "party", "urban", "playful", "triumphant", "quirky", "warm", "passionate", "energetic", "humorous"]
+  },
+  {
+    "id": "supersonico",
+    "album": "¡Supersónico!",
+    "artist": "Los Auténticos Decadentes",
+    "year": 1991,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Latin Alternative", "Third Wave Ska", "Murga uruguaya"]
+    },
+    "descriptors": ["humorous", "party", "sarcastic", "male vocalist"]
+  },
+  {
+    "id": "fiesta-monstruo",
+    "album": "Fiesta monstruo",
+    "artist": "Los Auténticos Decadentes",
+    "year": 1993,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": ["Pop Rock", "Latin Alternative"]
+    },
+    "descriptors": ["rhythmic", "warm", "humorous", "uplifting", "party", "eclectic", "male vocalist"]
+  },
+  {
+    "id": "mi-vida-loca",
+    "album": "Mi vida loca",
+    "artist": "Los Auténticos Decadentes",
+    "year": 1995,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": ["Pop Rock", "Ska", "Murga", "Cumbia argentina", "Latin Rock"]
+    },
+    "descriptors": ["party", "playful", "energetic", "eclectic", "male vocalist", "melodic", "love", "warm", "rhythmic", "rebellious", "longing", "breakup"]
+  },
+  {
+    "id": "cualquiera-puede-cantar",
+    "album": "Cualquiera puede cantar!!!",
+    "artist": "Los Auténticos Decadentes",
+    "year": 1997,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": ["Ska", "Pop Rock", "Cumbia argentina", "Reggae", "Third Wave Ska", "Cumbia"]
+    },
+    "descriptors": ["alcohol", "humorous", "urban", "party", "playful", "uplifting", "eclectic", "male vocalist"]
+  },
+  {
+    "id": "hoy-trasnoche",
+    "album": "Hoy trasnoche",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2000,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Ska", "Cumbia argentina"]
+    },
+    "descriptors": ["mellow", "male vocalist", "party", "nocturnal"]
+  },
+  {
+    "id": "sigue-tu-camino",
+    "album": "Sigue tu camino",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2003,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Latin Alternative", "Ska", "Latin Rock", "Murga"]
+    },
+    "descriptors": ["party", "rhythmic", "uplifting", "male vocalist"]
+  },
+  {
+    "id": "sigue-tu-camino-versiones-y-remixes",
+    "album": "Sigue tu camino versiones y remixes",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2004,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "club-atletico-decadente",
+    "album": "Club Atlético Decadente",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2006,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": ["Ska", "Murga", "Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "irrompibles",
+    "album": "Irrompibles",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2010,
+    "genres": {
+      "primary": ["Ska"],
+      "secondary": ["Murga", "Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "argentina-rocco-granata",
+    "album": "Argentina",
+    "artist": "Rocco Granata con Enrique Noviello & Los Auténticos Decadentes",
+    "year": 2013,
+    "genres": {
+      "primary": ["Tango"],
+      "secondary": ["Murga", "Italo Pop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "y-la-banda-sigue",
+    "album": "Y la banda sigue",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2014,
+    "genres": {
+      "primary": ["Latin Alternative"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-autenticos-reggaementes",
+    "album": "Los Auténticos Reggaementes",
+    "artist": "Klub & Los Auténticos Decadentes",
+    "year": 2017,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Ska", "Murga"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "adn-capitulo-a",
+    "album": "ADN (Capítulo A)",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2021,
+    "genres": {
+      "primary": ["Pop"],
+      "secondary": ["Latin Funk", "Reggae", "Candombe"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "adn-capitulo-d",
+    "album": "ADN (Capítulo D)",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2022,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": ["rhythmic", "warm", "party", "breakup", "playful", "love", "eclectic", "boastful", "male vocalist", "energetic"]
+  },
+  {
+    "id": "adn-capitulo-n",
+    "album": "ADN (Capítulo N)",
+    "artist": "Los Auténticos Decadentes",
+    "year": 2023,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Ska", "Cuarteto", "Cumbia argentina", "Murga uruguaya"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "emporio-bizarro",
+    "album": "Emporio bizarro",
+    "artist": "Santos Inocentes",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Industrial Rock",
+        "Neo-Psychedelia",
+        "Alternative Dance"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "megaton",
+    "album": "Megaton",
+    "artist": "Santos Inocentes",
+    "year": 2000,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Industrial Rock",
+        "Industrial Metal",
+        "Trip Hop",
+        "Electro-Industrial"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-avion-ya-se-estrello-y-yo-sigo-volando",
+    "album": "El avión ya se estrelló y yo sigo volando",
+    "artist": "Jaime Sin Tierra",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Slacker Rock",
+        "Post-Hardcore",
+        "Noise Pop",
+        "Shoegaze",
+        "Emo"
+      ]
+    },
+    "descriptors": [
+      "soft",
+      "anxious",
+      "passionate",
+      "failure",
+      "introspective",
+      "melancholic",
+      "lethargic",
+      "sentimental",
+      "twinkling",
+      "energetic",
+      "depressive",
+      "dense",
+      "noisy",
+      "lonely",
+      "raw",
+      "psychedelic",
+      "breakup",
+      "melodic",
+      "bittersweet"
+    ]
+  },
+  {
+    "id": "autochocador",
+    "album": "Autochocador",
+    "artist": "Jaime Sin Tierra",
+    "year": 2000,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Art Rock",
+        "Neo-Psychedelia",
+        "Dream Pop",
+        "Space Rock Revival",
+        "Noise Pop"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "atmospheric",
+      "introspective",
+      "depressive",
+      "ethereal",
+      "sentimental",
+      "mellow",
+      "longing",
+      "lethargic",
+      "sad",
+      "noisy",
+      "lonely",
+      "winter",
+      "melodic",
+      "love",
+      "psychedelic",
+      "breakup",
+      "anxious",
+      "bittersweet",
+      "poetic",
+      "lush"
+    ]
+  },
+  {
+    "id": "lo-que-va-a-encandilar-es-el-dia",
+    "album": "...Lo que va a encandilar es el día",
+    "artist": "Jaime Sin Tierra",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Dream Pop",
+        "Slowcore",
+        "Indie Rock"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "mellow",
+      "soft",
+      "introspective",
+      "peaceful",
+      "soothing",
+      "ethereal",
+      "bittersweet",
+      "existential",
+      "psychedelic",
+      "autumn",
+      "atmospheric",
+      "rain",
+      "lethargic",
+      "lush",
+      "sentimental",
+      "pastoral",
+      "warm",
+      "poetic",
+      "calm",
+      "sad",
+      "lonely",
+      "aquatic",
+      "longing",
+      "breakup",
+      "melodic",
+      "hypnotic"
+    ]
+  },
+  {
+    "id": "tren",
+    "album": "Tren",
+    "artist": "Jaime Sin Tierra",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Post-Rock"
+      ],
+      "secondary": [
+        "Ambient Pop",
+        "Art Rock",
+        "Slowcore",
+        "Indietronica",
+        "Space Ambient",
+        "Progressive Electronic"
+      ]
+    },
+    "descriptors": [
+      "lonely",
+      "melancholic",
+      "atmospheric",
+      "hypnotic",
+      "ethereal",
+      "sombre",
+      "mellow",
+      "cold",
+      "sparse",
+      "winter",
+      "lo-fi",
+      "calm",
+      "lush",
+      "bittersweet",
+      "warm",
+      "sentimental",
+      "sad",
+      "soothing",
+      "nocturnal",
+      "twinkling",
+      "avant-garde",
+      "dreams",
+      "progressive",
+      "soft",
+      "passionate"
+    ]
+  },
+  {
+    "id": "la-industria-del-poder",
+    "album": "La industria del poder",
+    "artist": "Logos",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Heavy Metal"
+      ],
+      "secondary": [
+        "Speed Metal",
+        "Thrash Metal",
+        "US Power Metal"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "energetic",
+      "dark",
+      "Christian",
+      "conscious",
+      "anthemic",
+      "rebellious",
+      "political"
+    ]
+  },
+  {
+    "id": "generacion-mutante",
+    "album": "Generacion mutante",
+    "artist": "Logos",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Heavy Metal"
+      ],
+      "secondary": [
+        "Speed Metal",
+        "Groove Metal"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "energetic",
+      "melodic"
+    ]
+  },
+  {
+    "id": "plan-mundial-para-la-destruccion",
+    "album": "Plan mundial para la destrucción",
+    "artist": "Logos",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Heavy Metal"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-traves-de-los-tiempos",
+    "album": "A través de los tiempos",
+    "artist": "Logos",
+    "year": 2009,
+    "genres": {
+      "primary": [
+        "Heavy Metal"
+      ],
+      "secondary": [
+        "Power Metal"
+      ]
+    },
+    "descriptors": []
+  },
   {
     "id": "color-humano-1972",
     "album": "Color Humano",
