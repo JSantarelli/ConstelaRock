@@ -12,7 +12,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xFFFFFF);
 
 const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
-camera.position.set(0, 0, 120);
+camera.position.set(0, 0, 90);
 
 const renderer = new THREE.WebGLRenderer({ antialias:true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -301,6 +301,7 @@ function animate() {
   updateSelectionOutlines();
   updateGenreLabels();
   updateConnections();
+  if (selectedIndices.size === 1) updatePinnedTooltipPosition(); // <-- nuevo
   if (selectedIndices.size > 1) updateMultiSelectPanels();
   controls.update();
   renderer.render(scene,camera);
@@ -344,21 +345,21 @@ const OUTLINE_THICKNESS_PX = 2;
 const OUTLINE_SEGMENTS = 40;
 
 const GENRE_LABEL_CONFIG = {
-  minAlbumsForLabel: 2,   // ignora géneros con muy pocos álbumes (ruido visual)
-  radiusPadding: 16,      // qué tanto se empuja la etiqueta más allá de su cluster
-  visibleOpacity: 0.85,
+  minAlbumsForLabel: 2,
+  radiusPadding: 8,   // <-- antes 16; más cerca del centroide del cluster
+  visibleOpacity: 1,
   fadeSpeed: 0.15,
-  overlapScreenDist: 46   // px mínimos entre dos etiquetas en pantalla antes de considerarlas solapadas
+  overlapScreenDist: 48
 };
 
 const EVENT_LABEL_CONFIG = {
-  offsetX: 3,           // separación horizontal respecto del borde del sprite del año
+  offsetX: 1,           // separación horizontal respecto del borde del sprite del año
   fontSize: 24,         // mismo tamaño que el sprite del año (ver YEAR_LABEL_CONFIG)
-  color: "#8a8a8a",
+  color: "#676767",
   maxCharsPerLine: 18,  // más chico que antes: con la tipografía más grande, menos caracteres entran por línea
-  maxLines: 4,
-  lineHeight: 64,
-  dimmedOpacity: 0.2    // opacidad cuando hay otro año seleccionado
+  maxLines: 1,
+  lineHeight: 36,
+  dimmedOpacity: 0.25    // opacidad cuando hay otro año seleccionado
 };
 
 const YEAR_LABEL_DEFAULT_TINT = 0xffffff;
@@ -459,154 +460,179 @@ function vectorize(album, vocab, descriptorWeight) {
 const GENRE_FAMILIES = [
 
   // ---------- METAL ----------
-  { match: /heavy metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [18, 32] },
-  { match: /thrash metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [30, 44] },
-  { match: /alternative metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [40, 52] },
-  { match: /groove metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [50, 62] },
-  { match: /metalcore/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [60, 72] },
-  { match: /nu metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [70, 82] },
-  { match: /power metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [78, 90] },
-  { match: /speed metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [86, 98] },
-  { match: /glam metal/i, group: "Metal", hueRange: [0, 0], satRange: [0, 8], lightRange: [92, 100] },
+  { match: /heavy metal/i,        group: "Metal", hueRange: [0, 0],   satRange: [0, 5],  lightRange: [12, 22] },
+  { match: /thrash metal/i,       group: "Metal", hueRange: [0, 0],   satRange: [0, 5],  lightRange: [18, 28] },
+  { match: /alternative metal/i,  group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [24, 34] },
+  { match: /groove metal/i,       group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [30, 40] },
+  { match: /metalcore/i,          group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [36, 46] },
+  { match: /nu metal/i,           group: "Metal", hueRange: [0, 0],   satRange: [0, 10], lightRange: [42, 52] },
+  { match: /power metal/i,        group: "Metal", hueRange: [0, 0],   satRange: [0, 10], lightRange: [48, 58] },
+  { match: /speed metal/i,        group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [54, 64] },
+  { match: /glam metal/i,         group: "Metal", hueRange: [0, 0],   satRange: [0, 12], lightRange: [60, 72] },
+  { match: /neoclassical metal/i, group: "Metal", hueRange: [0, 0],   satRange: [0, 5],  lightRange: [15, 25] },
+  { match: /rap metal/i,          group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [25, 35] },
 
   // ---------- ROCK ----------
-  { match: /hard rock/i, group: "Rock", hueRange: [210, 220] },
-  { match: /alternative rock/i, group: "Rock", hueRange: [220, 232] },
-  { match: /blues rock/i, group: "Rock", hueRange: [232, 242] },
-  { match: /progressive rock/i, group: "Rock", hueRange: [242, 252] },
-  { match: /art rock/i, group: "Rock", hueRange: [252, 262] },
-  { match: /rock opera/i, group: "Rock", hueRange: [262, 272] },
-  { match: /\bbig music\b/i, group: "Rock", hueRange: [272, 282] },
-  { match: /\baor\b/i, group: "Rock", hueRange: [282, 292] },
-  { match: /acoustic rock/i, group: "Rock", hueRange: [292, 302] },
-  { match: /boogie rock/i, group: "Rock", hueRange: [302, 312] },
-  { match: /britpop/i, group: "Rock", hueRange: [312, 322] },
-  { match: /experimental rock/i, group: "Rock", hueRange: [322, 332] },
-  { match: /funk rock/i, group: "Rock", hueRange: [332, 342] },
-  { match: /garage rock/i, group: "Rock", hueRange: [342, 352] },
-  { match: /grunge/i, group: "Rock", hueRange: [352, 362] },
-  { match: /indie rock/i, group: "Rock", hueRange: [362, 372] },
-  { match: /industrial rock/i, group: "Rock", hueRange: [372, 382] },
-  { match: /noise rock/i, group: "Rock", hueRange: [382, 392] },
-  { match: /piano rock/i, group: "Rock", hueRange: [392, 402] },
-  { match: /roots rock/i, group: "Rock", hueRange: [402, 412] },
-  { match: /slacker rock/i, group: "Rock", hueRange: [412, 422] },
-  { match: /soft rock/i, group: "Rock", hueRange: [422, 432] },
-  { match: /stoner rock/i, group: "Rock", hueRange: [432, 442] },
-  { match: /^rock\s*(&|and)\s*roll$/i, group: "Rock", hueRange: [442, 452] },
-  { match: /^rock$/i, group: "Rock", hueRange: [452, 462] },
-  { match: /^blues$/i, group: "Rock", hueRange: [732, 742] },
-  { match: /comedy rock/i, group: "Rock", hueRange: [742, 752] },
-  { match: /rockabilly/i, group: "Rock", hueRange: [752, 762] },
-  { match: /^twist$/i, group: "Rock", hueRange: [762, 772] },
-  { match: /^funk$/i, group: "Rock", hueRange: [772, 782] },
+  { match: /hard rock/i,              group: "Rock", hueRange: [205, 210], satRange: [55, 75], lightRange: [30, 42] },
+  { match: /alternative rock/i,       group: "Rock", hueRange: [210, 215], satRange: [50, 75], lightRange: [35, 47] },
+  { match: /blues rock/i,             group: "Rock", hueRange: [215, 220], satRange: [45, 70], lightRange: [38, 50] },
+  { match: /progressive rock/i,       group: "Rock", hueRange: [220, 225], satRange: [50, 75], lightRange: [42, 54] },
+  { match: /art rock/i,               group: "Rock", hueRange: [225, 230], satRange: [45, 70], lightRange: [45, 57] },
+  { match: /rock opera/i,             group: "Rock", hueRange: [230, 235], satRange: [50, 75], lightRange: [48, 60] },
+  { match: /\bbig music\b/i,          group: "Rock", hueRange: [235, 240], satRange: [50, 80], lightRange: [50, 62] },
+  { match: /\baor\b/i,                group: "Rock", hueRange: [240, 245], satRange: [45, 70], lightRange: [52, 64] },
+  { match: /acoustic rock/i,          group: "Rock", hueRange: [210, 218], satRange: [35, 60], lightRange: [55, 67] },
+  { match: /boogie rock/i,            group: "Rock", hueRange: [215, 223], satRange: [45, 70], lightRange: [45, 57] },
+  { match: /britpop/i,                group: "Rock", hueRange: [220, 228], satRange: [50, 75], lightRange: [48, 60] },
+  { match: /experimental rock/i,      group: "Rock", hueRange: [225, 233], satRange: [45, 70], lightRange: [40, 52] },
+  { match: /funk rock/i,              group: "Rock", hueRange: [230, 238], satRange: [55, 80], lightRange: [45, 57] },
+  { match: /garage rock/i,            group: "Rock", hueRange: [205, 215], satRange: [60, 80], lightRange: [32, 44] },
+  { match: /grunge/i,                 group: "Rock", hueRange: [210, 220], satRange: [25, 50], lightRange: [28, 40] },
+  { match: /indie rock/i,             group: "Rock", hueRange: [220, 230], satRange: [40, 65], lightRange: [45, 58] },
+  { match: /industrial rock/i,        group: "Rock", hueRange: [225, 235], satRange: [20, 45], lightRange: [25, 38] },
+  { match: /noise rock/i,             group: "Rock", hueRange: [230, 240], satRange: [30, 55], lightRange: [30, 42] },
+  { match: /piano rock/i,             group: "Rock", hueRange: [235, 245], satRange: [35, 60], lightRange: [55, 67] },
+  { match: /roots rock/i,             group: "Rock", hueRange: [205, 215], satRange: [35, 60], lightRange: [40, 52] },
+  { match: /slacker rock/i,           group: "Rock", hueRange: [215, 225], satRange: [35, 60], lightRange: [45, 57] },
+  { match: /soft rock/i,              group: "Rock", hueRange: [225, 235], satRange: [35, 60], lightRange: [58, 70] },
+  { match: /stoner rock/i,            group: "Rock", hueRange: [205, 215], satRange: [40, 65], lightRange: [25, 37] },
+  { match: /^rock\s*(&|and)\s*roll$/i, group: "Rock", hueRange: [210, 220], satRange: [55, 80], lightRange: [38, 50] },
+  { match: /^rock$/i,                group: "Rock", hueRange: [220, 230], satRange: [50, 75], lightRange: [42, 54] },
+  { match: /comedy rock/i,            group: "Rock", hueRange: [235, 245], satRange: [50, 75], lightRange: [55, 67] },
+  { match: /geek rock/i,              group: "Rock", hueRange: [225, 235], satRange: [45, 70], lightRange: [55, 67] },
+  { match: /post-rock/i,              group: "Rock", hueRange: [240, 250], satRange: [35, 60], lightRange: [35, 50] },
 
   // ---------- PUNK ----------
-  { match: /punk rock/i, group: "Punk", hueRange: [0, 10] },
-  { match: /melodic hardcore/i, group: "Punk", hueRange: [10, 20] },
-  { match: /post-punk revival/i, group: "Punk", hueRange: [20, 30] },
-  { match: /dance-punk revival/i, group: "Punk", hueRange: [30, 40] },
-  { match: /art punk/i, group: "Punk", hueRange: [40, 50] },
-  { match: /hardcore punk/i, group: "Punk", hueRange: [50, 60] },
-  { match: /pop punk/i, group: "Punk", hueRange: [60, 70] },
-  { match: /post-hardcore/i, group: "Punk", hueRange: [70, 80] },
-  { match: /skate punk/i, group: "Punk", hueRange: [80, 90] },
+  { match: /punk rock/i,             group: "Punk", hueRange: [0, 5],   satRange: [75, 95], lightRange: [35, 45] },
+  { match: /melodic hardcore/i,      group: "Punk", hueRange: [5, 10],  satRange: [70, 90], lightRange: [40, 50] },
+  { match: /post-punk revival/i,      group: "Punk", hueRange: [10, 15], satRange: [65, 90], lightRange: [45, 55] },
+  { match: /dance-punk revival/i,     group: "Punk", hueRange: [15, 20], satRange: [70, 95], lightRange: [50, 60] },
+  { match: /art punk/i,              group: "Punk", hueRange: [20, 25], satRange: [60, 85], lightRange: [45, 55] },
+  { match: /hardcore punk/i,         group: "Punk", hueRange: [0, 8],   satRange: [80, 100], lightRange: [25, 35] },
+  { match: /pop punk/i,              group: "Punk", hueRange: [8, 16],  satRange: [70, 95], lightRange: [55, 65] },
+  { match: /post-hardcore/i,         group: "Punk", hueRange: [15, 22], satRange: [65, 90], lightRange: [35, 45] },
+  { match: /skate punk/i,            group: "Punk", hueRange: [22, 28], satRange: [75, 95], lightRange: [45, 55] },
 
   // ---------- POP ----------
-  { match: /synthpop/i, group: "Pop", hueRange: [265, 275] },
-  { match: /art pop/i, group: "Pop", hueRange: [275, 285] },
-  { match: /chamber pop/i, group: "Pop", hueRange: [285, 295] },
-  { match: /sophisti-pop/i, group: "Pop", hueRange: [295, 305] },
-  { match: /power pop/i, group: "Pop", hueRange: [305, 315] },
-  { match: /indie pop/i, group: "Pop", hueRange: [315, 325] },
-  { match: /twee pop/i, group: "Pop", hueRange: [325, 335] },
-  { match: /latin pop/i, group: "Pop", hueRange: [335, 345] },
-  { match: /pop rock/i, group: "Pop", hueRange: [345, 355] },
-  { match: /baroque pop/i, group: "Pop", hueRange: [355, 365] },
-  { match: /jangle pop/i, group: "Pop", hueRange: [365, 375] },
-  { match: /noise pop/i, group: "Pop", hueRange: [375, 385] },
-  { match: /progressive pop/i, group: "Pop", hueRange: [385, 395] },
-  { match: /dance-pop/i, group: "Pop", hueRange: [782, 792] },
-  { match: /^pop$/i, group: "Pop", hueRange: [792, 802] },
+  { match: /synthpop/i,              group: "Pop", hueRange: [285, 290], satRange: [55, 85], lightRange: [45, 58] },
+  { match: /art pop/i,               group: "Pop", hueRange: [290, 295], satRange: [50, 80], lightRange: [50, 63] },
+  { match: /chamber pop/i,           group: "Pop", hueRange: [295, 300], satRange: [40, 70], lightRange: [58, 70] },
+  { match: /sophisti-pop/i,          group: "Pop", hueRange: [300, 305], satRange: [40, 70], lightRange: [52, 65] },
+  { match: /power pop/i,             group: "Pop", hueRange: [305, 310], satRange: [65, 90], lightRange: [48, 60] },
+  { match: /indie pop/i,             group: "Pop", hueRange: [310, 315], satRange: [50, 80], lightRange: [50, 63] },
+  { match: /twee pop/i,              group: "Pop", hueRange: [315, 320], satRange: [45, 75], lightRange: [60, 72] },
+  { match: /latin pop/i,             group: "Pop", hueRange: [320, 325], satRange: [65, 90], lightRange: [50, 63] },
+  { match: /pop rock/i,              group: "Pop", hueRange: [325, 330], satRange: [55, 85], lightRange: [45, 58] },
+  { match: /baroque pop/i,           group: "Pop", hueRange: [330, 335], satRange: [40, 70], lightRange: [55, 68] },
+  { match: /jangle pop/i,            group: "Pop", hueRange: [300, 310], satRange: [45, 75], lightRange: [58, 70] },
+  { match: /noise pop/i,             group: "Pop", hueRange: [310, 320], satRange: [55, 85], lightRange: [42, 55] },
+  { match: /progressive pop/i,       group: "Pop", hueRange: [320, 330], satRange: [45, 75], lightRange: [45, 58] },
+  { match: /dance-pop/i,             group: "Pop", hueRange: [335, 340], satRange: [70, 95], lightRange: [50, 63] },
+  { match: /^pop$/i,                 group: "Pop", hueRange: [315, 325], satRange: [60, 90], lightRange: [55, 68] },
+  { match: /adult contemporary/i,    group: "Pop", hueRange: [290, 300], satRange: [30, 60], lightRange: [65, 78] },
+  { match: /electropop/i,            group: "Pop", hueRange: [280, 290], satRange: [60, 90], lightRange: [45, 60] },
+  { match: /folk pop/i,              group: "Pop", hueRange: [300, 310], satRange: [40, 70], lightRange: [60, 72] },
 
   // ---------- NEW WAVE ----------
-  { match: /new wave/i, group: "New Wave", hueRange: [300, 320] },
-  { match: /ethereal wave/i, group: "New Wave", hueRange: [320, 335] },
+  { match: /new wave/i,              group: "New Wave", hueRange: [260, 270], satRange: [45, 75], lightRange: [40, 55] },
+  { match: /ethereal wave/i,         group: "New Wave", hueRange: [270, 280], satRange: [35, 65], lightRange: [50, 65] },
 
   // ---------- POST-PUNK ----------
-  { match: /post-punk/i, group: "Post-Punk", hueRange: [350, 360] },
-  { match: /gothic rock/i, group: "Post-Punk", hueRange: [360, 372] },
+  { match: /post-punk/i,             group: "Post-Punk", hueRange: [330, 340], satRange: [45, 70], lightRange: [28, 42] },
+  { match: /gothic rock/i,            group: "Post-Punk", hueRange: [340, 350], satRange: [35, 65], lightRange: [22, 38] },
 
   // ---------- REGGAE ----------
-  { match: /reggae/i, group: "Reggae", hueRange: [100, 112] },
-  { match: /lovers rock/i, group: "Reggae", hueRange: [112, 124] },
-  { match: /\bdub\b/i, group: "Reggae", hueRange: [124, 136] },
+  { match: /reggae/i,                group: "Reggae", hueRange: [95, 105],  satRange: [55, 85], lightRange: [35, 50] },
+  { match: /lovers rock/i,           group: "Reggae", hueRange: [105, 115], satRange: [45, 75], lightRange: [45, 60] },
+  { match: /\bdub\b/i,               group: "Reggae", hueRange: [115, 130], satRange: [50, 80], lightRange: [28, 43] },
 
   // ---------- SKA ----------
-  { match: /2 tone/i, group: "Ska", hueRange: [70, 80] },
-  { match: /third wave ska/i, group: "Ska", hueRange: [80, 90] },
-  { match: /\bska\b/i, group: "Ska", hueRange: [90, 102] },
+  { match: /2 tone/i,                group: "Ska", hueRange: [45, 52], satRange: [60, 85], lightRange: [35, 50] },
+  { match: /third wave ska/i,        group: "Ska", hueRange: [52, 60], satRange: [65, 90], lightRange: [40, 55] },
+  { match: /\bska\b/i,               group: "Ska", hueRange: [60, 70], satRange: [60, 90], lightRange: [45, 60] },
 
   // ---------- PSICODELIA ----------
-  { match: /psychedelic rock/i, group: "Psicodelia", hueRange: [145, 155] },
-  { match: /neo-psychedelia/i, group: "Psicodelia", hueRange: [155, 165] },
-  { match: /shoegaze/i, group: "Psicodelia", hueRange: [165, 175] },
-  { match: /dream pop/i, group: "Psicodelia", hueRange: [462, 472] },
-  { match: /heavy psych/i, group: "Psicodelia", hueRange: [472, 482] },
-  { match: /psychedelic folk/i, group: "Psicodelia", hueRange: [482, 492] },
-  { match: /psychedelic pop/i, group: "Psicodelia", hueRange: [492, 502] },
-  { match: /acid rock/i, group: "Psicodelia", hueRange: [812, 822] },
-  { match: /space rock/i, group: "Psicodelia", hueRange: [822, 832] },
+  { match: /psychedelic rock/i,      group: "Psicodelia", hueRange: [165, 172], satRange: [55, 85], lightRange: [40, 55] },
+  { match: /neo-psychedelia/i,       group: "Psicodelia", hueRange: [172, 179], satRange: [50, 80], lightRange: [45, 60] },
+  { match: /shoegaze/i,              group: "Psicodelia", hueRange: [179, 186], satRange: [35, 65], lightRange: [50, 65] },
+  { match: /dream pop/i,             group: "Psicodelia", hueRange: [186, 193], satRange: [35, 70], lightRange: [55, 70] },
+  { match: /heavy psych/i,           group: "Psicodelia", hueRange: [160, 168], satRange: [60, 90], lightRange: [30, 45] },
+  { match: /psychedelic folk/i,      group: "Psicodelia", hueRange: [168, 176], satRange: [40, 70], lightRange: [50, 65] },
+  { match: /psychedelic pop/i,       group: "Psicodelia", hueRange: [176, 184], satRange: [55, 85], lightRange: [50, 65] },
+  { match: /acid rock/i,             group: "Psicodelia", hueRange: [184, 192], satRange: [60, 90], lightRange: [35, 50] },
+  { match: /space rock/i,            group: "Psicodelia", hueRange: [192, 200], satRange: [40, 75], lightRange: [35, 52] },
 
   // ---------- ELECTRÓNICA / DANCE ----------
-  { match: /downtempo/i, group: "Electrónica / Dance", hueRange: [175, 185] },
-  { match: /alternative dance/i, group: "Electrónica / Dance", hueRange: [185, 195] },
-  { match: /new rave/i, group: "Electrónica / Dance", hueRange: [195, 205] },
-  { match: /chillout/i, group: "Electrónica / Dance", hueRange: [502, 512] },
-  { match: /^electronic$/i, group: "Electrónica / Dance", hueRange: [512, 522] },
-  { match: /synth funk/i, group: "Electrónica / Dance", hueRange: [522, 532] },
-  { match: /euro house/i, group: "Electrónica / Dance", hueRange: [802, 812] },
+  { match: /downtempo/i,             group: "Electrónica", hueRange: [180, 188], satRange: [35, 65], lightRange: [40, 55] },
+  { match: /alternative dance/i,     group: "Electrónica", hueRange: [188, 196], satRange: [50, 80], lightRange: [45, 60] },
+  { match: /new rave/i,              group: "Electrónica", hueRange: [196, 204], satRange: [65, 95], lightRange: [45, 60] },
+  { match: /chillout/i,              group: "Electrónica", hueRange: [204, 212], satRange: [30, 60], lightRange: [55, 70] },
+  { match: /^electronic$/i,          group: "Electrónica", hueRange: [212, 220], satRange: [50, 80], lightRange: [45, 60] },
+  { match: /synth funk/i,            group: "Electrónica", hueRange: [220, 228], satRange: [55, 85], lightRange: [45, 60] },
+  { match: /euro house/i,            group: "Electrónica", hueRange: [228, 236], satRange: [65, 95], lightRange: [50, 65] },
+  { match: /acid house/i,            group: "Electrónica", hueRange: [196, 204], satRange: [70, 100], lightRange: [35, 50] },
+  { match: /electronic dance music/i, group: "Electrónica", hueRange: [204, 212], satRange: [70, 100], lightRange: [40, 55] },
+  { match: /indietronica/i,           group: "Electrónica", hueRange: [212, 220], satRange: [55, 85], lightRange: [45, 60] },
+  { match: /^techno$/i,              group: "Electrónica", hueRange: [220, 228], satRange: [60, 90], lightRange: [30, 45] },
+
+  // ---------- AMBIENT ----------
+  { match: /dark ambient/i,          group: "Electrónica", hueRange: [180, 190], satRange: [15, 40], lightRange: [20, 32] },
+  { match: /ambient pop/i,            group: "Electrónica", hueRange: [190, 200], satRange: [25, 55], lightRange: [55, 70] },
+  { match: /^ambient$/i,             group: "Electrónica", hueRange: [200, 210], satRange: [20, 50], lightRange: [45, 60] },
+  { match: /^drone$/i,               group: "Electrónica", hueRange: [210, 220], satRange: [10, 35], lightRange: [25, 40] },
 
   // ---------- HIP HOP / RAP ----------
-  { match: /rap rock/i, group: "Hip Hop / Rap", hueRange: [200, 210] },
-  { match: /pop rap/i, group: "Hip Hop / Rap", hueRange: [210, 220] },
-  { match: /abstract hip hop/i, group: "Hip Hop / Rap", hueRange: [532, 542] },
-  { match: /experimental hip hop/i, group: "Hip Hop / Rap", hueRange: [542, 552] },
-  { match: /hardcore hip hop/i, group: "Hip Hop / Rap", hueRange: [552, 562] },
-  { match: /latin rap/i, group: "Hip Hop / Rap", hueRange: [562, 572] },
-  { match: /mid-school hip hop/i, group: "Hip Hop / Rap", hueRange: [572, 582] },
-  { match: /^hip hop$/i, group: "Hip Hop / Rap", hueRange: [582, 592] },
+  { match: /rap rock/i,              group: "Hip Hop / Rap", hueRange: [15, 22], satRange: [60, 90], lightRange: [35, 50] },
+  { match: /pop rap/i,               group: "Hip Hop / Rap", hueRange: [22, 29], satRange: [65, 95], lightRange: [45, 60] },
+  { match: /abstract hip hop/i,      group: "Hip Hop / Rap", hueRange: [29, 36], satRange: [45, 75], lightRange: [35, 50] },
+  { match: /experimental hip hop/i,  group: "Hip Hop / Rap", hueRange: [36, 43], satRange: [50, 80], lightRange: [40, 55] },
+  { match: /hardcore hip hop/i,      group: "Hip Hop / Rap", hueRange: [15, 25], satRange: [70, 95], lightRange: [25, 40] },
+  { match: /latin rap/i,             group: "Hip Hop / Rap", hueRange: [25, 35], satRange: [70, 95], lightRange: [45, 60] },
+  { match: /mid-school hip hop/i,    group: "Hip Hop / Rap", hueRange: [35, 45], satRange: [55, 85], lightRange: [40, 55] },
+  { match: /^hip hop$/i,             group: "Hip Hop / Rap", hueRange: [20, 35], satRange: [60, 90], lightRange: [35, 52] },
 
   // ---------- FOLK / CANCIÓN ----------
-  { match: /folk rock/i, group: "Folk / Canción", hueRange: [35, 45] },
-  { match: /singer-songwriter/i, group: "Folk / Canción", hueRange: [45, 55] },
-  { match: /\bbeat\b/i, group: "Folk / Canción", hueRange: [55, 65] },
-  { match: /contemporary folk/i, group: "Folk / Canción", hueRange: [592, 602] },
-  { match: /progressive folk/i, group: "Folk / Canción", hueRange: [602, 612] },
-  { match: /folktronica/i, group: "Folk / Canción", hueRange: [612, 622] },
+  { match: /folk rock/i,              group: "Folk", hueRange: [40, 45], satRange: [45, 70], lightRange: [40, 55] },
+  { match: /singer-songwriter/i,      group: "Folk", hueRange: [45, 50], satRange: [35, 60], lightRange: [50, 65] },
+  { match: /\bbeat\b/i,               group: "Folk", hueRange: [50, 55], satRange: [50, 75], lightRange: [45, 60] },
+  { match: /contemporary folk/i,      group: "Folk", hueRange: [55, 60], satRange: [35, 65], lightRange: [55, 70] },
+  { match: /progressive folk/i,       group: "Folk", hueRange: [60, 65], satRange: [40, 70], lightRange: [45, 60] },
+  { match: /folktronica/i,            group: "Folk", hueRange: [50, 60], satRange: [45, 75], lightRange: [50, 65] },
 
-  // ---------- LATIN / HISPANOAMERICANO ----------
-  { match: /latin alternative/i, group: "Latin / Hispanoamericano", hueRange: [65, 75] },
-  { match: /andean new age/i, group: "Latin / Hispanoamericano", hueRange: [622, 632] },
-  { match: /bossa nova/i, group: "Latin / Hispanoamericano", hueRange: [632, 642] },
-  { match: /chamamé/i, group: "Latin / Hispanoamericano", hueRange: [642, 652] },
-  { match: /hispanic american folk music/i, group: "Latin / Hispanoamericano", hueRange: [652, 662] },
-  { match: /indigenous andean music/i, group: "Latin / Hispanoamericano", hueRange: [662, 672] },
-  { match: /latin rock/i, group: "Latin / Hispanoamericano", hueRange: [672, 682] },
-  { match: /nuevo cancionero/i, group: "Latin / Hispanoamericano", hueRange: [682, 692] },
-  { match: /rock andino/i, group: "Latin / Hispanoamericano", hueRange: [692, 702] },
+  // ---------- LATINA ----------
+  { match: /latin alternative/i,       group: "Latina", hueRange: [5, 12],   satRange: [60, 90], lightRange: [40, 55] },
+  { match: /andean new age/i,          group: "Latina", hueRange: [12, 19],  satRange: [45, 75], lightRange: [45, 60] },
+  { match: /bossa nova/i,              group: "Latina", hueRange: [19, 26],  satRange: [50, 80], lightRange: [45, 60] },
+  { match: /chamamé/i,                 group: "Latina", hueRange: [26, 33],  satRange: [55, 85], lightRange: [40, 55] },
+  { match: /hispanic american folk music/i, group: "Latina", hueRange: [33, 40], satRange: [40, 70], lightRange: [45, 60] },
+  { match: /indigenous andean music/i, group: "Latina", hueRange: [40, 47],  satRange: [45, 75], lightRange: [40, 55] },
+  { match: /latin rock/i,              group: "Latina", hueRange: [5, 15],   satRange: [55, 85], lightRange: [35, 50] },
+  { match: /nuevo cancionero/i,       group: "Latina", hueRange: [15, 25],  satRange: [40, 70], lightRange: [45, 60] },
+  { match: /rock andino/i,             group: "Latina", hueRange: [25, 35],  satRange: [50, 80], lightRange: [35, 50] },
+  { match: /cumbia argentina/i,       group: "Latina", hueRange: [35, 45],  satRange: [70, 100], lightRange: [45, 60] },
+  { match: /^tango$/i,                group: "Latina", hueRange: [350, 360], satRange: [35, 65], lightRange: [25, 40] },
 
   // ---------- JAZZ ----------
-  { match: /jazz-rock/i, group: "Jazz", hueRange: [70, 80] },
-  { match: /acid jazz/i, group: "Jazz", hueRange: [702, 712] },
-  { match: /free improvisation/i, group: "Jazz", hueRange: [712, 722] },
-  { match: /jazz fusion/i, group: "Jazz", hueRange: [722, 732] },
-  { match: /rhythm (&|and) blues/i, group: "Jazz", hueRange: [832, 842] },
+  { match: /jazz-rock/i,              group: "Jazz", hueRange: [45, 50], satRange: [50, 75], lightRange: [35, 50] },
+  { match: /acid jazz/i,              group: "Jazz", hueRange: [50, 55], satRange: [60, 85], lightRange: [40, 55] },
+  { match: /free improvisation/i,     group: "Jazz", hueRange: [55, 60], satRange: [35, 65], lightRange: [35, 50] },
+  { match: /jazz fusion/i,            group: "Jazz", hueRange: [60, 65], satRange: [55, 80], lightRange: [40, 55] },
+  { match: /jazz-funk/i,              group: "Jazz", hueRange: [65, 70], satRange: [65, 90], lightRange: [45, 60] },
+
+  // ---------- RAÍCES ----------
+  { match: /^blues$/i,                group: "Raíces", hueRange: [25, 30], satRange: [45, 70], lightRange: [30, 45] },
+  { match: /rockabilly/i,             group: "Raíces", hueRange: [30, 35], satRange: [55, 80], lightRange: [35, 50] },
+  { match: /^twist$/i,                group: "Raíces", hueRange: [35, 40], satRange: [50, 75], lightRange: [45, 60] },
+  { match: /^funk$/i,                 group: "Raíces", hueRange: [40, 45], satRange: [60, 85], lightRange: [40, 55] },
+  { match: /rhythm (&|and) blues/i,   group: "Raíces", hueRange: [45, 50], satRange: [50, 75], lightRange: [35, 50] },
+  { match: /americana/i,              group: "Raíces", hueRange: [30, 38], satRange: [40, 65], lightRange: [45, 60] },
+  { match: /neo-soul/i,               group: "Raíces", hueRange: [38, 46], satRange: [45, 70], lightRange: [40, 55] },
 
   // ---------- CHRISTIAN ----------
-  { match: /christian rock/i, group: "Christian", hueRange: [50, 60] }
+  { match: /christian rock/i,         group: "Christian", hueRange: [150, 160], satRange: [40, 70], lightRange: [40, 55] }
 
 ];
+
 const GROUP_ORDER = [
   "Metal",
   "Rock",
@@ -617,16 +643,30 @@ const GROUP_ORDER = [
   "Reggae",
   "Ska",
   "Psicodelia",
-  "Electrónica / Dance",
+  "Electrónica",
   "Hip Hop / Rap",
-  "Folk / Canción",
-  "Latin / Hispanoamericano",
+  "Folk",
+  "Latina",
   "Jazz",
+  "Raíces",
   "Christian",
   "Otros"
 ];
 
 const groupColorCache = new Map();
+const groupHueCache = new Map();
+function hueForGroup(group) {
+  if (groupHueCache.has(group)) return groupHueCache.get(group);
+
+  const families = GENRE_FAMILIES.filter(f => f.group === group);
+  const hue = families.length
+    ? average(families.map(f => (f.hueRange[0] + f.hueRange[1]) / 2)) % 360
+    : 0;
+
+  groupHueCache.set(group, hue);
+  return hue;
+}
+
 function colorForGroup(group) {
   if (groupColorCache.has(group)) return groupColorCache.get(group);
  
@@ -815,38 +855,6 @@ async function calculateModel() {
     `${albums.length} álbumes · ${vocab.genres.length} géneros · ${vocab.descriptors.length} descriptores · UMAP 3D`;
 }
 
-// function clearScene() {
-//   pointMeshes.forEach(m => {
-//     m.geometry.dispose();
-//     m.material.dispose();
-//     root.remove(m);
-//   });
-//   pointMeshes = [];
-
-//   yearSprites.forEach(s => {
-//     s.material.map?.dispose();
-//     s.material.dispose();
-//     root.remove(s);
-//   });
-//   yearSprites = [];
-
-//   orbitRings.forEach(r => {
-//     r.geometry.dispose();
-//     r.material.dispose();
-//     root.remove(r);
-//   });
-//   orbitRings = [];
-
-//   clearGenreLabels();
-//   clearConnections();
-//   clearSelectionOutline();
-//   disposeOutlineMeshes();
-
-//   selected = null;
-//   selectedGenres.clear();
-//   selectedYear = null;
-// }
-
 function createPoints() {
   points.forEach((a,i) => {
     const geo = new THREE.SphereGeometry(POINT_RADIUS, 10, 10);
@@ -857,7 +865,7 @@ function createPoints() {
       roughness: .35,
       metalness: .15,
       transparent: true,
-      opacity: 1
+      opacity: 1  
     });
     const mesh = new THREE.Mesh(geo, mat);
     mesh.position.copy(a.umapVec);
@@ -1025,14 +1033,40 @@ function createYearOrbits() {
   });
 }
 
-function makeGenreLabelSprite(genre) {
+const groupLabelColorCache = new Map();
+function colorForGroupLabel(group) {
+  if (groupLabelColorCache.has(group)) return groupLabelColorCache.get(group);
+
+  const families = GENRE_FAMILIES.filter(f => f.group === group);
+  const c = new THREE.Color();
+
+  if (!families.length) {
+    c.setHSL(0, 0, 0.35); // "Otros": gris oscuro neutro, sin familia de la que tomar hue
+    groupLabelColorCache.set(group, c);
+    return c;
+  }
+
+  const hue = hueForGroup(group) / 360;
+  const satMid = f => f.satRange ? (f.satRange[0] + f.satRange[1]) / 2 / 100 : 0.72;
+  const lightMid = f => f.lightRange ? (f.lightRange[0] + f.lightRange[1]) / 2 / 100 : 0.58;
+
+  const avgSat = average(families.map(satMid));
+  const minLight = Math.min(...families.map(lightMid));
+  const labelLight = THREE.MathUtils.clamp(minLight, 0.22, 0.42);
+
+  c.setHSL(hue, avgSat, labelLight);
+  groupLabelColorCache.set(group, c);
+  return c;
+}
+
+function makeGenreLabelSprite(genre, color) {
   const label = genre.toUpperCase();
 
   const canvas = document.createElement("canvas");
   canvas.width = 384;
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
-  ctx.font = "400 16px sans-serif";
+  ctx.font = "600 24px sans-serif";
   if ("letterSpacing" in ctx) ctx.letterSpacing = "1px";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -1041,7 +1075,7 @@ function makeGenreLabelSprite(genre) {
   ctx.strokeStyle = "rgba(255,255,255,0.9)";
   ctx.strokeText(label, canvas.width/2, canvas.height/2);
 
-  ctx.fillStyle = "#a2a1a1";
+  ctx.fillStyle = color.getStyle(); // <-- antes: "#a2a1a1"
   ctx.fillText(label, canvas.width/2, canvas.height/2);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -1051,7 +1085,7 @@ function makeGenreLabelSprite(genre) {
     map: texture,
     transparent: true,
     depthWrite: false,
-    depthTest: true // el z-buffer oculta la etiqueta cuando queda detrás del modelo
+    depthTest: true
   });
   const sprite = new THREE.Sprite(material);
   sprite.scale.set(11, 2.75, 1);
@@ -1066,42 +1100,47 @@ function computeGenreLabelData() {
   const cz = average(points.map(p => p.umapVec.z));
   const globalCentroid = new THREE.Vector3(cx, cy, cz);
 
-  const acc = new Map(); // genre -> { sum: Vector3, count }
+  const acc = new Map(); // group -> { sum: Vector3, count }
+
   points.forEach(p => {
     const genres = new Set([...p.genres.primary, ...p.genres.secondary]);
-    genres.forEach(g => {
-      if (!acc.has(g)) acc.set(g, { sum: new THREE.Vector3(), count: 0 });
-      const entry = acc.get(g);
+    const groupsForPoint = new Set(
+      [...genres].map(g => cachedFamilyForGenre(g)?.group ?? "Otros")
+    );
+
+    groupsForPoint.forEach(group => {
+      if (group === "Otros") return; // <-- nuevo: no generar etiqueta flotante para "Otros"
+      if (!acc.has(group)) acc.set(group, { sum: new THREE.Vector3(), count: 0 });
+      const entry = acc.get(group);
       entry.sum.add(p.umapVec);
       entry.count += 1;
     });
   });
 
   const data = [];
-  acc.forEach((entry, genre) => {
+  acc.forEach((entry, group) => {
     if (entry.count < GENRE_LABEL_CONFIG.minAlbumsForLabel) return;
 
     const centroid = entry.sum.clone().divideScalar(entry.count);
     const dir = centroid.clone().sub(globalCentroid);
 
     if (dir.lengthSq() < 1e-6) {
-      const h = (hueForGenre(genre) / 360) * Math.PI * 2;
+      const h = (hueForGroup(group) / 360) * Math.PI * 2;
       dir.set(Math.cos(h), 0.2, Math.sin(h));
     }
     dir.normalize();
 
     const position = centroid.clone().addScaledVector(dir, GENRE_LABEL_CONFIG.radiusPadding);
-    data.push({ genre, position, count: entry.count });
+    data.push({ genre: group, position, count: entry.count });
   });
 
   return data;
 }
-
 function createGenreLabels() {
   computeGenreLabelData().forEach(d => {
-    const sprite = makeGenreLabelSprite(d.genre);
+    const sprite = makeGenreLabelSprite(d.genre, colorForGroupLabel(d.genre)); // <-- agregado el color
     sprite.position.copy(d.position);
-    sprite.material.opacity = 0; // entra con fade, igual que yearSprites/orbitRings
+    sprite.material.opacity = 0;
     labelGroup.add(sprite);
 
     genreLabelSprites.push({
@@ -1291,7 +1330,6 @@ function renderGenreLegend() {
 
   updateGenreLegendActiveState(); // <-- nuevo: por si veníamos con un género activo
 }
-
  
 function toggleGenreHighlight(genre) {
   if (selectedGenres.has(genre)) {
@@ -1848,22 +1886,6 @@ function fitCamera() {
   controls.update();
 }
 
-// function showTooltipForPoint(i, x, y) {
-//   const a = points[i];
-//   const primary = a.genres.primary.map(g=>`<span class="primary">${g}</span>`).join(" · ");
-//   const secondary = a.genres.secondary.map(g=>`<span class="secondary">${g}</span>`).join(" · ");
-//   ui.tooltip.innerHTML = `
-//     <strong>${a.album}</strong>
-//     <div class="artist">${a.artist} · ${a.year}</div>
-//     <div class="genres">${primary}${secondary ? "<br>"+secondary : ""}</div>
-//   `;
-//   ui.tooltip.style.pointerEvents = "none";
-//   ui.tooltip.style.right = "auto";
-//   ui.tooltip.style.display = "block";
-//   ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
-//   ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
-// }
-
 function hideTooltip() {
   ui.tooltip.style.display = "none";
 }
@@ -1970,6 +1992,19 @@ function pinTooltip(idx) {
 function unpinTooltip() {
   pinnedIndex = null;
   hideTooltip();
+}
+
+function updatePinnedTooltipPosition() {
+  // No pisar la posición si hay un preview de hover activo (ese sigue al
+  // mouse, no al nodo).
+  if (pinnedIndex === null || hoverPreviewIndex !== null) return;
+
+  const mesh = pointMeshes[pinnedIndex];
+  if (!mesh) return;
+
+  const { x, y } = projectToScreen(mesh.position);
+  ui.tooltip.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
+  ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 300)}px`;
 }
 
 function computeYearGenreStats(year) {

@@ -19330,6 +19330,464 @@
     "descriptors": []
   },
   {
+    "id": "carnaval-de-las-heridas",
+    "album": "Carnaval de las heridas",
+    "artist": "El Bordo",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Rock & Roll"
+      ],
+      "secondary": [
+        "Blues Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "un-grito-en-el-viento",
+    "album": "Un grito en el viento",
+    "artist": "El Bordo",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Hard Rock",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "en-la-vereda-de-enfrente",
+    "album": "En la vereda de enfrente",
+    "artist": "El Bordo",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Roots Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "yacanto",
+    "album": "Yacanto",
+    "artist": "El Bordo",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "uplifting",
+      "male vocalist",
+      "energetic"
+    ]
+  },
+  {
+    "id": "historias-perdidas",
+    "album": "Historias perdidas",
+    "artist": "El Bordo",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hermanos",
+    "album": "Hermanos",
+    "artist": "El Bordo",
+    "year": 2014,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "conscious",
+      "anthemic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-refugio",
+    "album": "El refugio",
+    "artist": "El Bordo",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock"
+      ]
+    },
+    "descriptors": [
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "irreal",
+    "album": "Irreal",
+    "artist": "El Bordo",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pedro-aznar",
+    "album": "Pedro Aznar",
+    "artist": "Pedro Aznar",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Jazz-Rock",
+        "Latin Jazz"
+      ]
+    },
+    "descriptors": [
+      "lush",
+      "progressive",
+      "male vocalist",
+      "instrumental",
+      "melodic",
+      "atmospheric",
+      "technical",
+      "complex",
+      "warm",
+      "nocturnal"
+    ]
+  },
+  {
+    "id": "contemplacion",
+    "album": "Contemplación",
+    "artist": "Pedro Aznar",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Art Pop",
+        "Jazz-Rock"
+      ],
+      "secondary": [
+        "ECM Style Jazz",
+        "New Wave"
+      ]
+    },
+    "descriptors": [
+      "urban",
+      "melodic"
+    ]
+  },
+  {
+    "id": "fotos-de-tokyo",
+    "album": "Fotos de Tokyo",
+    "artist": "Pedro Aznar",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "New Wave"
+      ],
+      "secondary": [
+        "Jazz Fusion",
+        "Synthpop",
+        "Hi-NRG"
+      ]
+    },
+    "descriptors": [
+      "progressive",
+      "rhythmic",
+      "technical",
+      "male vocalist",
+      "mechanical"
+    ]
+  },
+  {
+    "id": "hombre-mirando-al-sudeste",
+    "album": "Hombre mirando al sudeste",
+    "artist": "Pedro Aznar",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Film Soundtrack",
+        "Electronic"
+      ],
+      "secondary": [
+        "Cinematic Classical",
+        "Jazz"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ultimas-imagenes-del-naufragio",
+    "album": "Últimas imágenes del naufragio",
+    "artist": "Pedro Aznar",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Film Soundtrack"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "david-y-goliath",
+    "album": "David y Goliath",
+    "artist": "Pedro Aznar",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Jazz Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "no-te-mueras-sin-decirme-a-donde-vas",
+    "album": "No te mueras sin decirme a dónde vas",
+    "artist": "Pedro Aznar",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Film Soundtrack"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cuerpo-y-alma",
+    "album": "Cuerpo y alma",
+    "artist": "Pedro Aznar",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Zamba",
+        "Acoustic Rock"
+      ]
+    },
+    "descriptors": [
+      "folklore",
+      "male vocalist",
+      "acoustic"
+    ]
+  },
+  {
+    "id": "parte-de-volar",
+    "album": "Parte de volar",
+    "artist": "Pedro Aznar",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Contemporary Folk"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mudras-canciones-de-a-dos",
+    "album": "Mudras: Canciones de a dos",
+    "artist": "Pedro Aznar",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "aznar-canta-a-brasil",
+    "album": "Aznar canta a Brasil",
+    "artist": "Pedro Aznar",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Bossa nova"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "quebrado",
+    "album": "Quebrado",
+    "artist": "Pedro Aznar",
+    "year": 2008,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "AOR",
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "melodic",
+      "introspective",
+      "mellow",
+      "nocturnal",
+      "lush",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "ahora",
+    "album": "Ahora",
+    "artist": "Pedro Aznar",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "contraluz",
+    "album": "Contraluz",
+    "artist": "Pedro Aznar",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Piano Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "utopia",
+    "album": "Utopía",
+    "artist": "Pedro Aznar & Ramiro Gallo",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Tango",
+        "Milonga"
+      ],
+      "secondary": [
+        "Tango nuevo"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "abrazo-de-hermanos",
+    "album": "Abrazo de hermanos",
+    "artist": "Pedro Aznar",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Contemporary Folk"
+      ],
+      "secondary": [
+        "Dream Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "flor-y-raiz",
+    "album": "Flor y raíz",
+    "artist": "Pedro Aznar",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Nueva canción latinoamericana"
+      ],
+      "secondary": [
+        "Chacarera",
+        "Zamba"
+      ]
+    },
+    "descriptors": [
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-mundo-no-se-hizo-en-dos-dias",
+    "album": "El mundo no se hizo en dos días",
+    "artist": "Pedro Aznar",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Hispanic American Music",
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Latin Electronic",
+        "Celtic Folk Music"
+      ]
+    },
+    "descriptors": [
+      "vulgar",
+      "political",
+      "romantic",
+      "humorous",
+      "love",
+      "nature",
+      "lush",
+      "sentimental",
+      "eclectic",
+      "male vocalist",
+      "conscious",
+      "serious",
+      "optimistic"
+    ]
+  },
+  {
     "id": "conga",
     "album": "Conga",
     "artist": "Daniel Melero",
@@ -19584,7 +20042,7 @@
       "primary": [
         "Ambient"
       ],
-      "secondary": []
+      "secondary": ["Electronic"]
     },
     "descriptors": [
       "aquatic",
@@ -19614,7 +20072,7 @@
   {
     "id": "hana-x-melero",
     "album": "Hana x Melero",
-    "artist": "Hana / Melero",
+    "artist": "Daniel Melero",
     "year": 2007,
     "genres": {
       "primary": [],
@@ -19767,7 +20225,7 @@
   {
     "id": "la-ruta-del-opio",
     "album": "La ruta del opio",
-    "artist": "Melero / Tuñón",
+    "artist": "Melero",
     "year": 2020,
     "genres": {
       "primary": [
