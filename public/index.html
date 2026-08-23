@@ -29,11 +29,46 @@
         <div id="searchResults" class="search-results"></div>
       </div>
 
+      <div class="panel-section" id="filtersSection">
+        <h2>Filtros</h2>
+        <div class="filters">
+          <div class="filter-group">
+            <label for="filterArtist">Artista</label>
+            <input id="filterArtist" type="text" placeholder="Escribí un artista…" autocomplete="off">
+            <div id="filterArtistResults" class="search-results"></div>
+          </div>
+
+        <div class="filter-group">
+          <label>Año</label>
+          <div class="filter-year-range" style="display:flex;gap:6px;">
+            <select id="filterYearFrom"></select>
+            <select id="filterYearTo"></select>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterGenrePrimary">Género primario</label>
+          <select id="filterGenrePrimary"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterGenreSecondary">Género secundario</label>
+          <select id="filterGenreSecondary"></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterDescriptor">Descriptor</label>
+          <select id="filterDescriptor"></select>
+        </div>
+
+        <button id="filtersClear" type="button" class="filters-clear" style="display:none;">Limpiar filtros</button>
+      </div>
+    </div>
+
       <div class="panel-section">
         <h2>Géneros primarios</h2>
         <div id="genreLegend" class="genre-legend"></div>
       </div>
-
     </aside>
 
     <div id="tooltip" class="tooltip"></div>

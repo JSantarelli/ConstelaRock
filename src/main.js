@@ -46,11 +46,44 @@ let selectedIndices = new Set();
 let outlineRings = new Map();
 let multiSelectPanels = new Map();
 
+let activeFilters = {
+  artist: null,
+  yearFrom: null,
+  yearTo: null,
+  genrePrimary: null,
+  genreSecondary: null,
+  descriptor: null
+};
+let filteredIndices = null; // null = sin filtros activos; Set<idx> cuando hay filtros
+const ui = {
+  list: document.querySelector("#albumList"),
+  search: document.querySelector("#search"),
+  searchResults: document.querySelector("#searchResults"),
+  status: document.querySelector("#status"),
+  tooltip: document.querySelector("#tooltip"),
+  genreLegend: document.querySelector('#genreLegend'),
+  timeToggle: document.querySelector('#timeToggle'),
+  genreLabelToggle: document.querySelector('#genreLabelToggle'),
+  filterArtist: document.querySelector('#filterArtist'),
+  filterArtistResults: document.querySelector('#filterArtistResults'),
+  filterYearFrom: document.querySelector('#filterYearFrom'),
+  filterYearTo: document.querySelector('#filterYearTo'),
+  filterGenrePrimary: document.querySelector('#filterGenrePrimary'),
+  filterGenreSecondary: document.querySelector('#filterGenreSecondary'),
+  filterDescriptor: document.querySelector('#filterDescriptor'),
+  filtersClear: document.querySelector('#filtersClear')
+};
+
 function clearScene() {
   pointMeshes.forEach(m => {
     m.geometry.dispose();
     m.material.dispose();
     root.remove(m);
+    selectedIndices.clear();
+    selectedGenres.clear();
+    selectedYear = null;
+    activeFilters = { artist: null, yearFrom: null, yearTo: null, genrePrimary: null, genreSecondary: null, descriptor: null }; // <-- nuevo
+    filteredIndices = null;
   });
   pointMeshes = [];
 
@@ -306,17 +339,6 @@ function animate() {
   controls.update();
   renderer.render(scene,camera);
 }
- 
-const ui = {
-  list: document.querySelector("#albumList"),
-  search: document.querySelector("#search"),
-  searchResults: document.querySelector("#searchResults"),
-  status: document.querySelector("#status"),
-  tooltip: document.querySelector("#tooltip"),
-  genreLegend: document.querySelector('#genreLegend'),
-  timeToggle: document.querySelector('#timeToggle'),
-  genreLabelToggle: document.querySelector('#genreLabelToggle')
-};
 
 const WEIGHTS = {
   primaryBase: 1.0,
@@ -850,6 +872,7 @@ async function calculateModel() {
 
   renderList();
   renderGenreLegend();
+  refreshFilterOptions();
   fitCamera();
   ui.status.textContent =
     `${albums.length} álbumes · ${vocab.genres.length} géneros · ${vocab.descriptors.length} descriptores · UMAP 3D`;
@@ -1417,12 +1440,195 @@ function buildAlbumRow(a) {
   return el;
 }
 
-function renderList() {
+function pointMatchesFilters(p, filters) {
+  if (filters.artist && p.artist !== filters.artist) return false;
+  if (filters.yearFrom !== null && p.year < filters.yearFrom) return false;
+  if (filters.yearTo !== null && p.year > filters.yearTo) return false;
+  if (filters.genrePrimary && !p.genres.primary.includes(filters.genrePrimary)) return false;
+  if (filters.genreSecondary && !p.genres.secondary.includes(filters.genreSecondary)) return false;
+  if (filters.descriptor && !p.descriptors.includes(filters.descriptor)) return false;
+  return true;
+}
+
+function hasActiveFilters() {
+  return Object.values(activeFilters).some(v => v !== null);
+}
+
+// Pool de discos aplicando todos los filtros activos EXCEPTO el indicado
+// (o excepto año, si excludeKey === 'year'). Es la base de la cascada: las
+// opciones de cada control se calculan sobre lo que dejan pasar los demás.
+function getFilteredPoints(excludeKey) {
+  const filters = { ...activeFilters };
+  if (excludeKey === 'year') {
+    filters.yearFrom = null;
+    filters.yearTo = null;
+  } else if (excludeKey) {
+    filters[excludeKey] = null;
+  }
+  return points.filter(p => pointMatchesFilters(p, filters));
+}
+
+function populateSelectOptions(selectEl, values, placeholder, currentValue) {
+  // Si el valor actual quedó fuera de las opciones disponibles (por cómo
+  // se acomodó la cascada), lo mantenemos igual para no perder la
+  // selección silenciosamente — el cruce puede dar 0 resultados, y está bien.
+  const finalValues = currentValue && !values.includes(String(currentValue))
+    ? [String(currentValue), ...values]
+    : values;
+
+  selectEl.textContent = "";
+  const optAll = document.createElement("option");
+  optAll.value = "";
+  optAll.textContent = placeholder;
+  selectEl.appendChild(optAll);
+
+  finalValues.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    selectEl.appendChild(opt);
+  });
+
+  selectEl.value = currentValue !== null ? String(currentValue) : "";
+}
+
+function applyFilters() {
+  filteredIndices = hasActiveFilters()
+    ? new Set(points.filter(p => pointMatchesFilters(p, activeFilters)).map(p => p.idx))
+    : null;
+
+  renderList();
+  applyFilterMapVisuals();
+}
+
+function applyFilterMapVisuals() {
+  if (filteredIndices === null) return; // sin filtros: no tocar el mapa, que lo maneje selección/género/año
+
+  // El filtro es excluyente con los otros modos de resaltado del mapa.
+  clearHighlight();
+  clearGenreHighlight();
+  clearYearHighlight();
+
+  pointMeshes.forEach((m, i) => {
+    m.material.opacity = filteredIndices.has(i) ? 1 : 0.12;
+  });
+}
+
+function refreshFilterOptions() {
+  const primaryPool = getFilteredPoints('genrePrimary');
+  const secondaryPool = getFilteredPoints('genreSecondary');
+  const descriptorPool = getFilteredPoints('descriptor');
+  const yearPool = getFilteredPoints('year');
+
+  populateSelectOptions(
+    ui.filterGenrePrimary,
+    [...new Set(primaryPool.flatMap(p => p.genres.primary))].sort(),
+    "Género primario (todos)",
+    activeFilters.genrePrimary
+  );
+  populateSelectOptions(
+    ui.filterGenreSecondary,
+    [...new Set(secondaryPool.flatMap(p => p.genres.secondary))].sort(),
+    "Género secundario (todos)",
+    activeFilters.genreSecondary
+  );
+  populateSelectOptions(
+    ui.filterDescriptor,
+    [...new Set(descriptorPool.flatMap(p => p.descriptors))].sort(),
+    "Descriptor (todos)",
+    activeFilters.descriptor
+  );
+
+  const years = [...new Set(yearPool.map(p => p.year))].sort((a, b) => a - b);
+  populateSelectOptions(ui.filterYearFrom, years, "Desde", activeFilters.yearFrom);
+  populateSelectOptions(ui.filterYearTo, years, "Hasta", activeFilters.yearTo);
+
+  ui.filtersClear.style.display = hasActiveFilters() ? "inline-block" : "none";
+
+  applyFilters();
+  renderSelectedChips(); // unificado: ver punto 4
+}
+
+let filterArtistDebounce = null;
+
+function computeArtistSuggestions(query) {
+  const pool = getFilteredPoints('artist');
+  const artists = [...new Set(pool.map(p => p.artist))].sort();
+  const q = query.toLowerCase().trim();
+  if (!q) return artists.slice(0, MAX_SUGGESTIONS);
+  return artists.filter(a => a.toLowerCase().includes(q)).slice(0, MAX_SUGGESTIONS);
+}
+
+function renderFilterArtistSuggestions(list) {
+  ui.filterArtistResults.textContent = "";
+  if (!list.length) { ui.filterArtistResults.classList.remove("open"); return; }
+
   const frag = document.createDocumentFragment();
-  points.forEach(a => frag.appendChild(buildAlbumRow(a)));
+  list.forEach(name => {
+    const row = document.createElement("div");
+    row.className = "search-suggestion";
+    row.textContent = name;
+    row.addEventListener("mousedown", e => {
+      e.preventDefault();
+      activeFilters.artist = name;
+      ui.filterArtist.value = name;
+      closeFilterArtistTypeahead();
+      refreshFilterOptions();
+    });
+    frag.appendChild(row);
+  });
+  ui.filterArtistResults.appendChild(frag);
+  ui.filterArtistResults.classList.add("open");
+}
+
+function closeFilterArtistTypeahead() {
+  ui.filterArtistResults.textContent = "";
+  ui.filterArtistResults.classList.remove("open");
+}
+
+ui.filterArtist.addEventListener("input", e => {
+  const value = e.target.value;
+  if (activeFilters.artist && value !== activeFilters.artist) activeFilters.artist = null; // retipeando: invalida la selección anterior
+  clearTimeout(filterArtistDebounce);
+  filterArtistDebounce = setTimeout(() => {
+    renderFilterArtistSuggestions(computeArtistSuggestions(value));
+  }, SEARCH_DEBOUNCE_MS);
+});
+
+ui.filterArtist.addEventListener("blur", () => setTimeout(closeFilterArtistTypeahead, 100));
+ui.filterYearFrom.addEventListener("change", e => {
+  activeFilters.yearFrom = e.target.value ? Number(e.target.value) : null;
+  refreshFilterOptions();
+});
+ui.filterYearTo.addEventListener("change", e => {
+  activeFilters.yearTo = e.target.value ? Number(e.target.value) : null;
+  refreshFilterOptions();
+});
+ui.filterGenrePrimary.addEventListener("change", e => {
+  activeFilters.genrePrimary = e.target.value || null;
+  refreshFilterOptions();
+});
+ui.filterGenreSecondary.addEventListener("change", e => {
+  activeFilters.genreSecondary = e.target.value || null;
+  refreshFilterOptions();
+});
+ui.filterDescriptor.addEventListener("change", e => {
+  activeFilters.descriptor = e.target.value || null;
+  refreshFilterOptions();
+});
+ui.filtersClear.addEventListener("click", () => {
+  activeFilters = { artist: null, yearFrom: null, yearTo: null, genrePrimary: null, genreSecondary: null, descriptor: null };
+  ui.filterArtist.value = "";
+  refreshFilterOptions();
+});
+
+function renderList() {
+  const toRender = filteredIndices === null ? points : points.filter(p => filteredIndices.has(p.idx));
+  const frag = document.createDocumentFragment();
+  toRender.forEach(a => frag.appendChild(buildAlbumRow(a)));
   ui.list.textContent = "";
   ui.list.appendChild(frag);
-  document.querySelector("#count").textContent = `(${points.length})`;
+  document.querySelector("#count").textContent = `(${toRender.length})`;
 }
 
 const MAX_SUGGESTIONS = 8;
@@ -1682,11 +1888,14 @@ function renderSelectedChips() {
   const container = ensureSelectedChipsContainer();
   container.textContent = "";
 
+  renderFilterChipsInto(container);
+
   [...selectedIndices].forEach(idx => {
     const point = points[idx];
     if (!point) return;
 
     const chip = document.createElement("span");
+    chip.className = "chip chip-album";
     chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#f0f0f0;font-size:12px;";
 
     const dot = document.createElement("i");
@@ -1711,7 +1920,52 @@ function renderSelectedChips() {
     container.appendChild(chip);
   });
 
-  container.style.display = selectedIndices.size ? "flex" : "none";
+  container.style.display = (selectedIndices.size || hasActiveFilters()) ? "flex" : "none";
+}
+
+function renderFilterChipsInto(container) {
+  const defs = [
+    { active: () => activeFilters.artist !== null,
+      label: () => `Artista: ${activeFilters.artist}`,
+      clear: () => { activeFilters.artist = null; ui.filterArtist.value = ""; } },
+    { active: () => activeFilters.yearFrom !== null || activeFilters.yearTo !== null,
+      label: () => `Año: ${activeFilters.yearFrom ?? "…"}–${activeFilters.yearTo ?? "…"}`,
+      clear: () => { activeFilters.yearFrom = null; activeFilters.yearTo = null; } },
+    { active: () => activeFilters.genrePrimary !== null,
+      label: () => `Género: ${activeFilters.genrePrimary}`,
+      clear: () => { activeFilters.genrePrimary = null; } },
+    { active: () => activeFilters.genreSecondary !== null,
+      label: () => `Género 2°: ${activeFilters.genreSecondary}`,
+      clear: () => { activeFilters.genreSecondary = null; } },
+    { active: () => activeFilters.descriptor !== null,
+      label: () => `Descriptor: ${activeFilters.descriptor}`,
+      clear: () => { activeFilters.descriptor = null; } }
+  ];
+
+  defs.forEach(def => {
+    if (!def.active()) return;
+
+    const chip = document.createElement("span");
+    chip.className = "chip chip-filter";
+    chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#e8edff;font-size:12px;";
+
+    const label = document.createElement("span");
+    label.textContent = def.label();
+
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.setAttribute("aria-label", "Quitar filtro");
+    closeBtn.style.cssText = "border:none;background:none;cursor:pointer;font-size:14px;line-height:1;color:#556;padding:0;";
+    closeBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      def.clear();
+      refreshFilterOptions();
+    });
+
+    chip.appendChild(label);
+    chip.appendChild(closeBtn);
+    container.appendChild(chip);
+  });
 }
 
 function buildMultiSelectionChains() {
