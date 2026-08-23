@@ -1629,17 +1629,6 @@ function buildDiscoveryGraph(originIdx) {
   });
 }
 
-function buildMultiSelectionChains() {
-  const seenArtists = new Set();
-
-  selectedIndices.forEach(idx => {
-    const point = points[idx];
-    if (!point || seenArtists.has(point.artist)) return;
-    seenArtists.add(point.artist);
-    buildArtistChainConnections(idx);
-  });
-}
-
 function ensureSelectedChipsContainer() {
   if (ui.selectedChips) return ui.selectedChips;
 
@@ -1687,6 +1676,17 @@ function renderSelectedChips() {
   container.style.display = selectedIndices.size ? "flex" : "none";
 }
 
+function buildMultiSelectionChains() {
+  const seenArtists = new Set();
+
+  selectedIndices.forEach(idx => {
+    const point = points[idx];
+    if (!point || seenArtists.has(point.artist)) return;
+    seenArtists.add(point.artist);
+    buildArtistChainConnections(idx);
+  });
+}
+
 function applySelection() {
   clearYearHighlight();
   clearGenreHighlight();
@@ -1709,7 +1709,7 @@ function applySelection() {
     buildDiscoveryGraph(idx);
     pinTooltip(idx);
   } else {
-    selectedIndices.forEach(idx => buildDiscoveryGraph(idx));
+    buildMultiSelectionChains();
     updateMultiSelectPanels();
   }
 }
