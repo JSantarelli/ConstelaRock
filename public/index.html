@@ -24,7 +24,7 @@
 
       <div class="panel-section">
         <h2>Discos <small id="count"></small></h2>
-        <input id="search" type="search" placeholder="Buscar álbum o artista…">
+        <input id="search" type="search" placeholder="Buscar artista o álbum…">
         <template id="albumList"></template>
         <div id="searchResults" class="search-results"></div>
       </div>
@@ -32,38 +32,26 @@
       <div class="panel-section" id="filtersSection">
         <h2>Filtros</h2>
         <div class="filters">
-          <div class="filter-group">
-            <label for="filterArtist">Artista</label>
-            <input id="filterArtist" type="text" placeholder="Escribí un artista…" autocomplete="off">
-            <div id="filterArtistResults" class="search-results"></div>
-          </div>
+          <details id="advancedSearch" class="advanced-search">
+            <summary style="cursor:pointer;">Búsqueda avanzada</summary>
 
-        <div class="filter-group">
-          <label>Año</label>
-          <div class="filter-year-range" style="display:flex;gap:6px;">
-            <select id="filterYearFrom"></select>
-            <select id="filterYearTo"></select>
-          </div>
+            <div class="filter-group">
+              <label>Año</label>
+              <div class="filter-year-range" style="display:flex;gap:6px;">
+                <select id="filterYearFrom"></select>
+                <select id="filterYearTo"></select>
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <label for="filterDescriptor">Descriptor</label>
+              <select id="filterDescriptor"></select>
+            </div>
+          </details>
+
+          <button id="filtersClear" type="button" class="filters-clear" style="display:none;">Limpiar filtros</button>
         </div>
-
-        <div class="filter-group">
-          <label for="filterGenrePrimary">Género primario</label>
-          <select id="filterGenrePrimary"></select>
-        </div>
-
-        <div class="filter-group">
-          <label for="filterGenreSecondary">Género secundario</label>
-          <select id="filterGenreSecondary"></select>
-        </div>
-
-        <div class="filter-group">
-          <label for="filterDescriptor">Descriptor</label>
-          <select id="filterDescriptor"></select>
-        </div>
-
-        <button id="filtersClear" type="button" class="filters-clear" style="display:none;">Limpiar filtros</button>
       </div>
-    </div>
 
       <div class="panel-section">
         <h2>Géneros primarios</h2>
@@ -75,6 +63,6 @@
     <div class="status" id="status">Cargando datos…</div>
   </main>
 
-  <script src="./bundle.js"></script>
+  <script src="./bundle.js" type="module"></script>
 </body>
 </html>

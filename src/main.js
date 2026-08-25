@@ -7,6 +7,7 @@ import { UMAP } from "umap-js";
 
 let selectedGenres = new Set();
 let genreLegendItemsByGenre = new Map(); // genre -> elemento DOM de la leyenda
+let genreLegendGroups = new Map(); // group -> { titleEl, arrowEl, selectAreaEl, itemsContainerEl, genres }
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xFFFFFF);
@@ -46,13 +47,15 @@ let selectedIndices = new Set();
 let outlineRings = new Map();
 let multiSelectPanels = new Map();
 
+// activeFilters.query holds the live text from the unified search box.
+// Genre filtering is driven separately by `selectedGenres` (the genre tree),
+// which is folded into the filter pipeline via currentFilters().
 let activeFilters = {
   artist: null,
   yearFrom: null,
   yearTo: null,
-  genrePrimary: null,
-  genreSecondary: null,
-  descriptor: null
+  descriptor: null,
+  query: ""
 };
 let filteredIndices = null; // null = sin filtros activos; Set<idx> cuando hay filtros
 const ui = {
@@ -64,12 +67,8 @@ const ui = {
   genreLegend: document.querySelector('#genreLegend'),
   timeToggle: document.querySelector('#timeToggle'),
   genreLabelToggle: document.querySelector('#genreLabelToggle'),
-  filterArtist: document.querySelector('#filterArtist'),
-  filterArtistResults: document.querySelector('#filterArtistResults'),
   filterYearFrom: document.querySelector('#filterYearFrom'),
   filterYearTo: document.querySelector('#filterYearTo'),
-  filterGenrePrimary: document.querySelector('#filterGenrePrimary'),
-  filterGenreSecondary: document.querySelector('#filterGenreSecondary'),
   filterDescriptor: document.querySelector('#filterDescriptor'),
   filtersClear: document.querySelector('#filtersClear')
 };
@@ -79,13 +78,15 @@ function clearScene() {
     m.geometry.dispose();
     m.material.dispose();
     root.remove(m);
-    selectedIndices.clear();
-    selectedGenres.clear();
-    selectedYear = null;
-    activeFilters = { artist: null, yearFrom: null, yearTo: null, genrePrimary: null, genreSecondary: null, descriptor: null }; // <-- nuevo
-    filteredIndices = null;
   });
   pointMeshes = [];
+
+  selectedIndices.clear();
+  selectedGenres.clear();
+  selectedYear = null;
+  activeFilters = { artist: null, yearFrom: null, yearTo: null, descriptor: null, query: "" };
+  filteredIndices = null;
+  if (ui.search) ui.search.value = "";
 
   yearSprites.forEach(s => {
     s.material.map?.dispose();
@@ -319,7 +320,7 @@ function pointerClick(e) {
   }
 
   clearHighlight();
-  clearGenreHighlight();
+  clearGenreSelection();
   clearYearHighlight();
 }
 
@@ -347,9 +348,9 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.4,
-  nNeighbors: 3.5,
-  minDist: 0.5
+  descriptorWeight: 0.33,
+  nNeighbors: 4.3,
+  minDist: 0.65
 };
 
 const TIME_LAYOUT = {
@@ -523,6 +524,8 @@ const GENRE_FAMILIES = [
   { match: /comedy rock/i,            group: "Rock", hueRange: [235, 245], satRange: [50, 75], lightRange: [55, 67] },
   { match: /geek rock/i,              group: "Rock", hueRange: [225, 235], satRange: [45, 70], lightRange: [55, 67] },
   { match: /post-rock/i,              group: "Rock", hueRange: [240, 250], satRange: [35, 60], lightRange: [35, 50] },
+  { match: /symphonic prog/i,         group: "Rock", hueRange: [250, 258], satRange: [45, 70], lightRange: [40, 55] },
+  { match: /symphonic rock/i,         group: "Rock", hueRange: [258, 266], satRange: [50, 75], lightRange: [42, 55] },
 
   // ---------- PUNK ----------
   { match: /punk rock/i,             group: "Punk", hueRange: [0, 5],   satRange: [75, 95], lightRange: [35, 45] },
@@ -596,12 +599,16 @@ const GENRE_FAMILIES = [
   { match: /electronic dance music/i, group: "Electrónica", hueRange: [204, 212], satRange: [70, 100], lightRange: [40, 55] },
   { match: /indietronica/i,           group: "Electrónica", hueRange: [212, 220], satRange: [55, 85], lightRange: [45, 60] },
   { match: /^techno$/i,              group: "Electrónica", hueRange: [220, 228], satRange: [60, 90], lightRange: [30, 45] },
+  { match: /^disco$/i,               group: "Electrónica", hueRange: [236, 244], satRange: [65, 95], lightRange: [45, 60] },
+  { match: /\bidm\b/i,               group: "Electrónica", hueRange: [244, 252], satRange: [40, 70], lightRange: [35, 50] },
 
   // ---------- AMBIENT ----------
   { match: /dark ambient/i,          group: "Electrónica", hueRange: [180, 190], satRange: [15, 40], lightRange: [20, 32] },
   { match: /ambient pop/i,            group: "Electrónica", hueRange: [190, 200], satRange: [25, 55], lightRange: [55, 70] },
   { match: /^ambient$/i,             group: "Electrónica", hueRange: [200, 210], satRange: [20, 50], lightRange: [45, 60] },
   { match: /^drone$/i,               group: "Electrónica", hueRange: [210, 220], satRange: [10, 35], lightRange: [25, 40] },
+  { match: /neoclassical new age/i,  group: "Electrónica", hueRange: [220, 228], satRange: [10, 30], lightRange: [50, 65] },
+  { match: /^new age$/i,             group: "Electrónica", hueRange: [228, 236], satRange: [10, 30], lightRange: [50, 65] },
 
   // ---------- HIP HOP / RAP ----------
   { match: /rap rock/i,              group: "Hip Hop / Rap", hueRange: [15, 22], satRange: [60, 90], lightRange: [35, 50] },
@@ -620,6 +627,7 @@ const GENRE_FAMILIES = [
   { match: /contemporary folk/i,      group: "Folk", hueRange: [55, 60], satRange: [35, 65], lightRange: [55, 70] },
   { match: /progressive folk/i,       group: "Folk", hueRange: [60, 65], satRange: [40, 70], lightRange: [45, 60] },
   { match: /folktronica/i,            group: "Folk", hueRange: [50, 60], satRange: [45, 75], lightRange: [50, 65] },
+  { match: /indie folk/i,             group: "Folk", hueRange: [65, 70], satRange: [40, 65], lightRange: [45, 60] },
 
   // ---------- LATINA ----------
   { match: /latin alternative/i,       group: "Latina", hueRange: [5, 12],   satRange: [60, 90], lightRange: [40, 55] },
@@ -633,6 +641,12 @@ const GENRE_FAMILIES = [
   { match: /rock andino/i,             group: "Latina", hueRange: [25, 35],  satRange: [50, 80], lightRange: [35, 50] },
   { match: /cumbia argentina/i,       group: "Latina", hueRange: [35, 45],  satRange: [70, 100], lightRange: [45, 60] },
   { match: /^tango$/i,                group: "Latina", hueRange: [350, 360], satRange: [35, 65], lightRange: [25, 40] },
+  { match: /bolero/i,                 group: "Latina", hueRange: [47, 54],  satRange: [35, 60], lightRange: [50, 65] },
+  { match: /candombe/i,               group: "Latina", hueRange: [54, 61],  satRange: [60, 90], lightRange: [35, 50] },
+  { match: /chacarera/i,              group: "Latina", hueRange: [61, 68],  satRange: [55, 85], lightRange: [40, 55] },
+  { match: /^hispanic american music$/i, group: "Latina", hueRange: [68, 75], satRange: [40, 70], lightRange: [45, 60] },
+  { match: /milonga/i,                group: "Latina", hueRange: [340, 347], satRange: [35, 60], lightRange: [30, 45] },
+  { match: /zamba/i,                  group: "Latina", hueRange: [75, 82],  satRange: [45, 70], lightRange: [40, 55] },
 
   // ---------- JAZZ ----------
   { match: /jazz-rock/i,              group: "Jazz", hueRange: [45, 50], satRange: [50, 75], lightRange: [35, 50] },
@@ -640,6 +654,8 @@ const GENRE_FAMILIES = [
   { match: /free improvisation/i,     group: "Jazz", hueRange: [55, 60], satRange: [35, 65], lightRange: [35, 50] },
   { match: /jazz fusion/i,            group: "Jazz", hueRange: [60, 65], satRange: [55, 80], lightRange: [40, 55] },
   { match: /jazz-funk/i,              group: "Jazz", hueRange: [65, 70], satRange: [65, 90], lightRange: [45, 60] },
+  { match: /jazz pop/i,               group: "Jazz", hueRange: [70, 75], satRange: [45, 70], lightRange: [50, 65] },
+  { match: /smooth jazz/i,            group: "Jazz", hueRange: [75, 80], satRange: [35, 60], lightRange: [55, 70] },
 
   // ---------- RAÍCES ----------
   { match: /^blues$/i,                group: "Raíces", hueRange: [25, 30], satRange: [45, 70], lightRange: [30, 45] },
@@ -649,6 +665,9 @@ const GENRE_FAMILIES = [
   { match: /rhythm (&|and) blues/i,   group: "Raíces", hueRange: [45, 50], satRange: [50, 75], lightRange: [35, 50] },
   { match: /americana/i,              group: "Raíces", hueRange: [30, 38], satRange: [40, 65], lightRange: [45, 60] },
   { match: /neo-soul/i,               group: "Raíces", hueRange: [38, 46], satRange: [45, 70], lightRange: [40, 55] },
+  { match: /acoustic blues/i,         group: "Raíces", hueRange: [20, 25], satRange: [35, 60], lightRange: [35, 50] },
+  { match: /^boogie$/i,               group: "Raíces", hueRange: [46, 52], satRange: [55, 80], lightRange: [35, 50] },
+  { match: /contemporary r&b/i,       group: "Raíces", hueRange: [50, 56], satRange: [50, 75], lightRange: [40, 55] },
 
   // ---------- CHRISTIAN ----------
   { match: /christian rock/i,         group: "Christian", hueRange: [150, 160], satRange: [40, 70], lightRange: [40, 55] }
@@ -1265,7 +1284,7 @@ function tickAnimation() {
 }
 
 function highlightPoint(mesh) {
-  clearGenreHighlight();
+  clearGenreSelection();
   clearYearHighlight(); // <-- nuevo: seleccionar un disco es excluyente con un año activo
   const artist = mesh.userData.album?.artist ?? null;
   selected = artist;
@@ -1295,6 +1314,89 @@ function legendDotColor(g) {
   return c;
 }
 
+// --- Selección de géneros (árbol) ---------------------------------------
+// selectedGenres guarda géneros/subgéneros "hoja". Seleccionar un grupo
+// padre (ej. "Metal") agrega/quita de una vez todos sus géneros hijos.
+// La selección ahora es un filtro real (ver currentFilters/pointMatchesFilters),
+// no sólo un resaltado visual.
+
+function toggleGenreHighlight(genre) {
+  if (selectedGenres.has(genre)) {
+    selectedGenres.delete(genre);
+  } else {
+    selectedGenres.add(genre);
+  }
+
+  clearHighlight();
+  clearYearHighlight();
+  refreshFilterOptions();
+  updateGenreLegendActiveState();
+}
+
+function toggleGenreGroupSelection(genresInGroup) {
+  if (!genresInGroup.length) return;
+  const allSelected = genresInGroup.every(g => selectedGenres.has(g));
+
+  if (allSelected) {
+    genresInGroup.forEach(g => selectedGenres.delete(g));
+  } else {
+    genresInGroup.forEach(g => selectedGenres.add(g));
+  }
+
+  clearHighlight();
+  clearYearHighlight();
+  refreshFilterOptions();
+  updateGenreLegendActiveState();
+}
+
+function clearGenreSelection() {
+  if (selectedGenres.size === 0) return;
+  selectedGenres.clear();
+  refreshFilterOptions();
+  updateGenreLegendActiveState();
+}
+
+function updateFilterGenreVisuals() {
+  const filtersActive = filteredIndices !== null;
+  const genresActive = selectedGenres.size > 0;
+
+  if (!filtersActive && !genresActive) {
+    pointMeshes.forEach(m => { m.material.opacity = 1; });
+    return;
+  }
+
+  const dimOpacity = filtersActive ? 0.12 : 0.25;
+
+  pointMeshes.forEach((m, i) => {
+    const p = points[i];
+    const passesFilter = !filtersActive || filteredIndices.has(i);
+    const passesGenre = !genresActive ||
+      p.genres.primary.some(g => selectedGenres.has(g)) ||
+      p.genres.secondary.some(g => selectedGenres.has(g));
+
+    m.material.opacity = (passesFilter && passesGenre) ? 1 : dimOpacity;
+  });
+}
+
+function updateFilterArtistConnections() {
+  clearConnections();
+  if (!activeFilters.artist) return;
+
+  const originPoint = points.find(p => p.artist === activeFilters.artist);
+  if (!originPoint) return;
+
+  buildArtistChainConnections(originPoint.idx);
+}
+
+function applyFilterMapVisuals() {
+  if (filteredIndices !== null) {
+    clearHighlight();
+    clearYearHighlight();
+  }
+  updateFilterGenreVisuals();
+  updateFilterArtistConnections();
+}
+
 function renderGenreLegend() {
   const genres = new Set();
   albums.forEach(a =>
@@ -1315,79 +1417,100 @@ function renderGenreLegend() {
   ];
 
   const frag = document.createDocumentFragment();
-  genreLegendItemsByGenre = new Map(); // <-- reset en cada render
+  genreLegendItemsByGenre = new Map();
+  genreLegendGroups = new Map();
 
   orderedGroups.forEach(group => {
+    const isExpanded = expandedGenreGroups.has(group);
+    const groupGenres = byGroup.get(group);
+
     const title = document.createElement("div");
     title.className = "legend-group-title";
-    title.textContent = group;
+    title.style.cssText = "display:flex;align-items:center;gap:6px;";
+
+    const arrow = document.createElement("span");
+    arrow.textContent = isExpanded ? "▾" : "▸";
+    arrow.style.cssText = "font-size:10px;width:10px;flex-shrink:0;cursor:pointer;";
+
+    const selectArea = document.createElement("span");
+    selectArea.style.cssText = "display:flex;align-items:center;gap:6px;cursor:pointer;flex:1;";
+
+    const swatch = document.createElement("i");
+    swatch.style.cssText = `display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:${colorForGroup(group).getStyle()};`;
+
+    const label = document.createElement("span");
+    label.textContent = group;
+
+    selectArea.appendChild(swatch);
+    selectArea.appendChild(label);
+
+    title.appendChild(arrow);
+    title.appendChild(selectArea);
+
+    const itemsContainer = document.createElement("div");
+    itemsContainer.className = "legend-group-items";
+    itemsContainer.style.display = isExpanded ? "block" : "none";
+
+    // La flecha sólo expande/colapsa; el swatch+label selecciona/deselecciona
+    // todo el grupo (todos sus géneros hijos de una vez).
+    arrow.addEventListener("click", e => {
+      e.stopPropagation();
+      const nowExpanded = !expandedGenreGroups.has(group);
+      if (nowExpanded) {
+        expandedGenreGroups.add(group);
+      } else {
+        expandedGenreGroups.delete(group);
+      }
+      arrow.textContent = nowExpanded ? "▾" : "▸";
+      itemsContainer.style.display = nowExpanded ? "block" : "none";
+    });
+
+    selectArea.addEventListener("click", e => {
+      e.stopPropagation();
+      toggleGenreGroupSelection(groupGenres);
+    });
+
     frag.appendChild(title);
 
-    byGroup.get(group).forEach(g => {
+    groupGenres.forEach(g => {
       const item = document.createElement("div");
       item.className = "legend-item";
-      item.dataset.genre = g; // <-- nuevo
-      item.style.cursor = "pointer"; // <-- nuevo (fallback si no hay CSS)
+      item.dataset.genre = g;
+      item.style.cursor = "pointer";
 
       const dot = document.createElement("i");
       dot.className = "legend-dot";
       dot.style.background = legendDotColor(g).getStyle();
 
-      const label = document.createElement("span");
-      label.textContent = g;
+      const itemLabel = document.createElement("span");
+      itemLabel.textContent = g;
 
       item.appendChild(dot);
-      item.appendChild(label);
+      item.appendChild(itemLabel);
 
-      // <-- nuevo: click togglea el resaltado de este género
       item.addEventListener("click", () => toggleGenreHighlight(g));
 
-      genreLegendItemsByGenre.set(g, item); // <-- nuevo
+      genreLegendItemsByGenre.set(g, item);
 
-      frag.appendChild(item);
+      itemsContainer.appendChild(item);
+    });
+
+    frag.appendChild(itemsContainer);
+
+    genreLegendGroups.set(group, {
+      titleEl: title,
+      arrowEl: arrow,
+      selectAreaEl: selectArea,
+      itemsContainerEl: itemsContainer,
+      genres: groupGenres
     });
   });
 
   ui.genreLegend.textContent = "";
   ui.genreLegend.appendChild(frag);
 
-  updateGenreLegendActiveState(); // <-- nuevo: por si veníamos con un género activo
-}
- 
-function toggleGenreHighlight(genre) {
-  if (selectedGenres.has(genre)) {
-    selectedGenres.delete(genre);
-  } else {
-    selectedGenres.add(genre);
-  }
- 
-  if (selectedGenres.size === 0) {
-    clearGenreHighlight();
-    return;
-  }
- 
-  applyGenreHighlight();
-}
- 
-function applyGenreHighlight() {
-  clearHighlight();
-  clearYearHighlight();
- 
-  pointMeshes.forEach((m, i) => {
-    const album = points[i];
-    const has = album.genres.primary.some(g => selectedGenres.has(g)) ||
-      album.genres.secondary.some(g => selectedGenres.has(g));
-    m.material.opacity = has ? 1 : 0.25;
-  });
- 
   updateGenreLegendActiveState();
-}
- 
-function clearGenreHighlight() {
-  if (selectedGenres.size === 0) return;
-  selectedGenres.clear();
-  pointMeshes.forEach(m => { m.material.opacity = 1; });
-  updateGenreLegendActiveState();
+  updateGenreTreeVisibility();
 }
  
 function updateGenreLegendActiveState() {
@@ -1398,7 +1521,43 @@ function updateGenreLegendActiveState() {
     el.style.backgroundColor = active ? "rgba(0,0,0,0.06)" : "transparent";
     el.style.borderRadius = active ? "4px" : "0";
   });
+
+  genreLegendGroups.forEach(data => {
+    const selectedCount = data.genres.filter(g => selectedGenres.has(g)).length;
+    const allSelected = selectedCount > 0 && selectedCount === data.genres.length;
+    const partial = selectedCount > 0 && !allSelected;
+
+    data.selectAreaEl.classList.toggle("active", allSelected);
+    data.selectAreaEl.classList.toggle("partial", partial);
+    data.selectAreaEl.style.fontWeight = allSelected ? "700" : "400";
+    data.selectAreaEl.style.opacity = partial ? "0.7" : "1";
+  });
 }
+
+// Oculta géneros/subgéneros del árbol que no tengan ningún disco dentro del
+// conjunto actualmente filtrado (búsqueda + filtros avanzados), y colapsa
+// grupos enteros que se queden sin hijos visibles.
+function updateGenreTreeVisibility() {
+  const pool = getFilteredPoints('genres');
+  const visibleGenres = new Set(pool.flatMap(p => p.genres.primary));
+
+  genreLegendGroups.forEach((data, group) => {
+    let anyVisible = false;
+
+    data.genres.forEach(g => {
+      const el = genreLegendItemsByGenre.get(g);
+      if (!el) return;
+      const visible = visibleGenres.has(g);
+      el.style.display = visible ? "" : "none";
+      if (visible) anyVisible = true;
+    });
+
+    data.titleEl.style.display = anyVisible ? "" : "none";
+    data.itemsContainerEl.style.display = anyVisible && expandedGenreGroups.has(group) ? "block" : "none";
+  });
+}
+
+let expandedGenreGroups = new Set();
 
 function buildAlbumRow(a) {
   const el = document.createElement("div");
@@ -1444,24 +1603,43 @@ function pointMatchesFilters(p, filters) {
   if (filters.artist && p.artist !== filters.artist) return false;
   if (filters.yearFrom !== null && p.year < filters.yearFrom) return false;
   if (filters.yearTo !== null && p.year > filters.yearTo) return false;
-  if (filters.genrePrimary && !p.genres.primary.includes(filters.genrePrimary)) return false;
-  if (filters.genreSecondary && !p.genres.secondary.includes(filters.genreSecondary)) return false;
   if (filters.descriptor && !p.descriptors.includes(filters.descriptor)) return false;
+  if (filters.query && !p.searchText.includes(filters.query)) return false;
+  if (filters.genres && filters.genres.size > 0) {
+    const matchesGenre = p.genres.primary.some(g => filters.genres.has(g)) ||
+      p.genres.secondary.some(g => filters.genres.has(g));
+    if (!matchesGenre) return false;
+  }
   return true;
 }
 
+// Junta activeFilters + la selección de géneros del árbol en un único
+// objeto de filtros, usado por pointMatchesFilters/getFilteredPoints.
+function currentFilters() {
+  return { ...activeFilters, genres: selectedGenres };
+}
+
 function hasActiveFilters() {
-  return Object.values(activeFilters).some(v => v !== null);
+  return activeFilters.artist !== null
+    || activeFilters.yearFrom !== null
+    || activeFilters.yearTo !== null
+    || activeFilters.descriptor !== null
+    || Boolean(activeFilters.query && activeFilters.query.trim() !== "")
+    || selectedGenres.size > 0;
 }
 
 // Pool de discos aplicando todos los filtros activos EXCEPTO el indicado
-// (o excepto año, si excludeKey === 'year'). Es la base de la cascada: las
-// opciones de cada control se calculan sobre lo que dejan pasar los demás.
+// (o excepto año, si excludeKey === 'year'; o excepto géneros, si
+// excludeKey === 'genres'). Es la base de la cascada: las opciones de cada
+// control (incluido el árbol de géneros) se calculan sobre lo que dejan
+// pasar los demás.
 function getFilteredPoints(excludeKey) {
-  const filters = { ...activeFilters };
+  const filters = currentFilters();
   if (excludeKey === 'year') {
     filters.yearFrom = null;
     filters.yearTo = null;
+  } else if (excludeKey === 'genres') {
+    filters.genres = new Set();
   } else if (excludeKey) {
     filters[excludeKey] = null;
   }
@@ -1493,45 +1671,19 @@ function populateSelectOptions(selectEl, values, placeholder, currentValue) {
 }
 
 function applyFilters() {
+  const filters = currentFilters();
   filteredIndices = hasActiveFilters()
-    ? new Set(points.filter(p => pointMatchesFilters(p, activeFilters)).map(p => p.idx))
+    ? new Set(points.filter(p => pointMatchesFilters(p, filters)).map(p => p.idx))
     : null;
 
   renderList();
   applyFilterMapVisuals();
 }
 
-function applyFilterMapVisuals() {
-  if (filteredIndices === null) return; // sin filtros: no tocar el mapa, que lo maneje selección/género/año
-
-  // El filtro es excluyente con los otros modos de resaltado del mapa.
-  clearHighlight();
-  clearGenreHighlight();
-  clearYearHighlight();
-
-  pointMeshes.forEach((m, i) => {
-    m.material.opacity = filteredIndices.has(i) ? 1 : 0.12;
-  });
-}
-
 function refreshFilterOptions() {
-  const primaryPool = getFilteredPoints('genrePrimary');
-  const secondaryPool = getFilteredPoints('genreSecondary');
   const descriptorPool = getFilteredPoints('descriptor');
   const yearPool = getFilteredPoints('year');
 
-  populateSelectOptions(
-    ui.filterGenrePrimary,
-    [...new Set(primaryPool.flatMap(p => p.genres.primary))].sort(),
-    "Género primario (todos)",
-    activeFilters.genrePrimary
-  );
-  populateSelectOptions(
-    ui.filterGenreSecondary,
-    [...new Set(secondaryPool.flatMap(p => p.genres.secondary))].sort(),
-    "Género secundario (todos)",
-    activeFilters.genreSecondary
-  );
   populateSelectOptions(
     ui.filterDescriptor,
     [...new Set(descriptorPool.flatMap(p => p.descriptors))].sort(),
@@ -1546,56 +1698,10 @@ function refreshFilterOptions() {
   ui.filtersClear.style.display = hasActiveFilters() ? "inline-block" : "none";
 
   applyFilters();
-  renderSelectedChips(); // unificado: ver punto 4
+  updateGenreTreeVisibility();
+  renderSelectedChips();
 }
 
-let filterArtistDebounce = null;
-
-function computeArtistSuggestions(query) {
-  const pool = getFilteredPoints('artist');
-  const artists = [...new Set(pool.map(p => p.artist))].sort();
-  const q = query.toLowerCase().trim();
-  if (!q) return artists.slice(0, MAX_SUGGESTIONS);
-  return artists.filter(a => a.toLowerCase().includes(q)).slice(0, MAX_SUGGESTIONS);
-}
-
-function renderFilterArtistSuggestions(list) {
-  ui.filterArtistResults.textContent = "";
-  if (!list.length) { ui.filterArtistResults.classList.remove("open"); return; }
-
-  const frag = document.createDocumentFragment();
-  list.forEach(name => {
-    const row = document.createElement("div");
-    row.className = "search-suggestion";
-    row.textContent = name;
-    row.addEventListener("mousedown", e => {
-      e.preventDefault();
-      activeFilters.artist = name;
-      ui.filterArtist.value = name;
-      closeFilterArtistTypeahead();
-      refreshFilterOptions();
-    });
-    frag.appendChild(row);
-  });
-  ui.filterArtistResults.appendChild(frag);
-  ui.filterArtistResults.classList.add("open");
-}
-
-function closeFilterArtistTypeahead() {
-  ui.filterArtistResults.textContent = "";
-  ui.filterArtistResults.classList.remove("open");
-}
-
-ui.filterArtist.addEventListener("input", e => {
-  const value = e.target.value;
-  if (activeFilters.artist && value !== activeFilters.artist) activeFilters.artist = null; // retipeando: invalida la selección anterior
-  clearTimeout(filterArtistDebounce);
-  filterArtistDebounce = setTimeout(() => {
-    renderFilterArtistSuggestions(computeArtistSuggestions(value));
-  }, SEARCH_DEBOUNCE_MS);
-});
-
-ui.filterArtist.addEventListener("blur", () => setTimeout(closeFilterArtistTypeahead, 100));
 ui.filterYearFrom.addEventListener("change", e => {
   activeFilters.yearFrom = e.target.value ? Number(e.target.value) : null;
   refreshFilterOptions();
@@ -1604,22 +1710,16 @@ ui.filterYearTo.addEventListener("change", e => {
   activeFilters.yearTo = e.target.value ? Number(e.target.value) : null;
   refreshFilterOptions();
 });
-ui.filterGenrePrimary.addEventListener("change", e => {
-  activeFilters.genrePrimary = e.target.value || null;
-  refreshFilterOptions();
-});
-ui.filterGenreSecondary.addEventListener("change", e => {
-  activeFilters.genreSecondary = e.target.value || null;
-  refreshFilterOptions();
-});
 ui.filterDescriptor.addEventListener("change", e => {
   activeFilters.descriptor = e.target.value || null;
   refreshFilterOptions();
 });
 ui.filtersClear.addEventListener("click", () => {
-  activeFilters = { artist: null, yearFrom: null, yearTo: null, genrePrimary: null, genreSecondary: null, descriptor: null };
-  ui.filterArtist.value = "";
+  activeFilters = { artist: null, yearFrom: null, yearTo: null, descriptor: null, query: "" };
+  selectedGenres.clear();
+  ui.search.value = "";
   refreshFilterOptions();
+  updateGenreLegendActiveState();
 });
 
 function renderList() {
@@ -1631,11 +1731,36 @@ function renderList() {
   document.querySelector("#count").textContent = `(${toRender.length})`;
 }
 
-const MAX_SUGGESTIONS = 8;
-let currentSuggestions = [];
+// --- Buscador unificado (artistas + discos) ------------------------------
+const MAX_SUGGESTIONS_PER_GROUP = 6;
+let currentSuggestions = []; // [{ type: 'artist'|'album', value }]
 let activeSuggestionIndex = -1;
 
-function computeMatches(query) {
+function computeArtistMatches(query) {
+  const q = query.toLowerCase().trim();
+  if (!q) return [];
+
+  const seen = new Set();
+  const matches = [];
+  for (const p of points) {
+    if (seen.has(p.artist)) continue;
+    if (p.artist.toLowerCase().includes(q)) {
+      seen.add(p.artist);
+      matches.push(p.artist);
+    }
+  }
+
+  matches.sort((a,b) => {
+    const aStarts = a.toLowerCase().startsWith(q) ? 0 : 1;
+    const bStarts = b.toLowerCase().startsWith(q) ? 0 : 1;
+    if (aStarts !== bStarts) return aStarts - bStarts;
+    return a.localeCompare(b);
+  });
+
+  return matches.slice(0, MAX_SUGGESTIONS_PER_GROUP);
+}
+
+function computeAlbumMatches(query) {
   const q = query.toLowerCase().trim();
   if (!q) return [];
 
@@ -1651,7 +1776,39 @@ function computeMatches(query) {
     return a.album.localeCompare(b.album);
   });
 
-  return matches.slice(0, MAX_SUGGESTIONS);
+  return matches.slice(0, MAX_SUGGESTIONS_PER_GROUP);
+}
+
+function buildSectionHeader(text) {
+  const el = document.createElement("div");
+  el.className = "search-section-header";
+  el.textContent = text;
+  el.style.cssText = "font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#999;padding:6px 10px 2px;";
+  return el;
+}
+
+function buildArtistSuggestionRow(name, i) {
+  const el = document.createElement("div");
+  el.className = "search-suggestion";
+  el.dataset.i = i;
+
+  const dot = document.createElement("i");
+  dot.className = "suggestion-dot";
+  dot.style.cssText = "display:inline-block;width:8px;height:8px;border-radius:2px;background:#bbb;flex-shrink:0;";
+
+  const text = document.createElement("span");
+  text.textContent = name;
+
+  el.appendChild(dot);
+  el.appendChild(text);
+
+  el.addEventListener("mousedown", e => {
+    e.preventDefault();
+    selectSuggestion(i);
+  });
+  el.addEventListener("mouseenter", () => setActiveSuggestion(i));
+
+  return el;
 }
 
 function buildSuggestionRow(a, i) {
@@ -1682,7 +1839,13 @@ function buildSuggestionRow(a, i) {
 }
 
 function renderTypeahead(query) {
-  currentSuggestions = computeMatches(query);
+  const artistNames = computeArtistMatches(query);
+  const albumPoints = computeAlbumMatches(query);
+
+  currentSuggestions = [
+    ...artistNames.map(name => ({ type: "artist", value: name })),
+    ...albumPoints.map(p => ({ type: "album", value: p }))
+  ];
   activeSuggestionIndex = -1;
 
   if (!ui.searchResults) return; // sin markup del dropdown en el HTML, no-op
@@ -1695,7 +1858,21 @@ function renderTypeahead(query) {
   }
 
   const frag = document.createDocumentFragment();
-  currentSuggestions.forEach((a, i) => frag.appendChild(buildSuggestionRow(a, i)));
+
+  if (artistNames.length) {
+    frag.appendChild(buildSectionHeader("Artistas"));
+    currentSuggestions.forEach((s, i) => {
+      if (s.type === "artist") frag.appendChild(buildArtistSuggestionRow(s.value, i));
+    });
+  }
+
+  if (albumPoints.length) {
+    frag.appendChild(buildSectionHeader("Discos"));
+    currentSuggestions.forEach((s, i) => {
+      if (s.type === "album") frag.appendChild(buildSuggestionRow(s.value, i));
+    });
+  }
+
   ui.searchResults.appendChild(frag);
   ui.searchResults.classList.add("open");
 }
@@ -1714,11 +1891,26 @@ function closeTypeahead() {
 }
 
 function selectSuggestion(i) {
-  const a = currentSuggestions[i];
-  if (!a) return;
-  ui.search.value = a.album;
-  closeTypeahead();
-  jumpToAlbum(a);
+  const entry = currentSuggestions[i];
+  if (!entry) return;
+
+  // Elegir una sugerencia limpia el filtro de texto libre: el objetivo acá
+  // es navegar/filtrar por ese artista o disco puntual, no seguir acotando
+  // por la subcadena que se llegó a tipear.
+  activeFilters.query = "";
+
+  if (entry.type === "artist") {
+    activeFilters.artist = entry.value;
+    ui.search.value = entry.value;
+    closeTypeahead();
+    refreshFilterOptions();
+  } else {
+    const a = entry.value;
+    ui.search.value = a.album;
+    closeTypeahead();
+    refreshFilterOptions();
+    jumpToAlbum(a);
+  }
 }
 
 function computeNearestAlbums(idx, k = 3) {
@@ -1927,19 +2119,22 @@ function renderFilterChipsInto(container) {
   const defs = [
     { active: () => activeFilters.artist !== null,
       label: () => `Artista: ${activeFilters.artist}`,
-      clear: () => { activeFilters.artist = null; ui.filterArtist.value = ""; } },
+      clear: () => {
+        if (ui.search.value === activeFilters.artist) ui.search.value = "";
+        activeFilters.artist = null;
+      } },
     { active: () => activeFilters.yearFrom !== null || activeFilters.yearTo !== null,
       label: () => `Año: ${activeFilters.yearFrom ?? "…"}–${activeFilters.yearTo ?? "…"}`,
       clear: () => { activeFilters.yearFrom = null; activeFilters.yearTo = null; } },
-    { active: () => activeFilters.genrePrimary !== null,
-      label: () => `Género: ${activeFilters.genrePrimary}`,
-      clear: () => { activeFilters.genrePrimary = null; } },
-    { active: () => activeFilters.genreSecondary !== null,
-      label: () => `Género 2°: ${activeFilters.genreSecondary}`,
-      clear: () => { activeFilters.genreSecondary = null; } },
     { active: () => activeFilters.descriptor !== null,
       label: () => `Descriptor: ${activeFilters.descriptor}`,
-      clear: () => { activeFilters.descriptor = null; } }
+      clear: () => { activeFilters.descriptor = null; } },
+    { active: () => Boolean(activeFilters.query && activeFilters.query.trim() !== ""),
+      label: () => `Búsqueda: "${activeFilters.query}"`,
+      clear: () => { activeFilters.query = ""; ui.search.value = ""; } },
+    { active: () => selectedGenres.size > 0,
+      label: () => `Géneros: ${selectedGenres.size}`,
+      clear: () => { selectedGenres.clear(); } }
   ];
 
   defs.forEach(def => {
@@ -1960,6 +2155,7 @@ function renderFilterChipsInto(container) {
       e.stopPropagation();
       def.clear();
       refreshFilterOptions();
+      updateGenreLegendActiveState();
     });
 
     chip.appendChild(label);
@@ -1981,7 +2177,6 @@ function buildMultiSelectionChains() {
 
 function applySelection() {
   clearYearHighlight();
-  clearGenreHighlight();
   clearConnections();
   unpinTooltip();
   clearMultiSelectPanels();
@@ -2388,7 +2583,7 @@ function toggleYearHighlight(year) {
 
 function setYearHighlight(year) {
   clearHighlight();
-  clearGenreHighlight();
+  clearGenreSelection();
 
   selectedYear = year;
 
@@ -2489,8 +2684,19 @@ const SEARCH_DEBOUNCE_MS = 150;
 let searchDebounceTimer = null;
 ui.search.addEventListener("input", e => {
   const value = e.target.value;
+
+  // Reescribir el texto invalida cualquier artista previamente elegido: el
+  // filtro de artista sólo se fija de nuevo al elegir una sugerencia.
+  if (activeFilters.artist && value !== activeFilters.artist) {
+    activeFilters.artist = null;
+  }
+  activeFilters.query = value.toLowerCase().trim();
+
   clearTimeout(searchDebounceTimer);
-  searchDebounceTimer = setTimeout(() => renderTypeahead(value), SEARCH_DEBOUNCE_MS);
+  searchDebounceTimer = setTimeout(() => {
+    renderTypeahead(value);
+    refreshFilterOptions();
+  }, SEARCH_DEBOUNCE_MS);
 });
 
 ui.search.addEventListener("keydown", e => {

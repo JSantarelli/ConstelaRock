@@ -3704,7 +3704,7 @@
     {
     "id": "locura-total",
     "album": "Locura total",
-    "artist": "Fito Páez & Moska",
+    "artist": "Fito Páez",
     "year": 2015,
     "genres": {
     "primary": [
@@ -14980,7 +14980,7 @@
   {
     "id": "suelto",
     "album": "Suelto",
-    "artist": "Cordera",
+    "artist": "Gustavo Cordera",
     "year": 2009,
     "genres": {
       "primary": [
@@ -18118,7 +18118,7 @@
   {
     "id": "los-autenticos-reggaementes",
     "album": "Los Auténticos Reggaementes",
-    "artist": "Klub & Los Auténticos Decadentes",
+    "artist": "Los Auténticos Decadentes",
     "year": 2017,
     "genres": {
       "primary": ["Reggae"],
@@ -19317,7 +19317,7 @@
   {
     "id": "nadie-sabe",
     "album": "Nadie sabe",
-    "artist": "Christian Rosas & Daniel Melero",
+    "artist": "Daniel Melero",
     "year": 1986,
     "genres": {
       "primary": [
@@ -19709,7 +19709,7 @@
   {
     "id": "utopia",
     "album": "Utopía",
-    "artist": "Pedro Aznar & Ramiro Gallo",
+    "artist": "Pedro Aznar",
     "year": 2019,
     "genres": {
       "primary": [
@@ -20610,5 +20610,7019 @@
       "atmospheric",
       "eclectic"
     ]
+  },
+  {
+    "id": "bandalos-chinos",
+    "album": "Bandalos Chinos",
+    "artist": "Bandalos Chinos",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Math Rock",
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "bach",
+    "album": "BACH",
+    "artist": "Bandalos Chinos",
+    "year": 2018,
+    "genres": {
+      "primary": [
+        "Sophisti-Pop"
+      ],
+      "secondary": [
+        "New Wave",
+        "Yacht Rock",
+        "Synthpop",
+        "Alternative Dance",
+        "Neo-Psychedelia"
+      ]
+    },
+    "descriptors": [
+      "lush",
+      "melodic",
+      "longing",
+      "sentimental",
+      "energetic",
+      "romantic",
+      "soft",
+      "mellow",
+      "pastiche",
+      "introspective",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "paranoia-pop",
+    "album": "Paranoia pop",
+    "artist": "Bandalos Chinos",
+    "year": 2020,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Sophisti-Pop"
+      ],
+      "secondary": [
+        "Synth Funk",
+        "New Wave"
+      ]
+    },
+    "descriptors": [
+      "longing",
+      "playful",
+      "male vocalist",
+      "melodic",
+      "love",
+      "introspective",
+      "lush",
+      "bittersweet"
+    ]
+  },
+  {
+    "id": "el-big-blue",
+    "album": "El Big Blue",
+    "artist": "Bandalos Chinos",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Sophisti-Pop",
+        "Indie Pop",
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Yacht Rock",
+        "New Wave",
+        "Pop"
+      ]
+    },
+    "descriptors": [
+      "sentimental",
+      "male vocalist",
+      "lush",
+      "melancholic",
+      "rhythmic",
+      "love",
+      "bittersweet",
+      "energetic"
+    ]
+  },
+  {
+    "id": "vandalo",
+    "album": "Vándalos",
+    "artist": "Bandalos Chinos",
+    "year": 2025,
+    "genres": {
+      "primary": [
+        "Sophisti-Pop",
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Synthpop",
+        "Alternative Dance",
+        "New Wave",
+        "Funktronica"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "romantic",
+      "melodic",
+      "bittersweet",
+      "introspective",
+      "longing",
+      "melancholic",
+      "nocturnal",
+      "breakup",
+      "rhythmic",
+      "urban"
+    ]
+  },
+  {
+    "id": "usted-senalemelo",
+    "album": "Usted Señalemelo",
+    "artist": "Usted Señalemelo",
+    "year": 2015,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Garage Rock Revival",
+        "Power Pop"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "rhythmic",
+      "melodic",
+      "love",
+      "passionate"
+    ]
+  },
+  {
+    "id": "ii",
+    "album": "II",
+    "artist": "Usted Señalemelo",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Neo-Psychedelia",
+        "Art Rock",
+        "Synthpop"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "melodic",
+      "psychedelic",
+      "dense",
+      "sensual",
+      "nocturnal",
+      "energetic",
+      "poetic",
+      "introspective"
+    ]
+  },
+  {
+    "id": "tripolar",
+    "album": "Tripolar",
+    "artist": "Usted Señalemelo",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Indie Pop",
+        "Neo-Psychedelia"
+      ],
+      "secondary": [
+        "Synthpop",
+        "Psychedelic Pop"
+      ]
+    },
+    "descriptors": [
+      "poetic",
+      "male vocalist",
+      "melodic",
+      "introspective",
+      "bittersweet"
+    ]
+  },
+  {
+    "id": "terminos-condiciones",
+    "album": "Términos & condiciones",
+    "artist": "Usted Señalemelo",
+    "year": 2026,
+    "genres": {
+      "primary": [
+        "New Rave",
+        "Art Pop",
+        "Electropop"
+      ],
+      "secondary": [
+        "Synthpop",
+        "Electropop"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "bestia-bebe",
+    "album": "Bestia Bebé",
+    "artist": "Bestia Bebé",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Twee Pop",
+        "Post-Punk Revival",
+        "Garage Rock Revival"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "melodic",
+      "passionate",
+      "sports"
+    ]
+  },
+  {
+    "id": "jungla-de-metal-2",
+    "album": "Jungla de metal 2",
+    "artist": "Bestia Bebé",
+    "year": 2015,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Power Pop"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "happy",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "las-pruebas-destructivas",
+    "album": "Las pruebas destructivas",
+    "artist": "Bestia Bebé",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Alternative Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "repetitive"
+    ]
+  },
+  {
+    "id": "gracias-por-nada",
+    "album": "Gracias por nada",
+    "artist": "Bestia Bebé",
+    "year": 2020,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "playful",
+      "anxious",
+      "melodic",
+      "bittersweet",
+      "introspective",
+      "male vocalist",
+      "energetic",
+      "winter"
+    ]
+  },
+  {
+    "id": "vamos-a-destruir",
+    "album": "Vamos a destruir",
+    "artist": "Bestia Bebé",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "yendo-rapido-a-ningun-lugar",
+    "album": "Yendo rápido a ningún lugar",
+    "artist": "Bestia Bebé",
+    "year": 2026,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ubicacion-en-tiempo-real",
+    "album": "Ubicación en tiempo real",
+    "artist": "Barbi Recanati",
+    "year": 2020,
+    "genres": {
+      "primary": [
+        "Alternative Rock",
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Post-Punk",
+        "Shoegaze",
+        "Dream Pop",
+        "Neo-Psychedelia"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "longing",
+      "melancholic",
+      "melodic",
+      "bittersweet",
+      "breakup"
+    ]
+  },
+  {
+    "id": "el-final-de-las-cosas",
+    "album": "El final de las cosas",
+    "artist": "Barbi Recanati",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Post-Punk",
+        "Indie Rock",
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Dream Pop",
+        "Neo-Psychedelia",
+        "Darkwave",
+        "Gothic Rock"
+      ]
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "unico-y-nuestro",
+    "album": "Único y nuestro",
+    "artist": "Barbi Recanati",
+    "year": 2025,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Gothic Rock"
+      ],
+      "secondary": [
+        "Coldwave",
+        "Post-Punk",
+        "Darkwave",
+        "Shoegaze"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "guaper-la-tenaza-que-corta-el-alambre-del-corral",
+    "album": "Guaper, la tenaza que corta el alambre del corral",
+    "artist": "Mi Amigo Invencible",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Slacker Rock",
+        "Neo-Psychedelia"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "guaper-corriendo-a-lo-inmediato",
+    "album": "Guaper corriendo a lo inmediato",
+    "artist": "Mi Amigo Invencible",
+    "year": 2009,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Slacker Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "las-cuatro-canciones-del-viaje",
+    "album": "Las cuatro canciones del viaje",
+    "artist": "Mi Amigo Invencible",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Indie Folk",
+        "Synthpop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "relatos-de-un-incendio",
+    "album": "Relatos de un incendio",
+    "artist": "Mi Amigo Invencible",
+    "year": 2011,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Slowcore",
+        "Psychedelic Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-nostalgia-soundsystem",
+    "album": "La Nostalgia Soundsystem",
+    "artist": "Mi Amigo Invencible",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Neo-Psychedelia",
+        "Indie Folk",
+        "Garage Rock Revival"
+      ]
+    },
+    "descriptors": [
+      "alienation",
+      "longing",
+      "melancholic",
+      "psychedelic",
+      "lush",
+      "introspective",
+      "male vocalist",
+      "nature"
+    ]
+  },
+  {
+    "id": "la-danza-de-los-principiantes",
+    "album": "La danza de los principiantes",
+    "artist": "Mi Amigo Invencible",
+    "year": 2015,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Psychedelic Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "psychedelic",
+      "energetic",
+      "rhythmic",
+      "melancholic",
+      "melodic",
+      "poetic",
+      "lush"
+    ]
+  },
+  {
+    "id": "dutsiland",
+    "album": "Dutsiland",
+    "artist": "Mi Amigo Invencible",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": [
+        "Hypnagogic Pop",
+        "Psychedelic Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "isla-de-oro",
+    "album": "Isla de oro",
+    "artist": "Mi Amigo Invencible",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Neo-Psychedelia",
+        "Psychedelic Soul"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "arco-y-flecha",
+    "album": "Arco y flecha",
+    "artist": "Mi Amigo Invencible",
+    "year": 2024,
+    "genres": {
+      "primary": [
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Sophisti-Pop",
+        "Synthpop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "detectives",
+    "album": "Detectives",
+    "artist": "Fabiana Cantilo",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "New Wave",
+        "Synthpop",
+        "Sophisti-Pop"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "anxious",
+      "urban",
+      "playful",
+      "lush",
+      "sentimental",
+      "energetic",
+      "rhythmic",
+      "romantic",
+      "uplifting",
+      "melodic",
+      "passionate"
+    ]
+  },
+  {
+    "id": "fabiana-cantilo-y-los-perros-calientes",
+    "album": "Fabiana Cantilo y los Perros Calientes",
+    "artist": "Fabiana Cantilo",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "algo-mejor",
+    "album": "Algo mejor",
+    "artist": "Fabiana Cantilo",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Pop Soul",
+        "Blues Rock"
+      ]
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "golpes-al-vacio",
+    "album": "Golpes al vacío",
+    "artist": "Fabiana Cantilo",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "New Wave",
+        "Funk Rock",
+        "Dream Pop"
+      ]
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "sol-en-cinco",
+    "album": "Sol en cinco",
+    "artist": "Fabiana Cantilo",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "de-que-se-rien",
+    "album": "¿De qué se ríen?",
+    "artist": "Fabiana Cantilo",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "informacion-celeste",
+    "album": "Información celeste",
+    "artist": "Fabiana Cantilo",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Alternative Rock",
+        "Neo-Psychedelia",
+        "Electronic",
+        "Dream Pop"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "psychedelic"
+    ]
+  },
+  {
+    "id": "inconsciente-colectivo",
+    "album": "Inconsciente colectivo",
+    "artist": "Fabiana Cantilo",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Acoustic Rock"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Tango",
+        "Soft Rock",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "calm",
+      "acoustic",
+      "rhythmic",
+      "warm",
+      "about music"
+    ]
+  },
+  {
+    "id": "hija-del-rigor",
+    "album": "Hija del rigor",
+    "artist": "Fabiana Cantilo",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "en-la-vereda-del-sol",
+    "album": "En la vereda del sol",
+    "artist": "Fabiana Cantilo",
+    "year": 2009,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ahora",
+    "album": "Ahora",
+    "artist": "Fabiana Cantilo",
+    "year": 2011,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "superamor",
+    "album": "Superamor",
+    "artist": "Fabiana Cantilo",
+    "year": 2015,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cuna-de-piedra",
+    "album": "Cuna de piedra",
+    "artist": "Fabiana Cantilo",
+    "year": 2019,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "bh-plus",
+    "album": "BH (+)",
+    "artist": "Bahiano",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Reggae"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nomade",
+    "album": "Nómade",
+    "artist": "Bahiano",
+    "year": 2008,
+    "genres": {
+      "primary": [
+        "Reggae"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rey-mago-de-las-nubes",
+    "album": "Rey Mago de las nubes",
+    "artist": "Bahiano",
+    "year": 2011,
+    "genres": {
+      "primary": [
+        "Reggae"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "celebremos",
+    "album": "Celebremos",
+    "artist": "Bahiano",
+    "year": 2015,
+    "genres": {
+      "primary": [
+        "Reggae"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "original-roots",
+    "album": "Original Roots",
+    "artist": "Bahiano",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Reggae"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mucha-experiencia",
+    "album": "Mucha experiencia",
+    "artist": "Bahiano - Los Guardianes de Gregory",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Reggae"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vicentico",
+    "album": "Vicentico",
+    "artist": "Vicentico",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Latin Pop"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Latin Alternative",
+        "Folk Pop",
+        "Bolero"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-rayos",
+    "album": "Los rayos",
+    "artist": "Vicentico",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Latin Alternative"
+      ],
+      "secondary": [
+        "Cumbia",
+        "Bolero",
+        "Merengue",
+        "Singer-Songwriter",
+        "Tropipop"
+      ]
+    },
+    "descriptors": [
+      "warm",
+      "introspective",
+      "rhythmic",
+      "tropical",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "los-pajaros",
+    "album": "Los pájaros",
+    "artist": "Vicentico",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Latin Alternative"
+      ],
+      "secondary": [
+        "Pop",
+        "Bolero",
+        "Cumbia",
+        "Singer-Songwriter",
+        "Candombe",
+        "Salsa",
+        "Ska"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "rhythmic",
+      "warm",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "solo-un-momento",
+    "album": "Solo un momento",
+    "artist": "Vicentico",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Latin Pop"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Latin Alternative"
+      ]
+    },
+    "descriptors": [
+      "breakup",
+      "melodic",
+      "love",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "vicentico-5",
+    "album": "Vicentico 5",
+    "artist": "Vicentico",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Latin Alternative"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ultimo-acto",
+    "album": "Último acto",
+    "artist": "Vicentico",
+    "year": 2014,
+    "genres": {
+      "primary": [
+        "Latin Alternative"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-pozo-brillante",
+    "album": "El pozo brillante",
+    "artist": "Vicentico",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-traves-del-mar-de-los-sargazos",
+    "album": "A través del mar de los sargazos",
+    "artist": "Skay Beilinson",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Electronic",
+        "Art Rock"
+      ]
+    },
+    "descriptors": [
+      "epic",
+      "aquatic",
+      "energetic",
+      "anthemic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "talisman",
+    "album": "Talismán",
+    "artist": "Skay Beilinson",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Celtic Rock",
+        "Folk Rock",
+        "Experimental Rock"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "psychedelic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "la-marca-de-cain",
+    "album": "La marca de Caín",
+    "artist": "Skay Beilinson",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Electronic"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "donde-vas",
+    "album": "¿Dónde vas?",
+    "artist": "Skay Beilinson",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Alternative Rock",
+        "Country",
+        "Grunge",
+        "Punk Blues",
+        "Electronic",
+        "Roots Rock"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "existential",
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "la-luna-hueca",
+    "album": "La luna hueca",
+    "artist": "Skay Beilinson",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Rock"
+      ],
+      "secondary": [
+        "Country Rock",
+        "Celtic Rock",
+        "Ska Punk",
+        "Country Blues",
+        "Post-Britpop",
+        "Nordic Folk Rock",
+        "Post-Punk Revival",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-engranaje-de-cristal",
+    "album": "El engranaje de cristal",
+    "artist": "Skay Beilinson",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Folk Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "en-el-corazon-del-laberinto",
+    "album": "En el corazón del laberinto",
+    "artist": "Skay Beilinson",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Art Rock",
+        "Punk Blues",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "espejismos",
+    "album": "Espejismos",
+    "artist": "Skay Beilinson",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Alternative Rock"
+      ]
+    },
+    "descriptors": [
+      "existential",
+      "dark",
+      "energetic",
+      "anthemic",
+      "psychedelic",
+      "angry",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "musica-y-delirio",
+    "album": "Música y delirio",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Art Pop"
+      ],
+      "secondary": [
+        "Neo-Soul",
+        "Latin Alternative",
+        "Neo-Psychedelia",
+        "Psychedelic Soul"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rocanrolero",
+    "album": "Rocanrolero",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Neo-Psychedelia",
+        "Garage Rock Revival"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mordisco",
+    "album": "Mordisco",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Electropop"
+      ],
+      "secondary": [
+        "Sophisti-Pop",
+        "New Rave"
+      ]
+    },
+    "descriptors": [
+      "playful",
+      "sensual",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "amor-en-polvo",
+    "album": "Amor en polvo",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Sophisti-Pop",
+        "Boogie"
+      ],
+      "secondary": [
+        "Power Pop",
+        "Synth Funk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "xavier",
+    "album": "Xavier",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Electropop",
+        "Synth Funk"
+      ],
+      "secondary": [
+        "Art Pop",
+        "Neo-Soul",
+        "Contemporary R&B"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pitada",
+    "album": "Pitada",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Folk Pop"
+      ],
+      "secondary": [
+        "Contemporary Country",
+        "Bossa Nova"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "melodic"
+    ]
+  },
+  {
+    "id": "aqua-di-emma",
+    "album": "Aqua di Emma",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Indie Pop",
+        "Disco",
+        "Synth Funk"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mi-ano-gotico",
+    "album": "Mi año gótico",
+    "artist": "Emmanuel Horvilleur",
+    "year": 2025,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "elevado",
+    "album": "Elevado",
+    "artist": "Dante Spinetta",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Latin Rap"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-apagon",
+    "album": "El apagón",
+    "artist": "Dante Spinetta",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Latin Rap"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pyramide",
+    "album": "Pyramide",
+    "artist": "Dante Spinetta",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Latin Rap",
+        "Reggaetón"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "humorous",
+      "urban",
+      "party",
+      "drugs",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "punal",
+    "album": "Puñal",
+    "artist": "Dante Spinetta",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Contemporary R&B"
+      ],
+      "secondary": [
+        "Latin Alternative",
+        "Funk Rock",
+        "Neo-Soul",
+        "Latin Rap"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "soundtrack-4x4",
+    "album": "Soundtrack 4x4",
+    "artist": "Dante Spinetta",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Contemporary R&B",
+        "Synth Funk"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "niguiri-sessions",
+    "album": "Niguiri Sessions",
+    "artist": "Dante Spinetta",
+    "year": 2020,
+    "genres": {
+      "primary": [
+        "Contemporary R&B",
+        "Synth Funk"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mesa-dulce",
+    "album": "Mesa dulce",
+    "artist": "Dante Spinetta",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Funk"
+      ],
+      "secondary": [
+        "Contemporary R&B",
+        "Synth Funk"
+      ]
+    },
+    "descriptors": [
+      "uplifting",
+      "party",
+      "rhythmic",
+      "happy",
+      "vulgar",
+      "hedonism",
+      "quirky",
+      "energetic"
+    ]
+  },
+  {
+    "id": "dia-3",
+    "album": "DÍA 3",
+    "artist": "Dante Spinetta",
+    "year": 2026,
+    "genres": {
+      "primary": [
+        "Funk"
+      ],
+      "secondary": [
+        "Pop Rap"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "entrar-en-vos",
+    "album": "Entrar en vos",
+    "artist": "JAF",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "AOR",
+        "Soft Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "diapositivas",
+    "album": "Diapositivas",
+    "artist": "JAF",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Hard Rock",
+        "Blues Rock"
+      ],
+      "secondary": [
+        "Soft Rock"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "salida-de-emergencia",
+    "album": "Salida de emergencia",
+    "artist": "JAF",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Hard Rock",
+        "Blues Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "me-voy-para-el-sur",
+    "album": "Me voy para el sur",
+    "artist": "JAF",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hombre-de-blues",
+    "album": "Hombre de blues",
+    "artist": "JAF",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "corazon-en-llamas",
+    "album": "Corazón en llamas",
+    "artist": "JAF",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "numero-7",
+    "album": "Número 7",
+    "artist": "JAF",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "un-largo-camino",
+    "album": "Un largo camino",
+    "artist": "JAF",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "aire",
+    "album": "Aire",
+    "artist": "JAF",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "uno-plus",
+    "album": "Uno +",
+    "artist": "JAF",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "supercharger",
+    "album": "Supercharger",
+    "artist": "JAF",
+    "year": 2009,
+    "genres": {
+      "primary": [
+        "Blues Rock",
+        "Hard Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "canciones-de-amor",
+    "album": "Canciones de amor",
+    "artist": "JAF",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "instinto",
+    "album": "Instinto",
+    "artist": "JAF",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nocivo",
+    "album": "Nocivo",
+    "artist": "JAF",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "AOR",
+        "Soft Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cristo-rock",
+    "album": "Cristo Rock",
+    "artist": "Raúl Porchetto",
+    "year": 1972,
+    "genres": {
+      "primary": [
+        "Progressive Rock"
+      ],
+      "secondary": [
+        "Rock Opera",
+        "Progressive Folk",
+        "Acid Rock",
+        "Heavy Psych"
+      ]
+    },
+    "descriptors": [
+      "concept album",
+      "male vocalist",
+      "androgynous vocals",
+      "psychedelic",
+      "conscious",
+      "Christian"
+    ]
+  },
+  {
+    "id": "porchetto-1976",
+    "album": "Porchetto",
+    "artist": "Raúl Porchetto",
+    "year": 1976,
+    "genres": {
+      "primary": [
+        "Progressive Rock"
+      ],
+      "secondary": [
+        "Symphonic Prog"
+      ]
+    },
+    "descriptors": [
+      "progressive",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "chico-cosmico",
+    "album": "Chico cósmico",
+    "artist": "Raúl Porchetto",
+    "year": 1977,
+    "genres": {
+      "primary": [
+        "Symphonic Rock"
+      ],
+      "secondary": [
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "concept album",
+      "progressive"
+    ]
+  },
+  {
+    "id": "volando-de-vida",
+    "album": "Volando de vida",
+    "artist": "Raúl Porchetto",
+    "year": 1978,
+    "genres": {
+      "primary": [
+        "Progressive Rock"
+      ],
+      "secondary": [
+        "Progressive Folk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mundo-porchetto",
+    "album": "Mundo",
+    "artist": "Raúl Porchetto",
+    "year": 1979,
+    "genres": {
+      "primary": [
+        "Art Rock"
+      ],
+      "secondary": [
+        "Soft Rock",
+        "Pop Rock",
+        "Jazz-Rock",
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "metegol",
+    "album": "Metegol",
+    "artist": "Raúl Porchetto",
+    "year": 1980,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "New Wave",
+        "AOR",
+        "Progressive Pop"
+      ]
+    },
+    "descriptors": [
+      "energetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "television-porchetto",
+    "album": "Televisión",
+    "artist": "Raúl Porchetto",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "New Wave",
+        "Art Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "che-pibe",
+    "album": "Che pibe",
+    "artist": "Raúl Porchetto",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "reina-madre",
+    "album": "Reina Madre",
+    "artist": "Raúl Porchetto",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": [
+      "conscious",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "el-mundo-puede-mejorar",
+    "album": "El mundo puede mejorar",
+    "artist": "Raúl Porchetto",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "noche-y-dia",
+    "album": "Noche y día",
+    "artist": "Raúl Porchetto",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Synthpop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "barrios-bajos",
+    "album": "Barrios bajos",
+    "artist": "Raúl Porchetto",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "bumerang",
+    "album": "Búmerang",
+    "artist": "Raúl Porchetto",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "caras-de-la-guerra",
+    "album": "Caras de la guerra",
+    "artist": "Raúl Porchetto",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "altas-cumbres",
+    "album": "Altas cumbres",
+    "artist": "Raúl Porchetto",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "fuera-de-juego",
+    "album": "Fuera de juego",
+    "artist": "Raúl Porchetto",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Soft Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "centavos-de-amor",
+    "album": "Centavos de amor",
+    "artist": "Raúl Porchetto",
+    "year": 2001,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "yo-soy",
+    "album": "Yo soy",
+    "artist": "Raúl Porchetto",
+    "year": 2008,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Show Tunes"
+      ]
+    },
+    "descriptors": [
+      "concept album"
+    ]
+  },
+  {
+    "id": "dragones-y-planetas",
+    "album": "Dragones y planetas",
+    "artist": "Raúl Porchetto",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Blues Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sombras-en-el-cielo",
+    "album": "Sombras en el cielo",
+    "artist": "Raúl Porchetto",
+    "year": 2018,
+    "genres": {
+      "primary": [
+        "Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Soft Rock",
+        "Pop Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "miguel-cantilo-y-grupo-sur",
+    "album": "Miguel Cantilo y Grupo Sur",
+    "artist": "Miguel Cantilo",
+    "year": 1975,
+    "genres": {
+      "primary": [
+        "Psychedelic Rock"
+      ],
+      "secondary": [
+        "Heavy Psych",
+        "Folk Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "heavy",
+      "political",
+      "acoustic",
+      "conscious",
+      "rebellious"
+    ]
+  },
+  {
+    "id": "apostoles",
+    "album": "Apóstoles",
+    "artist": "Miguel Cantilo",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Psychedelic Rock"
+      ]
+    },
+    "descriptors": [
+      "acoustic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "unidad",
+    "album": "Unidad",
+    "artist": "Miguel Cantilo",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": [
+      "conscious",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "la-nueva-vanguardia",
+    "album": "La nueva vanguardia",
+    "artist": "Miguel Cantilo",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mateina",
+    "album": "Mateína",
+    "artist": "Miguel Cantilo",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "locomotor",
+    "album": "Locomotor",
+    "artist": "Miguel Cantilo",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "canciones-para-vivir-mejor",
+    "album": "Canciones para vivir mejor",
+    "artist": "Miguel Cantilo",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "de-amores-y-pasiones",
+    "album": "De amores y pasiones",
+    "artist": "Miguel Cantilo",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sudamerica-va",
+    "album": "Sudamérica va",
+    "artist": "Miguel Cantilo",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "clasicos-cantilo",
+    "album": "Clásicos",
+    "artist": "Miguel Cantilo",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "consciencia",
+    "album": "Consciencia",
+    "artist": "Miguel Cantilo",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cantilenas",
+    "album": "Cantilenas",
+    "artist": "Miguel Cantilo",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cantangos",
+    "album": "Cantangos",
+    "artist": "Miguel Cantilo",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Tango"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "canciones-de-la-buhardilla",
+    "album": "Canciones de la buhardilla",
+    "artist": "Miguel Cantilo",
+    "year": 2014,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "todo-concuerda",
+    "album": "Todo concuerda",
+    "artist": "Miguel Cantilo",
+    "year": 2018,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Classical Crossover"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "dia-de-sol",
+    "album": "Día de sol",
+    "artist": "Miguel Cantilo",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "corazon-acustico",
+    "album": "Corazón acústico",
+    "artist": "Miguel Cantilo",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cuentos-cantados",
+    "album": "Cuentos cantados",
+    "artist": "Miguel Cantilo",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Reggae",
+        "Acoustic Rock"
+      ]
+    },
+    "descriptors": [
+      "conscious",
+      "sarcastic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "despertar",
+    "album": "Despertar",
+    "artist": "Miguel Cantilo",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "soto-homenaje-a-la-patagonia-rebelde",
+    "album": "Soto: Homenaje a la Patagonia rebelde",
+    "artist": "Miguel Cantilo",
+    "year": 2025,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Blues Rock",
+        "Acoustic Rock"
+      ]
+    },
+    "descriptors": [
+      "history",
+      "conscious"
+    ]
+  },
+  {
+    "id": "amigo-cantilo",
+    "album": "Amigo",
+    "artist": "Miguel Cantilo",
+    "year": 2025,
+    "genres": {
+      "primary": ["Singer-Songwriter"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "diez-de-corazones",
+    "album": "Diez de corazones",
+    "artist": "Javier Calamaro",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Pop",
+        "Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "quitapenas",
+    "album": "Quitapenas",
+    "artist": "Javier Calamaro",
+    "year": 2000,
+    "genres": {
+      "primary": [
+        "Latin Pop",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "kimika",
+    "album": "Kimika",
+    "artist": "Javier Calamaro",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "villavicio",
+    "album": "Villavicio",
+    "artist": "Javier Calamaro",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Tango"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "este-minuto",
+    "album": "Éste minuto",
+    "artist": "Javier Calamaro",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-vida-es-afano",
+    "album": "La vida es afano",
+    "artist": "Javier Calamaro",
+    "year": 2014,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "proxima-vida",
+    "album": "Próxima vida",
+    "artist": "Javier Calamaro",
+    "year": 2015,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-regalo",
+    "album": "El regalo",
+    "artist": "Javier Calamaro",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "patricia-sosa",
+    "album": "Patricia Sosa",
+    "artist": "Patricia Sosa",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "AOR",
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "luz-de-mi-vida",
+    "album": "Luz de mi vida",
+    "artist": "Patricia Sosa",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "suave-y-profundo",
+    "album": "Suave y profundo",
+    "artist": "Patricia Sosa",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-historia-sigue",
+    "album": "La historia sigue",
+    "artist": "Patricia Sosa",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mujeres-argentinas-cantata-sudamericana",
+    "album": "Mujeres argentinas: Cantata sudamericana",
+    "artist": "Ariel Ramírez / Patricia Sosa",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Chacarera",
+        "Zamba"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "no-me-dejes-de-amar",
+    "album": "No me dejes de amar",
+    "artist": "Patricia Sosa",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "todos-podemos-volar-peter-pan",
+    "album": "Todos podemos volar: Peter Pan",
+    "artist": "Patricia Sosa",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "lija-y-terciopelo",
+    "album": "Lija y terciopelo",
+    "artist": "Patricia Sosa",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Soft Rock",
+        "Pop Rock",
+        "AOR"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "patricia-sosa-desde-la-torre",
+    "album": "Patricia Sosa desde La Torre",
+    "artist": "Patricia Sosa",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "senales",
+    "album": "Señales",
+    "artist": "Patricia Sosa",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "once-concierto-para-dos",
+    "album": "ONCE: Concierto para dos",
+    "artist": "Patricia Sosa",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Bolero"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "folclore-patricia-sosa",
+    "album": "Folclore",
+    "artist": "Patricia Sosa",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Chacarera",
+        "Zamba"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "me-vuelvo-cada-dia-mas-loca",
+    "album": "Me vuelvo cada día más loca",
+    "artist": "Celeste Carballo",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Blues Rock"
+      ],
+      "secondary": [
+        "Sophisti-Pop",
+        "Pop Rock",
+        "Soul Blues",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "LGBTQ",
+      "playful",
+      "conscious",
+      "rebellious",
+      "romantic",
+      "passionate"
+    ]
+  },
+  {
+    "id": "mi-voz-renacera",
+    "album": "Mi voz renacerá",
+    "artist": "Celeste Carballo",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Folk Rock",
+        "Blues",
+        "Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "celeste-y-la-generacion",
+    "album": "Celeste y La Generación",
+    "artist": "Celeste Carballo",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "New Wave",
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "LGBTQ",
+      "urban",
+      "playful",
+      "energetic",
+      "conscious",
+      "protest",
+      "anthemic",
+      "raw",
+      "rebellious",
+      "boastful",
+      "angry"
+    ]
+  },
+  {
+    "id": "somos-mucho-mas-que-dos",
+    "album": "Somos mucho más que dos",
+    "artist": "Celeste Carballo",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Adult Contemporary"
+      ],
+      "secondary": [
+        "Sophisti-Pop",
+        "Soft Rock"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "LGBTQ",
+      "progressive",
+      "sentimental",
+      "passionate"
+    ]
+  },
+  {
+    "id": "mujer-contra-mujer",
+    "album": "Mujer contra mujer",
+    "artist": "Carballo Mihanovich",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Adult Contemporary"
+      ],
+      "secondary": [
+        "Canción melódica"
+      ]
+    },
+    "descriptors": [
+      "sensual",
+      "female vocalist",
+      "LGBTQ",
+      "love",
+      "romantic",
+      "ballad",
+      "melodic",
+      "playful",
+      "nocturnal",
+      "urban",
+      "mellow",
+      "lush"
+    ]
+  },
+  {
+    "id": "chocolate-ingles",
+    "album": "Chocolate inglés",
+    "artist": "Celeste Carballo",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Art Pop"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tercer-infinito",
+    "album": "Tercer infinito",
+    "artist": "Celeste Carballo",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "celesteacustica",
+    "album": "Celesteacústica",
+    "artist": "Celeste Carballo",
+    "year": 2001,
+    "genres": {
+      "primary": [
+        "Acoustic Rock",
+        "Acoustic Blues"
+      ],
+      "secondary": [
+        "Soft Rock",
+        "Singer-Songwriter",
+        "Folktronica"
+      ]
+    },
+    "descriptors": [
+      "calm",
+      "female vocalist",
+      "spring",
+      "folklore"
+    ]
+  },
+  {
+    "id": "celesteacusticados",
+    "album": "Celesteacusticados!",
+    "artist": "Celeste Carballo",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Acoustic Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mujer-de-piedra",
+    "album": "Mujer de piedra",
+    "artist": "Celeste Carballo",
+    "year": 2011,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pappoacustico",
+    "album": "Pappoacustico",
+    "artist": "Celeste Carballo",
+    "year": 2025,
+    "genres": {
+      "primary": [
+        "Acoustic Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "buen-dia-dia",
+    "album": "Buen día, día",
+    "artist": "Miguel Abuelo",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Latin Funk",
+        "Singer-Songwriter",
+        "Hispanic American Folk Music",
+        "Rumba Cubana",
+        "Psychedelic Pop"
+      ]
+    },
+    "descriptors": [
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "canciones-para-cantar-en-el-cordon-de-la-vereda",
+    "album": "Canciones para cantar en el cordón de la vereda",
+    "artist": "Miguel Abuelo",
+    "year": 2024,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "obsesion",
+    "album": "Obsesión",
+    "artist": "Miguel Mateos",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Synthpop"
+      ],
+      "secondary": [
+        "Jangle Pop",
+        "New Wave",
+        "Pop Rock",
+        "Synth Funk",
+        "Hi-NRG"
+      ]
+    },
+    "movements": [
+      "New Romantic"
+    ],
+    "descriptors": [
+      "rhythmic",
+      "sexual",
+      "passionate",
+      "male vocalist",
+      "mechanical"
+    ]
+  },
+  {
+    "id": "kryptonita",
+    "album": "Kryptonita",
+    "artist": "Miguel Mateos",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Alternative Rock",
+        "AOR"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "coctel",
+    "album": "Coctel",
+    "artist": "Miguel Mateos",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Alternative Rock",
+        "AOR"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pisanlov",
+    "album": "Pisanlov",
+    "artist": "Miguel Mateos",
+    "year": 1995,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "bar-imperio",
+    "album": "Bar imperio",
+    "artist": "Miguel Mateos",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Alternative Rock",
+        "AOR"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "uno",
+    "album": "Uno",
+    "artist": "Miguel Mateos",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "fidelidad",
+    "album": "Fidelidad",
+    "artist": "Miguel Mateos",
+    "year": 2008,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-alegria-ha-vuelto-a-la-ciudad",
+    "album": "La alegría ha vuelto a la ciudad",
+    "artist": "Miguel Mateos",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Post-Grunge",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "Electro Pop"
+    ]
+  },
+  {
+    "id": "miguel-mateos-2016",
+    "album": "Miguel Mateos",
+    "artist": "Miguel Mateos",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "undotrecua-deluxe-version",
+    "album": "Undotrecua (Deluxe Version)",
+    "artist": "Miguel Mateos",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vital",
+    "album": "Vital",
+    "artist": "Leo García",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Folktronica",
+        "Art Pop",
+        "Ambient Pop"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Downtempo",
+        "Ambient",
+        "Folk Pop"
+      ]
+    },
+    "descriptors": [
+      "surreal",
+      "hypnotic",
+      "calm",
+      "mysterious",
+      "atmospheric",
+      "mellow",
+      "soothing",
+      "meditative",
+      "ethereal",
+      "male vocalist",
+      "abstract",
+      "sampling",
+      "repetitive",
+      "winter",
+      "psychedelic",
+      "avant-garde",
+      "lo-fi",
+      "cold",
+      "love",
+      "sentimental",
+      "urban",
+      "melancholic",
+      "longing"
+    ]
+  },
+  {
+    "id": "clap-beat",
+    "album": "Clap Beat",
+    "artist": "Leo García",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "IDM",
+        "Experimental"
+      ],
+      "secondary": [
+        "Glitch",
+        "Ambient",
+        "Microhouse",
+        "Industrial"
+      ]
+    },
+    "descriptors": [
+      "repetitive",
+      "surreal",
+      "anxious",
+      "dark",
+      "cold",
+      "dissonant",
+      "chaotic",
+      "rhythmic",
+      "minimalistic",
+      "avant-garde",
+      "mysterious",
+      "instrumental",
+      "futuristic",
+      "hypnotic",
+      "mechanical"
+    ]
+  },
+  {
+    "id": "mar",
+    "album": "Mar",
+    "artist": "Leo García",
+    "year": 2001,
+    "genres": {
+      "primary": [
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Folk Pop",
+        "Dance-Pop",
+        "Indietronica",
+        "Singer-Songwriter",
+        "Pop Rock",
+        "Synthpop",
+        "Jangle Pop"
+      ]
+    },
+    "descriptors": [
+      "LGBTQ",
+      "melodic",
+      "gay",
+      "eclectic",
+      "male vocalist",
+      "sentimental",
+      "lonely",
+      "introspective",
+      "rhythmic",
+      "warm",
+      "romantic",
+      "breakup",
+      "poetic",
+      "bittersweet",
+      "quirky",
+      "existential",
+      "longing",
+      "melancholic",
+      "playful"
+    ]
+  },
+  {
+    "id": "vos",
+    "album": "Vos",
+    "artist": "Leo García",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Dance-Pop"
+      ],
+      "secondary": [
+        "Indie Pop",
+        "Electropop",
+        "Folk Pop",
+        "Pop Rock",
+        "House"
+      ]
+    },
+    "descriptors": [
+      "rhythmic",
+      "mellow",
+      "happy",
+      "romantic",
+      "LGBTQ",
+      "party",
+      "melodic",
+      "playful",
+      "sentimental",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "cuarto-creciente",
+    "album": "Cuarto creciente",
+    "artist": "Leo García",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Dance-Pop"
+      ],
+      "secondary": [
+        "Indie Pop",
+        "Electropop",
+        "Folk Pop",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "comun-y-especial",
+    "album": "Común y especial",
+    "artist": "Leo García",
+    "year": 2010,
+    "genres": {
+      "primary": [
+        "Dance-Pop"
+      ],
+      "secondary": [
+        "Indie Pop",
+        "Electropop",
+        "Folk Pop",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "algo-real",
+    "album": "Algo real",
+    "artist": "Leo García",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Dance-Pop"
+      ],
+      "secondary": [
+        "Indie Pop",
+        "Electropop",
+        "Folk Pop",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "musica-del-corazon",
+    "album": "Música del corazón",
+    "artist": "Leo García",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Piano Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "leo-punk",
+    "album": "Leo punk",
+    "artist": "Leo García",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Indie Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "leopunk",
+    "album": "#leopunk",
+    "artist": "Leo García",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Alternative Rock"
+      ],
+      "secondary": [
+        "Indie Rock",
+        "Pop Punk",
+        "Alternative Dance",
+        "Heavy Metal"
+      ]
+    },
+    "descriptors": [
+      "lonely",
+      "political",
+      "raw",
+      "rebellious",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "jauria",
+    "album": "Jauría",
+    "artist": "Jauría",
+    "year": 2010,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "melodic",
+      "protest"
+    ]
+  },
+  {
+    "id": "libre-o-muerto",
+    "album": "Libre o muerto",
+    "artist": "Jauría",
+    "year": 2013,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "melodic",
+      "protest"
+    ]
+  },
+  {
+    "id": "la-cura",
+    "album": "La cura",
+    "artist": "Arde la Sangre",
+    "year": 2021,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "aggressive",
+      "conscious",
+      "pessimistic",
+      "angry",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "pase-lo-que-pase",
+    "album": "Pase lo que pase",
+    "artist": "Arde la Sangre",
+    "year": 2024,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "aggressive",
+      "conscious",
+      "pessimistic",
+      "angry",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "viuda-e-hijas-de-roque-enroll",
+    "album": "Viuda e Hijas de Roque Enroll",
+    "artist": "Viuda e Hijas de Roque Enroll",
+    "year": 1984,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "humorous",
+      "urban",
+      "party",
+      "playful",
+      "lush",
+      "energetic",
+      "hedonism",
+      "quirky",
+      "happy",
+      "melodic",
+      "sarcastic",
+      "satirical",
+      "vocal group"
+    ]
+  },
+  {
+    "id": "ciudad-cat-runica",
+    "album": "Ciudad catrúnica",
+    "artist": "Viuda e Hijas de Roque Enroll",
+    "year": 1985,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "humorous",
+      "urban",
+      "playful",
+      "energetic",
+      "hedonism",
+      "quirky",
+      "melodic",
+      "sarcastic",
+      "satirical",
+      "vocal group"
+    ]
+  },
+  {
+    "id": "vale-4",
+    "album": "Vale 4",
+    "artist": "Viuda e Hijas de Roque Enroll",
+    "year": 1986,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "female vocalist",
+      "humorous",
+      "urban",
+      "melodic",
+      "playful",
+      "sarcastic",
+      "satirical",
+      "vocal group",
+      "energetic"
+    ]
+  },
+  {
+    "id": "perlas-y-diamantes",
+    "album": "Perlas y diamantes",
+    "artist": "Viuda e Hijas de Roque Enroll",
+    "year": 2014,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "joyful",
+      "playful",
+      "ironic",
+      "colorful",
+      "feminine",
+      "danceable",
+      "postmodern"
+    ]
+  },
+  {
+    "id": "yo-vivo-en-esta-ciudad",
+    "album": "Yo vivo en esta ciudad",
+    "artist": "Pedro y Pablo",
+    "year": 1970,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "humorous",
+      "urban",
+      "sarcastic",
+      "male vocalist",
+      "protest",
+      "melodic",
+      "lush",
+      "alienation"
+    ]
+  },
+  {
+    "id": "conesa",
+    "album": "Conesa",
+    "artist": "Pedro y Pablo",
+    "year": 1972,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "conscious",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "contracrisis",
+    "album": "Contracrisis",
+    "artist": "Cantilo - Durietz",
+    "year": 1982,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "corazon-sudamericano",
+    "album": "Corazón sudamericano",
+    "artist": "Pedro y Pablo",
+    "year": 1985,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "unidos-por-el-cantar",
+    "album": "Unidos por el cantar",
+    "artist": "Pedro y Pablo",
+    "year": 2017,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "es-mentira",
+    "album": "Es mentira",
+    "artist": "Miranda!",
+    "year": 2002,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "male vocalist",
+      "love",
+      "sensual",
+      "rhythmic",
+      "breakup",
+      "energetic",
+      "hedonism",
+      "longing",
+      "lush",
+      "sentimental",
+      "sexual",
+      "androgynous vocals",
+      "quirky",
+      "passionate",
+      "melancholic",
+      "flirting",
+      "bright",
+      "party"
+    ]
+  },
+  {
+    "id": "sin-restricciones",
+    "album": "Sin restricciones",
+    "artist": "Miranda!",
+    "year": 2004,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "sexual",
+      "male vocalist",
+      "female vocalist",
+      "hedonism",
+      "playful",
+      "rhythmic",
+      "melancholic",
+      "breakup",
+      "romantic",
+      "sensual",
+      "quirky",
+      "melodic",
+      "androgynous vocals",
+      "flirting"
+    ]
+  },
+  {
+    "id": "el-disco-de-tu-corazon",
+    "album": "El disco de tu corazón",
+    "artist": "Miranda!",
+    "year": 2007,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist",
+      "playful",
+      "sexual",
+      "romantic",
+      "bittersweet",
+      "female vocalist",
+      "sentimental",
+      "love",
+      "sarcastic"
+    ]
+  },
+  {
+    "id": "miranda-es-imposible",
+    "album": "Miranda es imposible!",
+    "artist": "Miranda!",
+    "year": 2009,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "sexual",
+      "romantic",
+      "male vocalist",
+      "hedonism",
+      "sensual",
+      "breakup",
+      "love",
+      "playful",
+      "lush",
+      "sentimental"
+    ]
+  },
+  {
+    "id": "magistral",
+    "album": "Magistral",
+    "artist": "Miranda!",
+    "year": 2011,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "male vocalist",
+      "sarcastic",
+      "hedonism",
+      "breakup",
+      "melancholic",
+      "quirky",
+      "playful",
+      "love",
+      "bittersweet",
+      "androgynous vocals"
+    ]
+  },
+  {
+    "id": "safari",
+    "album": "Safari",
+    "artist": "Miranda!",
+    "year": 2014,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "love",
+      "quirky",
+      "romantic",
+      "male vocalist",
+      "rhythmic",
+      "female vocalist",
+      "androgynous vocals"
+    ]
+  },
+  {
+    "id": "fuerte",
+    "album": "Fuerte",
+    "artist": "Miranda!",
+    "year": 2017,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "male vocalist",
+      "playful",
+      "rhythmic",
+      "introspective",
+      "melodic",
+      "love",
+      "bittersweet",
+      "romantic",
+      "longing"
+    ]
+  },
+  {
+    "id": "souvenir",
+    "album": "Souvenir",
+    "artist": "Miranda!",
+    "year": 2021,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "LGBTQ",
+      "playful",
+      "bittersweet",
+      "love",
+      "breakup",
+      "male vocalist",
+      "rhythmic",
+      "romantic",
+      "atmospheric",
+      "female vocalist",
+      "sentimental",
+      "lush",
+      "hedonism",
+      "eclectic"
+    ]
+  },
+  {
+    "id": "hotel-miranda",
+    "album": "Hotel Miranda!",
+    "artist": "Miranda!",
+    "year": 2023,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "party",
+      "playful",
+      "energetic",
+      "melodic",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "nuevo-hotel-miranda",
+    "album": "Nuevo Hotel Miranda!",
+    "artist": "Miranda!",
+    "year": 2025,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "treinta-minutos-de-vida",
+    "album": "Treinta minutos de vida",
+    "artist": "Moris",
+    "year": 1970,
+    "genres": {
+      "primary": [
+        "Contemporary Folk",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Psychedelic Folk",
+        "Folk Rock",
+        "Nueva canción latinoamericana"
+      ]
+    },
+    "descriptors": [
+      "protest",
+      "urban",
+      "male vocalist",
+      "poetic",
+      "existential",
+      "conscious",
+      "political",
+      "melancholic",
+      "introspective",
+      "lo-fi",
+      "serious"
+    ]
+  },
+  {
+    "id": "ciudad-de-guitarras-callejeras",
+    "album": "Ciudad de guitarras callejeras",
+    "artist": "Moris",
+    "year": 1974,
+    "genres": {
+      "primary": [
+        "Rock & Roll"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Piano Rock",
+        "Singer-Songwriter",
+        "Acoustic Rock"
+      ]
+    },
+    "descriptors": [
+      "urban",
+      "conscious",
+      "rhythmic",
+      "poetic",
+      "male vocalist",
+      "introspective",
+      "bittersweet",
+      "love"
+    ]
+  },
+  {
+    "id": "fiebre-de-vivir",
+    "album": "Fiebre de vivir",
+    "artist": "Moris",
+    "year": 1978,
+    "genres": {
+      "primary": [
+        "Rock & Roll",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pub Rock",
+        "Hard Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "nocturnal",
+      "party",
+      "introspective",
+      "hedonism",
+      "rhythmic",
+      "energetic"
+    ]
+  },
+  {
+    "id": "mundo-moderno",
+    "album": "Mundo moderno",
+    "artist": "Moris",
+    "year": 1980,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Rock & Roll",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "urban",
+      "playful",
+      "energetic",
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "donde-estan-las-canciones",
+    "album": "Dónde están las canciones",
+    "artist": "Moris",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Rock & Roll"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": [
+      "urban",
+      "playful",
+      "energetic",
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "senor-rock-presente",
+    "album": "Señor Rock: ¡Presente!",
+    "artist": "Moris",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Rock & Roll"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "urban",
+      "party",
+      "playful",
+      "energetic",
+      "hedonism",
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "sur-y-despues",
+    "album": "Sur y después",
+    "artist": "Moris",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Jazz Pop"
+      ],
+      "secondary": [
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": [
+      "urban",
+      "playful",
+      "conscious",
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "10-grandes-exitos",
+    "album": "10 grandes éxitos",
+    "artist": "Moris",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Rock & Roll",
+        "Acoustic Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "familia-cancion",
+    "album": "Familia canción",
+    "artist": "Moris",
+    "year": 2011,
+    "genres": {
+      "primary": [
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Latin Alternative"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "longing",
+      "urban",
+      "conscious",
+      "rhythmic",
+      "bittersweet",
+      "male vocalist",
+      "soft"
+    ]
+  },
+  {
+    "id": "ayer-hoy-y-siempre",
+    "album": "Ayer, hoy y siempre",
+    "artist": "Moris",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Rock & Roll",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-ultima-montana",
+    "album": "La última montaña",
+    "artist": "Moris",
+    "year": 2020,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "urban",
+      "conscious",
+      "rhythmic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "tiempos-dificiles",
+    "album": "Tiempos difíciles",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Contemporary Folk"
+      ],
+      "secondary": [
+        "Candombe",
+        "Folk Rock",
+        "Piano Rock",
+        "Progressive Folk",
+        "Jazz-Rock"
+      ]
+    },
+    "descriptors": [
+      "depressive",
+      "complex",
+      "poetic",
+      "bittersweet",
+      "male vocalist",
+      "death"
+    ]
+  },
+  {
+    "id": "actuar-para-vivir",
+    "album": "Actuar para vivir",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Folk Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "melancholic",
+      "conscious",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "baglietto",
+    "album": "Baglietto",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Psychedelic Folk",
+        "Nueva trova"
+      ]
+    },
+    "descriptors": [
+      "mellow",
+      "psychedelic",
+      "male vocalist",
+      "soothing"
+    ]
+  },
+  {
+    "id": "baglietto-y-compania",
+    "album": "Baglietto & compañía",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Contemporary Folk",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "modelo-para-armar",
+    "album": "Modelo para armar",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "acne",
+    "album": "Acné",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "Rock & Roll",
+        "Blues Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mami",
+    "album": "¡Mami!",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ayudame-a-mirar",
+    "album": "Ayúdame a mirar",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Contemporary Folk",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cachuso-rantifuso",
+    "album": "Cachuso Rantifuso",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Children's Music"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "postales-de-este-lado-del-mundo",
+    "album": "Postales de este lado del mundo",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Tango",
+        "Milonga"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "postales-de-este-lado-del-mundo-2",
+    "album": "Postales de este lado del mundo",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Tango",
+        "Milonga"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "corazon-de-barco",
+    "album": "Corazón de barco",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Progressive Folk",
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Contemporary Folk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "luz-quitapenas",
+    "album": "Luz quitapenas",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Contemporary Folk"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "15-anos",
+    "album": "15 años",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Contemporary Folk"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sabe-quien",
+    "album": "Sabe quién...",
+    "artist": "Juan Carlos Baglietto",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Contemporary Folk"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+   {
+    "id": "maria-elena-de-nosotros",
+    "album": "María Elena de nosotros",
+    "artist": "Lito Vitale",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Children's Music"
+      ],
+      "secondary": [
+        "Chacarera",
+        "Smooth Jazz",
+        "Synthpop",
+        "Art Pop",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "playful",
+      "folklore",
+      "eclectic",
+      "fairy tale"
+    ]
+  },
+  {
+    "id": "sobre-miedos-creencias-y-supersticiones",
+    "album": "Sobre miedos, creencias y supersticiones",
+    "artist": "Lito Vitale",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "New Age",
+        "Symphonic Prog"
+      ],
+      "secondary": [
+        "Space Rock"
+      ]
+    },
+    "descriptors": [
+      "progressive",
+      "atmospheric",
+      "instrumental"
+    ]
+  },
+  {
+    "id": "quitapenas",
+    "album": "Quitapenas",
+    "artist": "Lito Vitale",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "New Age"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "jorge-cumbo-lito-vitale-lucho-gonzalez",
+    "album": "Jorge Cumbo / Lito Vitale / Lucho González",
+    "artist": "Lito Vitale",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Progressive Folk",
+        "Hispanic American Folk Music",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Andean New Age",
+        "Zamba",
+        "Cueca"
+      ]
+    },
+    "descriptors": [
+      "mellow",
+      "acoustic",
+      "playful",
+      "lush",
+      "quirky",
+      "warm",
+      "melodic",
+      "atmospheric",
+      "instrumental",
+      "soft"
+    ]
+  },
+  {
+    "id": "solo",
+    "album": "Solo",
+    "artist": "Lito Vitale",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Progressive Folk",
+        "Hispanic American Folk Music",
+        "Jazz Fusion"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vitale-baraj-gonzalez",
+    "album": "Vitale Baraj González",
+    "artist": "Vitale",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Progressive Folk",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Hispanic American Folk Music",
+        "New Age"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vitalebarajgonzalez",
+    "album": "Vitale Baraj González",
+    "artist": "Vitale",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Latin Jazz",
+        "Tango nuevo"
+      ]
+    },
+    "descriptors": [
+      "instrumental"
+    ]
+  },
+  {
+    "id": "lito-vitale-cuarteto",
+    "album": "Lito Vitale Cuarteto",
+    "artist": "Lito Vitale",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "en-solitario",
+    "album": "En solitario",
+    "artist": "Lito Vitale",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "New Age"
+      ],
+      "secondary": [
+        "ECM Style Jazz"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ese-amigo-del-alma",
+    "album": "Ese amigo del alma",
+    "artist": "Lito Vitale",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Adult Contemporary",
+        "New Age"
+      ],
+      "secondary": [
+        "Andean New Age"
+      ]
+    },
+    "descriptors": [
+      "instrumental"
+    ]
+  },
+  {
+    "id": "la-senda-infinita",
+    "album": "La senda infinita",
+    "artist": "Lito Vitale",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Adult Contemporary",
+        "New Age"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "viento-sur",
+    "album": "Viento sur",
+    "artist": "Lito Vitale",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "kuarahy-musica-para-ballet-en-tres-actos",
+    "album": "Kuarahy (Música para ballet en tres actos)",
+    "artist": "Lito Vitale",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "New Age"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-excusa",
+    "album": "La excusa",
+    "artist": "Lito Vitale",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Progressive Folk"
+      ],
+      "secondary": [
+        "Andean New Age"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sobre-riesgos-y-memorias",
+    "album": "Sobre riesgos y memorias",
+    "artist": "Lito Vitale",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "juntando-almas",
+    "album": "Juntando almas",
+    "artist": "Lito Vitale",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-cruz-del-sur",
+    "album": "La Cruz del Sur",
+    "artist": "Lito Vitale",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cuentos-de-la-media-luna",
+    "album": "Cuentos de la media luna",
+    "artist": "Lito Vitale",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Folk"
+      ],
+      "secondary": [
+        "Progressive Rock",
+        "Jazz Fusion",
+        "Symphonic Prog",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mas-alla-del-mar",
+    "album": "Mas allá del mar",
+    "artist": "Lito Vitale",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Folk"
+      ],
+      "secondary": [
+        "Progressive Rock",
+        "Jazz Fusion",
+        "Symphonic Prog",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-memoria-del-tiempo-juntando-almas-vol-ii",
+    "album": "La memoria del tiempo: Juntando almas vol - II",
+    "artist": "Lito Vitale",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Folk"
+      ],
+      "secondary": [
+        "Progressive Rock",
+        "Jazz Fusion",
+        "Symphonic Prog",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pantallas",
+    "album": "Pantallas",
+    "artist": "Lito Vitale",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Television Music"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "solo-piano",
+    "album": "Solo piano",
+    "artist": "Lito Vitale",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Neoclassical New Age"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "laberinto-sin-ley",
+    "album": "Laberinto sin ley",
+    "artist": "Lito Vitale",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Television Music"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pantalla-de-agua",
+    "album": "Pantalla de agua",
+    "artist": "Lito Vitale",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "New Age"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "traccion-a-cuerda",
+    "album": "Tracción a cuerda",
+    "artist": "Lito Vitale",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Progressive Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "desde-casa",
+    "album": "Desde casa",
+    "artist": "Lito Vitale",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-grito-sagrado",
+    "album": "El grito sagrado",
+    "artist": "Lito Vitale",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "dia-del-milenio",
+    "album": "Día del milenio",
+    "artist": "Lito Vitale",
+    "year": 2000,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "musica-para-sonar-y-reposar-1-rock-argentino",
+    "album": "Música para soñar y reposar 1: Rock argentino",
+    "artist": "Lito Vitale",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "New Age"
+      ],
+      "secondary": [
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "un-solo-destino",
+    "album": "Un solo destino",
+    "artist": "Lito Vitale",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Progressive Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-melancolia-vital",
+    "album": "La melancolía vital",
+    "artist": "Litto Nebbia",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-hombre-de-la-corbata-roja",
+    "album": "El hombre de la corbata roja",
+    "artist": "Lito Vitale",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "en-el-eden",
+    "album": "En el Edén",
+    "artist": "Lito Vitale",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Progressive Folk",
+        "New Age"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "opera-pampa",
+    "album": "Opera Pampa",
+    "artist": "Lito Vitale",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Progressive Folk",
+        "New Age"
+      ],
+      "secondary": [
+        "Progressive Rock",
+        "Jazz Fusion",
+        "Symphonic Prog"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "elsa-fred-original-motion-picture-soundtrack",
+    "album": "Elsa & Fred (Original Motion Picture Soundtrack)",
+    "artist": "Lito Vitale",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Adult Contemporary"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "adios-hermano-cruel",
+    "album": "Adiós hermano cruel",
+    "artist": "Lito Vitale",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-otro",
+    "album": "El otro",
+    "artist": "Lito Vitale",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "New Age",
+        "Progressive Rock",
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Symphonic Prog",
+        "Progressive Folk",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "federal-tango",
+    "album": "Federal Tango",
+    "artist": "Lito Vitale",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Tango",
+        "New Age"
+      ],
+      "secondary": [
+        "Progressive Folk",
+        "Jazz Fusion"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "desde-el-alma",
+    "album": "Desde el alma",
+    "artist": "Lito Vitale",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Progressive Folk"
+      ],
+      "secondary": [
+        "New Age",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "litto-nebbia-1969",
+    "album": "Litto Nebbia",
+    "artist": "Litto Nebbia",
+    "year": 1969,
+    "genres": {
+      "primary": [
+        "Baroque Pop",
+        "Psychedelic Pop",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Beat"
+      ]
+    },
+    "descriptors": [
+      "soft",
+      "existential",
+      "urban",
+      "progressive",
+      "melodic",
+      "orchestral",
+      "eclectic",
+      "mellow",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "litto-nebbia-1970",
+    "album": "Litto Nebbia",
+    "artist": "Litto Nebbia",
+    "year": 1970,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Piano Rock"
+      ],
+      "secondary": [
+        "Progressive Folk",
+        "Progressive Pop"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "progressive",
+      "lo-fi",
+      "melodic",
+      "eclectic",
+      "male vocalist",
+      "soft"
+    ]
+  },
+  {
+    "id": "nebbias-band",
+    "album": "Nebbia's Band",
+    "artist": "Nebbia's Band",
+    "year": 1971,
+    "genres": {
+      "primary": [
+        "Jazz-Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "progressive",
+      "passionate",
+      "male vocalist",
+      "soft"
+    ]
+  },
+  {
+    "id": "despertemos-en-america",
+    "album": "Despertemos en América",
+    "artist": "Litto Nebbia",
+    "year": 1973,
+    "genres": {
+      "primary": [
+        "Progressive Folk",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Folk Rock",
+        "Jazz-Rock"
+      ]
+    },
+    "descriptors": [
+      "conscious",
+      "progressive",
+      "male vocalist",
+      "nocturnal",
+      "poetic",
+      "eclectic",
+      "melancholic"
+    ]
+  },
+  {
+    "id": "muerte-en-la-catedral",
+    "album": "Muerte en la catedral",
+    "artist": "Litto Nebbia",
+    "year": 1973,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Jazz-Rock",
+        "Folk Rock",
+        "Chamber Folk",
+        "Jazz Fusion"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "surreal",
+      "nocturnal",
+      "progressive",
+      "funereal",
+      "pessimistic",
+      "poetic",
+      "eclectic",
+      "cryptic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "melopea",
+    "album": "Melopea",
+    "artist": "Litto Nebbia",
+    "year": 1974,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Art Rock"
+      ],
+      "secondary": [
+        "Progressive Rock",
+        "Folk Rock",
+        "Psychedelic Rock",
+        "Jazz-Rock",
+        "Piano Rock"
+      ]
+    },
+    "descriptors": [
+      "surreal",
+      "melancholic",
+      "progressive",
+      "melodic",
+      "poetic",
+      "orchestral",
+      "eclectic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "fuera-del-cielo",
+    "album": "Fuera del Cielo",
+    "artist": "Litto Nebbia",
+    "year": 1975,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "Jazz-Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "progressive",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "cosas-que-no-quieren-morir",
+    "album": "Cosas que no quieren morir",
+    "artist": "Litto Nebbia",
+    "year": 1976,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "bazar-de-los-milagros",
+    "album": "Bazar de los milagros",
+    "artist": "Litto Nebbia",
+    "year": 1976,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "Jazz-Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Jazz Fusion",
+        "Progressive Folk"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "progressive",
+      "mellow",
+      "female vocalist",
+      "abstract",
+      "fantasy",
+      "pastoral",
+      "psychedelic",
+      "spiritual",
+      "melodic",
+      "poetic",
+      "atmospheric",
+      "passionate",
+      "mysterious",
+      "soothing",
+      "cryptic",
+      "hypnotic",
+      "calm"
+    ]
+  },
+  {
+    "id": "el-vendedor-de-promesas",
+    "album": "El vendedor de promesas",
+    "artist": "Litto Nebbia",
+    "year": 1977,
+    "genres": {
+      "primary": [
+        "Progressive Rock",
+        "Jazz-Rock",
+        "Symphonic Prog"
+      ],
+      "secondary": [
+        "Modern Classical",
+        "Piano Rock"
+      ]
+    },
+    "descriptors": [
+      "melancholic",
+      "fantasy",
+      "melodic",
+      "poetic",
+      "progressive",
+      "meditative",
+      "suite",
+      "orchestral"
+    ]
+  },
+  {
+    "id": "canciones-para-cada-uno-vol-1",
+    "album": "Canciones para cada uno: Vol. 1",
+    "artist": "Litto Nebbia",
+    "year": 1978,
+    "genres": {
+      "primary": [
+        "Jazz-Rock",
+        "Singer-Songwriter",
+        "Progressive Rock"
+      ],
+      "secondary": [
+        "Progressive Pop"
+      ]
+    },
+    "descriptors": [
+      "progressive",
+      "melodic",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "toda-cancion-sera-plegaria",
+    "album": "Toda canción será plegaria",
+    "artist": "Litto Nebbia",
+    "year": 1979,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Art Pop"
+      ],
+      "secondary": [
+        "Progressive Pop",
+        "Jazz Pop",
+        "Canción melódica",
+        "Piano Rock"
+      ]
+    },
+    "descriptors": [
+      "female vocalist",
+      "existential",
+      "abstract",
+      "philosophical",
+      "peaceful",
+      "progressive",
+      "daytime",
+      "sparse",
+      "ethereal",
+      "lush",
+      "sentimental",
+      "bright",
+      "hazy",
+      "smooth",
+      "melodic",
+      "poetic",
+      "atmospheric",
+      "love",
+      "bittersweet",
+      "passionate",
+      "male vocalist",
+      "about music",
+      "soothing",
+      "introspective",
+      "soft"
+    ]
+  },
+  {
+    "id": "creer",
+    "album": "Creer",
+    "artist": "Litto Nebbia",
+    "year": 1980,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Contemporary Folk"
+      ],
+      "secondary": [
+        "Jazz-Rock",
+        "Folk Pop",
+        "Zamba",
+        "Progressive Folk"
+      ]
+    },
+    "descriptors": [
+      "mellow",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "solopiano-vol-1",
+    "album": "Solopiano Vol. 1",
+    "artist": "Litto Nebbia",
+    "year": 1980,
+    "genres": {
+      "primary": [
+        "Piano Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "1981-litto-nebbia",
+    "album": "1981",
+    "artist": "Litto Nebbia",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Piano Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "canciones-para-cada-uno-vol-2",
+    "album": "Canciones para cada uno: Vol. 2",
+    "artist": "Litto Nebbia",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Jazz-Rock",
+        "Singer-Songwriter",
+        "Progressive Rock"
+      ],
+      "secondary": [
+        "Folk Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "solo-se-trata-de-vivir",
+    "album": "Solo se trata de vivir",
+    "artist": "Litto Nebbia",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Folk Rock"
+      ],
+      "secondary": [
+        "Folk Pop",
+        "Progressive Pop"
+      ]
+    },
+    "descriptors": [
+      "melodic",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "llegamos-de-los-barcos",
+    "album": "Llegamos de los barcos",
+    "artist": "Litto Nebbia",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Jazz-Rock",
+        "Jazz Fusion",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "complex",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "para-que-se-encuentren-los-hombres",
+    "album": "Para que se encuentren los hombres",
+    "artist": "Litto Nebbia",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter",
+        "Jazz Pop"
+      ],
+      "secondary": [
+        "Progressive Pop",
+        "Vocal Group",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "1992",
+    "album": "1992...",
+    "artist": "Litto Nebbia",
+    "year": 1984,
+    "genres": {
+      "primary": ["Singer-Songwriter"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "en-brasil-aqui-y-ahora",
+    "album": "En Brasil, aquí y ahora...",
+    "artist": "Litto Nebbia",
+    "year": 1985,
+    "genres": {
+      "primary": ["Singer-Songwriter"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "musiquero",
+    "album": "Musiqueros",
+    "artist": "Litto Nebbia",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Hispanic American Folk Music",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Smooth Jazz"
+      ]
+    },
+    "descriptors": [
+      "mellow",
+      "sentimental",
+      "warm",
+      "romantic",
+      "uplifting",
+      "melodic",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "the-naked-word",
+    "album": "The Naked Word",
+    "artist": "Litto Nebbia",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Progressive Pop",
+        "Neo-Canterbury"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "buscando-en-el-bolsillo-del-alma",
+    "album": "Buscando en el bolsillo del alma",
+    "artist": "Litto Nebbia",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Synthpop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "las-tres-corazonadas",
+    "album": "Las tres corazonadas",
+    "artist": "Litto Nebbia",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Smooth Jazz"
+      ],
+      "secondary": [
+        "Jazz Pop",
+        "Singer-Songwriter",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": [
+      "nocturnal",
+      "warm",
+      "romantic",
+      "melodic",
+      "atmospheric",
+      "passionate",
+      "male vocalist",
+      "instrumental"
+    ]
+  },
+  {
+    "id": "homenaje-a-gardel-y-le-pera",
+    "album": "Homenaje a Gardel y Le Pera",
+    "artist": "Litto Nebbia",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Tango"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "las-aventuras-de-ruben-rada-y-litto-nebbia",
+    "album": "Litto Nebbia",
+    "artist": "Nebbia",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Jazz-Rock",
+        "Candombe"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-aviadores",
+    "album": "Los aviadores",
+    "artist": "Litto Nebbia",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Jazz Fusion"
+      ],
+      "secondary": [
+        "Tango nuevo"
+      ]
+    },
+    "descriptors": [
+      "instrumental",
+      "nocturnal",
+      "urban",
+      "mellow",
+      "technical",
+      "melodic",
+      "warm"
+    ]
+  },
+  {
+    "id": "new-york-es-una-ciudad-solitaria",
+    "album": "New York es una ciudad solitaria",
+    "artist": "Litto Nebbia",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "Jazz Fusion",
+        "Jazz-Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-hombre-que-amaba-a-todas-las-mujeres",
+    "album": "El hombre que amaba a todas las mujeres",
+    "artist": "Litto Nebbia",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ponto-de-encontro",
+    "album": "Ponto de encontro",
+    "artist": "Litto Nebbia",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "MPB",
+        "Smooth Jazz",
+        "Tango nuevo",
+        "Contemporary Folk"
+      ]
+    },
+    "descriptors": [
+      "calm",
+      "mellow",
+      "warm",
+      "technical",
+      "melodic",
+      "atmospheric",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "danza-del-corazon",
+    "album": "Danza del corazón",
+    "artist": "Litto Nebbia",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Rock",
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rodar",
+    "album": "Rodar",
+    "artist": "Litto Nebbia",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Blues Rock"
+      ],
+      "secondary": [
+        "Psychedelic Rock"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "warm",
+      "uplifting",
+      "melodic"
+    ]
+  },
+  {
+    "id": "alla-el-viento",
+    "album": "Allá el viento",
+    "artist": "Litto Nebbia",
+    "year": 2026,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-hombre-de-la-guitarra-feliz",
+    "album": "El hombre de la guitarra feliz",
+    "artist": "Litto Nebbia",
+    "year": 2026,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "20-10",
+    "album": "20/10",
+    "artist": "Nito Mestre",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Jazz-Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "escondo-mis-ojos-al-sol",
+    "album": "Escondo mis ojos al sol",
+    "artist": "Nito Mestre",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Yacht Rock",
+        "Progressive Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nito",
+    "album": "Nito",
+    "artist": "Nito Mestre",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "entrada-de-locos",
+    "album": "Entrada de locos",
+    "artist": "Nito Mestre",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tocando-el-cielo",
+    "album": "Tocando el cielo",
+    "artist": "Nito Mestre",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Pop",
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nito-mestre-canta-sui-generis",
+    "album": "Nito Mestre canta Sui Generis",
+    "artist": "Nito Mestre",
+    "year": 1993,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "colores-puros",
+    "album": "Colores puros",
+    "artist": "Nito Mestre",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Folk Rock",
+        "Folk Pop",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "calm",
+      "melancholic",
+      "acoustic",
+      "male vocalist",
+      "soft"
+    ]
+  },
+  {
+    "id": "mestre",
+    "album": "Mestre",
+    "artist": "Nito Mestre",
+    "year": 2005,
+    "genres": {
+      "primary": [
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "flores-en-nashville",
+    "album": "Flores en Nashville",
+    "artist": "Nito Mestre",
+    "year": 2009,
+    "genres": {
+      "primary": [
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "trip-de-agosto",
+    "album": "Trip de agosto",
+    "artist": "Nito Mestre",
+    "year": 2014,
+    "genres": {
+      "primary": [
+        "Soft Rock",
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tango",
+    "album": "Tango",
+    "artist": "Tanguito",
+    "year": 1973,
+    "genres": {
+      "primary": ["Singer-Songwriter"],
+      "secondary": []
+    },
+    "descriptors": [
+      "raw",
+      "introspective",
+      "surreal",
+      "acoustic",
+      "lonely",
+      "passionate",
+      "repetitive",
+      "male vocalist",
+      "lo-fi",
+      "hypnotic",
+      "quirky",
+      "mellow",
+      "psychedelic",
+      "existential",
+      "playful"
+    ]
+  },
+  {
+    "id": "yo-soy-ramses",
+    "album": "Yo soy Ramsés (Estudio TNT - 1967)",
+    "artist": "Tanguito",
+    "year": 1967,
+    "genres": {
+      "primary": ["Psychedelic Folk"],
+      "secondary": []
+    },
+    "descriptors": [
+      "lonely",
+      "existential",
+      "melodic",
+      "protest",
+      "conscious",
+      "male vocalist",
+      "peaceful"
+    ]
+  },
+  {
+    "id": "david-lebon",
+    "album": "David Lebón",
+    "artist": "David Lebón",
+    "year": 1973,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "nayla",
+    "album": "Nayla",
+    "artist": "David Lebón",
+    "year": 1980,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist",
+      "romantic",
+      "ballad",
+      "spiritual",
+      "love",
+      "passionate"
+    ]
+  },
+  {
+    "id": "el-tiempo-es-veloz",
+    "album": "El tiempo es veloz",
+    "artist": "David Lebón",
+    "year": 1982,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist",
+      "romantic",
+      "ballad",
+      "spiritual",
+      "energetic"
+    ]
+  },
+  {
+    "id": "siempre-estare",
+    "album": "Siempre estaré",
+    "artist": "David Lebón",
+    "year": 1983,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "desnuque",
+    "album": "Desnuque",
+    "artist": "David Lebón",
+    "year": 1984,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "si-de-algo-sirve",
+    "album": "Si de algo sirve",
+    "artist": "David Lebón",
+    "year": 1985,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "7x7",
+    "album": "7x7",
+    "artist": "David Lebón",
+    "year": 1986,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nunca-te-puedo-alcanzar",
+    "album": "Nunca te puedo alcanzar",
+    "artist": "David Lebón",
+    "year": 1987,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "contactos",
+    "album": "Contactos",
+    "artist": "David Lebón",
+    "year": 1989,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nuevas-mananas",
+    "album": "Nuevas mañanas",
+    "artist": "David Lebón",
+    "year": 1991,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "yo-lo-sone",
+    "album": "Yo lo soñé",
+    "artist": "David Lebón",
+    "year": 2002,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "deja-vu",
+    "album": "Déjà vu",
+    "artist": "David Lebón",
+    "year": 2009,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "encuentro-supremo",
+    "album": "Encuentro supremo",
+    "artist": "David Lebón",
+    "year": 2016,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "lebon-and-co",
+    "album": "Lebón & Co.",
+    "artist": "David Lebón",
+    "year": 2019,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "lebon-and-co-vol-2",
+    "album": "Lebón & Co. Vol.2",
+    "artist": "David Lebón",
+    "year": 2022,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "herencia-lebon",
+    "album": "Herencia Lebón",
+    "artist": "David Lebón",
+    "year": 2024,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "inhuman",
+    "album": "Inhuman",
+    "artist": "Utopians",
+    "year": 2008,
+    "genres": {
+      "primary": ["Garage Rock Revival"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "freak",
+    "album": "Freak",
+    "artist": "Utopians",
+    "year": 2010,
+    "genres": {
+      "primary": ["Garage Rock Revival"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "trastornados",
+    "album": "Trastornados",
+    "artist": "Utopians",
+    "year": 2012,
+    "genres": {
+      "primary": ["Garage Rock Revival"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vandalo",
+    "album": "Vándalo",
+    "artist": "Utopians",
+    "year": 2014,
+    "genres": {
+      "primary": ["Garage Rock Revival"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "todos-nuestros-atomos",
+    "album": "Todos nuestros átomos",
+    "artist": "Utopians",
+    "year": 2016,
+    "genres": {
+      "primary": ["Indie Rock"],
+      "secondary": []
+    },
+    "descriptors": [
+      "female vocalist"
+    ]
+  },
+  {
+    "id": "sandro-y-los-de-fuego",
+    "album": "Sandro y los de Fuego",
+    "artist": "Sandro",
+    "year": 1965,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Beat"]
+    },
+    "descriptors": ["rhythmic", "male vocalist"]
+  },
+  {
+    "id": "al-calor-de-sandro-y-los-de-fuego",
+    "album": "Al calor de Sandro y los de Fuego",
+    "artist": "Sandro",
+    "year": 1965,
+    "genres": {
+      "primary": ["Beat"],
+      "secondary": ["Rock & Roll"]
+    },
+    "descriptors": ["male vocalist", "passionate", "melodic"]
+  },
+  {
+    "id": "alma-y-fuego",
+    "album": "Alma y fuego",
+    "artist": "Sandro",
+    "year": 1966,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Beat", "Canción melódica"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-sorprendente-mundo-de-sandro",
+    "album": "El sorprendente mundo de Sandro",
+    "artist": "Sandro",
+    "year": 1966,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Beat", "Canción melódica"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "beat-latino",
+    "album": "\"Beat\" latino",
+    "artist": "Sandro",
+    "year": 1967,
+    "genres": {
+      "primary": ["Beat"],
+      "secondary": ["Canción melódica", "Pop Rock"]
+    },
+    "descriptors": ["melodic", "male vocalist"]
+  },
+  {
+    "id": "quiero-llenarme-de-ti",
+    "album": "Quiero llenarme de ti (Vibración y ritmo)",
+    "artist": "Sandro",
+    "year": 1968,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Canción melódica", "Rhythm & Blues"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "una-muchacha-y-una-guitarra",
+    "album": "Una muchacha y una guitarra",
+    "artist": "Sandro",
+    "year": 1968,
+    "genres": {
+      "primary": ["Bolero-Beat"],
+      "secondary": ["Canción melódica", "Pop Rock"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "sentimental",
+      "passionate",
+      "longing",
+      "melancholic",
+      "mellow",
+      "acoustic",
+      "love",
+      "theatrical",
+      "lush"
+    ]
+  },
+  {
+    "id": "la-magia-de-sandro",
+    "album": "La magia de Sandro",
+    "artist": "Sandro",
+    "year": 1968,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Bolero-Beat", "Beat", "Bolero", "Baroque Pop"]
+    },
+    "descriptors": ["longing", "melodic", "love", "male vocalist"]
+  },
+  {
+    "id": "sandro-1969",
+    "album": "Sandro",
+    "artist": "Sandro",
+    "year": 1969,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Baroque Pop"]
+    },
+    "descriptors": [
+      "lush",
+      "energetic",
+      "romantic",
+      "ballad",
+      "melodic",
+      "poetic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "sandro-de-america",
+    "album": "Sandro de América",
+    "artist": "Sandro",
+    "year": 1969,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Bolero-Beat", "Bossa nova"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "sensual",
+      "romantic",
+      "ballad",
+      "melodic",
+      "passionate",
+      "lush",
+      "love",
+      "sentimental",
+      "melancholic",
+      "breakup",
+      "alcohol"
+    ]
+  },
+  {
+    "id": "muchacho",
+    "album": "Muchacho",
+    "artist": "Sandro",
+    "year": 1970,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Beat", "Bossa nova"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-espectacular",
+    "album": "Sandro espectacular",
+    "artist": "Sandro",
+    "year": 1971,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": ["energetic", "melodic"]
+  },
+  {
+    "id": "siempre-te-amare",
+    "album": "Siempre te amaré",
+    "artist": "Sandro",
+    "year": 1971,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "te-espero",
+    "album": "Te espero...",
+    "artist": "Sandro",
+    "year": 1972,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "despues-de-10-anos",
+    "album": "Después de 10 años",
+    "artist": "Sandro",
+    "year": 1973,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-siempre-sandro",
+    "album": "Sandro... siempre Sandro",
+    "artist": "Sandro",
+    "year": 1974,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tu-me-enloqueces",
+    "album": "Tú me enloqueces",
+    "artist": "Sandro",
+    "year": 1975,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Film Soundtrack"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-1976",
+    "album": "Sandro",
+    "artist": "Sandro",
+    "year": 1976,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Canción melódica"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-un-idolo",
+    "album": "Sandro...un ídolo",
+    "artist": "Sandro",
+    "year": 1977,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "querer-como-dios-manda",
+    "album": "Querer como Dios manda",
+    "artist": "Sandro",
+    "year": 1978,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-bra",
+    "album": "Sandro [Bra]",
+    "artist": "Sandro",
+    "year": 1978,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Canción melódica"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-1979",
+    "album": "Sandro",
+    "artist": "Sandro",
+    "year": 1979,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sandro-1981",
+    "album": "Sandro",
+    "artist": "Sandro",
+    "year": 1981,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": ["Funk", "Rock & Roll"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "fue-sin-querer",
+    "album": "Fue sin querer",
+    "artist": "Sandro",
+    "year": 1982,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "vengo-a-ocupar-mi-lugar",
+    "album": "Vengo a ocupar mi lugar",
+    "artist": "Sandro",
+    "year": 1984,
+    "genres": {
+      "primary": ["Dance-Pop"],
+      "secondary": ["Canción melódica"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "volviendo-a-casa",
+    "album": "Volviendo a casa",
+    "artist": "Sandro",
+    "year": 1990,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "con-gusto-a-mujer",
+    "album": "Con gusto a mujer",
+    "artist": "Sandro",
+    "year": 1992,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "clasico",
+    "album": "Clásico",
+    "artist": "Sandro",
+    "year": 1994,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "presentando-a-sandro",
+    "album": "Presentando A Sandro",
+    "artist": "Sandro",
+    "year": 1997,
+    "genres": {
+      "primary": ["Beat"],
+      "secondary": ["Rock & Roll"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "secretamente-palabras-de-amor",
+    "album": "Secretamente palabras de amor (para escuchar en penumbras)",
+    "artist": "Sandro",
+    "year": 2006,
+    "genres": {
+      "primary": ["Canción melódica"],
+      "secondary":[]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "piero",
+    "album": "Piero",
+    "artist": "Piero",
+    "year": 1969,
+    "genres": {
+      "primary": [
+        "Beat"
+      ],
+      "secondary": [
+        "Nueva canción latinoamericana",
+        "Canción melódica",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "melancholic",
+      "dense",
+      "hypnotic",
+      "psychedelic",
+      "deadpan",
+      "mellow",
+      "melodic",
+      "poetic",
+      "sensual",
+      "longing"
+    ]
+  },
+  {
+    "id": "pedro-nadie",
+    "album": "Pedro Nadie",
+    "artist": "Piero",
+    "year": 1970,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Folk Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "coplas-de-mi-pais",
+    "album": "Coplas de mi país",
+    "artist": "Piero",
+    "year": 1972,
+    "genres": {
+      "primary": [
+        "Nueva canción latinoamericana"
+      ],
+      "secondary": [
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "para-el-pueblo-lo-que-es-del-pueblo",
+    "album": "Para el pueblo... lo que es del pueblo",
+    "artist": "Piero",
+    "year": 1974,
+    "genres": {
+      "primary": [
+        "Nueva canción latinoamericana"
+      ],
+      "secondary": [
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sinfonia-inconclusa-en-la-mar",
+    "album": "Sinfonía inconclusa en la mar",
+    "artist": "Piero",
+    "year": 1975,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Children's Music"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "y-mi-gente-donde-va",
+    "album": "Y mi gente dónde va...",
+    "artist": "Piero",
+    "year": 1978,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "recuerdos",
+    "album": "Recuerdos",
+    "artist": "Piero",
+    "year": 1981,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "canto-de-la-ternura",
+    "album": "Canto de la ternura",
+    "artist": "Piero",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "folklore-a-mi-manera",
+    "album": "Folklore a mi manera",
+    "artist": "Piero",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Hispanic American Folk Music"
+      ],
+      "secondary": [
+        "Tonada chilena",
+        "Zamba",
+        "Chamamé"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-regalao",
+    "album": "El regalao",
+    "artist": "Piero",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Acoustic Rock"
+      ],
+      "secondary": [
+        "Contemporary Folk",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "las-galaxias-nos-miran",
+    "album": "Las galaxias nos miran",
+    "artist": "Piero",
+    "year": 1986,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-pesar-de-los-pesares",
+    "album": "A pesar de los pesares",
+    "artist": "Piero",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cachuso-rantifuso",
+    "album": "Cachuso Rantifuso",
+    "artist": "Piero, Marilina Ross & Juan Carlos Baglietto",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Children's Music"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "america",
+    "album": "América",
+    "artist": "Piero",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Singer-Songwriter"
+      ],
+      "secondary": [
+        "Nueva canción latinoamericana",
+        "Beat",
+        "Folk Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "asi-de-simple",
+    "album": "Así de simple",
+    "artist": "César Pueyrredón",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "solo-un-poco-mas",
+    "album": "Sólo un poco más",
+    "artist": "César Pueyrredón",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mas-cerca-de-la-vida",
+    "album": "Mas cerca de la vida",
+    "artist": "César Pueyrredón",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": [
+        "Soft Rock",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ser-uno-mismo",
+    "album": "Ser uno mismo",
+    "artist": "César Pueyrredón",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": [
+        "Soft Rock",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tarde-o-temprano",
+    "album": "Tarde o temprano",
+    "artist": "César Pueyrredón",
+    "year": 1989,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": [
+        "Soft Rock",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "20-anos",
+    "album": "20 años",
+    "artist": "César Pueyrredón",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "armonia",
+    "album": "Armonía",
+    "artist": "César Pueyrredón",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "de-la-ternura-a-la-pasion",
+    "album": "De la ternura a la pasión",
+    "artist": "César Pueyrredón",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "souvenir-del-paraiso",
+    "album": "Souvenir del Paraíso",
+    "artist": "César Pueyrredón",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "romantico-nuevo",
+    "album": "Romántico + Nuevo",
+    "artist": "César Pueyrredón",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": [
+        "Soft Rock",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "alejandro-lerner-y-la-magia",
+    "album": "Alejandro Lerner y la Magia",
+    "artist": "Alejandro Lerner",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Piano Rock",
+        "Singer-Songwriter"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "todo-a-pulmon",
+    "album": "Todo a pulmón",
+    "artist": "Alejandro Lerner",
+    "year": 1983,
+    "genres": {
+      "primary": [
+        "Piano Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "lernertres",
+    "album": "Lernertres",
+    "artist": "Alejandro Lerner",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "Piano Rock"
+      ],
+      "secondary": [
+        "Singer-Songwriter",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "algo-que-decir",
+    "album": "Algo que decir",
+    "artist": "Alejandro Lerner",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Piano Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "canciones",
+    "album": "Canciones",
+    "artist": "Alejandro Lerner",
+    "year": 1988,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Piano Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "entrelineas",
+    "album": "Entrelíneas",
+    "artist": "Alejandro Lerner",
+    "year": 1990,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Piano Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "amor-infinito",
+    "album": "Amor infinito",
+    "artist": "Alejandro Lerner",
+    "year": 1992,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "permiso-de-volar",
+    "album": "Permiso de volar",
+    "artist": "Alejandro Lerner",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-magia-continua",
+    "album": "La magia continúa",
+    "artist": "Alejandro Lerner",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Piano Rock",
+        "Soft Rock",
+        "Singer-Songwriter",
+        "Pop"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "magic-hotel",
+    "album": "Magic Hotel",
+    "artist": "Alejandro Lerner",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "volver-a-empezar",
+    "album": "Volver a empezar",
+    "artist": "Alejandro Lerner",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Soft Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "si-quieres-saber-quien-soy",
+    "album": "Si quieres saber quién soy",
+    "artist": "Alejandro Lerner",
+    "year": 2000,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": [
+        "Latin Pop",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "warm",
+      "melodic",
+      "love"
+    ]
+  },
+  {
+    "id": "buen-viaje",
+    "album": "Buen viaje",
+    "artist": "Alejandro Lerner",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Tango",
+        "Latin Pop",
+        "Singer-Songwriter",
+        "Adult Contemporary"
+      ]
+    },
+    "descriptors": [
+      "romantic",
+      "warm",
+      "ballad",
+      "melodic",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "canciones-para-gente-nina",
+    "album": "Canciones para gente niña",
+    "artist": "Alejandro Lerner",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Children's Music"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "enojado",
+    "album": "Enojado",
+    "artist": "Alejandro Lerner",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Blues",
+        "Adult Contemporary",
+        "Piano Blues"
+      ]
+    },
+    "descriptors": [
+      "introspective",
+      "rhythmic",
+      "ballad",
+      "melodic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "autentico",
+    "album": "Auténtico",
+    "artist": "Alejandro Lerner",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
   }
+  
 ]
