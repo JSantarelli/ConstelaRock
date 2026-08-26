@@ -8,6 +8,8 @@ import { UMAP } from "umap-js";
 let selectedGenres = new Set();
 let genreLegendItemsByGenre = new Map(); // genre -> elemento DOM de la leyenda
 let genreLegendGroups = new Map(); // group -> { titleEl, arrowEl, selectAreaEl, itemsContainerEl, genres }
+let tooltipExpanded = false; // persiste entre navegaciones de disco, se resetea sólo manualmente vía el toggle
+
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xFFFFFF);
@@ -46,10 +48,6 @@ let genreLabelSprites = [];
 let selectedIndices = new Set();
 let outlineRings = new Map();
 let multiSelectPanels = new Map();
-
-// activeFilters.query holds the live text from the unified search box.
-// Genre filtering is driven separately by `selectedGenres` (the genre tree),
-// which is folded into the filter pipeline via currentFilters().
 let activeFilters = {
   artist: null,
   yearFrom: null,
@@ -117,6 +115,10 @@ function updateSelectionVisuals() {
     pointMeshes.forEach(m => { m.material.opacity = 1; });
     return;
   }
+  pointMeshes.forEach((m, i) => {
+    m.material.opacity = selectedIndices.has(i) ? 1 : 0.35;
+  });
+}
 
   const artists = new Set([...selectedIndices].map(i => points[i].artist));
 
@@ -125,7 +127,6 @@ function updateSelectionVisuals() {
     const sameArtist = artists.has(points[i].artist);
     m.material.opacity = (isSelected || sameArtist) ? 1 : 0.35;
   });
-}
 
 function ensureOutlineRing(idx) {
   if (outlineRings.has(idx)) return outlineRings.get(idx);
@@ -143,6 +144,12 @@ function ensureOutlineRing(idx) {
   root.add(ring);
   outlineRings.set(idx, ring);
   return ring;
+}
+
+function getArtistDiscography(artist) {
+  return points
+    .filter(p => p.artist === artist)
+    .sort((a, b) => a.year - b.year || a.album.localeCompare(b.album));
 }
 
 function showSelectionOutlines() {
@@ -198,6 +205,74 @@ function updateSelectionOutlines() {
   });
 }
 
+function buildAncestorDescendantSection(idx) {
+  const { ancestor, descendants } = computeAncestorDescendants(idx);
+  const wrap = document.createElement("div");
+
+  if (ancestor) {
+    const t = document.createElement("div");
+    t.textContent = "Disco ancestro";
+    t.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    wrap.appendChild(t);
+    wrap.appendChild(buildNearestRow(ancestor, { showYear: true }));
+  }
+
+  if (descendants.length) {
+    const t = document.createElement("div");
+    t.textContent = "Discos descendientes";
+    t.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    wrap.appendChild(t);
+    descendants.forEach(p => wrap.appendChild(buildNearestRow(p, { showYear: true })));
+  }
+
+  return wrap;
+}
+
+function buildNavChevrons(a) {
+  const discog = getArtistDiscography(a.artist);
+  const pos = discog.findIndex(p => p.idx === a.idx);
+
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "display:flex;align-items:center;gap:8px;position:absolute;top:6px;right:32px;";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "‹";
+  prevBtn.setAttribute("aria-label", "Disco anterior del artista");
+  prevBtn.disabled = pos <= 0;
+  prevBtn.style.cssText = `border:none;background:none;font-size:18px;line-height:1;cursor:${prevBtn.disabled ? "default" : "pointer"};color:${prevBtn.disabled ? "#ccc" : "#888"};padding:0;`;
+  prevBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    if (pos > 0) selectAlbum(discog[pos - 1].idx);
+  });
+
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "›";
+  nextBtn.setAttribute("aria-label", "Disco siguiente del artista");
+  nextBtn.disabled = pos === -1 || pos >= discog.length - 1;
+  nextBtn.style.cssText = `border:none;background:none;font-size:18px;line-height:1;cursor:${nextBtn.disabled ? "default" : "pointer"};color:${nextBtn.disabled ? "#ccc" : "#888"};padding:0;`;
+  nextBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    if (pos < discog.length - 1) selectAlbum(discog[pos + 1].idx);
+  });
+
+  wrap.appendChild(prevBtn);
+  wrap.appendChild(nextBtn);
+  return wrap;
+}
+
+function buildExpandToggle(section) {
+  const btn = document.createElement("button");
+  btn.textContent = tooltipExpanded ? "Saber menos" : "Saber más";
+  btn.style.cssText = "margin-top:10px;border:none;background:none;color:#556;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;";
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    tooltipExpanded = !tooltipExpanded;
+    section.style.display = tooltipExpanded ? "block" : "none";
+    btn.textContent = tooltipExpanded ? "Saber menos" : "Saber más";
+  });
+  return btn;
+}
+
 function buildHoverPanelHTML(i) {
   const a = points[i];
   const mainGenre = a.genres.primary[0] ?? "";
@@ -206,6 +281,79 @@ function buildHoverPanelHTML(i) {
     <div class="artist">${a.artist} · ${a.year}</div>
     ${mainGenre ? `<div class="genres"><span class="primary">${mainGenre}</span></div>` : ""}
   `;
+}
+
+function renderDetailPanel(i, x, y) {
+  const a = points[i];
+  if (!a) return;
+
+  ui.tooltip.textContent = "";
+  ui.tooltip.style.pointerEvents = "auto";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
+  closeBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    clearHighlight();
+  });
+
+  const navChevrons = buildNavChevrons(a);
+
+  const title = document.createElement("strong");
+  title.textContent = a.album;
+
+  const artistLine = document.createElement("div");
+  artistLine.className = "artist";
+
+  const artistName = document.createElement("span");
+  artistName.textContent = a.artist;
+  artistName.style.cursor = "pointer";
+  artistName.style.textDecoration = "underline";
+  artistName.addEventListener("click", e => {
+    e.stopPropagation();
+    clearHighlight(); // deselecciona el nodo y limpia las conexiones dashed
+    activeFilters.artist = a.artist;
+    ui.search.value = a.artist;
+    refreshFilterOptions(); // dibuja la trayectoria del artista con solid line (buildArtistChainConnections)
+  });
+
+  artistLine.appendChild(artistName);
+  artistLine.appendChild(document.createTextNode(` · ${a.year}`));
+
+  const genresDiv = document.createElement("div");
+  genresDiv.className = "genres";
+  a.genres.primary.forEach(g => {
+    const span = document.createElement("span");
+    span.className = "primary";
+    span.textContent = g;
+    genresDiv.appendChild(span);
+  });
+  a.genres.secondary.forEach(g => {
+    const span = document.createElement("span");
+    span.className = "secondary";
+    span.textContent = g;
+    genresDiv.appendChild(span);
+  });
+
+  ui.tooltip.appendChild(closeBtn);
+  ui.tooltip.appendChild(navChevrons);
+  ui.tooltip.appendChild(title);
+  ui.tooltip.appendChild(artistLine);
+  ui.tooltip.appendChild(genresDiv);
+
+  const extendedSection = document.createElement("div");
+  extendedSection.style.display = tooltipExpanded ? "block" : "none";
+  extendedSection.appendChild(buildAncestorDescendantSection(i));
+
+  ui.tooltip.appendChild(buildExpandToggle(extendedSection));
+  ui.tooltip.appendChild(extendedSection);
+
+  ui.tooltip.style.right = "auto";
+  ui.tooltip.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
+  ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 380)}px`; // más alto: hay más contenido potencial
+  ui.tooltip.style.display = "block";
 }
 
 function showTooltipForPoint(i, x, y) {
@@ -371,7 +519,7 @@ const GENRE_LABEL_CONFIG = {
   minAlbumsForLabel: 2,
   radiusPadding: 8,   // <-- antes 16; más cerca del centroide del cluster
   visibleOpacity: 1,
-  fadeSpeed: 0.15,
+  fadeSpeed: 0.25,
   overlapScreenDist: 48
 };
 
@@ -402,8 +550,16 @@ const CONNECTION_CONFIG = {
   fadeSpeed: 0.09,
   lineWidth: 3.2, // px, mismo grosor para la cadena sólida y las líneas punteadas
   dashSize: 0.35,  // trazo corto...
-  gapSize: 0.18    // ...y gap corto = punteado fino y denso
+  gapSize: 0.18,    // ...y gap corto = punteado fino y denso
+  originNodeOpacity: 1,
+  ancestorOpacity: 0.8,
+  descendantOpacity: 0.8,
+  secondLevelOpacity: 0.65,
 };
+
+const ARROW_POSITION_T = 0.6; // fracción sobre la línea donde se ubica la flecha
+const connectionArrowDir = new THREE.Vector3();
+const connectionArrowUp = new THREE.Vector3(0, 1, 0);
 
 let timeMode = false;
 let animating = false;
@@ -884,8 +1040,8 @@ async function calculateModel() {
       s.userData.targetOpacity = 1;
     });
     orbitRings.forEach(r => {
-      r.material.opacity = 0.4;
-      r.userData.targetOpacity = 0.4;
+      r.material.opacity = 0.25;
+      r.userData.targetOpacity = 0.25;
     });
   }
 
@@ -1256,7 +1412,7 @@ function setTimeMode(on) {
   animating = true;
 
   yearSprites.forEach(s => { s.userData.targetOpacity = timeMode ? 1 : 0; });
-  orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? 0.4 : 0; });
+  orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? 0.25 : 0; });
 
 }
 
@@ -1285,17 +1441,14 @@ function tickAnimation() {
 
 function highlightPoint(mesh) {
   clearGenreSelection();
-  clearYearHighlight(); // <-- nuevo: seleccionar un disco es excluyente con un año activo
-  const artist = mesh.userData.album?.artist ?? null;
-  selected = artist;
+  clearYearHighlight();
 
   pointMeshes.forEach(m => {
-    const sameArtist = artist && m.userData.album?.artist === artist;
-    m.material.opacity = (m === mesh || sameArtist) ? 1 : 0.35;
+    m.material.opacity = (m === mesh) ? 1 : 0.35;
   });
 
   const idx = mesh.userData.index;
-  if (idx !== undefined) buildDiscoveryGraph(idx);
+  if (idx !== undefined) buildAncestorDescendantGraph(idx);
 }
 
 function legendDotColor(g) {
@@ -1534,9 +1687,6 @@ function updateGenreLegendActiveState() {
   });
 }
 
-// Oculta géneros/subgéneros del árbol que no tengan ningún disco dentro del
-// conjunto actualmente filtrado (búsqueda + filtros avanzados), y colapsa
-// grupos enteros que se queden sin hijos visibles.
 function updateGenreTreeVisibility() {
   const pool = getFilteredPoints('genres');
   const visibleGenres = new Set(pool.flatMap(p => p.genres.primary));
@@ -1613,8 +1763,6 @@ function pointMatchesFilters(p, filters) {
   return true;
 }
 
-// Junta activeFilters + la selección de géneros del árbol en un único
-// objeto de filtros, usado por pointMatchesFilters/getFilteredPoints.
 function currentFilters() {
   return { ...activeFilters, genres: selectedGenres };
 }
@@ -1628,11 +1776,6 @@ function hasActiveFilters() {
     || selectedGenres.size > 0;
 }
 
-// Pool de discos aplicando todos los filtros activos EXCEPTO el indicado
-// (o excepto año, si excludeKey === 'year'; o excepto géneros, si
-// excludeKey === 'genres'). Es la base de la cascada: las opciones de cada
-// control (incluido el árbol de géneros) se calculan sobre lo que dejan
-// pasar los demás.
 function getFilteredPoints(excludeKey) {
   const filters = currentFilters();
   if (excludeKey === 'year') {
@@ -1945,6 +2088,107 @@ function pickNearestUnvisited(originVec, visitedArtists, minYear, count) {
   return picked;
 }
 
+function computeAncestorDescendants(idx) {
+  const origin = points[idx];
+  const others = points.filter(p => p.idx !== idx && p.artist !== origin.artist);
+
+  const ancestor = others
+    .filter(p => p.year < origin.year)
+    .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
+    .sort((a, b) => a.d - b.d)[0]?.p ?? null;
+
+  const usedDescendantArtists = new Set();
+  const descendants = others
+    // PARA REPETIR ARTISTAS A NIVEL 2
+    .filter(p => p.year > origin.year)
+    .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 3)
+    .map(e => e.p);
+
+    // .filter(p => p.year > origin.year)
+    // .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
+    // .sort((a, b) => a.d - b.d)
+    // .reduce((acc, entry) => {
+    //   if (acc.length >= 3) return acc;
+    //   if (usedDescendantArtists.has(entry.p.artist)) return acc;
+    //   usedDescendantArtists.add(entry.p.artist);
+    //   acc.push(entry.p);
+    //   return acc;
+    // }, []);
+
+
+
+  // Artistas ya usados en el grafo hasta este punto (para el filtro de nivel 2)
+  const usedArtists = new Set([
+    origin.artist,
+    ancestor?.artist,
+    ...descendants.map(d => d.artist)
+  ].filter(Boolean));
+
+  const secondLevel = descendants.map(d => {
+    const candidates = points.filter(p =>
+      p.idx !== d.idx &&
+      !usedArtists.has(p.artist) &&
+      p.year <= d.year
+    );
+    const nearest = candidates
+      .map(p => ({ p, dist: p.umapVec.distanceTo(d.umapVec) }))
+      .sort((a, b) => a.dist - b.dist)[0]?.p ?? null;
+
+    if (nearest) usedArtists.add(nearest.artist); // evita duplicar artista entre las 3 ramas de nivel 2
+    return nearest;
+  });
+
+  return { ancestor, descendants, secondLevel };
+}
+
+function buildAncestorDescendantGraph(idx) {
+  const origin = points[idx];
+  if (!origin) return;
+
+  const now = performance.now();
+  const originColor = origin.color.getHex();
+  activeGraphIndices.add(origin.idx);
+
+  const { ancestor, descendants, secondLevel } = computeAncestorDescendants(idx);
+
+  if (ancestor) {
+    activeGraphIndices.add(ancestor.idx);
+    addConnection(
+      pointMeshes[ancestor.idx], pointMeshes[origin.idx],
+      originColor, CONNECTION_CONFIG.ancestorOpacity,
+      true, now, CONNECTION_CONFIG.lineWidth, true
+    );
+    fadeNodeIn(pointMeshes[ancestor.idx], CONNECTION_CONFIG.ancestorOpacity, now);
+  }
+
+  descendants.forEach((d, i) => {
+    activeGraphIndices.add(d.idx);
+    const appearAt = now + i * CONNECTION_CONFIG.siblingStagger;
+
+    addConnection(
+      pointMeshes[origin.idx], pointMeshes[d.idx],
+      originColor, CONNECTION_CONFIG.descendantOpacity,
+      true, appearAt, CONNECTION_CONFIG.lineWidth, true
+    );
+    fadeNodeIn(pointMeshes[d.idx], CONNECTION_CONFIG.descendantOpacity, appearAt);
+
+    const level2 = secondLevel[i];
+    if (level2) {
+      activeGraphIndices.add(level2.idx);
+      const level2AppearAt = appearAt + CONNECTION_CONFIG.stageDelay;
+
+      addConnection(
+        pointMeshes[d.idx], pointMeshes[level2.idx],
+        originColor, CONNECTION_CONFIG.secondLevelOpacity,
+        true, level2AppearAt, CONNECTION_CONFIG.lineWidth, true
+      );
+      fadeNodeIn(pointMeshes[level2.idx], CONNECTION_CONFIG.secondLevelOpacity, level2AppearAt);
+    }
+  });
+}
+
 function createConnectionLine(colorHex, dashed, lineWidth) {
   const geometry = new LineGeometry();
   geometry.setPositions([0, 0, 0, 0, 0, 0]);
@@ -1967,13 +2211,44 @@ function createConnectionLine(colorHex, dashed, lineWidth) {
   return line;
 }
 
-function addConnection(fromMesh, toMesh, colorHex, targetOpacity, dashed, appearAt, lineWidth) {
+function createArrowHead(colorHex) {
+  const shape = new THREE.Shape();
+  const halfWidth = 0.12;
+  const height = 0.55;
+  shape.moveTo(0, height / 2);            // punta
+  shape.lineTo(-halfWidth, -height / 2);  // base izquierda
+  shape.lineTo(halfWidth, -height / 2);   // base derecha
+  shape.closePath();
+
+  const geometry = new THREE.ShapeGeometry(shape);
+  const material = new THREE.MeshBasicMaterial({
+    color: colorHex,
+    transparent: true,
+    opacity: 0,
+    depthWrite: false,
+    side: THREE.DoubleSide // plano: sin esto no se ve desde el lado "de atrás"
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+function addConnection(fromMesh, toMesh, colorHex, targetOpacity, dashed, appearAt, lineWidth, withArrow = false) {
   const line = createConnectionLine(colorHex, dashed, lineWidth);
   line.userData.targetOpacity = targetOpacity;
   line.userData.appearAt = appearAt;
   line.userData.dashed = dashed;
   connectionGroup.add(line);
-  connectionLines.push({ line, fromMesh, toMesh });
+
+  let arrow = null;
+  if (withArrow) {
+    arrow = createArrowHead(colorHex);
+    arrow.userData.targetOpacity = targetOpacity;
+    arrow.userData.appearAt = appearAt;
+    connectionGroup.add(arrow);
+  }
+
+  connectionLines.push({ line, fromMesh, toMesh, arrow });
 }
 
 function fadeNodeIn(mesh, targetOpacity, appearAt) {
@@ -1985,6 +2260,11 @@ function clearConnections() {
     c.line.geometry.dispose();
     c.line.material.dispose();
     connectionGroup.remove(c.line);
+    if (c.arrow) {
+      c.arrow.geometry.dispose();
+      c.arrow.material.dispose();
+      connectionGroup.remove(c.arrow);
+    }
   });
   connectionLines = [];
   connectionNodeFades = [];
@@ -2164,17 +2444,6 @@ function renderFilterChipsInto(container) {
   });
 }
 
-function buildMultiSelectionChains() {
-  const seenArtists = new Set();
-
-  selectedIndices.forEach(idx => {
-    const point = points[idx];
-    if (!point || seenArtists.has(point.artist)) return;
-    seenArtists.add(point.artist);
-    buildArtistChainConnections(idx);
-  });
-}
-
 function applySelection() {
   clearYearHighlight();
   clearConnections();
@@ -2193,12 +2462,16 @@ function applySelection() {
 
   if (selectedIndices.size === 1) {
     const idx = [...selectedIndices][0];
-    buildDiscoveryGraph(idx);
+    buildAncestorDescendantGraph(idx); // <-- antes: buildDiscoveryGraph(idx)
     pinTooltip(idx);
   } else {
     buildMultiSelectionChains();
     updateMultiSelectPanels();
   }
+}
+
+function buildMultiSelectionChains() {
+  selectedIndices.forEach(idx => buildAncestorDescendantGraph(idx));
 }
 
 function clearHighlight() {
@@ -2224,6 +2497,17 @@ function updateConnections() {
 
     const target = now >= c.line.userData.appearAt ? c.line.userData.targetOpacity : 0;
     c.line.material.opacity += (target - c.line.material.opacity) * CONNECTION_CONFIG.fadeSpeed;
+
+    if (c.arrow) {
+      connectionArrowDir.subVectors(to, from);
+      if (connectionArrowDir.lengthSq() > 1e-6) {
+        connectionArrowDir.normalize();
+        c.arrow.position.lerpVectors(from, to, ARROW_POSITION_T);
+        c.arrow.quaternion.setFromUnitVectors(connectionArrowUp, connectionArrowDir);
+      }
+      const arrowTarget = now >= c.arrow.userData.appearAt ? c.arrow.userData.targetOpacity : 0;
+      c.arrow.material.opacity += (arrowTarget - c.arrow.material.opacity) * CONNECTION_CONFIG.fadeSpeed;
+    }
   });
 
   connectionNodeFades.forEach(n => {
@@ -2339,7 +2623,8 @@ function hideTooltip() {
   ui.tooltip.style.display = "none";
 }
 
-function buildNearestRow(p) {
+function buildNearestRow(p, opts = {}) {
+  const { showYear = false } = opts;
   const row = document.createElement("div");
   row.className = "nearest-row";
   row.style.cssText = "display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;";
@@ -2349,7 +2634,9 @@ function buildNearestRow(p) {
 
   const text = document.createElement("span");
   text.style.fontSize = "12px";
-  text.textContent = `${p.album} — ${p.artist}`;
+  text.textContent = showYear
+    ? `${p.album} — ${p.artist} · ${p.year}`
+    : `${p.album} — ${p.artist}`;
 
   row.appendChild(dot);
   row.appendChild(text);
@@ -2369,64 +2656,6 @@ function projectToScreen(vec3) {
     x: (screenProjectionVector.x * 0.5 + 0.5) * innerWidth,
     y: (-screenProjectionVector.y * 0.5 + 0.5) * innerHeight
   };
-}
-
-function renderDetailPanel(i, x, y) {
-  const a = points[i];
-  if (!a) return;
-
-  ui.tooltip.textContent = "";
-  ui.tooltip.style.pointerEvents = "auto";
-
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "×";
-  closeBtn.setAttribute("aria-label", "Cerrar");
-  closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
-  closeBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    clearHighlight();
-  });
-
-  const title = document.createElement("strong");
-  title.textContent = a.album;
-
-  const artistLine = document.createElement("div");
-  artistLine.className = "artist";
-  artistLine.textContent = `${a.artist} · ${a.year}`;
-
-  const genresDiv = document.createElement("div");
-  genresDiv.className = "genres";
-  a.genres.primary.forEach(g => {
-    const span = document.createElement("span");
-    span.className = "primary";
-    span.textContent = g;
-    genresDiv.appendChild(span);
-  });
-  a.genres.secondary.forEach(g => {
-    const span = document.createElement("span");
-    span.className = "secondary";
-    span.textContent = g;
-    genresDiv.appendChild(span);
-  });
-
-  ui.tooltip.appendChild(closeBtn);
-  ui.tooltip.appendChild(title);
-  ui.tooltip.appendChild(artistLine);
-  ui.tooltip.appendChild(genresDiv);
-
-  const nearest = computeNearestAlbums(i, 3);
-  if (nearest.length) {
-    const nearestTitle = document.createElement("div");
-    nearestTitle.textContent = "Discos más cercanos";
-    nearestTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
-    ui.tooltip.appendChild(nearestTitle);
-    nearest.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
-  }
-
-  ui.tooltip.style.right = "auto";
-  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
-  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-300)}px`;
-  ui.tooltip.style.display = "block";
 }
 
 function pinTooltip(idx) {
@@ -2630,8 +2859,6 @@ function pointerMove(e) {
   mouse.y = -(e.clientY / innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse,camera);
   const hit = raycaster.intersectObjects(pointMeshes)[0];
-  // Anillos, sprites de año y sprites de evento comparten el mismo
-  // comportamiento de selección de año, así que se prueban juntos.
   const yearHit = timeMode ? raycaster.intersectObjects([...orbitRings, ...yearSprites])[0] : null;
 
   pointMeshes.forEach(m => m.material.emissiveIntensity = .35);
