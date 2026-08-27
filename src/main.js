@@ -49,7 +49,7 @@ let selectedIndices = new Set();
 let outlineRings = new Map();
 let multiSelectPanels = new Map();
 let activeFilters = {
-  artist: null,
+  artists: new Set(),
   yearFrom: null,
   yearTo: null,
   descriptor: null,
@@ -82,7 +82,7 @@ function clearScene() {
   selectedIndices.clear();
   selectedGenres.clear();
   selectedYear = null;
-  activeFilters = { artist: null, yearFrom: null, yearTo: null, descriptor: null, query: "" };
+  activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptor: null, query: "" };
   filteredIndices = null;
   if (ui.search) ui.search.value = "";
 
@@ -312,11 +312,10 @@ function renderDetailPanel(i, x, y) {
   artistName.style.cursor = "pointer";
   artistName.style.textDecoration = "underline";
   artistName.addEventListener("click", e => {
-    e.stopPropagation();
-    clearHighlight(); // deselecciona el nodo y limpia las conexiones dashed
-    activeFilters.artist = a.artist;
-    ui.search.value = a.artist;
-    refreshFilterOptions(); // dibuja la trayectoria del artista con solid line (buildArtistChainConnections)
+      e.stopPropagation();
+      clearHighlight();
+      activeFilters.artists.add(a.artist);
+      refreshFilterOptions();
   });
 
   artistLine.appendChild(artistName);
@@ -354,6 +353,15 @@ function renderDetailPanel(i, x, y) {
   ui.tooltip.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
   ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 380)}px`; // más alto: hay más contenido potencial
   ui.tooltip.style.display = "block";
+
+    const nearest = computeNearestAlbums(i, 3);
+  if (nearest.length) {
+    const nearestTitle = document.createElement("div");
+    nearestTitle.textContent = "Discos más cercanos";
+    nearestTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    ui.tooltip.appendChild(nearestTitle);
+    nearest.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
+  }
 }
 
 function showTooltipForPoint(i, x, y) {
@@ -1533,12 +1541,13 @@ function updateFilterGenreVisuals() {
 
 function updateFilterArtistConnections() {
   clearConnections();
-  if (!activeFilters.artist) return;
+  if (activeFilters.artists.size === 0) return;
 
-  const originPoint = points.find(p => p.artist === activeFilters.artist);
-  if (!originPoint) return;
-
-  buildArtistChainConnections(originPoint.idx);
+  activeFilters.artists.forEach(artist => {
+    const originPoint = points.find(p => p.artist === artist);
+    if (!originPoint) return;
+    buildArtistChainConnections(originPoint.idx);
+  });
 }
 
 function applyFilterMapVisuals() {
@@ -1750,8 +1759,7 @@ function buildAlbumRow(a) {
 }
 
 function pointMatchesFilters(p, filters) {
-  if (filters.artist && p.artist !== filters.artist) return false;
-  if (filters.yearFrom !== null && p.year < filters.yearFrom) return false;
+if (filters.artists && filters.artists.size > 0 && !filters.artists.has(p.artist)) return false;  if (filters.yearFrom !== null && p.year < filters.yearFrom) return false;
   if (filters.yearTo !== null && p.year > filters.yearTo) return false;
   if (filters.descriptor && !p.descriptors.includes(filters.descriptor)) return false;
   if (filters.query && !p.searchText.includes(filters.query)) return false;
@@ -1768,7 +1776,8 @@ function currentFilters() {
 }
 
 function hasActiveFilters() {
-  return activeFilters.artist !== null
+return activeFilters.artists.size > 0
+    || activeFilters.yearFrom !== null
     || activeFilters.yearFrom !== null
     || activeFilters.yearTo !== null
     || activeFilters.descriptor !== null
@@ -1858,7 +1867,7 @@ ui.filterDescriptor.addEventListener("change", e => {
   refreshFilterOptions();
 });
 ui.filtersClear.addEventListener("click", () => {
-  activeFilters = { artist: null, yearFrom: null, yearTo: null, descriptor: null, query: "" };
+  activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptor: null, query: "" };
   selectedGenres.clear();
   ui.search.value = "";
   refreshFilterOptions();
@@ -2037,14 +2046,11 @@ function selectSuggestion(i) {
   const entry = currentSuggestions[i];
   if (!entry) return;
 
-  // Elegir una sugerencia limpia el filtro de texto libre: el objetivo acá
-  // es navegar/filtrar por ese artista o disco puntual, no seguir acotando
-  // por la subcadena que se llegó a tipear.
   activeFilters.query = "";
 
-  if (entry.type === "artist") {
-    activeFilters.artist = entry.value;
-    ui.search.value = entry.value;
+if (entry.type === "artist") {
+    activeFilters.artists.add(entry.value);
+    ui.search.value = "";
     closeTypeahead();
     refreshFilterOptions();
   } else {
@@ -2061,7 +2067,7 @@ function computeNearestAlbums(idx, k = 3) {
   if (!origin) return [];
 
   return points
-    .filter((p, i) => i !== idx && p.artist !== origin.artist)
+    .filter((p, i) => i !== idx && p.artist)
     .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
     .sort((a, b) => a.d - b.d)
     .slice(0, k)
@@ -2092,30 +2098,33 @@ function computeAncestorDescendants(idx) {
   const origin = points[idx];
   const others = points.filter(p => p.idx !== idx && p.artist !== origin.artist);
 
-  const ancestor = others
-    .filter(p => p.year < origin.year)
+const artistFirstYear = getArtistDiscography(origin.artist)[0]?.year ?? origin.year;
+
+const ancestor = others
+    .filter(p => p.year <= artistFirstYear)
     .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
     .sort((a, b) => a.d - b.d)[0]?.p ?? null;
 
   const usedDescendantArtists = new Set();
   const descendants = others
     // PARA REPETIR ARTISTAS A NIVEL 2
-    .filter(p => p.year > origin.year)
-    .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
-    .sort((a, b) => a.d - b.d)
-    .slice(0, 3)
-    .map(e => e.p);
-
     // .filter(p => p.year > origin.year)
     // .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
     // .sort((a, b) => a.d - b.d)
-    // .reduce((acc, entry) => {
-    //   if (acc.length >= 3) return acc;
-    //   if (usedDescendantArtists.has(entry.p.artist)) return acc;
-    //   usedDescendantArtists.add(entry.p.artist);
-    //   acc.push(entry.p);
-    //   return acc;
-    // }, []);
+    // .slice(0, 2)
+    // .map(e => e.p);
+
+    // PARA NO REPETIR ARTISTAS A NIVEL 2
+    .filter(p => p.year > origin.year)
+    .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
+    .sort((a, b) => a.d - b.d)
+    .reduce((acc, entry) => {
+      if (acc.length >= 2) return acc;
+      if (usedDescendantArtists.has(entry.p.artist)) return acc;
+      usedDescendantArtists.add(entry.p.artist);
+      acc.push(entry.p);
+      return acc;
+    }, []);
 
 
 
@@ -2396,13 +2405,31 @@ function renderSelectedChips() {
 }
 
 function renderFilterChipsInto(container) {
+  activeFilters.artists.forEach(artist => {
+    const chip = document.createElement("span");
+    chip.className = "chip chip-filter";
+    chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#e8edff;font-size:12px;";
+
+    const label = document.createElement("span");
+    label.textContent = `Artista: ${artist}`;
+
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.setAttribute("aria-label", `Quitar filtro de artista ${artist}`);
+    closeBtn.style.cssText = "border:none;background:none;cursor:pointer;font-size:14px;line-height:1;color:#556;padding:0;";
+    closeBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      activeFilters.artists.delete(artist);
+      refreshFilterOptions();
+      updateGenreLegendActiveState();
+    });
+
+    chip.appendChild(label);
+    chip.appendChild(closeBtn);
+    container.appendChild(chip);
+  });
+
   const defs = [
-    { active: () => activeFilters.artist !== null,
-      label: () => `Artista: ${activeFilters.artist}`,
-      clear: () => {
-        if (ui.search.value === activeFilters.artist) ui.search.value = "";
-        activeFilters.artist = null;
-      } },
     { active: () => activeFilters.yearFrom !== null || activeFilters.yearTo !== null,
       label: () => `Año: ${activeFilters.yearFrom ?? "…"}–${activeFilters.yearTo ?? "…"}`,
       clear: () => { activeFilters.yearFrom = null; activeFilters.yearTo = null; } },
@@ -2673,8 +2700,6 @@ function unpinTooltip() {
 }
 
 function updatePinnedTooltipPosition() {
-  // No pisar la posición si hay un preview de hover activo (ese sigue al
-  // mouse, no al nodo).
   if (pinnedIndex === null || hoverPreviewIndex !== null) return;
 
   const mesh = pointMeshes[pinnedIndex];
@@ -2912,8 +2937,7 @@ let searchDebounceTimer = null;
 ui.search.addEventListener("input", e => {
   const value = e.target.value;
 
-  // Reescribir el texto invalida cualquier artista previamente elegido: el
-  // filtro de artista sólo se fija de nuevo al elegir una sugerencia.
+  activeFilters.query = value.toLowerCase().trim();
   if (activeFilters.artist && value !== activeFilters.artist) {
     activeFilters.artist = null;
   }

@@ -27623,6 +27623,643 @@
       "secondary": []
     },
     "descriptors": []
+  },
+  {
+    "id": "vanthra",
+    "album": "Vanthra",
+    "artist": "Vanthra",
+    "year": 2018,
+    "genres": {
+      "primary": ["Rock alternativo"],
+      "secondary": ["Rock industrial", "Metal alternativo", "Rock experimental"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "h2o",
+    "album": "H2O",
+    "artist": "Melingo",
+    "year": 1995,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tangos-bajos",
+    "album": "Tangos bajos",
+    "artist": "Melingo",
+    "year": 1998,
+    "genres": {
+      "primary": ["Tango", "Milonga"],
+      "secondary": ["Avant-Folk", "Tango nuevo", "Singer-Songwriter"]
+    },
+    "descriptors": ["alcohol", "introspective", "vulgar", "nocturnal", "longing", "acoustic", "urban", "lethargic", "infidelity", "playful", "nightlife", "lonely", "hedonism", "poetic", "sombre", "cocaine", "male vocalist"]
+  },
+  {
+    "id": "ufa",
+    "album": "Ufa!",
+    "artist": "Melingo",
+    "year": 2000,
+    "genres": {
+      "primary": ["Tango", "Milonga"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "maldito-tango",
+    "album": "Maldito Tango",
+    "artist": "Melingo",
+    "year": 2008,
+    "genres": {
+      "primary": ["Tango"],
+      "secondary": ["Tango nuevo"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "corazon-y-hueso",
+    "album": "Corazón & hueso",
+    "artist": "Melingo",
+    "year": 2011,
+    "genres": {
+      "primary": ["Tango"],
+      "secondary": ["Tango nuevo"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "linyera",
+    "album": "Linyera",
+    "artist": "Melingo",
+    "year": 2014,
+    "genres": {
+      "primary": ["Tango nuevo", "Tango"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "anda",
+    "album": "Anda",
+    "artist": "Melingo",
+    "year": 2016,
+    "genres": {
+      "primary": ["Tango nuevo"],
+      "secondary": ["Rembetika"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "oasis",
+    "album": "Oasis",
+    "artist": "Melingo",
+    "year": 2020,
+    "genres": {
+      "primary": ["Tango", "Downtempo", "Avant-Folk"],
+      "secondary": ["Spoken Word", "Blues", "Rembetika", "Art Pop"]
+    },
+    "descriptors": ["nocturnal", "dark", "urban", "playful", "progressive", "raw", "avant-garde", "passionate", "folklore", "eclectic", "male vocalist", "mysterious"]
+  },
+  {
+    "id": "javier-malosetti",
+    "album": "Javier Malosetti",
+    "artist": "Javier Malosetti",
+    "year": 1993,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "spaguetti-boogie",
+    "album": "Spaguetti Boogie",
+    "artist": "Javier Malosetti",
+    "year": 2000,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "villa",
+    "album": "Villa",
+    "artist": "Javier Malosetti",
+    "year": 2002,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "onyx",
+    "album": "Onyx",
+    "artist": "Javier Malosetti",
+    "year": 2004,
+    "genres": {
+      "primary": ["Jazz"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nino",
+    "album": "Niño",
+    "artist": "Javier Malosetti",
+    "year": 2006,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "electrohope",
+    "album": "ElectroHope",
+    "artist": "Javier Malosetti",
+    "year": 2009,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ten",
+    "album": "Ten",
+    "artist": "Javier Malosetti",
+    "year": 2010,
+    "genres": {
+      "primary": ["Blues Rock", "Jazz-Rock"],
+      "secondary": ["Latin Jazz"]
+    },
+    "descriptors": ["rhythmic", "male vocalist"]
+  },
+  {
+    "id": "para-ir",
+    "album": "Para ir",
+    "artist": "Javier Malosetti",
+    "year": 2013,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "enves",
+    "album": "Envés",
+    "artist": "Javier Malosetti",
+    "year": 2014,
+    "genres": {
+      "primary": ["Jazz Fusion", "Jazz-Funk"],
+      "secondary": ["Blues Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "malosetti-y-la-colonia",
+    "album": "Malosetti & La Colonia",
+    "artist": "Javier Malosetti",
+    "year": 2020,
+    "genres": {
+      "primary": ["Jazz-Funk", "Jazz Fusion"],
+      "secondary": []
+    },
+    "descriptors": ["improvisation", "technical", "energetic"]
+  },
+  {
+    "id": "coti",
+    "album": "Coti",
+    "artist": "Coti",
+    "year": 2002,
+    "genres": {
+      "primary": ["Pop", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": ["male vocalist"]
+  },
+  {
+    "id": "canciones-para-llevar",
+    "album": "Canciones para llevar",
+    "artist": "Coti",
+    "year": 2004,
+    "genres": {
+      "primary": ["Pop", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "gatos-y-palomas",
+    "album": "Gatos y palomas",
+    "artist": "Coti",
+    "year": 2007,
+    "genres": {
+      "primary": ["Pop"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "malditas-canciones",
+    "album": "Malditas canciones",
+    "artist": "Coti",
+    "year": 2009,
+    "genres": {
+      "primary": ["Pop"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "lo-dije-por-boca-de-otro",
+    "album": "Lo dije por boca de otro",
+    "artist": "Coti",
+    "year": 2012,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "que-esperas",
+    "album": "Que esperas",
+    "artist": "Coti",
+    "year": 2015,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "serenata-en-mi-mayor-para-un-amor-y-un-atardecer",
+    "album": "Serenata en mi mayor para un amor y un atardecer",
+    "artist": "Coti",
+    "year": 2025,
+    "genres": {
+      "primary": ["Pop Rock", "Pop"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cazuela",
+    "album": "Cazuela",
+    "artist": "Francisco Bochatón",
+    "year": 1999,
+    "genres": {
+      "primary": ["Indie Pop", "Jangle Pop", "Singer-Songwriter"],
+      "secondary": ["Alternative Rock", "Indie Rock", "Slacker Rock"]
+    },
+    "descriptors": ["poetic", "bittersweet", "mellow", "existential", "longing", "melancholic", "playful", "sentimental", "spiritual", "nostalgia", "melodic", "passionate", "introspective", "male vocalist", "cryptic"]
+  },
+  {
+    "id": "hasta-decir-palabra",
+    "album": "Hasta decir palabra",
+    "artist": "Francisco Bochatón",
+    "year": 2002,
+    "genres": {
+      "primary": ["Indie Pop"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-tranquilidad-despues-de-la-paliza",
+    "album": "La tranquilidad después de la paliza",
+    "artist": "Francisco Bochatón",
+    "year": 2005,
+    "genres": {
+      "primary": ["Alternative Rock", "Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": ["introspective", "mellow", "longing", "male vocalist"]
+  },
+  {
+    "id": "tic-tac",
+    "album": "Tic Tac",
+    "artist": "Francisco Bochatón",
+    "year": 2007,
+    "genres": {
+      "primary": ["Folk Pop", "Indie Pop"],
+      "secondary": ["Indie Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-vuelta-entera",
+    "album": "La vuelta entera",
+    "artist": "Francisco Bochatón",
+    "year": 2012,
+    "genres": {
+      "primary": ["Indie Pop"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ropa-de-animal",
+    "album": "Ropa de animal",
+    "artist": "Francisco Bochatón",
+    "year": 2022,
+    "genres": {
+      "primary": ["Indie Pop"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-muerte-no-existe-y-el-amor-tampoco",
+    "album": "La muerte no existe y el amor tampoco",
+    "artist": "Santiago Motorizado",
+    "year": 2019,
+    "genres": {
+      "primary": ["Spoken Word", "Film Soundtrack"],
+      "secondary": ["Indie Rock", "Ambient"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "canciones-sobre-una-casa-cuatro-amigos-y-un-perro",
+    "album": "Canciones sobre una casa, cuatro amigos y un perro",
+    "artist": "Santiago Motorizado",
+    "year": 2021,
+    "genres": {
+      "primary": ["Television Music", "Indie Rock", "Hispanic American Music"],
+      "secondary": ["Cumbia santafesina"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-retorno",
+    "album": "El retorno",
+    "artist": "Santiago Motorizado",
+    "year": 2025,
+    "genres": {
+      "primary": ["Indie Rock"],
+      "secondary": ["Indie Pop", "Noise Pop"]
+    },
+    "descriptors": ["rhythmic", "breakup", "melodic", "love", "male vocalist"]
+  },
+  {
+    "id": "senorita-corazon",
+    "album": "Señorita corazón",
+    "artist": "María Gabriela Epumer",
+    "year": 1998,
+    "genres": {
+      "primary": ["Alternative Rock", "Alternative Dance"],
+      "secondary": ["Baggy", "Trip Hop", "Dream Pop", "Indietronica"]
+    },
+    "descriptors": ["introspective", "rhythmic", "female vocalist", "anxious", "longing", "melodic", "poetic", "atmospheric", "love", "lush"]
+  },
+  {
+    "id": "perfume",
+    "album": "Perfume",
+    "artist": "María Gabriela Epumer",
+    "year": 2000,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Downtempo", "Art Pop", "Baggy", "Tango nuevo"]
+    },
+    "descriptors": ["introspective", "cryptic", "mellow", "female vocalist", "abstract", "peaceful", "lush", "energetic", "psychedelic", "melodic", "poetic", "atmospheric", "eclectic", "soothing"]
+  },
+  {
+    "id": "miss-universo",
+    "album": "Miss Universo",
+    "artist": "Carca",
+    "year": 1994,
+    "genres": {
+      "primary": ["Neo-Psychedelia", "Experimental Rock"],
+      "secondary": ["Space Rock Revival", "Progressive Rock", "Stoner Rock", "Jazz-Rock", "Krautrock", "Ambient", "Psychedelic Folk", "Downtempo", "Post-Rock", "Sound Collage", "Acid House"]
+    },
+    "descriptors": ["drugs", "eclectic", "male vocalist", "psychedelic"]
+  },
+  {
+    "id": "a-un-millon-de-anos-blues",
+    "album": "A un millón de años blues",
+    "artist": "Carca",
+    "year": 1996,
+    "genres": {
+      "primary": ["Blues Rock", "Stoner Rock"],
+      "secondary": ["Heavy Psych", "Acoustic Blues", "Psychedelic Rock", "Art Rock"]
+    },
+    "descriptors": ["psychedelic", "raw", "infernal", "dark", "playful", "paranormal", "eclectic", "male vocalist", "chaotic", "desert", "lo-fi", "ominous", "heavy"]
+  },
+  {
+    "id": "carca",
+    "album": "Carca",
+    "artist": "Carca",
+    "year": 1998,
+    "genres": {
+      "primary": ["Art Rock", "Stoner Rock"],
+      "secondary": ["Acid Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nena",
+    "album": "Nena",
+    "artist": "Carca",
+    "year": 1999,
+    "genres": {
+      "primary": ["Glam Rock", "Rock & Roll", "Boogie Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "divino",
+    "album": "Divino",
+    "artist": "Carca",
+    "year": 2003,
+    "genres": {
+      "primary": ["Glam Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "uoiea",
+    "album": "Uoiea",
+    "artist": "Carca",
+    "year": 2009,
+    "genres": {
+      "primary": ["Psychedelic Rock", "Neo-Psychedelia", "Hard Rock"],
+      "secondary": ["Glam Rock", "Art Rock"]
+    },
+    "descriptors": ["lush", "sensual", "rebellious", "happy", "sexual", "psychedelic"]
+  },
+  {
+    "id": "carcasutra",
+    "album": "Carcasutra",
+    "artist": "Carca",
+    "year": 2023,
+    "genres": {
+      "primary": ["Art Rock", "Neo-Psychedelia"],
+      "secondary": ["Art Pop"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "exultante",
+    "album": "Exultante",
+    "artist": "Carca",
+    "year": 2025,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-traves-de-los-suenos",
+    "album": "A través de los sueños",
+    "artist": "Palo Pandolfo",
+    "year": 2001,
+    "genres": {
+      "primary": ["Rock", "Tango", "Punk Rock", "Hardcore Punk", "Folk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "antojo",
+    "album": "Antojo",
+    "artist": "Palo Pandolfo",
+    "year": 2004,
+    "genres": {
+      "primary": ["Rock", "Tango", "Punk Rock", "Hardcore Punk", "Folk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ritual-criollo",
+    "album": "Ritual criollo",
+    "artist": "Palo Pandolfo",
+    "year": 2008,
+    "genres": {
+      "primary": ["Rock", "Tango", "Punk Rock", "Hardcore Punk", "Folk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "esto-es-un-abrazo",
+    "album": "Esto es un abrazo",
+    "artist": "Palo Pandolfo",
+    "year": 2013,
+    "genres": {
+      "primary": ["Rock", "Tango", "Punk Rock", "Hardcore Punk", "Folk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "transformacion",
+    "album": "Transformación",
+    "artist": "Palo Pandolfo",
+    "year": 2016,
+    "genres": {
+      "primary": ["Rock", "Tango", "Punk Rock", "Hardcore Punk", "Folk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "siervo",
+    "album": "Siervo",
+    "artist": "Palo Pandolfo",
+    "year": 2021,
+    "genres": {
+      "primary": ["Rock", "Tango", "Punk Rock", "Hardcore Punk", "Folk Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "flopa-manza-minimal",
+    "album": "Ariel Minimal",
+    "artist": "Ariel Minimal",
+    "year": 2003,
+    "genres": {
+      "primary": ["Singer-Songwriter", "Indie Rock"],
+      "secondary": ["Indie Folk", "Indie Pop", "Folk Rock", "Psychedelic Rock"]
+    },
+    "descriptors": ["mellow", "female vocalist", "psychedelic", "uplifting", "melodic", "male vocalist", "soft"]
+  },
+  {
+    "id": "un-hombre-solo-no-puede-hacer-nada",
+    "album": "Un hombre solo no puede hacer nada",
+    "artist": "Ariel Minimal",
+    "year": 2004,
+    "genres": {
+      "primary": ["Contemporary Folk", "Singer-Songwriter"],
+      "secondary": ["Indie Folk", "Indie Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "un-dia-normal-en-el-maravilloso-mundo-de-ariel-minimal",
+    "album": "Un día normal en el maravilloso mundo de Ariel Minimal",
+    "artist": "Ariel Minimal",
+    "year": 2006,
+    "genres": {
+      "primary": ["Contemporary Folk", "Singer-Songwriter", "Indie Folk"],
+      "secondary": ["Pop Rock", "Psychedelic Folk"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ese-impulso-superior",
+    "album": "Ese impulso superior",
+    "artist": "Ariel Minimal",
+    "year": 2008,
+    "genres": {
+      "primary": ["Contemporary Folk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-piedra-en-el-aire",
+    "album": "La piedra en el aire",
+    "artist": "Ariel Minimal",
+    "year": 2012,
+    "genres": {
+      "primary": ["Singer-Songwriter", "Indie Folk"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ahora-si",
+    "album": "Ahora sí",
+    "artist": "Ariel Minimal",
+    "year": 2019,
+    "genres": {
+      "primary": ["Zamba", "Hispanic American Folk Music"],
+      "secondary": ["Chacarera"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "418-km",
+    "album": "418 km.",
+    "artist": "Ariel Minimal",
+    "year": 2024,
+    "genres": {
+      "primary": ["Contemporary Folk", "Singer-Songwriter"],
+      "secondary": []
+    },
+    "descriptors": []
   }
-  
 ]
