@@ -504,8 +504,8 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.33,
-  nNeighbors: 4.3,
+  descriptorWeight: 0.32,
+  nNeighbors: 4.5,
   minDist: 0.65
 };
 
@@ -1037,8 +1037,8 @@ async function calculateModel() {
 
   computeTimeLayout();
   createPoints();
-  createYearSprites();
   createYearOrbits();
+  createYearSprites();
   createGenreLabels();
 
   if (timeMode) {
@@ -1111,57 +1111,36 @@ function createYearSprites() {
   const years = [...new Set(points.map(p => p.year))].sort((a,b) => a-b);
   if (!years.length) return;
 
-  const minYear = years[0], maxYear = years[years.length-1];
-  const yearSpan = (maxYear - minYear) || 1;
-
-  const ux = points.map(p => p.position[0]);
-  const uz = points.map(p => p.position[2]);
-  const marginX = Math.min(...ux) - 14;
-  const cz = average(uz);
-
   years.forEach(year => {
-    const t = (year - minYear) / yearSpan;
-    const y = (t - 0.5) * TIME_LAYOUT.totalHeight;
+    const ring = orbitRings.find(r => r.userData.year === year);
+    if (!ring) return;
+
+    const y = ring.position.y;
+    const x = timeCentroid.x;
+    const z = timeCentroid.z;
 
     const sprite = makeYearSprite(String(year));
-    sprite.position.set(marginX, y, cz);
+    sprite.position.set(x, y, z);
     sprite.material.opacity = 0;
     sprite.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
     sprite.userData.targetOpacity = 0;
     sprite.userData.year = year;
     root.add(sprite);
     yearSprites.push(sprite);
-
-    const eventText = eventsByYear.get(year);
-    if (eventText) {
-      const eventSprite = makeEventLabelSprite(eventText);
-      const yearLeftEdgeX = sprite.position.x - sprite.scale.x / 2;
-      eventSprite.position.set(
-        yearLeftEdgeX - EVENT_LABEL_CONFIG.offsetX - eventSprite.scale.x / 2,
-        y,
-        cz
-      );
-      eventSprite.material.opacity = 0;
-      eventSprite.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
-      eventSprite.userData.targetOpacity = 0;
-      eventSprite.userData.year = year;
-      eventSprite.userData.isEventLabel = true;
-      root.add(eventSprite);
-      yearSprites.push(eventSprite);
-    }
   });
 }
+
 
 function makeYearSprite(text) {
   const canvas = document.createElement("canvas");
   canvas.width = 256;
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
-  ctx.font = "regular 48px sans-serif";
+  ctx.font = "regular 96px sans-serif";
   ctx.fillStyle = "#848484";
-  ctx.textAlign = "left";
+  ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(text, 8, 48);
+  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
   const texture = new THREE.CanvasTexture(canvas);
   const material = new THREE.SpriteMaterial({
@@ -1170,7 +1149,7 @@ function makeYearSprite(text) {
     depthWrite: false
   });
   const sprite = new THREE.Sprite(material);
-  sprite.scale.set(14, 5.25, 1);
+  sprite.scale.set(16, 6, 1);
   return sprite;
 }
 
@@ -1230,6 +1209,7 @@ function createYearOrbits() {
     });
 
     const ring = new THREE.Mesh(geo, mat);
+    ring.userData.radius = radius; // <-- agregar esta línea
     ring.rotation.x = Math.PI / 2; // acostar el anillo en el plano X/Z
     ring.position.set(timeCentroid.x, group[0].timeVec.y, timeCentroid.z);
     ring.userData.targetOpacity = 0;
@@ -1452,7 +1432,7 @@ function highlightPoint(mesh) {
   clearYearHighlight();
 
   pointMeshes.forEach(m => {
-    m.material.opacity = (m === mesh) ? 1 : 0.35;
+    m.material.opacity = (m === mesh) ? 1 : 0.25;
   });
 
   const idx = mesh.userData.index;
@@ -1474,12 +1454,6 @@ function legendDotColor(g) {
   c.setHSL(hue, saturation, lightness);
   return c;
 }
-
-// --- Selección de géneros (árbol) ---------------------------------------
-// selectedGenres guarda géneros/subgéneros "hoja". Seleccionar un grupo
-// padre (ej. "Metal") agrega/quita de una vez todos sus géneros hijos.
-// La selección ahora es un filtro real (ver currentFilters/pointMatchesFilters),
-// no sólo un resaltado visual.
 
 function toggleGenreHighlight(genre) {
   if (selectedGenres.has(genre)) {
@@ -1551,6 +1525,8 @@ function updateFilterArtistConnections() {
 }
 
 function applyFilterMapVisuals() {
+  if (selectedIndices.size > 0) return; // selección manual activa: los filtros de búsqueda no la pisan
+
   if (filteredIndices !== null) {
     clearHighlight();
     clearYearHighlight();
@@ -2135,19 +2111,19 @@ const ancestor = others
     ...descendants.map(d => d.artist)
   ].filter(Boolean));
 
-  const secondLevel = descendants.map(d => {
+const secondLevel = descendants.map(d => {
     const candidates = points.filter(p =>
       p.idx !== d.idx &&
       !usedArtists.has(p.artist) &&
-      p.year <= d.year
+      p.year > d.year
     );
     const nearest = candidates
       .map(p => ({ p, dist: p.umapVec.distanceTo(d.umapVec) }))
       .sort((a, b) => a.dist - b.dist)[0]?.p ?? null;
 
-    if (nearest) usedArtists.add(nearest.artist); // evita duplicar artista entre las 3 ramas de nivel 2
+    if (nearest) usedArtists.add(nearest.artist); // evita duplicar artista entre las ramas de nivel 2
     return nearest;
-  });
+});
 
   return { ancestor, descendants, secondLevel };
 }
@@ -2788,6 +2764,7 @@ function renderYearStatsPanel(year, x, y) {
   ui.tooltip.appendChild(title);
   ui.tooltip.appendChild(meta);
  
+  /*
   const eventText = eventsByYear.get(year);
   if (eventText) {
     const eventLine = document.createElement("div");
@@ -2795,6 +2772,7 @@ function renderYearStatsPanel(year, x, y) {
     eventLine.textContent = eventText;
     ui.tooltip.appendChild(eventLine);
   }
+  */
  
   if (stats.groups.length) {
     const groupsTitle = document.createElement("div");

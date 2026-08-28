@@ -18096,7 +18096,7 @@
   {
     "id": "argentina-rocco-granata",
     "album": "Argentina",
-    "artist": "Rocco Granata con Enrique Noviello & Los Auténticos Decadentes",
+    "artist": "Los Auténticos Decadentes",
     "year": 2013,
     "genres": {
       "primary": ["Tango"],
@@ -20180,7 +20180,7 @@
   {
     "id": "desayuno-en-ganimedes",
     "album": "Desayuno en Ganímedes",
-    "artist": "Gillespi con Melero",
+    "artist": "Daniel Melero",
     "year": 2015,
     "genres": {
       "primary": [
@@ -23277,7 +23277,7 @@
   {
     "id": "mujer-contra-mujer",
     "album": "Mujer contra mujer",
-    "artist": "Carballo Mihanovich",
+    "artist": "Celeste Carballo",
     "year": 1990,
     "genres": {
       "primary": [
@@ -23838,21 +23838,16 @@
       "male vocalist"
     ]
   },
-  {
+{
     "id": "jauria",
     "album": "Jauría",
     "artist": "Jauría",
     "year": 2010,
     "genres": {
       "primary": ["Alternative Rock"],
-      "secondary": []
+      "secondary": ["Punk Rock"]
     },
-    "descriptors": [
-      "male vocalist",
-      "energetic",
-      "melodic",
-      "protest"
-    ]
+    "descriptors": ["male vocalist", "energetic", "melodic", "protest"]
   },
   {
     "id": "libre-o-muerto",
@@ -23861,14 +23856,9 @@
     "year": 2013,
     "genres": {
       "primary": ["Alternative Rock"],
-      "secondary": []
+      "secondary": ["Punk Rock"]
     },
-    "descriptors": [
-      "male vocalist",
-      "energetic",
-      "melodic",
-      "protest"
-    ]
+    "descriptors": ["male vocalist", "energetic", "melodic", "protest"]
   },
   {
     "id": "la-cura",
@@ -23876,16 +23866,10 @@
     "artist": "Arde la Sangre",
     "year": 2021,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Alternative Metal"],
+      "secondary": ["Djent", "Metalcore", "Groove Metal", "Industrial Metal"]
     },
-    "descriptors": [
-      "aggressive",
-      "conscious",
-      "pessimistic",
-      "angry",
-      "male vocalist"
-    ]
+    "descriptors": ["aggressive", "conscious", "pessimistic", "angry", "male vocalist"]
   },
   {
     "id": "pase-lo-que-pase",
@@ -23893,16 +23877,10 @@
     "artist": "Arde la Sangre",
     "year": 2024,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Alternative Metal"],
+      "secondary": ["Djent", "Metalcore", "Groove Metal", "Industrial Metal"]
     },
-    "descriptors": [
-      "aggressive",
-      "conscious",
-      "pessimistic",
-      "angry",
-      "male vocalist"
-    ]
+    "descriptors": ["aggressive", "conscious", "pessimistic", "angry", "male vocalist"]
   },
   {
     "id": "viuda-e-hijas-de-roque-enroll",
@@ -23910,8 +23888,8 @@
     "artist": "Viuda e Hijas de Roque Enroll",
     "year": 1984,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Pop Rock"],
+      "secondary": ["Twist", "Girl Group", "Vocal Surf", "New Wave", "Rock & Roll"]
     },
     "descriptors": [
       "female vocalist",
@@ -23931,13 +23909,13 @@
     ]
   },
   {
-    "id": "ciudad-cat-runica",
+    "id": "ciudad-catrunica",
     "album": "Ciudad catrúnica",
     "artist": "Viuda e Hijas de Roque Enroll",
     "year": 1985,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["New Wave"],
+      "secondary": ["Pop Rock", "Synthpop", "Girl Group", "Twist", "Surf Music"]
     },
     "descriptors": [
       "female vocalist",
@@ -23959,8 +23937,8 @@
     "artist": "Viuda e Hijas de Roque Enroll",
     "year": 1986,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["New Wave"],
+      "secondary": ["Pop Rock", "Synthpop"]
     },
     "descriptors": [
       "hedonism",
@@ -23983,8 +23961,8 @@
     "artist": "Viuda e Hijas de Roque Enroll",
     "year": 2014,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Rock"],
+      "secondary": ["Pop"]
     },
     "descriptors": [
       "joyful",
@@ -24002,8 +23980,8 @@
     "artist": "Pedro y Pablo",
     "year": 1970,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Folk Rock"],
+      "secondary": ["Contemporary Folk", "Chamber Folk", "Canción melódica"]
     },
     "descriptors": [
       "humorous",
@@ -24022,8 +24000,8 @@
     "artist": "Pedro y Pablo",
     "year": 1972,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Rock"],
+      "secondary": ["Folk Rock", "Blues Rock"]
     },
     "descriptors": [
       "conscious",
@@ -24036,8 +24014,8 @@
     "artist": "Cantilo - Durietz",
     "year": 1982,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Rock"],
+      "secondary": ["Folk Rock", "Classic Rock"]
     },
     "descriptors": []
   },
@@ -24047,8 +24025,8 @@
     "artist": "Pedro y Pablo",
     "year": 1985,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Rock"],
+      "secondary": ["Acoustic", "Folk Rock"]
     },
     "descriptors": []
   },
@@ -24058,8 +24036,8 @@
     "artist": "Pedro y Pablo",
     "year": 2017,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Rock"],
+      "secondary": ["Folk Rock"]
     },
     "descriptors": []
   },
@@ -24069,8 +24047,8 @@
     "artist": "Miranda!",
     "year": 2002,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Dance-Pop", "Synthpop", "Art Pop", "Sophisti-Pop", "Downtempo"]
     },
     "descriptors": [
       "female vocalist",
@@ -24094,14 +24072,14 @@
       "party"
     ]
   },
-  {
+ {
     "id": "sin-restricciones",
     "album": "Sin restricciones",
     "artist": "Miranda!",
     "year": 2004,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Synthpop", "Dance-Pop", "Indietronica", "Alternative Dance"]
     },
     "descriptors": [
       "sexual",
@@ -24126,8 +24104,8 @@
     "artist": "Miranda!",
     "year": 2007,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Dance-Pop", "Electro-Disco", "Pop Rock", "Synthpop"]
     },
     "descriptors": [
       "male vocalist",
@@ -24147,8 +24125,8 @@
     "artist": "Miranda!",
     "year": 2009,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Pop Rock"],
+      "secondary": ["Synthpop", "Electropop", "Alternative Dance"]
     },
     "descriptors": [
       "female vocalist",
@@ -24170,8 +24148,8 @@
     "artist": "Miranda!",
     "year": 2011,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Synthpop", "Dance-Pop", "New Rave", "Hi-NRG"]
     },
     "descriptors": [
       "female vocalist",
@@ -24193,8 +24171,8 @@
     "artist": "Miranda!",
     "year": 2014,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Synthpop", "Pop Rock", "Dance-Pop", "Folk Pop"]
     },
     "descriptors": [
       "love",
@@ -24212,8 +24190,8 @@
     "artist": "Miranda!",
     "year": 2017,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Synthpop"],
+      "secondary": ["Electropop", "Nu-Disco", "Dance-Pop"]
     },
     "descriptors": [
       "female vocalist",
@@ -24234,8 +24212,8 @@
     "artist": "Miranda!",
     "year": 2021,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Synthpop", "Nu-Disco", "Dance-Pop"]
     },
     "descriptors": [
       "LGBTQ",
@@ -24260,8 +24238,8 @@
     "artist": "Miranda!",
     "year": 2023,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Dance-Pop", "Electro House", "Synthpop"]
     },
     "descriptors": [
       "female vocalist",
@@ -24279,14 +24257,10 @@
     "artist": "Miranda!",
     "year": 2025,
     "genres": {
-      "primary": ["Alternative Rock"],
-      "secondary": []
+      "primary": ["Electropop"],
+      "secondary": ["Synthpop", "Funktronica", "Dance-Pop", "Synthwave"]
     },
-    "descriptors": [
-      "female vocalist",
-      "love",
-      "male vocalist"
-    ]
+    "descriptors": ["female vocalist", "love", "male vocalist"]
   },
   {
     "id": "treinta-minutos-de-vida",
