@@ -9,7 +9,129 @@ let selectedGenres = new Set();
 let genreLegendItemsByGenre = new Map(); // genre -> elemento DOM de la leyenda
 let genreLegendGroups = new Map(); // group -> { titleEl, arrowEl, selectAreaEl, itemsContainerEl, genres }
 let tooltipExpanded = false; // persiste entre navegaciones de disco, se resetea sólo manualmente vía el toggle
+let pinnedArtists = new Set();
+let artistPanelEls = new Map();
 
+function ensureArtistPanelEl(artist) {
+  if (artistPanelEls.has(artist)) return artistPanelEls.get(artist);
+  const el = document.createElement("div");
+  el.className = ui.tooltip.className;
+  el.style.position = "absolute";
+  el.style.pointerEvents = "auto";
+  document.body.appendChild(el);
+  artistPanelEls.set(artist, el);
+  return el;
+}
+
+function renderArtistDetailPanelInto(el, artist) {
+  const stats = computeArtistStats(artist);
+  if (!stats) return;
+
+  el.textContent = "";
+  el.style.display = "block";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
+  closeBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    unpinArtist(artist);
+  });
+
+  const title = document.createElement("strong");
+  title.textContent = stats.artist;
+
+  const trajectory = document.createElement("div");
+  trajectory.className = "artist";
+  trajectory.textContent = stats.firstYear === stats.lastYear
+    ? `${stats.firstYear}`
+    : `${stats.firstYear} – ${stats.lastYear}`;
+
+  const genresDiv = document.createElement("div");
+  genresDiv.className = "genres";
+  stats.primaryGenres.forEach(g => {
+    const span = document.createElement("span");
+    span.className = "primary";
+    span.textContent = g;
+    genresDiv.appendChild(span);
+  });
+  stats.secondaryGenres.forEach(g => {
+    const span = document.createElement("span");
+    span.className = "secondary";
+    span.textContent = g;
+    genresDiv.appendChild(span);
+  });
+
+  el.appendChild(closeBtn);
+  el.appendChild(title);
+  el.appendChild(trajectory);
+  el.appendChild(genresDiv);
+}
+
+function updateArtistPanels() {
+  const keep = new Set();
+
+  pinnedArtists.forEach(artist => {
+    keep.add(artist);
+    const discog = getArtistDiscography(artist);
+    const anchorMesh = discog.length ? pointMeshes[discog[0].idx] : null;
+    const { x, y } = anchorMesh
+      ? projectToScreen(anchorMesh.position)
+      : { x: innerWidth / 2, y: innerHeight / 2 };
+
+    const el = ensureArtistPanelEl(artist);
+    renderArtistDetailPanelInto(el, artist);
+    el.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
+    el.style.top = `${Math.min(y + 16, innerHeight - 200)}px`;
+  });
+
+  [...artistPanelEls.keys()].forEach(artist => {
+    if (!keep.has(artist)) {
+      artistPanelEls.get(artist).remove();
+      artistPanelEls.delete(artist);
+    }
+  });
+}
+
+function unpinArtist(artist) {
+  pinnedArtists.delete(artist);
+  const el = artistPanelEls.get(artist);
+  if (el) el.remove();
+  artistPanelEls.delete(artist);
+}
+
+function clearArtistPanels() {
+  artistPanelEls.forEach(el => el.remove());
+  artistPanelEls.clear();
+  pinnedArtists.clear();
+}
+
+function buildArtistHoverHTML(artist) {
+  const stats = computeArtistStats(artist);
+  if (!stats) return "";
+  const primary = stats.primaryGenres[0] ?? "";
+  const range = stats.firstYear === stats.lastYear
+    ? `${stats.firstYear}`
+    : `${stats.firstYear}–${stats.lastYear}`;
+  return `
+    <strong>${stats.artist}</strong>
+    <div class="artist">${range}</div>
+    ${primary ? `<div class="genres"><span class="primary">${primary}</span></div>` : ""}
+  `;
+}
+
+function selectArtistLine(artist) {
+  selectedIndices.clear();
+  clearSelectionOutlines();
+  clearMultiSelectPanels();
+  unpinTooltip();
+  renderSelectedChips();
+  updateFilterGenreVisuals(); // reaplica opacidad según filtros activos, sin tocar conexiones
+
+  pinnedArtists.add(artist);
+  updateArtistPanels();
+}
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xFFFFFF);
@@ -116,7 +238,7 @@ function updateSelectionVisuals() {
     return;
   }
   pointMeshes.forEach((m, i) => {
-    m.material.opacity = selectedIndices.has(i) ? 1 : 0.35;
+    m.material.opacity = selectedIndices.has(i) ? 1 : 0.25;
   });
 }
 
@@ -312,10 +434,11 @@ function renderDetailPanel(i, x, y) {
   artistName.style.cursor = "pointer";
   artistName.style.textDecoration = "underline";
   artistName.addEventListener("click", e => {
-      e.stopPropagation();
-      clearHighlight();
-      activeFilters.artists.add(a.artist);
-      refreshFilterOptions();
+    e.stopPropagation();
+    clearHighlight();
+    activeFilters.artists.add(a.artist);
+    refreshFilterOptions();
+    selectArtistLine(a.artist);
   });
 
   artistLine.appendChild(artistName);
@@ -449,6 +572,16 @@ function selectAlbum(idx, additive = false) {
   }
 }
 
+function resetAllFilters() {
+  if (!hasActiveFilters()) return;
+  activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptor: null, query: "" };
+  selectedGenres.clear();
+  ui.search.value = "";
+  hideTooltip();
+  refreshFilterOptions();
+  updateGenreLegendActiveState();
+}
+
 function pointerClick(e) {
   if (e.target !== renderer.domElement) return;
 
@@ -459,11 +592,22 @@ function pointerClick(e) {
   mouse.x = e.clientX / innerWidth * 2 - 1;
   mouse.y = -(e.clientY / innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse,camera);
-
-  const hit = raycaster.intersectObjects(pointMeshes)[0];
+  raycaster.camera = camera
+  const hit = raycaster.intersectObjects(getInteractivePointMeshes())[0];
   if (hit) {
     const additive = e.ctrlKey || e.metaKey;
     selectAlbum(hit.object.userData.index, additive);
+    return;
+  }
+
+  const artistChainLines = connectionLines
+    .filter(c => c.line.userData.isArtistChain)
+    .map(c => c.line);
+  const lineHit = artistChainLines.length
+    ? raycaster.intersectObjects(artistChainLines)[0]
+    : null;
+  if (lineHit) {
+    selectArtistLine(lineHit.object.userData.artist);
     return;
   }
 
@@ -478,6 +622,8 @@ function pointerClick(e) {
   clearHighlight();
   clearGenreSelection();
   clearYearHighlight();
+  clearArtistPanels();
+  resetAllFilters();
 }
 
 function jumpToAlbum(a) {
@@ -491,10 +637,16 @@ function animate() {
   updateSelectionOutlines();
   updateGenreLabels();
   updateConnections();
-  if (selectedIndices.size === 1) updatePinnedTooltipPosition(); // <-- nuevo
+  if (selectedIndices.size === 1) updatePinnedTooltipPosition();
   if (selectedIndices.size > 1) updateMultiSelectPanels();
+  if (pinnedArtists.size > 0) updateArtistPanels();
   controls.update();
   renderer.render(scene,camera);
+}
+
+function getInteractivePointMeshes() {
+  if (activeFilters.artists.size === 0) return pointMeshes;
+  return pointMeshes.filter(m => activeFilters.artists.has(points[m.userData.index].artist));
 }
 
 const WEIGHTS = {
@@ -504,9 +656,9 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.32,
+  descriptorWeight: 0.35,
   nNeighbors: 4.5,
-  minDist: 0.65
+  minDist: 0.75
 };
 
 const TIME_LAYOUT = {
@@ -576,8 +728,8 @@ let animFrom = [];
 let animTo = [];
 let timeCentroid = new THREE.Vector3(); // mismo centro usado por el plegado radial, reutilizado por las órbitas
 let genreLabelsVisible = true;
-let selectedYear = null;
 let eventsByYear = new Map();
+let selectedYear = null;
 let cameraAnimating = false;
 let cameraAnimStart = 0;
 const cameraFromPos = new THREE.Vector3();
@@ -1589,8 +1741,6 @@ function renderGenreLegend() {
     itemsContainer.className = "legend-group-items";
     itemsContainer.style.display = isExpanded ? "block" : "none";
 
-    // La flecha sólo expande/colapsa; el swatch+label selecciona/deselecciona
-    // todo el grupo (todos sus géneros hijos de una vez).
     arrow.addEventListener("click", e => {
       e.stopPropagation();
       const nowExpanded = !expandedGenreGroups.has(group);
@@ -1668,7 +1818,7 @@ function updateGenreLegendActiveState() {
     data.selectAreaEl.classList.toggle("active", allSelected);
     data.selectAreaEl.classList.toggle("partial", partial);
     data.selectAreaEl.style.fontWeight = allSelected ? "700" : "400";
-    data.selectAreaEl.style.opacity = partial ? "0.7" : "1";
+    data.selectAreaEl.style.opacity = partial ? "0.25" : "1";
   });
 }
 
@@ -1842,13 +1992,8 @@ ui.filterDescriptor.addEventListener("change", e => {
   activeFilters.descriptor = e.target.value || null;
   refreshFilterOptions();
 });
-ui.filtersClear.addEventListener("click", () => {
-  activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptor: null, query: "" };
-  selectedGenres.clear();
-  ui.search.value = "";
-  refreshFilterOptions();
-  updateGenreLegendActiveState();
-});
+
+ui.filtersClear.addEventListener("click", () => resetAllFilters());
 
 function renderList() {
   const toRender = filteredIndices === null ? points : points.filter(p => filteredIndices.has(p.idx));
@@ -2025,11 +2170,13 @@ function selectSuggestion(i) {
   activeFilters.query = "";
 
 if (entry.type === "artist") {
+    clearHighlight();               // por si había un álbum seleccionado antes
     activeFilters.artists.add(entry.value);
     ui.search.value = "";
     closeTypeahead();
     refreshFilterOptions();
-  } else {
+    selectArtistLine(entry.value);  // pinea el panel al final, sin que nadie lo tape después
+} else {
     const a = entry.value;
     ui.search.value = a.album;
     closeTypeahead();
@@ -2218,11 +2365,12 @@ function createArrowHead(colorHex) {
   return mesh;
 }
 
-function addConnection(fromMesh, toMesh, colorHex, targetOpacity, dashed, appearAt, lineWidth, withArrow = false) {
+function addConnection(fromMesh, toMesh, colorHex, targetOpacity, dashed, appearAt, lineWidth, withArrow = false, meta = null) {
   const line = createConnectionLine(colorHex, dashed, lineWidth);
   line.userData.targetOpacity = targetOpacity;
   line.userData.appearAt = appearAt;
   line.userData.dashed = dashed;
+  if (meta) Object.assign(line.userData, meta);
   connectionGroup.add(line);
 
   let arrow = null;
@@ -2270,7 +2418,7 @@ function buildArtistChainConnections(originIdx) {
 
   sameArtistChain.forEach(p => activeGraphIndices.add(p.idx));
 
-  for (let i = 0; i < sameArtistChain.length - 1; i++) {
+for (let i = 0; i < sameArtistChain.length - 1; i++) {
     addConnection(
       pointMeshes[sameArtistChain[i].idx],
       pointMeshes[sameArtistChain[i + 1].idx],
@@ -2278,7 +2426,9 @@ function buildArtistChainConnections(originIdx) {
       CONNECTION_CONFIG.sameArtistLineOpacity,
       false,
       now,
-      CONNECTION_CONFIG.lineWidth
+      CONNECTION_CONFIG.lineWidth,
+      false,
+      { isArtistChain: true, artist: origin.artist }
     );
   }
 }
@@ -2396,6 +2546,7 @@ function renderFilterChipsInto(container) {
     closeBtn.addEventListener("click", e => {
       e.stopPropagation();
       activeFilters.artists.delete(artist);
+      unpinArtist(artist);      
       refreshFilterOptions();
       updateGenreLegendActiveState();
     });
@@ -2448,6 +2599,7 @@ function renderFilterChipsInto(container) {
 }
 
 function applySelection() {
+  clearArtistPanels();
   clearYearHighlight();
   clearConnections();
   unpinTooltip();
@@ -2713,6 +2865,33 @@ function computeYearGenreStats(year) {
   };
 }
 
+function computeArtistStats(artist) {
+  const discog = getArtistDiscography(artist);
+  if (!discog.length) return null;
+
+  const primaryCounts = new Map();
+  const secondaryCounts = new Map();
+
+  discog.forEach(a => {
+    a.genres.primary.forEach(g => primaryCounts.set(g, (primaryCounts.get(g) ?? 0) + 1));
+    a.genres.secondary.forEach(g => secondaryCounts.set(g, (secondaryCounts.get(g) ?? 0) + 1));
+  });
+
+  const dominant = (counts) => {
+    if (!counts.size) return [];
+    const max = Math.max(...counts.values());
+    return [...counts.entries()].filter(([, c]) => c === max).map(([g]) => g);
+  };
+
+  return {
+    artist,
+    primaryGenres: dominant(primaryCounts),
+    secondaryGenres: dominant(secondaryCounts),
+    firstYear: discog[0].year,
+    lastYear: discog[discog.length - 1].year
+  };
+}
+
 function buildGenreStatRow(entry, color) {
   const row = document.createElement("div");
   row.style.cssText = "display:flex;align-items:center;gap:6px;padding:3px 0;font-size:12px;";
@@ -2820,12 +2999,12 @@ function setYearHighlight(year) {
   selectedYear = year;
 
   pointMeshes.forEach((m, i) => {
-    m.material.opacity = points[i].year === year ? 1 : 0.15;
+    m.material.opacity = points[i].year === year ? 1 : 0.25;
   });
 
   orbitRings.forEach(r => {
     const isSelected = r.userData.year === year;
-    r.userData.targetOpacity = isSelected ? 0.9 : 0.08;
+    r.userData.targetOpacity = isSelected ? 1 : 0.25;
     r.material.color.setHex(isSelected ? ORBIT_RING_SELECTED_COLOR : ORBIT_RING_DEFAULT_COLOR);
   });
 
@@ -2861,18 +3040,38 @@ function pointerMove(e) {
   mouse.x = e.clientX / innerWidth * 2 - 1;
   mouse.y = -(e.clientY / innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse,camera);
-  const hit = raycaster.intersectObjects(pointMeshes)[0];
+  raycaster.camera = camera;
+
+  const interactiveMeshes = getInteractivePointMeshes();
+  const hit = raycaster.intersectObjects(interactiveMeshes)[0];
   const yearHit = timeMode ? raycaster.intersectObjects([...orbitRings, ...yearSprites])[0] : null;
+
+  const artistChainLines = connectionLines
+    .filter(c => c.line.userData.isArtistChain)
+    .map(c => c.line);
+  const lineHit = !hit && artistChainLines.length
+    ? raycaster.intersectObjects(artistChainLines)[0]
+    : null;
 
   pointMeshes.forEach(m => m.material.emissiveIntensity = .35);
 
   if (hit) {
     hit.object.material.emissiveIntensity = 1.2;
     renderer.domElement.style.cursor = "pointer";
-  } else if (yearHit) {
+  } else if (lineHit || yearHit) {
     renderer.domElement.style.cursor = "pointer";
   } else {
     renderer.domElement.style.cursor = "default";
+  }
+
+  if (lineHit && pinnedIndex === null) {
+    ui.tooltip.innerHTML = buildArtistHoverHTML(lineHit.object.userData.artist);
+    ui.tooltip.style.pointerEvents = "none";
+    ui.tooltip.style.right = "auto";
+    ui.tooltip.style.display = "block";
+    ui.tooltip.style.left = `${Math.min(e.clientX + 16, innerWidth - 320)}px`;
+    ui.tooltip.style.top = `${Math.min(e.clientY + 16, innerHeight - 150)}px`;
+    return;
   }
 
   if (pinnedIndex !== null) {
@@ -2885,7 +3084,7 @@ function pointerMove(e) {
       showTooltipForPoint(hitIdx, e.clientX, e.clientY);
     } else if (hoverPreviewIndex !== null) {
       hoverPreviewIndex = null;
-      pinTooltip(pinnedIndex); // restaura el panel fijado
+      pinTooltip(pinnedIndex);
     }
     return;
   }
@@ -2897,11 +3096,10 @@ function pointerMove(e) {
 
   if (hit && (compareMode || !selectedIndices.has(hitIdx))) {
     showTooltipForPoint(hitIdx, e.clientX, e.clientY);
-  } else {
+  } else if (!lineHit) {
     hideTooltip();
   }
 }
-
 function scrollListToAlbum(a) {
   const row = ui.list.querySelector(`[data-idx="${a.idx}"]`);
   if (!row) return;

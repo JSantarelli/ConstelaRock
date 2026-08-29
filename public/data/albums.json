@@ -1612,26 +1612,6 @@
   ]
 },
 {
-  "id": "el-reino-olvidado",
-  "album": "El reino olvidado",
-  "artist": "Rata Blanca",
-  "year": 2008,
-  "genres": {
-    "primary": [
-      "Heavy Metal",
-      "Hard Rock"
-    ],
-    "secondary": [
-      "Power Metal"
-    ]
-  },
-  "descriptors": [
-    "fantasy",
-    "love",
-    "male vocalist"
-  ]
-},
-{
   "id": "la-llave-de-la-puerta-secreta",
   "album": "La llave de la puerta secreta",
   "artist": "Rata Blanca",
@@ -1658,6 +1638,356 @@
     "concept album"
   ]
 },
+{
+  "id": "el-reino-olvidado",
+  "album": "El reino olvidado",
+  "artist": "Rata Blanca",
+  "year": 2008,
+  "genres": {
+    "primary": [
+      "Heavy Metal",
+      "Hard Rock"
+    ],
+    "secondary": [
+      "Power Metal"
+    ]
+  },
+  "descriptors": [
+    "fantasy",
+    "love",
+    "male vocalist"
+  ]
+},
+  {
+    "id": "tormenta-electrica",
+    "album": "Tormenta eléctrica",
+    "artist": "Rata Blanca",
+    "year": 2015,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Heavy Metal", "Power Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hijos-de-la-tempestad",
+    "album": "Rock es rock! / Hijos de la tempestad / Cuando sane tu corazón / Mujer Amante",
+    "artist": "Rata Blanca",
+    "year": 2024,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Heavy Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rompehuesos-aquellos-bastardos",
+    "album": "Rompehuesos / Aquellos bastardos",
+    "artist": "Nepal",
+    "year": 1988,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "raza-de-traidores",
+    "album": "Raza de traidores",
+    "artist": "Nepal",
+    "year": 1993,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": ["Death Metal"]
+    },
+    "descriptors": ["heavy", "conscious"]
+  },
+  {
+    "id": "ideologia",
+    "album": "Ideología",
+    "artist": "Nepal",
+    "year": 1995,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": ["Death Metal"]
+    },
+    "descriptors": ["heavy", "conscious"]
+  },
+  {
+    "id": "manifiesto",
+    "album": "Manifiesto",
+    "artist": "Nepal",
+    "year": 1997,
+    "genres": {
+      "primary": ["Thrash Metal"],
+      "secondary": []
+    },
+    "descriptors": ["heavy", "conscious"]
+  },
+  {
+    "id": "helios",
+    "album": "Helios",
+    "artist": "Helios",
+    "year": 2018,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Power Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rebelion",
+    "album": "Rebelión",
+    "artist": "Helios",
+    "year": 2021,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Power Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cenizas-del-caos",
+    "album": "Cenizas del Caos",
+    "artist": "Helios",
+    "year": 2024,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Power Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hellion",
+    "album": "Hellion",
+    "artist": "Hellion",
+    "year": 1984,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Hard Rock", "Speed Metal"]
+    },
+    "descriptors": ["heavy", "rebellious", "male vocalist"]
+  },
+  {
+    "id": "en-tiempos-de-redencion",
+    "album": "En tiempos de redención",
+    "artist": "IAN",
+    "year": 2006,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Christian Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nuevo-orden",
+    "album": "Nuevo orden",
+    "artist": "IAN",
+    "year": 2012,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Christian Rock", "Power Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "aeroblus",
+    "album": "Aeroblus",
+    "artist": "Aeroblus",
+    "year": 1977,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Heavy Psych"]
+    },
+    "descriptors": ["heavy", "energetic", "psychedelic", "passionate", "male vocalist", "technical"]
+  },
+  {
+    "id": "no-pisar-el-infinito",
+    "album": "No pisar el infinito",
+    "artist": "Plus",
+    "year": 1976,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Heavy Psych"]
+    },
+    "descriptors": ["male vocalist"]
+  },
+  {
+    "id": "plus",
+    "album": "Plus",
+    "artist": "Plus",
+    "year": 1978,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Progressive Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "escuela-de-rock-n-roll",
+    "album": "Escuela de rock 'n' roll",
+    "artist": "Plus",
+    "year": 1981,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": ["Blues Rock", "Rock & Roll"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "crucis",
+    "album": "Crucis",
+    "artist": "Crucis",
+    "year": 1976,
+    "genres": {
+      "primary": ["Symphonic Prog"],
+      "secondary": ["Progressive Rock", "Hard Rock", "Jazz-Rock"]
+    },
+    "descriptors": ["male vocalist", "uncommon time signatures", "progressive", "complex", "technical", "energetic", "instrumental", "lush", "dark"]
+  },
+  {
+    "id": "los-delirios-del-mariscal",
+    "album": "Los delirios del Mariscal",
+    "artist": "Crucis",
+    "year": 1976,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Symphonic Prog", "Jazz-Rock"]
+    },
+    "descriptors": ["uncommon time signatures", "instrumental", "male vocalist", "technical", "complex", "epic", "lush", "energetic", "introspective", "eclectic", "progressive", "concept album"]
+  },
+  {
+    "id": "aquelarre",
+    "album": "Aquelarre",
+    "artist": "Aquelarre",
+    "year": 1972,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Heavy Psych", "Blues Rock", "Hard Rock", "Folk Rock"]
+    },
+    "descriptors": ["heavy", "abstract", "psychedelic", "male vocalist", "raw", "serious", "conscious", "progressive", "improvisation", "spiritual", "technical"]
+  },
+  {
+    "id": "candiles",
+    "album": "Candiles",
+    "artist": "Aquelarre",
+    "year": 1972,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Hard Rock", "Blues Rock"]
+    },
+    "descriptors": ["progressive", "heavy", "psychedelic"]
+  },
+  {
+    "id": "brumas",
+    "album": "Brumas",
+    "artist": "Aquelarre",
+    "year": 1974,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Progressive Folk"]
+    },
+    "descriptors": ["sentimental", "existential", "male vocalist", "nature", "melancholic"]
+  },
+  {
+    "id": "siesta",
+    "album": "Siesta",
+    "artist": "Aquelarre",
+    "year": 1975,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Psychedelic Rock"]
+    },
+    "descriptors": ["progressive", "sentimental", "psychedelic"]
+  },
+  {
+    "id": "tempestades",
+    "album": "Tempestades",
+    "artist": "Tren Loco",
+    "year": 1992,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Hard Rock"]
+    },
+    "descriptors": ["heavy", "melodic"]
+  },
+  {
+    "id": "no-me-importa",
+    "album": "No me importa!",
+    "artist": "Tren Loco",
+    "year": 1996,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "carne-viva",
+    "album": "Carne viva",
+    "artist": "Tren Loco",
+    "year": 2000,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "ruta-197",
+    "album": "Ruta 197",
+    "artist": "Tren Loco",
+    "year": 2002,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Speed Metal"]
+    },
+    "descriptors": ["heavy", "melodic", "male vocalist"]
+  },
+  {
+    "id": "sangresur",
+    "album": "Sangresur",
+    "artist": "Tren Loco",
+    "year": 2006,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Speed Metal", "Thrash Metal"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "venas-de-acero",
+    "album": "Venas de acero",
+    "artist": "Tren Loco",
+    "year": 2008,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": ["Speed Metal", "Thrash Metal"]
+    },
+    "descriptors": ["heavy", "energetic", "male vocalist"]
+  },
+  {
+    "id": "vieja-escuela",
+    "album": "Vieja escuela",
+    "artist": "Tren Loco",
+    "year": 2013,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "prisioneros-de-la-tierra",
+    "album": "Prisioneros de la tierra",
+    "artist": "Tren Loco",
+    "year": 2022,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
   {
     "id": "utopia",
     "album": "Utopía",
@@ -12209,7 +12539,7 @@
 	{
 		"id": "seremos-primavera",
 		"album": "Seremos primavera",
-		"artist": "Eruca",
+		"artist": "Eruca Sativa",
 		"year": 2019,
 		"genres": {
 			"primary": [
@@ -13010,7 +13340,7 @@
       "primary": [
         "Hard Rock", "Rock"
       ],
-      "secondary": []
+      "secondary": ["Blues rock", "Folk rock"]
     },
     "descriptors": []
     },
@@ -14535,6 +14865,72 @@
       "male vocalist",
       "mysterious"
     ]
+  },
+  {
+    "id": "desierto-sin-amor",
+    "album": "Desierto sin amor",
+    "artist": "Bravo",
+    "year": 1991,
+    "genres": {
+      "primary": ["Glam Metal"],
+      "secondary": ["Hard Rock", "Pop Rock", "AOR"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sacrificio",
+    "album": "Sacrificio",
+    "artist": "Bravo",
+    "year": 1992,
+    "genres": {
+      "primary": ["Glam Metal"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "bravo-3",
+    "album": "Bravo",
+    "artist": "Bravo",
+    "year": 1993,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "no-es-como-ayer",
+    "album": "No es como ayer",
+    "artist": "Bravo",
+    "year": 1995,
+    "genres": {
+      "primary": ["Glam Metal"],
+      "secondary": ["Pop Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "un-instante-de-magia",
+    "album": "Un instante de magia",
+    "artist": "Bravo",
+    "year": 1996,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "brv",
+    "album": "brv",
+    "artist": "Bravo",
+    "year": 2002,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "descriptors": []
   },
   {
     "id": "pajaritos-bravos-muchachitos",
@@ -28235,5 +28631,704 @@
       "secondary": []
     },
     "descriptors": []
-  }
+  },
+  {
+    "id": "cabeza-negra",
+    "album": "Cabeza negra",
+    "artist": "Fidel Nadal",
+    "year": 2001,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Dub", "Roots Reggae", "Ragga"]
+    },
+    "descriptors": [
+      "rhythmic",
+      "warm",
+      "uplifting",
+      "spiritual",
+      "urban",
+      "religious",
+      "melodic",
+      "meditative",
+      "passionate",
+      "drugs",
+      "male vocalist",
+      "soothing",
+      "conscious"
+    ]
+  },
+  {
+    "id": "repatriacion",
+    "album": "Repatriación",
+    "artist": "Fidel Nadal",
+    "year": 2001,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "selassie-i-dios-todopoderoso",
+    "album": "Selassie I dios todopoderoso",
+    "artist": "Fidel Nadal",
+    "year": 2001,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "brillando-por-negus",
+    "album": "Brillando por Negus",
+    "artist": "Fidel Nadal",
+    "year": 2002,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "amlak",
+    "album": "Amlak",
+    "artist": "Fidel Nadal",
+    "year": 2003,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "dame-una-alegria",
+    "album": "Dame una alegría",
+    "artist": "Fidel & Pablo",
+    "year": 2003,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "fuego-caliente",
+    "album": "Fuego caliente",
+    "artist": "Fidel Nadal",
+    "year": 2004,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "negrociacion",
+    "album": "Negrociación",
+    "artist": "Fidel Nadal",
+    "year": 2004,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "puerta-de-oro",
+    "album": "Puerta de oro",
+    "artist": "Fidel Nadal",
+    "year": 2004,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "avanzando",
+    "album": "Avanzando",
+    "artist": "Fidel Nadal",
+    "year": 2005,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cosas-buenas",
+    "album": "Cosas buenas",
+    "artist": "Fidel Nadal",
+    "year": 2005,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "trabajo-de-hormiga",
+    "album": "Trabajo de hormiga",
+    "artist": "Fidel Nadal",
+    "year": 2005,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "emocionado",
+    "album": "Emocionado!",
+    "artist": "Fidel Nadal",
+    "year": 2007,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": [
+      "happy",
+      "spiritual",
+      "male vocalist",
+      "optimistic"
+    ]
+  },
+  {
+    "id": "international-love",
+    "album": "International Love",
+    "artist": "Fidel Nadal",
+    "year": 2008,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": [
+      "nocturnal",
+      "urban",
+      "conscious",
+      "rhythmic",
+      "breakup",
+      "love",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "llego-el-momento",
+    "album": "Llegó el momento",
+    "artist": "Fidel Nadal",
+    "year": 2010,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "forever-together",
+    "album": "Forever Together!",
+    "artist": "Fidel Nadal",
+    "year": 2010,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "arranqe",
+    "album": "Arranqe",
+    "artist": "Fidel Nadal",
+    "year": 2011,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "tek-a-ship",
+    "album": "Tek A Ship",
+    "artist": "Fidel Nadal",
+    "year": 2015,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "raices-muy-fuertes",
+    "album": "Raíces muy fuertes",
+    "artist": "Fidel Nadal",
+    "year": 2025,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": ["Pop Reggae"]
+    },
+    "descriptors": []
+  },
+ {
+    "id": "dread-al-control",
+    "album": "Dread al control",
+    "artist": "Nonpalidece",
+    "year": 2000,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nuevo-dia",
+    "album": "Nuevo día",
+    "artist": "Nonpalidece",
+    "year": 2004,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hagan-correr-la-voz",
+    "album": "Hagan correr la voz",
+    "artist": "Nonpalidece",
+    "year": 2006,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-fuego-en-nosotros",
+    "album": "El fuego en nosotros",
+    "artist": "Nonpalidece",
+    "year": 2009,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-fuego-en-nosotros-2009",
+    "album": "El fuego en nosotros",
+    "artist": "Nonpalidece",
+    "year": 2009,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "activistas",
+    "album": "Activistas",
+    "artist": "Nonpalidece",
+    "year": 2013,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "nonpalidece-2021",
+    "album": "Nonpalidece",
+    "artist": "Nonpalidece",
+    "year": 2021,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "hecho-en-jamaica",
+    "album": "Hecho en Jamaica",
+    "artist": "Nonpalidece",
+    "year": 2024,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-zimbabwe",
+    "album": "La Zimbabwe",
+    "artist": "La Zimbabwe",
+    "year": 1988,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "caminando-en-el-fuego",
+    "album": "Caminando en el fuego",
+    "artist": "La Zimbabwe",
+    "year": 1989,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cuestion-de-honor",
+    "album": "Cuestión de honor",
+    "artist": "La Zimbabwe",
+    "year": 1994,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []  
+    },
+    "descriptors": []
+  },
+  {
+    "id": "a-d-n",
+    "album": "A-D=N",
+    "artist": "La Zimbabwe",
+    "year": 1996,
+    "genres": {
+      "primary": ["Reggae"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "pajaro-y-la-murga-del-rock-and-roll",
+    "album": "Pájaro y la Murga del Rock and Roll",
+    "artist": "Pajarito Zaguri",
+    "year": 1976,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": []
+    },
+    "descriptors": ["male vocalist"]
+  },
+  {
+    "id": "el-rey-criollo-del-rock-n-roll",
+    "album": "El rey criollo del rock 'n' roll",
+    "artist": "Pajarito Zaguri",
+    "year": 1984,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Blues Rock"]
+    },
+    "descriptors": ["male vocalist"]
+  },
+  {
+    "id": "en-el-2000-tambien",
+    "album": "En el 2000...(también)...",
+    "artist": "Pajarito Zaguri",
+    "year": 1994,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Hard Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-mago-de-los-vagos",
+    "album": "El mago de los vagos",
+    "artist": "Pajarito Zaguri",
+    "year": 2006,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sexogenario",
+    "album": "Sexogenario",
+    "artist": "Pajarito Zaguri",
+    "year": 2009,
+    "genres": {
+      "primary": ["Rock & Roll"],
+      "secondary": ["Blues Rock"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "los-gatos-salvajes",
+    "album": "Los Gatos Salvajes",
+    "artist": "Los Gatos Salvajes",
+    "year": 1965,
+    "genres": {
+      "primary": ["Beat"],
+      "secondary": ["Garage Rock", "Freakbeat"]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "rebelde-no-finjas-mas",
+    "album": "Rebelde / No finjas más",
+    "artist": "Los Beatniks",
+    "year": 1966,
+    "genres": {
+      "primary": ["Garage Rock"],
+      "secondary": ["Proto-Punk", "Beat", "Freakbeat"]
+    },
+    "descriptors": [
+      "male vocalist",
+      "energetic",
+      "conscious",
+      "political",
+      "rebellious",
+      "protest"
+    ]
+  },
+  {
+    "id": "la-barra-de-chocolate",
+    "album": "La Barra de Chocolate",
+    "artist": "La Barra de Chocolate",
+    "year": 1970,
+    "genres": {
+      "primary": [
+        "Psychedelic Rock",
+        "Garage Rock"
+      ],
+      "secondary": [
+        "Beat"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-extrano-del-pelo-largo",
+    "album": "El extraño del pelo largo",
+    "artist": "La Joven Guardia",
+    "year": 1969,
+    "genres": {
+      "primary": [
+        "Psychedelic Pop",
+        "Beat"
+      ],
+      "secondary": [
+        "Psychedelic Rock",
+        "Baroque Pop"
+      ]
+    },
+    "descriptors": [
+      "male vocalist",
+      "warm",
+      "psychedelic",
+      "melodic",
+      "protest",
+      "quirky",
+      "rebellious",
+      "urban"
+    ]
+  },
+  {
+    "id": "la-extrana-de-las-botas-rosas",
+    "album": "La extraña de las botas rosas",
+    "artist": "La Joven Guardia",
+    "year": 1969,
+    "genres": {
+      "primary": [
+        "Beat"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-reina-de-la-cancion",
+    "album": "La reina de la canción",
+    "artist": "La Joven Guardia",
+    "year": 1971,
+    "genres": {
+      "primary": [
+        "Pop Rock",
+        "Beat"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "otra-vez-en-la-via",
+    "album": "Otra vez en la vía",
+    "artist": "Los Náufragos",
+    "year": 1969,
+    "genres": {
+      "primary": [
+        "Beat"
+      ],
+      "secondary": [
+        "Psychedelic Pop"
+      ]
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "los-naufragos",
+    "album": "Los Náufragos",
+    "artist": "Los Náufragos",
+    "year": 1970,
+    "genres": {
+      "primary": [
+        "Beat"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "te-quiero-ver-bailar",
+    "album": "Te quiero ver bailar",
+    "artist": "Los Náufragos",
+    "year": 1970,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "estoy-del-tomate",
+    "album": "Estoy del tomate",
+    "artist": "Los Náufragos",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "baila-bamba",
+    "album": "Baila bamba",
+    "artist": "Los Náufragos",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Pop"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+  "id": "viajero",
+  "album": "Viajero",
+  "artist": "Ulises Butrón",
+  "year": 1997,
+  "genres": {
+    "primary": [
+      "Rock",
+      "Rock & Roll"
+    ],
+    "secondary": [
+      "Pop Rock"
+    ]
+  },
+  "descriptors": []
+  },
+  {
+  "id": "lejos",
+  "album": "Lejos",
+  "artist": "Ulises Butrón",
+  "year": 2015,
+  "genres": {
+    "primary": [
+      "Rock"
+    ],
+    "secondary": [
+      "Psychedelic Rock",
+      "Pop Rock"
+    ]
+  },
+  "descriptors": [
+    "male vocalist",
+    "mysterious",
+    "personal",
+    "psychological",
+    "dark",
+    "psychedelic",
+    "acoustic",
+    "electric",
+    "love",
+    "melancholic",
+    "spiritual"
+  ]
+},
+{
+  "id": "isabel-de-sebastian",
+  "album": "Isabel de Sebastián",
+  "artist": "Isabel de Sebastián",
+  "year": 2013,
+  "genres": {
+    "primary": [
+      "Rock",
+      "Pop",
+      "Jazz"
+    ],
+    "secondary": [
+      "World Music"
+    ]
+  },
+  "descriptors": []
+},
+{
+  "id": "cemento-de-contacto",
+  "album": "Cemento de contacto",
+  "artist": "Metrópoli",
+  "year": 1985,
+  "genres": {
+    "primary": [
+      "New Wave",
+      "Pop Rock"
+    ],
+    "secondary": [
+      "Sophisti-Pop",
+      "Post-Punk"
+    ]
+  },
+  "descriptors": [
+    "female vocalist",
+    "rhythmic"
+  ]
+},
+{
+  "id": "viaje-al-mas-aca",
+  "album": "Viaje al más acá",
+  "artist": "Metrópoli",
+  "year": 1986,
+  "genres": {
+    "primary": [
+      "New Wave",
+      "Pop Rock"
+    ],
+    "secondary": [
+      "Sophisti-Pop",
+      "Post-Punk"
+    ]
+  },
+  "descriptors": [
+    "lush",
+    "female vocalist",
+    "aquatic",
+    "progressive",
+    "sentimental",
+    "melodic",
+    "atmospheric",
+    "bittersweet",
+    "cryptic",
+    "passionate"
+  ]
+}
 ]
