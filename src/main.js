@@ -11,6 +11,309 @@ let genreLegendGroups = new Map(); // group -> { titleEl, arrowEl, selectAreaEl,
 let tooltipExpanded = false; // persiste entre navegaciones de disco, se resetea sólo manualmente vía el toggle
 let pinnedArtists = new Set();
 let artistPanelEls = new Map();
+let onboardingOverlay = null;
+let onboardingProgressFillEl = null;
+let onboardingProgressLabelEl = null;
+let onboardingStartCta = null;
+let loadingProgress = 0;
+let onboardingHistory = [];
+
+function createOnboardingOverlay() {
+  const overlay = document.createElement("div");
+  overlay.id = "onboardingOverlay";
+  overlay.style.cssText = `
+    position: fixed; inset: 0; background: rgba(255,255,255,0.97); width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+  `;
+  document.body.appendChild(overlay);
+  return overlay;
+}
+
+function addOnboardingChrome(box, { showBack = false } = {}) {
+  box.style.position = "relative";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.style.cssText = "position:absolute;top:8px;left:8px;border:none;background:none;font-size:20px;line-height:1;cursor:pointer;color:#888; display: flex; justify-content: end;";
+  closeBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    closeOnboarding();
+  });
+  box.appendChild(closeBtn);
+
+  if (showBack) {
+    const backBtn = document.createElement("button");
+    backBtn.textContent = "←";
+    backBtn.setAttribute("aria-label", "Volver");
+    backBtn.style.cssText = "position:absolute;top:8px;right:8px;border:none;background:none;font-size:18px;line-height:1;cursor:pointer;color:#888; display: flex; justify-content: start;";
+    backBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      goOnboardingBack();
+    });
+    box.appendChild(backBtn);
+  }
+}
+
+function closeOnboarding() {
+  if (!onboardingOverlay) return;
+  onboardingOverlay.remove();
+  onboardingOverlay = null;
+  onboardingHistory = [];
+}
+
+function goOnboardingBack() {
+  const prev = onboardingHistory.pop();
+  if (prev) prev();
+}
+
+function clearOverlayContent() {
+  onboardingOverlay.textContent = "";
+}
+
+function setLoadingProgress(pct) {
+  loadingProgress = Math.max(0, Math.min(100, pct));
+  if (onboardingProgressFillEl) onboardingProgressFillEl.style.width = `${loadingProgress}%`;
+  if (onboardingProgressLabelEl) {
+    onboardingProgressLabelEl.textContent = loadingProgress >= 100 ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`;
+  }
+  if (onboardingStartCta) {
+    const ready = loadingProgress >= 100;
+    onboardingStartCta.disabled = !ready;
+    onboardingStartCta.style.cursor = ready ? "pointer" : "default";
+    onboardingStartCta.style.opacity = ready ? "1" : "0.4";
+  }
+}
+
+function renderOnboardingStep1() {
+  clearOverlayContent();
+  const box = document.createElement("div");
+  box.style.cssText = "max-width:480px;width:90%;text-align:center;padding:32px;";
+
+  const title = document.createElement("h1");
+  title.textContent = "DisConstelación";
+  title.style.cssText = "font-size:32px;margin-bottom:16px;";
+
+  const desc = document.createElement("p");
+  desc.textContent = "Una constelación que representa la evolución del rock y la música nacional a través de sus discos: cada punto es un álbum, cada cercanía una afinidad de género, cada línea una historia de influencias.";
+  desc.style.cssText = "font-size:15px;color:#555;line-height:1.5;margin-bottom:24px;";
+
+  const progressTrack = document.createElement("div");
+  progressTrack.style.cssText = "width:100%;height:6px;background:#eee;border-radius:3px;overflow:hidden;margin-bottom:8px;";
+
+  const progressFill = document.createElement("div");
+  progressFill.style.cssText = `width:${loadingProgress}%;height:100%;background:#111;transition:width 0.2s ease;`;
+  progressTrack.appendChild(progressFill);
+
+  const progressLabel = document.createElement("div");
+  progressLabel.textContent = loadingProgress >= 100 ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`;
+  progressLabel.style.cssText = "font-size:12px;color:#999;margin-bottom:24px;";
+
+  const cta = document.createElement("button");
+  cta.textContent = "Comenzar";
+  cta.disabled = loadingProgress < 100;
+  cta.style.cssText = `padding:10px 28px;font-size:15px;border:none;border-radius:24px;background:#111;color:#fff;cursor:${cta.disabled ? "default" : "pointer"};opacity:${cta.disabled ? 0.4 : 1};`;
+  cta.addEventListener("click", () => {
+      if (cta.disabled) return;
+      onboardingHistory.push(() => renderOnboardingStep1());
+      renderOnboardingStep2();
+  });
+
+  box.appendChild(title);
+  box.appendChild(desc);
+  box.appendChild(progressTrack);
+  box.appendChild(progressLabel);
+  box.appendChild(cta);
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });   // <-- nuevo
+  onboardingOverlay.appendChild(box);
+
+  onboardingProgressFillEl = progressFill;
+  onboardingProgressLabelEl = progressLabel;
+  onboardingStartCta = cta;
+}
+
+function renderOnboardingStep2() {
+  clearOverlayContent();
+  const box = document.createElement("div");
+  box.style.cssText = "max-width:420px;width:90%;text-align:center;padding:32px;";
+
+  const question = document.createElement("h2");
+  question.textContent = "¿Cuál es tu banda o artista nacional favorito?";
+  question.style.cssText = "font-size:20px;margin-bottom:20px;";
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Escribí un artista…";
+  input.style.cssText = "width:100%;padding:10px 14px;font-size:15px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;";
+
+  const results = document.createElement("div");
+  results.style.cssText = "margin-top:8px;text-align:left;max-height:240px;overflow-y:auto;";
+
+  input.addEventListener("input", () => {
+    const matches = computeArtistMatches(input.value);
+    results.textContent = "";
+    matches.forEach(name => {
+      const row = document.createElement("div");
+      row.textContent = name;
+      row.style.cssText = "padding:8px 10px;cursor:pointer;border-radius:6px;font-size:14px;";
+      row.addEventListener("mouseenter", () => row.style.background = "#f0f0f0");
+      row.addEventListener("mouseleave", () => row.style.background = "transparent");
+      row.addEventListener("click", () => {
+          onboardingHistory.push(() => renderOnboardingStep2());
+          renderOnboardingStep3(name);
+      });
+      results.appendChild(row);
+    });
+  });
+
+  box.appendChild(question);
+  box.appendChild(input);
+  box.appendChild(results);
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });
+  onboardingOverlay.appendChild(box);
+  input.focus();
+}
+
+function renderOnboardingStep3(artist) {
+  clearOverlayContent();
+  const stats = computeArtistStats(artist);
+  if (!stats) { renderOnboardingStep2(); return; }
+
+  const box = document.createElement("div");
+  box.style.cssText = "max-width:420px;width:90%;text-align:center;padding:32px;";
+
+  const title = document.createElement("h2");
+  title.textContent = stats.artist;
+  title.style.cssText = "font-size:24px;margin-bottom:8px;";
+
+  const trajectory = document.createElement("div");
+  trajectory.textContent = stats.firstYear === stats.lastYear
+    ? `${stats.firstYear}`
+    : `${stats.firstYear} – ${stats.lastYear}`;
+  trajectory.style.cssText = "color:#888;font-size:13px;margin-bottom:12px;";
+
+  const genresDiv = document.createElement("div");
+  genresDiv.style.cssText = "margin-bottom:28px;";
+  stats.primaryGenres.forEach(g => {
+    const span = document.createElement("span");
+    span.textContent = g;
+    span.style.cssText = "display:inline-block;margin:2px;padding:4px 10px;border-radius:12px;background:#111;color:#fff;font-size:12px;";
+    genresDiv.appendChild(span);
+  });
+  stats.secondaryGenres.forEach(g => {
+    const span = document.createElement("span");
+    span.textContent = g;
+    span.style.cssText = "display:inline-block;margin:2px;padding:4px 10px;border-radius:12px;background:#eee;color:#555;font-size:12px;";
+    genresDiv.appendChild(span);
+  });
+
+  const buttonsWrap = document.createElement("div");
+  buttonsWrap.style.cssText = "display:flex;flex-direction:column;gap:10px;align-items:center;";
+
+  const ctaLocate = document.createElement("button");
+  ctaLocate.textContent = "Ubicar artista en la constelación";
+  ctaLocate.style.cssText = "padding:10px 24px;font-size:14px;border:none;border-radius:24px;background:#111;color:#fff;cursor:pointer;width:100%;max-width:300px;";
+  ctaLocate.addEventListener("click", () => {
+    activeFilters.artists.add(artist);
+    refreshFilterOptions();
+    selectArtistLine(artist);
+    finishOnboardingToArtist();
+  });
+
+  const ctaBrowse = document.createElement("button");
+  ctaBrowse.textContent = "Buscar un disco del artista";
+  ctaBrowse.style.cssText = "padding:10px 24px;font-size:14px;border:1px solid #111;border-radius:24px;background:#fff;color:#111;cursor:pointer;width:100%;max-width:300px;";
+  ctaBrowse.addEventListener("click", () => {
+      onboardingHistory.push(() => renderOnboardingStep3(artist));
+      renderOnboardingStep4(artist);
+  });
+
+  buttonsWrap.appendChild(ctaLocate);
+  buttonsWrap.appendChild(ctaBrowse);
+
+  box.appendChild(title);
+  box.appendChild(trajectory);
+  box.appendChild(genresDiv);
+  box.appendChild(buttonsWrap);
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });   // <-- agregar
+  onboardingOverlay.appendChild(box);}
+
+function renderOnboardingStep4(artist) {
+  clearOverlayContent();
+  const discog = getArtistDiscography(artist);
+
+  const box = document.createElement("div");
+  box.style.cssText = "max-width:420px;width:90%;text-align:center;padding:32px;";
+
+  const question = document.createElement("h2");
+  question.textContent = "¿Con qué disco te gustaría comenzar el recorrido?";
+  question.style.cssText = "font-size:20px;margin-bottom:20px;";
+
+  const list = document.createElement("div");
+  list.style.cssText = "text-align:left;max-height:320px;overflow-y:auto;";
+
+  discog.forEach(a => {
+    const row = document.createElement("div");
+    row.style.cssText = "display:flex;align-items:center;gap:10px;padding:8px 10px;cursor:pointer;border-radius:6px;";
+    row.addEventListener("mouseenter", () => row.style.background = "#f0f0f0");
+    row.addEventListener("mouseleave", () => row.style.background = "transparent");
+
+    const dot = document.createElement("i");
+    dot.style.cssText = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${a.color.getStyle()};flex-shrink:0;`;
+
+    const text = document.createElement("span");
+    text.textContent = `${a.album} (${a.year})`;
+    text.style.fontSize = "14px";
+
+    row.appendChild(dot);
+    row.appendChild(text);
+    row.addEventListener("click", () => finishOnboarding(a.idx));
+    list.appendChild(row);
+  });
+
+  box.appendChild(question);
+  box.appendChild(list);
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });   // <-- agregar
+  onboardingOverlay.appendChild(box);
+}
+
+function finishOnboarding(idx) {
+  onboardingOverlay.remove();
+  onboardingOverlay = null;
+  selectAlbum(idx);
+}
+
+function finishOnboardingToArtist() {
+  onboardingOverlay.remove();
+  onboardingOverlay = null;
+}
+
+function createInfoButton() {
+  const btn = document.createElement("button");
+  btn.setAttribute("aria-label", "Ver información del proyecto");
+  btn.textContent = "i";
+  btn.style.cssText = `
+    position: fixed; bottom: 20px; right: 20px; z-index: 900;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid #ccc; background: #fff; color: #555;
+    font-size: 15px; font-style: italic; font-family: serif;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  `;
+  btn.addEventListener("mouseenter", () => { btn.style.background = "#f5f5f5"; });
+  btn.addEventListener("mouseleave", () => { btn.style.background = "#fff"; });
+  btn.addEventListener("click", reopenOnboarding);
+  document.body.appendChild(btn);
+  return btn;
+}
+
+function reopenOnboarding() {
+  if (onboardingOverlay) return;
+  onboardingHistory = [];   // <-- nuevo: arranca limpio, sin arrastrar historial de una sesión previa
+  onboardingOverlay = createOnboardingOverlay();
+  renderOnboardingStep1();
+}
 
 function ensureArtistPanelEl(artist) {
   if (artistPanelEls.has(artist)) return artistPanelEls.get(artist);
@@ -657,8 +960,8 @@ const WEIGHTS = {
 
 const MODEL_CONFIG = {
   descriptorWeight: 0.35,
-  nNeighbors: 4.5,
-  minDist: 0.75
+  nNeighbors: 4.75,
+  minDist: 0.65
 };
 
 const TIME_LAYOUT = {
@@ -1164,9 +1467,11 @@ function computeTimeLayout() {
 async function calculateModel() {
   ui.status.textContent = "Calculando espacio latente…";
   clearScene();
+  setLoadingProgress(20);
 
   const vocab = buildVocabulary(albums);
   const matrix = albums.map(a => vectorize(a, vocab, MODEL_CONFIG.descriptorWeight));
+  setLoadingProgress(25);
 
   const umap = new UMAP({
     nComponents: 3,
@@ -1176,7 +1481,17 @@ async function calculateModel() {
     random: mulberry32(UMAP_SEED)
   });
 
-  const embedding = await umap.fitAsync(matrix);
+  const nEpochs = umap.initializeFit(matrix);
+  for (let i = 0; i < nEpochs; i++) {
+    umap.step();
+    if (i % 5 === 0 || i === nEpochs - 1) {
+      setLoadingProgress(25 + ((i + 1) / nEpochs) * 55); // 25% -> 80%
+      await new Promise(resolve => setTimeout(resolve, 0)); // cede el hilo para que la barra pinte
+    }
+  }
+  const embedding = umap.getEmbedding();
+  setLoadingProgress(80);
+
   const coords = normalize3D(embedding);
 
   points = coords.map((p,i) => ({
@@ -1192,6 +1507,7 @@ async function calculateModel() {
   createYearOrbits();
   createYearSprites();
   createGenreLabels();
+  setLoadingProgress(92);
 
   if (timeMode) {
     pointMeshes.forEach((m,i) => m.position.copy(points[i].timeVec));
@@ -1211,6 +1527,7 @@ async function calculateModel() {
   fitCamera();
   ui.status.textContent =
     `${albums.length} álbumes · ${vocab.genres.length} géneros · ${vocab.descriptors.length} descriptores · UMAP 3D`;
+  setLoadingProgress(100);
 }
 
 function createPoints() {
@@ -3173,6 +3490,10 @@ function buildEventsByYear(events) {
   return map;
 }
 
+onboardingOverlay = createOnboardingOverlay();
+renderOnboardingStep1();
+createInfoButton(); 
+
 Promise.all([
   fetch("./data/albums.json").then(r => r.json()),
   fetch("./data/eventos.json")
@@ -3185,6 +3506,7 @@ Promise.all([
   .then(([albumsData, eventsData]) => {
     albums = albumsData;
     eventsByYear = buildEventsByYear(eventsData);
+    setLoadingProgress(10);
     return calculateModel();
   })
   .catch(err => {

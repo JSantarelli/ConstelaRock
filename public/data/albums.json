@@ -3522,256 +3522,256 @@
     ]
     },
     {
-    "id": "giros",
-    "album": "Giros",
-    "artist": "Fito Páez",
-    "year": 1985,
-    "genres": {
-    "primary": [
-    "Pop Rock",
-    "Sophisti-Pop"
-    ],
-    "secondary": [
-    "Art Pop",
-    "Singer-Songwriter",
-    "New Wave",
-    "Synthpop",
-    "Tango nuevo"
-    ]
-    },
-    "descriptors": [
-    "male vocalist",
-    "melodic",
-    "urban",
-    "conscious",
-    "introspective",
-    "melancholic",
-    "poetic",
-    "love",
-    "passionate",
-    "nocturnal"
-    ]
-    },
-    {
-    "id": "la-la-la",
-    "album": "La la la",
-    "artist": "Fito Páez",
-    "year": 1986,
-    "genres": {
-    "primary": [
-    "Art Pop",
-    "Pop Rock",
-    "Sophisti-Pop"
-    ],
-    "secondary": [
-    "Baroque Pop",
-    "Progressive Pop",
-    "Jazz Pop"
-    ]
-    },
-    "descriptors": [
-    "poetic",
-    "melodic",
-    "male vocalist",
-    "urban",
-    "mellow",
-    "soft",
-    "melancholic",
-    "lush",
-    "violence"
-    ]
+      "id": "giros",
+      "album": "Giros",
+      "artist": "Fito Páez",
+      "year": 1985,
+      "genres": {
+      "primary": [
+      "Pop Rock",
+      "Sophisti-Pop"
+      ],
+      "secondary": [
+      "Art Pop",
+      "Singer-Songwriter",
+      "New Wave",
+      "Synthpop",
+      "Tango nuevo"
+      ]
+      },
+      "descriptors": [
+      "male vocalist",
+      "melodic",
+      "urban",
+      "conscious",
+      "introspective",
+      "melancholic",
+      "poetic",
+      "love",
+      "passionate",
+      "nocturnal"
+      ]
     },
     {
-    "id": "ciudad-de-pobres-corazones",
-    "album": "Ciudad de pobres corazones",
-    "artist": "Fito Páez",
-    "year": 1987,
-    "genres": {
-    "primary": [
-    "New Wave",
-    "Pop Rock",
-    "Art Pop"
-    ],
-    "secondary": [
-    "Hard Rock",
-    "Sophisti-Pop",
-    "Synth Funk",
-    "Art Rock",
-    "Darkwave"
-    ]
-    },
-    "descriptors": [
-    "aggressive",
-    "depressive",
-    "male vocalist",
-    "angry",
-    "pessimistic",
-    "urban",
-    "atmospheric",
-    "anxious",
-    "crime",
-    "drugs",
-    "alienation",
-    "homicide",
-    "sombre",
-    "protest",
-    "grief",
-    "family",
-    "cynical",
-    "introspective",
-    "nocturnal",
-    "serious",
-    "misanthropic",
-    "dark",
-    "hateful",
-    "death",
-    "lonely",
-    "hazy",
-    "suicide",
-    "nihilistic",
-    "passionate",
-    "fame",
-    "manic"
-    ]
+      "id": "la-la-la",
+      "album": "La la la",
+      "artist": "Fito Páez",
+      "year": 1986,
+      "genres": {
+      "primary": [
+      "Art Pop",
+      "Pop Rock",
+      "Sophisti-Pop"
+      ],
+      "secondary": [
+      "Baroque Pop",
+      "Progressive Pop",
+      "Jazz Pop"
+      ]
+      },
+      "descriptors": [
+      "poetic",
+      "melodic",
+      "male vocalist",
+      "urban",
+      "mellow",
+      "soft",
+      "melancholic",
+      "lush",
+      "violence"
+      ]
     },
     {
-    "id": "ey",
-    "album": "Ey!",
-    "artist": "Fito Páez",
-    "year": 1988,
-    "genres": {
-    "primary": [
-    "Pop Rock",
-    "New Wave"
-    ],
-    "secondary": [
-    "Art Pop",
-    "Funk Rock",
-    "Noise Pop"
-    ]
-    },
-    "descriptors": [
-    "male vocalist",
-    "nocturnal",
-    "urban",
-    "playful",
-    "cryptic",
-    "love",
-    "drugs",
-    "psychedelic"
-    ]
-    },
-    {
-    "id": "tercer-mundo",
-    "album": "Tercer mundo",
-    "artist": "Fito Páez",
-    "year": 1990,
-    "genres": {
-    "primary": [
-    "Pop Rock"
-    ],
-    "secondary": [
-    "Art Pop",
-    "Rock & Roll",
-    "Singer-Songwriter",
-    "New Wave",
-    "Piano Rock"
-    ]
-    },
-    "descriptors": [
-    "male vocalist",
-    "urban",
-    "playful",
-    "surreal",
-    "conscious",
-    "love",
-    "energetic"
-    ]
-    },
-    {
-    "id": "el-amor-despues-del-amor",
-    "album": "El amor después del amor",
-    "artist": "Fito Páez",
-    "year": 1992,
-    "genres": {
-    "primary": [
-    "Pop Rock"
-    ],
-    "secondary": [
-    "Singer-Songwriter",
-    "Sophisti-Pop",
-    "Art Pop",
-    "Piano Rock"
-    ]
-    },
-    "descriptors": [
-    "melodic",
-    "male vocalist",
-    "love",
-    "uplifting",
-    "anthemic",
-    "romantic",
-    "poetic",
-    "warm",
-    "melancholic",
-    "lush",
-    "passionate",
-    "spring",
-    "bittersweet",
-    "urban",
-    "eclectic",
-    "ballad"
-    ]
+      "id": "ciudad-de-pobres-corazones",
+      "album": "Ciudad de pobres corazones",
+      "artist": "Fito Páez",
+      "year": 1987,
+      "genres": {
+      "primary": [
+      "New Wave",
+      "Pop Rock",
+      "Art Pop"
+      ],
+      "secondary": [
+      "Hard Rock",
+      "Sophisti-Pop",
+      "Synth Funk",
+      "Art Rock",
+      "Darkwave"
+      ]
+      },
+      "descriptors": [
+      "aggressive",
+      "depressive",
+      "male vocalist",
+      "angry",
+      "pessimistic",
+      "urban",
+      "atmospheric",
+      "anxious",
+      "crime",
+      "drugs",
+      "alienation",
+      "homicide",
+      "sombre",
+      "protest",
+      "grief",
+      "family",
+      "cynical",
+      "introspective",
+      "nocturnal",
+      "serious",
+      "misanthropic",
+      "dark",
+      "hateful",
+      "death",
+      "lonely",
+      "hazy",
+      "suicide",
+      "nihilistic",
+      "passionate",
+      "fame",
+      "manic"
+      ]
     },
     {
-    "id": "circo-beat",
-    "album": "Circo Beat",
-    "artist": "Fito Páez",
-    "year": 1994,
-    "genres": {
-    "primary": [
-    "Pop Rock"
-    ],
-    "secondary": [
-    "Psychedelic Pop",
-    "Baroque Pop",
-    "Art Pop",
-    "Sunshine Pop",
-    "Piano Rock"
-    ]
-    },
-    "descriptors": [
-    "male vocalist",
-    "playful",
-    "lush",
-    "warm",
-    "uplifting",
-    "concept album",
-    "melodic",
-    "summer",
-    "anthemic",
-    "love"
-    ]
+      "id": "ey",
+      "album": "Ey!",
+      "artist": "Fito Páez",
+      "year": 1988,
+      "genres": {
+      "primary": [
+      "Pop Rock",
+      "New Wave"
+      ],
+      "secondary": [
+      "Art Pop",
+      "Funk Rock",
+      "Noise Pop"
+      ]
+      },
+      "descriptors": [
+      "male vocalist",
+      "nocturnal",
+      "urban",
+      "playful",
+      "cryptic",
+      "love",
+      "drugs",
+      "psychedelic"
+      ]
     },
     {
-    "id": "enemigos-intimos",
-    "album": "Enemigos íntimos",
-    "artist": "Sabina y Páez",
-    "year": 1998,
-    "genres": {
-    "primary": [
-    "Pop Rock",
-    "Singer-Songwriter"
-    ],
-    "secondary": [
-    "Adult Contemporary"
-    ]
+      "id": "tercer-mundo",
+      "album": "Tercer mundo",
+      "artist": "Fito Páez",
+      "year": 1990,
+      "genres": {
+      "primary": [
+      "Pop Rock"
+      ],
+      "secondary": [
+      "Art Pop",
+      "Rock & Roll",
+      "Singer-Songwriter",
+      "New Wave",
+      "Piano Rock"
+      ]
+      },
+      "descriptors": [
+      "male vocalist",
+      "urban",
+      "playful",
+      "surreal",
+      "conscious",
+      "love",
+      "energetic"
+      ]
     },
-    "descriptors": [
-    "humorous",
-    "male vocalist",
-    "poetic"
-    ]
+    {
+      "id": "el-amor-despues-del-amor",
+      "album": "El amor después del amor",
+      "artist": "Fito Páez",
+      "year": 1992,
+      "genres": {
+      "primary": [
+      "Pop Rock"
+      ],
+      "secondary": [
+      "Singer-Songwriter",
+      "Sophisti-Pop",
+      "Art Pop",
+      "Piano Rock"
+      ]
+      },
+      "descriptors": [
+      "melodic",
+      "male vocalist",
+      "love",
+      "uplifting",
+      "anthemic",
+      "romantic",
+      "poetic",
+      "warm",
+      "melancholic",
+      "lush",
+      "passionate",
+      "spring",
+      "bittersweet",
+      "urban",
+      "eclectic",
+      "ballad"
+      ]
+    },
+    {
+      "id": "circo-beat",
+      "album": "Circo Beat",
+      "artist": "Fito Páez",
+      "year": 1994,
+      "genres": {
+      "primary": [
+      "Pop Rock"
+      ],
+      "secondary": [
+      "Psychedelic Pop",
+      "Baroque Pop",
+      "Art Pop",
+      "Sunshine Pop",
+      "Piano Rock"
+      ]
+      },
+      "descriptors": [
+      "male vocalist",
+      "playful",
+      "lush",
+      "warm",
+      "uplifting",
+      "concept album",
+      "melodic",
+      "summer",
+      "anthemic",
+      "love"
+      ]
+    },
+    {
+      "id": "enemigos-intimos",
+      "album": "Enemigos íntimos",
+      "artist": "Fito Páez",
+      "year": 1998,
+      "genres": {
+      "primary": [
+      "Pop Rock",
+      "Singer-Songwriter"
+      ],
+      "secondary": [
+      "Adult Contemporary"
+      ]
+      },
+      "descriptors": [
+      "humorous",
+      "male vocalist",
+      "poetic"
+      ]
     },
     {
     "id": "abre",
@@ -5085,6 +5085,94 @@
       "passionate",
       "love"
     ]
+  },
+  {
+    "id": "algo-que-me-saque-del-mal",
+    "album": "Algo que me saque del mal",
+    "artist": "Oisin",
+    "year": 2003,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Alternative Metal", "Nu Metal", "Power Pop"]
+    },
+    "descriptors": ["energetic", "melodic", "distorted", "female vocalist"]
+  },
+  {
+    "id": "sangre",
+    "album": "Sangre",
+    "artist": "Oisin",
+    "year": 2005,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Alternative Metal", "Nu Metal", "Pop Rock"]
+    },
+    "descriptors": ["melodic", "distorted", "female vocalist"]
+  },
+  {
+    "id": "refugio",
+    "album": "Refugio",
+    "artist": "Decenadores",
+    "year": 2004,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Nu Metal", "Hardcore Punk", "Punk Rock"]
+    },
+    "descriptors": ["energetic", "aggressive", "raw", "male vocalist"]
+  },
+  {
+    "id": "underground",
+    "album": "Underground",
+    "artist": "Decenadores",
+    "year": 2008,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Nu Metal", "Hardcore Punk", "Punk Rock"]
+    },
+    "descriptors": ["energetic", "aggressive", "raw", "male vocalist"]
+  },
+  {
+    "id": "supermedicado",
+    "album": "Supermedicado",
+    "artist": "Decenadores",
+    "year": 2011,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Nu Metal", "Punk Rock", "Pop Rock"]
+    },
+    "descriptors": ["energetic", "melodic", "aggressive", "male vocalist"]
+  },
+  {
+    "id": "volador-g",
+    "album": "Volador G",
+    "artist": "Volador G",
+    "year": 2004,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Electronic Rock", "Post-Punk"]
+    },
+    "descriptors": ["dark", "atmospheric", "melancholic", "urban"]
+  },
+  {
+    "id": "par",
+    "album": "Par",
+    "artist": "Volador G",
+    "year": 2006,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Post-Punk", "Electronic Rock"]
+    },
+    "descriptors": ["dark", "atmospheric", "dense", "melodic"]
+  },
+  {
+    "id": "cuentos-de-terror",
+    "album": "Cuentos de terror",
+    "artist": "Volador G",
+    "year": 2008,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Rock", "Post-Punk", "Electronic Rock"]
+    },
+    "descriptors": ["dark", "atmospheric", "concept album", "urban", "melancholic"]
   },
   {
     "id": "el-final-de-las-primaveras",
@@ -9384,6 +9472,24 @@
     "descriptors": ["Dark", "Atmospheric", "Experimental", "Guitar-Driven", "Underground"]
   },
   {
+    "id": "abril-a-mil",
+    "album": "Abril a Mil",
+    "artist": "Abril a Mil",
+    "year": 2020,
+    "genres": {
+      "primary": ["Rock"],
+      "secondary": ["Alternative Rock", "Pop Rock"]
+    },
+  "descriptors": [
+      "male vocalist",
+      "melodic",
+      "energetic",
+      "personal",
+      "urban",
+      "nostalgic"
+    ]  
+  },
+  {
   "id": "magico-corazon-radiofonico",
   "album": "Mágico corazón radiofónico",
   "artist": "Banda de Turistas",
@@ -9628,7 +9734,7 @@
 {
   "id": "vuelve-a-comenzar",
   "album": "Vuelve a comenzar",
-  "artist": "Mario Gómez Vilma Palma",
+  "artist": "Vilma Palma e Vampiros",
   "year": 2002,
   "genres": {
     "primary": [],
@@ -12448,32 +12554,6 @@
       "folklore",
       "satirical",
       "eclectic"
-    ]
-  },
-  {
-    "id": "mercedes-sosa-canta-charly-garc-a-alta-fidelidad",
-    "album": "Mercedes Sosa canta Charly García: Alta fidelidad",
-    "artist": "Charly García",
-    "year": 1997,
-    "genres": {
-      "primary": [
-        "Art Pop",
-        "Pop Rock"
-      ],
-      "secondary": [
-        "Baroque Pop",
-        "Nueva canción latinoamericana",
-        "Downtempo",
-        "Andean New Age"
-      ]
-    },
-    "descriptors": [
-      "introspective",
-      "female vocalist",
-      "nocturnal",
-      "melodic",
-      "passionate",
-      "crooning"
     ]
   },
   {
@@ -15466,7 +15546,7 @@
   {
     "id": "blues-local",
     "album": "Blues local",
-    "artist": "Pappo's",
+    "artist": "Pappo",
     "year": 1992,
     "genres": {
       "primary": [
@@ -20549,7 +20629,7 @@
   {
     "id": "cutaia-melero",
     "album": "Cutaia Melero",
-    "artist": "Cutaia Melero",
+    "artist": "Daniel Melero",
     "year": 2014,
     "genres": {
       "primary": [],
@@ -20621,7 +20701,7 @@
   {
     "id": "la-ruta-del-opio",
     "album": "La ruta del opio",
-    "artist": "Melero",
+    "artist": "Daniel Melero",
     "year": 2020,
     "genres": {
       "primary": [
@@ -24407,7 +24487,7 @@
   {
     "id": "contracrisis",
     "album": "Contracrisis",
-    "artist": "Cantilo - Durietz",
+    "artist": "Pedro y Pablo",
     "year": 1982,
     "genres": {
       "primary": ["Rock"],
