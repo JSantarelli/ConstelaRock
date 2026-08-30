@@ -16773,6 +16773,376 @@
   "descriptors": []
   },
   {
+    "id": "mal-momento",
+    "album": "Mal Momento",
+    "artist": "Mal Momento",
+    "year": 1994,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": [
+      "punchy",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "fin-de-fiesta",
+    "album": "Fin de fiesta",
+    "artist": "Mal Momento",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "macabra-palidez",
+    "album": "Macabra palidez",
+    "artist": "Mal Momento",
+    "year": 2003,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "historias-de-un-corazon-fuera-de-la-ley",
+    "album": "Historias de un corazón fuera de la ley",
+    "artist": "Mal Momento",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "macabras-rarezas",
+    "album": "Macabras rarezas",
+    "artist": "Mal Momento",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Rock & Roll"
+      ],
+      "secondary": [
+        "Punk Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "archivo-secreto",
+    "album": "Archivo secreto",
+    "artist": "Mal Momento",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "quien-mato-a-la-inocencia",
+    "album": "¿Quién mató a la inocencia?",
+    "artist": "Mal Momento",
+    "year": 2011,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mi-corazon-es-una-manzana-podrida",
+    "album": "Mi corazón es una manzana podrida",
+    "artist": "Mal Momento",
+    "year": 2018,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sr-punk",
+    "album": "Sr. Punk",
+    "artist": "Mal Momento",
+    "year": 2020,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "sr-punk-vol-2",
+    "album": "Sr. Punk (Vol. 2)",
+    "artist": "Mal Momento",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "psicostereo",
+    "album": "Psicostereo",
+    "artist": "Hermann & Mal Momento",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Rock & Roll"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "expulsados",
+    "album": "Expulsados",
+    "artist": "Expulsados",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "carretera-nocturna",
+    "album": "Carretera nocturna",
+    "artist": "Expulsados",
+    "year": 2000,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "24-hs-en-el-cine",
+    "album": "24 hs. en el cine",
+    "artist": "Expulsados",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "cuarto-para-espectros",
+    "album": "Cuarto para espectros",
+    "artist": "Expulsados",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "museo-de-cera",
+    "album": "Museo de cera",
+    "artist": "Expulsados",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": [
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "altoparlantes-2",
+    "album": "Altoparlantes 2",
+    "artist": "Expulsados",
+    "year": 2008,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "retrato-de-un-cazador",
+    "album": "Retrato de un cazador",
+    "artist": "Expulsados",
+    "year": 2009,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "suicidas-y-sicarios",
+    "album": "Suicidas y sicarios",
+    "artist": "Expulsados",
+    "year": 2016,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "el-laberinto-de-neblina",
+    "album": "El laberinto de neblina",
+    "artist": "Expulsados",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Pop Punk",
+        "Pop Rock"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "un-kilme-resucitado",
+    "album": "Un kilme resucitado",
+    "artist": "Sin Ley",
+    "year": 1996,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Reggae"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "in-feliz",
+    "album": "In feliz",
+    "artist": "Sin Ley",
+    "year": 1998,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Art Rock",
+        "Reggae",
+        "Blues Rock",
+        "Power Pop"
+      ]
+    },
+    "descriptors": [
+      "concept album"
+    ]
+  },
+  {
+    "id": "a-1000-del-3000",
+    "album": "A 1000 del 3000",
+    "artist": "Sin Ley",
+    "year": 1999,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "mafisimа",
+    "album": "Mafísima",
+    "artist": "Sin Ley",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Ska Punk"
+      ]
+    },
+    "descriptors": []
+  },
+  {
+    "id": "delirio-fatal-agitado",
+    "album": "Delirio fatal agitado",
+    "artist": "Sin Ley",
+    "year": 2012,
+    "genres": {
+      "primary": [
+        "Punk Rock"
+      ],
+      "secondary": [
+        "Ska Punk",
+        "Reggae"
+      ]
+    },
+    "descriptors": []
+  },
+  {
     "id": "eterna-inocencia-juggling-jugulars",
     "album": "Juggling Jugulars",
     "artist": "Eterna Inocencia",
@@ -21491,6 +21861,92 @@
     "descriptors": []
   },
   {
+    "id": "indios",
+    "album": "Indios",
+    "artist": "Indios",
+    "year": 2013,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Indie Pop",
+        "Power Pop",
+        "Indie Rock"
+      ]
+    },
+    "descriptors": [
+      "rhythmic",
+      "warm",
+      "love",
+      "passionate",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "asfalto",
+    "album": "Asfalto",
+    "artist": "Indios",
+    "year": 2017,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Power Pop",
+        "Indie Surf",
+        "Hypnagogic Pop",
+        "Synthwave"
+      ]
+    },
+    "descriptors": [
+    ]
+  },
+  {
+    "id": "besos-en-la-espalda",
+    "album": "Besos en la espalda",
+    "artist": "Indios",
+    "year": 2019,
+    "genres": {
+      "primary": [
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Sophisti-Pop",
+        "Neo-Psychedelia",
+        "Psychedelic Soul"
+      ]
+    },
+    "descriptors": [
+      "atmospheric",
+      "love",
+      "melancholic",
+      "breakup",
+      "bittersweet",
+      "longing",
+      "male vocalist",
+      "lo-fi",
+      "sensual",
+      "warm"
+    ]
+  },
+  {
+    "id": "artificio",
+    "album": "Artificio",
+    "artist": "Indios",
+    "year": 2025,
+    "genres": {
+      "primary": [
+        "Indie Pop"
+      ],
+      "secondary": [
+        "Indie Rock"
+      ]
+    },
+    "descriptors": [
+    ]
+  },
+  {
     "id": "guaper-la-tenaza-que-corta-el-alambre-del-corral",
     "album": "Guaper, la tenaza que corta el alambre del corral",
     "artist": "Mi Amigo Invencible",
@@ -23550,7 +24006,7 @@
   {
     "id": "mujeres-argentinas-cantata-sudamericana",
     "album": "Mujeres argentinas: Cantata sudamericana",
-    "artist": "Ariel Ramírez / Patricia Sosa",
+    "artist": "Patricia Sosa",
     "year": 1997,
     "genres": {
       "primary": [

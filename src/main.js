@@ -959,8 +959,8 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.35,
-  nNeighbors: 4.75,
+  descriptorWeight: 0.34,
+  nNeighbors: 4.7,
   minDist: 0.65
 };
 
@@ -1019,6 +1019,26 @@ const CONNECTION_CONFIG = {
   descendantOpacity: 0.8,
   secondLevelOpacity: 0.65,
 };
+
+
+const NETWORK_INSIGHTS_CONFIG = {
+  topCount: 30,
+  dimOpacity: 0.15,
+  outlierK: 5,
+  minGenreSpread: 3
+};
+
+let networkInsightMode = null;
+let bridgeBetweenness = null;
+let bridgeTopIndices = new Set();
+let nodeDegree = null;
+let hubTopIndices = new Set();
+let outlierScore = null;
+let outlierTopIndices = new Set();
+let convergenceScore = null;
+let convergenceTopIndices = new Set();
+let divergenceScore = null;
+let divergenceTopIndices = new Set();
 
 const ARROW_POSITION_T = 0.6; // fracción sobre la línea donde se ubica la flecha
 const connectionArrowDir = new THREE.Vector3();
@@ -1507,6 +1527,7 @@ async function calculateModel() {
   createYearOrbits();
   createYearSprites();
   createGenreLabels();
+  computeNetworkMetrics();
   setLoadingProgress(92);
 
   if (timeMode) {
@@ -1963,13 +1984,22 @@ function clearGenreSelection() {
 function updateFilterGenreVisuals() {
   const filtersActive = filteredIndices !== null;
   const genresActive = selectedGenres.size > 0;
+  const insightActive = networkInsightMode !== null;
 
-  if (!filtersActive && !genresActive) {
+  const insightTopSet = {
+    bridges: bridgeTopIndices,
+    hubs: hubTopIndices,
+    outliers: outlierTopIndices,
+    convergence: convergenceTopIndices,
+    divergence: divergenceTopIndices
+  }[networkInsightMode] ?? null;
+
+  if (!filtersActive && !genresActive && !insightActive) {
     pointMeshes.forEach(m => { m.material.opacity = 1; });
     return;
   }
 
-  const dimOpacity = filtersActive ? 0.12 : 0.25;
+  const dimOpacity = filtersActive ? 0.12 : (insightActive ? NETWORK_INSIGHTS_CONFIG.dimOpacity : 0.25);
 
   pointMeshes.forEach((m, i) => {
     const p = points[i];
@@ -1977,8 +2007,65 @@ function updateFilterGenreVisuals() {
     const passesGenre = !genresActive ||
       p.genres.primary.some(g => selectedGenres.has(g)) ||
       p.genres.secondary.some(g => selectedGenres.has(g));
+    const passesInsight = !insightActive || insightTopSet.has(i);
 
-    m.material.opacity = (passesFilter && passesGenre) ? 1 : dimOpacity;
+    m.material.opacity = (passesFilter && passesGenre && passesInsight) ? 1 : dimOpacity;
+  });
+}
+
+function setNetworkInsightMode(mode) {
+  networkInsightMode = (networkInsightMode === mode) ? null : mode;
+  updateNetworkInsightButtons();
+  if (selectedIndices.size === 0) updateFilterGenreVisuals();
+}
+
+function createNetworkInsightsToggle() {
+  const container = document.createElement("div");
+  container.id = "networkInsights";
+  container.style.cssText = `
+    position: fixed; bottom: 20px; left: 20px; z-index: 900;
+    display: flex; flex-direction: row; gap: 8px; flex-wrap: no-wrap;
+  `;
+
+  const modes = [
+    { mode: "hubs", label: "HUBS" },
+    { mode: "bridges", label: "BRIDGES" },
+    { mode: "outliers", label: "OUTLIERS" },
+    { mode: "convergence", label: "CONVERGENCE" },
+    { mode: "divergence", label: "DIVERGENCE" }
+  ];
+
+  modes.forEach(({ mode, label }) => {
+    const btn = document.createElement("button");
+    btn.id = `${mode}Toggle`;
+    btn.textContent = label;
+    btn.dataset.mode = mode;
+    btn.setAttribute("aria-pressed", "false");
+    btn.style.cssText = `
+      display: flex;
+      width: fit-content;
+      padding: 8px 14px; border-radius: 18px;
+      border: 1px solid #ccc; background: #fff; color: #555;
+      font-size: 12px; font-weight: 600; letter-spacing: .5px;
+      cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    `;
+    btn.addEventListener("click", () => setNetworkInsightMode(mode));
+    container.appendChild(btn);
+  });
+
+  document.body.appendChild(container);
+  return container;
+}
+
+function updateNetworkInsightButtons() {
+  ["hubs", "bridges", "outliers", "convergence", "divergence"].forEach(mode => {
+    const btn = document.querySelector(`#${mode}Toggle`);
+    if (!btn) return;
+    const active = networkInsightMode === mode;
+    btn.setAttribute("aria-pressed", String(active));
+    btn.style.background = active ? "#111" : "#fff";
+    btn.style.color = active ? "#fff" : "#555";
+    btn.style.borderColor = active ? "#111" : "#ccc";
   });
 }
 
@@ -2369,6 +2456,176 @@ function computeAlbumMatches(query) {
   return matches.slice(0, MAX_SUGGESTIONS_PER_GROUP);
 }
 
+
+function buildNetworkGraphAdjacency() {
+  const adjacency = new Map();
+  points.forEach((_, i) => adjacency.set(i, new Set()));
+
+  const addEdge = (a, b) => {
+    if (a == null || b == null || a === b) return;
+    adjacency.get(a).add(b);
+    adjacency.get(b).add(a);
+  };
+
+  // Fuente 1: cadena cronológica por artista (idéntica a buildArtistChainConnections)
+  const artists = new Set(points.map(p => p.artist));
+  artists.forEach(artist => {
+    const discog = getArtistDiscography(artist);
+    for (let i = 0; i < discog.length - 1; i++) {
+      addEdge(discog[i].idx, discog[i + 1].idx);
+    }
+  });
+
+  // Fuente 2: red ancestro/descendiente (idéntica a buildAncestorDescendantGraph),
+  // calculada para CADA disco, no solo el seleccionado
+  points.forEach((p, idx) => {
+    const { ancestor, descendants, secondLevel } = computeAncestorDescendants(idx);
+    if (ancestor) addEdge(ancestor.idx, idx);
+    descendants.forEach((d, i) => {
+      addEdge(idx, d.idx);
+      const level2 = secondLevel[i];
+      if (level2) addEdge(d.idx, level2.idx);
+    });
+  });
+
+  return adjacency;
+}
+
+function brandesBetweenness(adjacency, n) {
+  const betweenness = new Map();
+  for (let i = 0; i < n; i++) betweenness.set(i, 0);
+
+  for (let s = 0; s < n; s++) {
+    const stack = [];
+    const predecessors = Array.from({ length: n }, () => []);
+    const sigma = new Array(n).fill(0);
+    const dist = new Array(n).fill(-1);
+    sigma[s] = 1;
+    dist[s] = 0;
+
+    const queue = [s];
+    let qi = 0;
+    while (qi < queue.length) {
+      const v = queue[qi++];
+      stack.push(v);
+      adjacency.get(v).forEach(w => {
+        if (dist[w] < 0) {
+          dist[w] = dist[v] + 1;
+          queue.push(w);
+        }
+        if (dist[w] === dist[v] + 1) {
+          sigma[w] += sigma[v];
+          predecessors[w].push(v);
+        }
+      });
+    }
+
+    const delta = new Array(n).fill(0);
+    while (stack.length) {
+      const w = stack.pop();
+      predecessors[w].forEach(v => {
+        delta[v] += (sigma[v] / sigma[w]) * (1 + delta[w]);
+      });
+      if (w !== s) betweenness.set(w, betweenness.get(w) + delta[w]);
+    }
+  }
+
+  // No dirigido: cada par (s,t) se contabiliza dos veces (desde s y desde t)
+  for (let i = 0; i < n; i++) betweenness.set(i, betweenness.get(i) / 2);
+
+  return betweenness;
+}
+
+function computeNetworkMetrics() {
+  if (!points.length) return;
+
+  const adjacency = buildNetworkGraphAdjacency();
+
+  nodeDegree = new Map();
+  adjacency.forEach((neighbors, idx) => nodeDegree.set(idx, neighbors.size));
+  hubTopIndices = new Set(
+    points.map((_, i) => i)
+      .filter(i => (nodeDegree.get(i) ?? 0) > 0)
+      .sort((a, b) => nodeDegree.get(b) - nodeDegree.get(a))
+      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  );
+
+  bridgeBetweenness = brandesBetweenness(adjacency, points.length);
+  bridgeTopIndices = new Set(
+    points.map((_, i) => i)
+      .filter(i => (bridgeBetweenness.get(i) ?? 0) > 0)
+      .sort((a, b) => bridgeBetweenness.get(b) - bridgeBetweenness.get(a))
+      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  );
+
+  outlierScore = computeOutlierScores();
+  outlierTopIndices = new Set(
+    points.map((_, i) => i)
+      .sort((a, b) => outlierScore.get(b) - outlierScore.get(a))
+      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  );
+
+  const { convergence, divergence } = computeConvergenceDivergence();
+  convergenceScore = convergence;
+  divergenceScore = divergence;
+
+  convergenceTopIndices = new Set(
+    points.map((_, i) => i)
+      .filter(i => convergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.minGenreSpread)
+      .sort((a, b) => convergenceScore.get(b) - convergenceScore.get(a))
+      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  );
+
+  divergenceTopIndices = new Set(
+    points.map((_, i) => i)
+      .filter(i => divergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.minGenreSpread)
+      .sort((a, b) => divergenceScore.get(b) - divergenceScore.get(a))
+      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  );
+}
+
+function genreGroupOf(p) {
+  const primary = p.genres.primary[0];
+  return primary ? (cachedFamilyForGenre(primary)?.group ?? "Otros") : "Otros";
+}
+
+function computeOutlierScores() {
+  const scores = new Map();
+  points.forEach((p, i) => {
+    const dists = points
+      .filter((_, j) => j !== i)
+      .map(q => p.umapVec.distanceTo(q.umapVec))
+      .sort((a, b) => a - b)
+      .slice(0, NETWORK_INSIGHTS_CONFIG.outlierK);
+    scores.set(i, dists.length ? average(dists) : 0);
+  });
+  return scores;
+}
+
+function computeConvergenceDivergence() {
+  const convergenceGenres = new Map();
+  const divergenceGenres = new Map();
+  points.forEach((_, i) => {
+    convergenceGenres.set(i, new Set());
+    divergenceGenres.set(i, new Set());
+  });
+
+  points.forEach((p, idx) => {
+    const { ancestor, descendants } = computeAncestorDescendants(idx);
+    if (ancestor) convergenceGenres.get(ancestor.idx).add(genreGroupOf(p));
+    descendants.forEach(d => divergenceGenres.get(idx).add(genreGroupOf(d)));
+  });
+
+  const convergence = new Map();
+  const divergence = new Map();
+  points.forEach((_, i) => {
+    convergence.set(i, convergenceGenres.get(i).size);
+    divergence.set(i, divergenceGenres.get(i).size);
+  });
+
+  return { convergence, divergence };
+}
+
 function buildSectionHeader(text) {
   const el = document.createElement("div");
   el.className = "search-section-header";
@@ -2559,7 +2816,7 @@ const ancestor = others
     .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
     .sort((a, b) => a.d - b.d)
     .reduce((acc, entry) => {
-      if (acc.length >= 2) return acc;
+      if (acc.length >= 3) return acc;
       if (usedDescendantArtists.has(entry.p.artist)) return acc;
       usedDescendantArtists.add(entry.p.artist);
       acc.push(entry.p);
@@ -3493,6 +3750,7 @@ function buildEventsByYear(events) {
 onboardingOverlay = createOnboardingOverlay();
 renderOnboardingStep1();
 createInfoButton(); 
+createNetworkInsightsToggle();
 
 Promise.all([
   fetch("./data/albums.json").then(r => r.json()),
