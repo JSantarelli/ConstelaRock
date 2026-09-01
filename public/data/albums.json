@@ -16525,6 +16525,127 @@
     ]
   },
   {
+    "id": "sueter",
+    "album": "Suéter",
+    "artist": "Suéter",
+    "year": 1982,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Jazz-Rock",
+        "Progressive Pop",
+        "Progressive Rock"
+      ]
+    },
+    "descriptors": [
+      "mellow",
+      "melodic",
+      "playful",
+      "bittersweet",
+      "satirical",
+      "male vocalist",
+      "conscious"
+    ]
+  },
+  {
+    "id": "lluvia-de-gallinas",
+    "album": "Lluvia de gallinas",
+    "artist": "Suéter",
+    "year": 1984,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Synthpop",
+        "Progressive Pop"
+      ]
+    },
+    "descriptors": [
+      "humorous",
+      "urban",
+      "party",
+      "playful",
+      "energetic",
+      "conscious",
+      "hedonism",
+      "quirky",
+      "rhythmic",
+      "bittersweet",
+      "satirical",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "20-caras-bonitas",
+    "album": "20 caras bonitas",
+    "artist": "Suéter",
+    "year": 1985,
+    "genres": {
+      "primary": [
+        "New Wave"
+      ],
+      "secondary": [
+        "Pop Rock",
+        "Post-Punk"
+      ]
+    },
+    "descriptors": [
+      "sarcastic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "mision-ciudadano-i",
+    "album": "Misión ciudadano I",
+    "artist": "Suéter",
+    "year": 1987,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": [
+        "New Wave"
+      ]
+    },
+    "descriptors": [
+      "concept album",
+      "melancholic",
+      "sarcastic",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "sueter-5",
+    "album": "Suéter 5",
+    "artist": "Suéter",
+    "year": 1995,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
+    "id": "la-reserva-moral-de-occidente",
+    "album": "La reserva moral de Occidente",
+    "artist": "Suéter",
+    "year": 2024,
+    "genres": {
+      "primary": [
+        "Pop Rock"
+      ],
+      "secondary": []
+    },
+    "descriptors": []
+  },
+  {
     "id": "git",
     "album": "G.I.T.",
     "artist": "G.I.T.",

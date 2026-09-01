@@ -15,8 +15,10 @@ let onboardingOverlay = null;
 let onboardingProgressFillEl = null;
 let onboardingProgressLabelEl = null;
 let onboardingStartCta = null;
+let onboardingStartCta2 = null;
 let loadingProgress = 0;
 let onboardingHistory = [];
+let onboardingPresetCardEls = [];
 
 function createOnboardingOverlay() {
   const overlay = document.createElement("div");
@@ -30,18 +32,20 @@ function createOnboardingOverlay() {
   return overlay;
 }
 
-function addOnboardingChrome(box, { showBack = false } = {}) {
+function addOnboardingChrome(box, { showBack = false, showClose = false } = {}) {
   box.style.position = "relative";
 
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "×";
-  closeBtn.setAttribute("aria-label", "Cerrar");
-  closeBtn.style.cssText = "position:absolute;top:8px;left:8px;border:none;background:none;font-size:20px;line-height:1;cursor:pointer;color:#888; display: flex; justify-content: end;";
-  closeBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    closeOnboarding();
-  });
-  box.appendChild(closeBtn);
+  if (showClose) {
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.setAttribute("aria-label", "Cerrar");
+    closeBtn.style.cssText = "position:absolute;top:8px;left:8px;border:none;background:none;font-size:20px;line-height:1;cursor:pointer;color:#888; display: flex; justify-content: end;";
+    closeBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      closeOnboarding();
+    });
+    box.appendChild(closeBtn);
+  }
 
   if (showBack) {
     const backBtn = document.createElement("button");
@@ -54,6 +58,47 @@ function addOnboardingChrome(box, { showBack = false } = {}) {
     });
     box.appendChild(backBtn);
   }
+}
+
+function resetInteractionState() {
+  clearHighlight();
+  clearGenreSelection();
+  clearYearHighlight();
+  clearArtistPanels();
+  resetAllFilters();
+  resetNetworkInsightMode();
+}
+
+function applyArtistsPreset(artistNames, opts = {}) {
+  if (!points.length) return; // datos aún no cargados
+  resetInteractionState();
+
+  artistNames.forEach(name => activeFilters.artists.add(name));
+  refreshFilterOptions();
+
+  if (opts.timeMode) {
+    if (ui.timeToggle) ui.timeToggle.checked = true;
+    setTimeMode(true);
+  }
+}
+
+function applyGenreGroupPreset(groupName, opts = {}) {
+  if (!points.length) return;
+  resetInteractionState();
+
+  const groupData = genreLegendGroups.get(groupName);
+  if (groupData) toggleGenreGroupSelection(groupData.genres);
+
+  if (opts.timeMode) {
+    if (ui.timeToggle) ui.timeToggle.checked = true;
+    setTimeMode(true);
+  }
+}
+
+function applyInsightPreset(mode) {
+  if (!points.length) return;
+  resetInteractionState(); // resetNetworkInsightMode() ya deja networkInsightMode en null
+  setNetworkInsightMode(mode);
 }
 
 function closeOnboarding() {
@@ -84,6 +129,18 @@ function setLoadingProgress(pct) {
     onboardingStartCta.style.cursor = ready ? "pointer" : "default";
     onboardingStartCta.style.opacity = ready ? "1" : "0.4";
   }
+  if (onboardingStartCta2) {
+    const ready = loadingProgress >= 100;
+    onboardingStartCta2.disabled = !ready;
+    onboardingStartCta2.style.cursor = ready ? "pointer" : "default";
+    onboardingStartCta2.style.opacity = ready ? "1" : "0.4";
+  }
+    const ready = loadingProgress >= 100;         // <-- nuevo bloque
+  onboardingPresetCardEls.forEach(card => {
+    card.disabled = !ready;
+    card.style.cursor = ready ? "pointer" : "default";
+    card.style.opacity = ready ? "1" : "0.4";
+  });
 }
 
 function renderOnboardingStep1() {
@@ -92,7 +149,7 @@ function renderOnboardingStep1() {
   box.style.cssText = "max-width:480px;width:90%;text-align:center;padding:32px;";
 
   const title = document.createElement("h1");
-  title.textContent = "DisConstelación";
+  title.textContent = "ConstelaRock";
   title.style.cssText = "font-size:32px;margin-bottom:16px;";
 
   const desc = document.createElement("p");
@@ -111,26 +168,67 @@ function renderOnboardingStep1() {
   progressLabel.style.cssText = "font-size:12px;color:#999;margin-bottom:24px;";
 
   const cta = document.createElement("button");
-  cta.textContent = "Comenzar";
+  cta.textContent = "Seleccionar un artista";
   cta.disabled = loadingProgress < 100;
-  cta.style.cssText = `padding:10px 28px;font-size:15px;border:none;border-radius:24px;background:#111;color:#fff;cursor:${cta.disabled ? "default" : "pointer"};opacity:${cta.disabled ? 0.4 : 1};`;
+  cta.style.cssText = `padding:10px 28px;font-size:15px;border:none;border-radius:24px;background:#111;color:#fff;cursor:${cta.disabled ? "default" : "pointer"};opacity:${cta.disabled ? 0.35 : 1};`;
   cta.addEventListener("click", () => {
       if (cta.disabled) return;
       onboardingHistory.push(() => renderOnboardingStep1());
       renderOnboardingStep2();
   });
 
+  const cta2 = document.createElement("button");
+  cta2.textContent = "Explorar libremente";
+  cta2.disabled = loadingProgress < 100;
+  cta2.style.cssText = `padding:10px 28px;font-size:15px;border: solid 1px #111;border-radius:24px;background:#fff;color:#111;cursor:${cta2.disabled ? "default" : "pointer"};opacity:${cta2.disabled ? 0.35 : 1};`;
+  cta2.addEventListener("click", e => {
+    e.stopPropagation();
+    closeOnboarding();
+  });
   box.appendChild(title);
   box.appendChild(desc);
   box.appendChild(progressTrack);
   box.appendChild(progressLabel);
   box.appendChild(cta);
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });   // <-- nuevo
+  box.appendChild(cta2);
+  box.appendChild(buildOnboardingPresetCards());
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0, showClose: onboardingHistory.length = 0 });
   onboardingOverlay.appendChild(box);
 
   onboardingProgressFillEl = progressFill;
   onboardingProgressLabelEl = progressLabel;
   onboardingStartCta = cta;
+  onboardingStartCta2 = cta2;
+
+  function buildOnboardingPresetCards() {
+    onboardingPresetCardEls = [];
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px;";
+
+    const ready = loadingProgress >= 100;
+
+    ONBOARDING_PRESETS.forEach(preset => {
+      const card = document.createElement("button");
+      card.textContent = preset.title;
+      card.disabled = !ready;
+      card.style.cssText = `padding:8px 14px;font-size:13px;border:1px solid #ddd;border-radius:16px;background:#fafafa;color:#333;cursor:${ready ? "pointer" : "default"};opacity:${ready ? "1" : "0.4"};`;
+      card.addEventListener("mouseenter", () => { if (!card.disabled) card.style.background = "#f0f0f0"; });
+      card.addEventListener("mouseleave", () => { card.style.background = "#fafafa"; });
+      card.addEventListener("click", e => {
+        e.stopPropagation();
+        if (card.disabled) return;
+        onboardingOverlay.remove();
+        onboardingOverlay = null;
+        preset.apply();
+      });
+      onboardingPresetCardEls.push(card);
+      wrap.appendChild(card);
+    });
+
+    return wrap;
+  }
+
+  
 }
 
 function renderOnboardingStep2() {
@@ -215,7 +313,7 @@ function renderOnboardingStep3(artist) {
   ctaLocate.textContent = "Ubicar artista en la constelación";
   ctaLocate.style.cssText = "padding:10px 24px;font-size:14px;border:none;border-radius:24px;background:#111;color:#fff;cursor:pointer;width:100%;max-width:300px;";
   ctaLocate.addEventListener("click", () => {
-    activeFilters.artists.add(artist);
+    addArtistFilter(artist);
     refreshFilterOptions();
     selectArtistLine(artist);
     finishOnboardingToArtist();
@@ -739,7 +837,7 @@ function renderDetailPanel(i, x, y) {
   artistName.addEventListener("click", e => {
     e.stopPropagation();
     clearHighlight();
-    activeFilters.artists.add(a.artist);
+    addArtistFilter(a.artist);
     refreshFilterOptions();
     selectArtistLine(a.artist);
   });
@@ -885,6 +983,14 @@ function resetAllFilters() {
   updateGenreLegendActiveState();
 }
 
+function resetNetworkInsightMode() {
+  if (networkInsightMode === null) return;
+  networkInsightMode = null;
+  setFilterControlsEnabled(true);
+  updateNetworkInsightButtons();
+  updateFilterGenreVisuals();
+}
+
 function pointerClick(e) {
   if (e.target !== renderer.domElement) return;
 
@@ -927,6 +1033,7 @@ function pointerClick(e) {
   clearYearHighlight();
   clearArtistPanels();
   resetAllFilters();
+  resetNetworkInsightMode();
 }
 
 function jumpToAlbum(a) {
@@ -959,41 +1066,41 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.34,
-  nNeighbors: 4.7,
+  descriptorWeight: 0.3,
+  nNeighbors: 4.6,
   minDist: 0.65
 };
 
 const TIME_LAYOUT = {
-  foldWeight: 0.35,   // cuánto de UMAP_Y se pliega en el radio X/Z
-  totalHeight: 100     // rango vertical total ocupado por los años
+  foldWeight: 0.35,
+  totalHeight: 100
 };
 
-const ANIM_DURATION = 1400; // ms de la transición estilístico <-> temporal
+const ANIM_DURATION = 1400;
 
-const POINT_RADIUS = .25; // debe coincidir con el radio usado en SphereGeometry de createPoints
-const CAMERA_FOCUS_DURATION = 900; // ms
-const FOCUS_ZOOM_FACTOR = 0.4; // < 1 acerca la cámara al enfocar (más chico = zoom más cercano)
+const POINT_RADIUS = .25;
+const CAMERA_FOCUS_DURATION = 900;
+const FOCUS_ZOOM_FACTOR = 0.4;
 const OUTLINE_OFFSET_PX = 2;
 const OUTLINE_THICKNESS_PX = 2;
 const OUTLINE_SEGMENTS = 40;
 
 const GENRE_LABEL_CONFIG = {
   minAlbumsForLabel: 2,
-  radiusPadding: 8,   // <-- antes 16; más cerca del centroide del cluster
+  radiusPadding: 8,
   visibleOpacity: 1,
   fadeSpeed: 0.25,
   overlapScreenDist: 48
 };
 
 const EVENT_LABEL_CONFIG = {
-  offsetX: 1,           // separación horizontal respecto del borde del sprite del año
-  fontSize: 24,         // mismo tamaño que el sprite del año (ver YEAR_LABEL_CONFIG)
+  offsetX: 1, 
+  fontSize: 24, 
   color: "#676767",
-  maxCharsPerLine: 18,  // más chico que antes: con la tipografía más grande, menos caracteres entran por línea
+  maxCharsPerLine: 18,  
   maxLines: 1,
   lineHeight: 36,
-  dimmedOpacity: 0.25    // opacidad cuando hay otro año seleccionado
+  dimmedOpacity: 0.25   
 };
 
 const YEAR_LABEL_DEFAULT_TINT = 0xffffff;
@@ -1020,6 +1127,30 @@ const CONNECTION_CONFIG = {
   secondLevelOpacity: 0.65,
 };
 
+const ONBOARDING_PRESETS = [
+  {
+    title: "La Cueva",
+    apply: () => applyArtistsPreset(
+      ['Manal', 'Almendra', 'Los Gatos', 'Vox Dei', 'Vivencia', 'Pedro y Pablo'],
+      { timeMode: true }
+    )
+  },
+  {
+    title: "No tan distintos",
+    apply: () => applyArtistsPreset(
+      ['Soda Stereo', 'Patricio Rey y sus Redonditos de Ricota'],
+      { timeMode: false }
+    )
+  },
+  {
+    title: "Primavera democrática",
+    apply: () => applyGenreGroupPreset('New Wave', { timeMode: true })
+  },
+  {
+    title: "Fuera de serie",
+    apply: () => applyInsightPreset('outliers')
+  }
+];
 
 const NETWORK_INSIGHTS_CONFIG = {
   topCount: 30,
@@ -2013,8 +2144,82 @@ function updateFilterGenreVisuals() {
   });
 }
 
+function ensureGenreLegendToggleAllBtn() {
+  if (ui.genreLegendToggleAll) return ui.genreLegendToggleAll;
+
+  const btn = document.createElement("button");
+  btn.id = "genreLegendToggleAll";
+  btn.style.cssText = "border:none;background:none;color:#556;font-size:11px;text-decoration:underline;cursor:pointer;padding:4px 0;display:block;";
+  btn.addEventListener("click", () => toggleAllGenreGroups());
+
+  ui.genreLegend.insertAdjacentElement("beforebegin", btn);
+  ui.genreLegendToggleAll = btn;
+  return btn;
+}
+
+function getVisibleGenreGroups() {
+  return [...genreLegendGroups.entries()].filter(([, data]) => data.titleEl.style.display !== "none");
+}
+
+function toggleAllGenreGroups() {
+  const visible = getVisibleGenreGroups();
+  if (!visible.length) return;
+
+  const allExpanded = visible.every(([group]) => expandedGenreGroups.has(group));
+  const shouldExpand = !allExpanded;
+
+  visible.forEach(([group, data]) => {
+    if (shouldExpand) {
+      expandedGenreGroups.add(group);
+    } else {
+      expandedGenreGroups.delete(group);
+    }
+    data.arrowEl.textContent = shouldExpand ? "▾" : "▸";
+    data.itemsContainerEl.style.display = shouldExpand ? "block" : "none";
+  });
+
+  updateGenreLegendToggleAllLabel();
+}
+
+function updateGenreLegendToggleAllLabel() {
+  const btn = ui.genreLegendToggleAll;
+  if (!btn) return;
+  const visible = getVisibleGenreGroups();
+  const allExpanded = visible.length > 0 && visible.every(([group]) => expandedGenreGroups.has(group));
+  btn.textContent = allExpanded ? "Colapsar todo" : "Expandir todo";
+}
+
+function setFilterControlsEnabled(enabled) {
+  [ui.search, ui.filterYearFrom, ui.filterYearTo, ui.filterDescriptor].forEach(el => {
+    if (!el) return;
+    el.disabled = !enabled;
+  });
+  if (ui.genreLegend) {
+    ui.genreLegend.style.pointerEvents = enabled ? "auto" : "none";
+    ui.genreLegend.style.opacity = enabled ? "1" : "0.4";
+  }
+}
+
+function addArtistFilter(artist) {
+  if (networkInsightMode !== null) return; // insight activo: no se permiten nuevos filtros
+  activeFilters.artists.add(artist);
+  refreshFilterOptions();
+}
+
 function setNetworkInsightMode(mode) {
   networkInsightMode = (networkInsightMode === mode) ? null : mode;
+
+  if (networkInsightMode !== null && hasActiveFilters()) {
+    activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptor: null, query: "" };
+    selectedGenres.clear();
+    ui.search.value = "";
+    filteredIndices = null;
+    clearArtistPanels();
+    renderList();
+    refreshFilterOptions();
+  }
+
+  setFilterControlsEnabled(networkInsightMode === null);
   updateNetworkInsightButtons();
   if (selectedIndices.size === 0) updateFilterGenreVisuals();
 }
@@ -2155,6 +2360,7 @@ function renderGenreLegend() {
       }
       arrow.textContent = nowExpanded ? "▾" : "▸";
       itemsContainer.style.display = nowExpanded ? "block" : "none";
+      updateGenreLegendToggleAllLabel();
     });
 
     selectArea.addEventListener("click", e => {
@@ -2203,6 +2409,8 @@ function renderGenreLegend() {
 
   updateGenreLegendActiveState();
   updateGenreTreeVisibility();
+  ensureGenreLegendToggleAllBtn();
+  updateGenreLegendToggleAllLabel();
 }
  
 function updateGenreLegendActiveState() {
@@ -2244,6 +2452,7 @@ function updateGenreTreeVisibility() {
     data.titleEl.style.display = anyVisible ? "" : "none";
     data.itemsContainerEl.style.display = anyVisible && expandedGenreGroups.has(group) ? "block" : "none";
   });
+  updateGenreLegendToggleAllLabel();
 }
 
 let expandedGenreGroups = new Set();
@@ -2745,7 +2954,7 @@ function selectSuggestion(i) {
 
 if (entry.type === "artist") {
     clearHighlight();               // por si había un álbum seleccionado antes
-    activeFilters.artists.add(entry.value);
+    addArtistFilter(entry.value);
     ui.search.value = "";
     closeTypeahead();
     refreshFilterOptions();
