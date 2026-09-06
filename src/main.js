@@ -357,14 +357,13 @@ function renderOnboardingStep4(artist) {
     row.addEventListener("mouseenter", () => row.style.background = "#f0f0f0");
     row.addEventListener("mouseleave", () => row.style.background = "transparent");
 
-    const dot = document.createElement("i");
-    dot.style.cssText = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${a.color.getStyle()};flex-shrink:0;`;
+    const cover = createCoverThumb(a, 40);   // <-- antes: dot de color (const dot = document.createElement("i"); ...)
 
     const text = document.createElement("span");
     text.textContent = `${a.album} (${a.year})`;
     text.style.fontSize = "14px";
 
-    row.appendChild(dot);
+    row.appendChild(cover);
     row.appendChild(text);
     row.addEventListener("click", () => finishOnboarding(a.idx));
     list.appendChild(row);
@@ -372,7 +371,7 @@ function renderOnboardingStep4(artist) {
 
   box.appendChild(question);
   box.appendChild(list);
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });   // <-- agregar
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });
   onboardingOverlay.appendChild(box);
 }
 
@@ -408,7 +407,7 @@ function createInfoButton() {
 
 function reopenOnboarding() {
   if (onboardingOverlay) return;
-  onboardingHistory = [];   // <-- nuevo: arranca limpio, sin arrastrar historial de una sesión previa
+  onboardingHistory = [];
   onboardingOverlay = createOnboardingOverlay();
   renderOnboardingStep1();
 }
@@ -800,9 +799,14 @@ function buildHoverPanelHTML(i) {
   const a = points[i];
   const mainGenre = a.genres.primary[0] ?? "";
   return `
-    <strong>${a.album}</strong>
-    <div class="artist">${a.artist} · ${a.year}</div>
-    ${mainGenre ? `<div class="genres"><span class="primary">${mainGenre}</span></div>` : ""}
+    <div style="display:flex;gap:10px;align-items:flex-start;">
+      ${coverThumbHTML(a, 48)}
+      <div>
+        <strong>${a.album}</strong>
+        <div class="artist">${a.artist} · ${a.year}</div>
+        ${mainGenre ? `<div class="genres"><span class="primary">${mainGenre}</span></div>` : ""}
+      </div>
+    </div>
   `;
 }
 
@@ -838,7 +842,6 @@ function renderDetailPanel(i, x, y) {
     e.stopPropagation();
     clearHighlight();
     addArtistFilter(a.artist);
-    refreshFilterOptions();
     selectArtistLine(a.artist);
   });
 
@@ -860,11 +863,19 @@ function renderDetailPanel(i, x, y) {
     genresDiv.appendChild(span);
   });
 
+  const headerRow = document.createElement("div");
+  headerRow.style.cssText = "display:flex;gap:10px;align-items:flex-start;";
+  headerRow.appendChild(createCoverThumb(a, 48));
+
+  const headerText = document.createElement("div");
+  headerText.appendChild(title);
+  headerText.appendChild(artistLine);
+  headerText.appendChild(genresDiv);
+  headerRow.appendChild(headerText);
+
   ui.tooltip.appendChild(closeBtn);
   ui.tooltip.appendChild(navChevrons);
-  ui.tooltip.appendChild(title);
-  ui.tooltip.appendChild(artistLine);
-  ui.tooltip.appendChild(genresDiv);
+  ui.tooltip.appendChild(headerRow);
 
   const extendedSection = document.createElement("div");
   extendedSection.style.display = tooltipExpanded ? "block" : "none";
@@ -875,10 +886,10 @@ function renderDetailPanel(i, x, y) {
 
   ui.tooltip.style.right = "auto";
   ui.tooltip.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
-  ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 380)}px`; // más alto: hay más contenido potencial
+  ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 380)}px`;
   ui.tooltip.style.display = "block";
 
-    const nearest = computeNearestAlbums(i, 3);
+  const nearest = computeNearestAlbums(i, 3);
   if (nearest.length) {
     const nearestTitle = document.createElement("div");
     nearestTitle.textContent = "Discos más cercanos";
@@ -1569,6 +1580,25 @@ function colorForAlbum(album) {
 
   return c;
 }
+
+function coverBackgroundStyle(point) {
+  const color = point.color.getStyle();
+  return point.cover
+    ? `background-color:${color};background-image:url('${point.cover}');background-size:cover;background-position:center;`
+    : `background-color:${color};`;
+}
+
+function coverThumbHTML(point, sizePx) {
+  return `<div class="cover-thumb" style="width:${sizePx}px;height:${sizePx}px;flex-shrink:0;border-radius:4px;${coverBackgroundStyle(point)}"></div>`;
+}
+
+function createCoverThumb(point, sizePx) {
+  const div = document.createElement("div");
+  div.className = "cover-thumb";
+  div.style.cssText = `width:${sizePx}px;height:${sizePx}px;flex-shrink:0;border-radius:4px;${coverBackgroundStyle(point)}`;
+  return div;
+}
+
 function normalize3D(coords) {
   const out = coords.map(p => [...p]);
   for (let d=0; d<3; d++) {
@@ -3314,10 +3344,16 @@ function renderSelectedChips() {
 }
 
 function renderFilterChipsInto(container) {
-  activeFilters.artists.forEach(artist => {
+    activeFilters.artists.forEach(artist => {
     const chip = document.createElement("span");
     chip.className = "chip chip-filter";
     chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#e8edff;font-size:12px;";
+
+    const discog = getArtistDiscography(artist);
+    const refColor = discog.length ? discog[0].color.getStyle() : "#ccc";
+
+    const dot = document.createElement("i");
+    dot.style.cssText = `display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:${refColor};`;
 
     const label = document.createElement("span");
     label.textContent = `Artista: ${artist}`;
@@ -3329,11 +3365,12 @@ function renderFilterChipsInto(container) {
     closeBtn.addEventListener("click", e => {
       e.stopPropagation();
       activeFilters.artists.delete(artist);
-      unpinArtist(artist);      
+      unpinArtist(artist);
       refreshFilterOptions();
       updateGenreLegendActiveState();
     });
 
+    chip.appendChild(dot);
     chip.appendChild(label);
     chip.appendChild(closeBtn);
     container.appendChild(chip);
@@ -3568,7 +3605,7 @@ function buildNearestRow(p, opts = {}) {
   row.style.cssText = "display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;";
 
   const dot = document.createElement("i");
-  dot.style.cssText = `display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;background:${p.color.getStyle()};`;
+  dot.style.cssText = `display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;background:${p.color.getStyle()};`
 
   const text = document.createElement("span");
   text.style.fontSize = "12px";
@@ -3745,11 +3782,27 @@ function renderYearStatsPanel(year, x, y) {
   }
  
   if (stats.albums.length) {
+    const albumsSection = document.createElement("div");
+    albumsSection.style.display = "none";
+
     const albumsTitle = document.createElement("div");
     albumsTitle.textContent = "Álbumes de este año";
     albumsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
-    ui.tooltip.appendChild(albumsTitle);
-    stats.albums.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
+    albumsSection.appendChild(albumsTitle);
+    stats.albums.forEach(p => albumsSection.appendChild(buildNearestRow(p)));
+
+    const showBtn = document.createElement("button");
+    showBtn.textContent = `Ver álbumes (${stats.albums.length})`;
+    showBtn.style.cssText = "margin-top:10px;border:none;background:none;color:#556;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;";
+    showBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      const showing = albumsSection.style.display !== "none";
+      albumsSection.style.display = showing ? "none" : "block";
+      showBtn.textContent = showing ? `Ver álbumes (${stats.albums.length})` : "Ocultar álbumes";
+    });
+
+    ui.tooltip.appendChild(showBtn);
+    ui.tooltip.appendChild(albumsSection);
   }
  
   ui.tooltip.style.right = "auto";
