@@ -97,7 +97,7 @@ function applyGenreGroupPreset(groupName, opts = {}) {
 
 function applyInsightPreset(mode) {
   if (!points.length) return;
-  resetInteractionState(); // resetNetworkInsightMode() ya deja networkInsightMode en null
+  resetInteractionState();
   setNetworkInsightMode(mode);
 }
 
@@ -135,7 +135,7 @@ function setLoadingProgress(pct) {
     onboardingStartCta2.style.cursor = ready ? "pointer" : "default";
     onboardingStartCta2.style.opacity = ready ? "1" : "0.4";
   }
-    const ready = loadingProgress >= 100;         // <-- nuevo bloque
+    const ready = loadingProgress >= 100;
   onboardingPresetCardEls.forEach(card => {
     card.disabled = !ready;
     card.style.cursor = ready ? "pointer" : "default";
@@ -334,7 +334,7 @@ function renderOnboardingStep3(artist) {
   box.appendChild(trajectory);
   box.appendChild(genresDiv);
   box.appendChild(buttonsWrap);
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });   // <-- agregar
+  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });
   onboardingOverlay.appendChild(box);}
 
 function renderOnboardingStep4(artist) {
@@ -1077,8 +1077,8 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.3,
-  nNeighbors: 4.6,
+  descriptorWeight: 0.37,
+  nNeighbors: 4.3,
   minDist: 0.65
 };
 

@@ -12377,7 +12377,7 @@
         "Cumbia"
       ]
     },
-    "cover": "",
+    "cover": "https://cdn.sonemic.net/i/150/s/6c7ee96595e4d1a43ce476f5ac1fc5f7/8282688```",
     "descriptors": [
       "playful",
       "energetic",
@@ -12407,7 +12407,7 @@
         "Slacker Rock"
       ]
     },
-    "cover": "",
+    "cover": "https://cdn.sonemic.net/i/150/w/0148f524220a63454fef2981b639a0e5/5314256",
     "descriptors": [
       "female vocalist",
       "melodic",
@@ -12435,7 +12435,7 @@
 				"Noise Pop"
 			]
 		},
-		"cover": "",
+		"cover": "https://cdn.sonemic.net/i/150/w/bcb608028df0938f572aa4b0dd37d923/6984920",
     "descriptors": [
 			"female vocalist",
 			"melodic",
@@ -12462,7 +12462,7 @@
 				"Indie Pop"
 			]
 		},
-		"cover": "",
+		"cover": "https://cdn.sonemic.net/i/150/w/01eb1aedcd69bf61ff1cf185460d0e11/13455979",
     "descriptors": [
 			"calm",
 			"female vocalist",
@@ -21034,6 +21034,24 @@
     "descriptors": []
   },
   {
+  "id": "sin-la-piel",
+  "album": "Sin la piel",
+  "artist": "Las Pelotas",
+  "year": 2026,
+  "genres": {
+    "primary": [],
+    "secondary": [
+      "Alternative Rock",
+      "Post-Punk",
+      "Hard Rock",
+      "Pop Rock",
+      "Reggae"
+    ]
+  },
+  "cover": "https://cdn.sonemic.net/i/150/w/a06e7b1d7181af978db13b8f08bb7466/15030337",
+  "descriptors": []
+},
+  {
     "id": "ratones-paranoicos",
     "album": "Ratones Paranoicos",
     "artist": "Ratones Paranoicos",
@@ -23610,6 +23628,78 @@
       ]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/95f22c7a68cc5aa15df43a3f5f10c852/12220654",
+    "descriptors": []
+  },
+  {
+    "id": "brote",
+    "album": "Brote",
+    "artist": "El Plan de la Mariposa",
+    "year": 2011,
+    "genres": {
+      "primary": ["Art Rock"],
+      "secondary": ["Latin Rock", "Psychedelic Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/93a5fcfdc105a069908343039b9e1665/4198981",
+    "descriptors": []
+  },
+  {
+    "id": "trance-habitante",
+    "album": "Trance habitante",
+    "artist": "El Plan de la Mariposa",
+    "year": 2013,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/e5a5997773e179d7fc2286fe686b6c70/10123231",
+    "descriptors": []
+  },
+  {
+    "id": "danza-de-antalgia",
+    "album": "Danza de antalgia",
+    "artist": "El Plan de la Mariposa",
+    "year": 2015,
+    "genres": {
+      "primary": ["Art Rock"],
+      "secondary": ["Alternative Rock", "Psychedelic Rock"]
+    },
+    "cover": "",
+    "descriptors": []
+  },
+  {
+    "id": "devorando-intensidad",
+    "album": "Devorando intensidad",
+    "artist": "El Plan de la Mariposa",
+    "year": 2017,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": []
+    },
+    "cover": "",
+    "descriptors": []
+  },
+  {
+    "id": "estado-de-enlace",
+    "album": "Estado de enlace",
+    "artist": "El Plan de la Mariposa",
+    "year": 2020,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/72813e7a106a199c1ca5abd18073b7f2/10123247",
+    "descriptors": []
+  },
+  {
+    "id": "correntada",
+    "album": "Correntada",
+    "artist": "El Plan de la Mariposa",
+    "year": 2024,
+    "genres": {
+      "primary": ["Pop Rock"],
+      "secondary": ["Art Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/e3ee738fe9c4d3726f9f55d8fd3b0e48/12434534",
     "descriptors": []
   },
   {
