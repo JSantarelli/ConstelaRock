@@ -11474,6 +11474,66 @@
     ]
   },
   {
+    "id": "mujer-cebra",
+    "album": "Mujer Cebra",
+    "artist": "Mujer Cebra",
+    "year": 2021,
+    "genres": {
+      "primary": ["Post-Punk Revival", "Alternative Rock"],
+      "secondary": ["Jangle Pop", "Dream Pop", "Shoegaze"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/2527b2158e04ada38da17075c62a2370/9489577",
+    "descriptors": [
+      "sentimental",
+      "male vocalist",
+      "melancholic",
+      "mellow",
+      "passionate",
+      "longing"
+    ]
+  },
+  {
+    "id": "clase-b",
+    "album": "CLASE B",
+    "artist": "Mujer Cebra",
+    "year": 2023,
+    "genres": {
+      "primary": ["Post-Punk Revival", "Alternative Rock"],
+      "secondary": ["Jangle Pop"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/e0c112e89d780a3b0e5be8a3043f4896/11401229",
+    "descriptors": [
+      "energetic",
+      "raw",
+      "male vocalist",
+      "anxious",
+      "noisy",
+      "longing",
+      "melancholic"
+    ]
+  },
+  {
+    "id": "inhibidor",
+    "album": "Inhibidor",
+    "artist": "Mujer Cebra",
+    "year": 2026,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": [
+        "Post-Punk Revival",
+        "Noise Pop",
+        "Space Rock Revival"
+      ]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/97466dd571f92ac6a74879ae7318eb8a/14883596",
+    "descriptors": [
+      "male vocalist",
+      "nocturnal",
+      "longing",
+      "melancholic"
+    ]
+  },
+  {
     "id": "dual",
     "album": "Dual",
     "artist": "1915",
