@@ -11534,6 +11534,105 @@
     ]
   },
   {
+    "id": "buenos-vampiros",
+    "album": "Buenos Vampiros",
+    "artist": "Buenos Vampiros",
+    "year": 2019,
+    "genres": {
+      "primary": ["Post-Punk Revival"],
+      "secondary": ["Gothic Rock", "Dream Pop", "Noise Pop"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/164e9ac15975d65b3efd83de784dec2c/7962508",
+    "descriptors": [
+      "sombre",
+      "bittersweet",
+      "male vocalist",
+      "sentimental",
+      "cold",
+      "female vocalist",
+      "rhythmic",
+      "atmospheric",
+      "quirky",
+      "dark",
+      "melancholic",
+      "melodic",
+      "surreal"
+    ]
+  },
+  {
+    "id": "destruya",
+    "album": "DESTRUYA!",
+    "artist": "Buenos Vampiros",
+    "year": 2022,
+    "genres": {
+      "primary": ["Post-Punk Revival", "Gothic Rock"],
+      "secondary": ["Dream Pop", "Deathrock", "Indie Surf"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/85b6df3e017a43f7bd02674120630edc/10063917",
+    "descriptors": [
+      "melancholic",
+      "female vocalist",
+      "male vocalist",
+      "cold",
+      "energetic",
+      "sentimental",
+      "bittersweet",
+      "angry",
+      "anxious",
+      "rebellious",
+      "nocturnal",
+      "protest",
+      "dark",
+      "sombre",
+      "atmospheric"
+    ]
+  },
+  {
+    "id": "entre-sombras",
+    "album": "Entre sombras",
+    "artist": "Buenos Vampiros",
+    "year": 2024,
+    "genres": {
+      "primary": ["Gothic Rock", "Post-Punk Revival"],
+      "secondary": ["Dream Pop", "Deathrock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/e89096c17228cee4d4068bba74e52e03/12325647",
+    "descriptors": [
+      "dark",
+      "sombre",
+      "female vocalist",
+      "cold",
+      "melancholic",
+      "atmospheric",
+      "male vocalist",
+      "ethereal",
+      "nocturnal",
+      "passionate",
+      "mysterious",
+      "sentimental",
+      "funereal",
+      "noisy",
+      "rhythmic",
+      "melodic",
+      "suspenseful"
+    ]
+  },
+  {
+    "id": "el-ultimo-disparo",
+    "album": "El último disparo",
+    "artist": "Buenos Vampiros",
+    "year": 2026,
+    "genres": {
+      "primary": ["Gothic Rock"],
+      "secondary": ["Deathrock", "Post-Punk Revival", "Dream Pop"]
+    },
+    "cover": "https://cdn.sonemic.net/i/75/w/3497e3c0dafc1538efc71700f0227344/14846152",
+    "descriptors": [
+      "female vocalist",
+      "male vocalist"
+    ]
+  },
+  {
     "id": "dual",
     "album": "Dual",
     "artist": "1915",

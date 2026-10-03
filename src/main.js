@@ -357,7 +357,7 @@ function renderOnboardingStep4(artist) {
     row.addEventListener("mouseenter", () => row.style.background = "#f0f0f0");
     row.addEventListener("mouseleave", () => row.style.background = "transparent");
 
-    const cover = createCoverThumb(a, 40);   // <-- antes: dot de color (const dot = document.createElement("i"); ...)
+    const cover = createCoverThumb(a, 48);   // <-- antes: dot de color (const dot = document.createElement("i"); ...)
 
     const text = document.createElement("span");
     text.textContent = `${a.album} (${a.year})`;
@@ -865,7 +865,7 @@ function renderDetailPanel(i, x, y) {
 
   const headerRow = document.createElement("div");
   headerRow.style.cssText = "display:flex;gap:10px;align-items:flex-start;";
-  headerRow.appendChild(createCoverThumb(a, 48));
+  headerRow.appendChild(createCoverThumb(a, 64));
 
   const headerText = document.createElement("div");
   headerText.appendChild(title);
