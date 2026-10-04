@@ -161,17 +161,13 @@ function setLoadingProgress(pct) {
   });
 }
 
-
-/* ==========================================================
-   PASO 1 — Búsqueda de artista + presets + explorar libremente
-   ========================================================== */
 function renderOnboardingStep1() {
   clearOverlayContent();
   const ready = loadingProgress >= 100;
 
   const frame = obEl("div", "ob-frame");
+  const overlay = obEl("span", "ob-frame-overlay");
 
-  // Acerca del proyecto (arriba a la derecha)
   const aboutBtn = obEl("button", "ob-about");
   aboutBtn.type = "button";
   aboutBtn.setAttribute("aria-expanded", "false");
@@ -187,7 +183,6 @@ function renderOnboardingStep1() {
     aboutBtn.setAttribute("aria-expanded", String(!aboutPanel.hidden));
   });
 
-  // Hero: título, subtítulo, divisor (hace de barra de carga)
   const hero = obEl("header", "ob-hero");
   hero.appendChild(obEl("h1", "ob-title", "ConstelaRock"));
   hero.appendChild(obEl("p", "ob-subtitle", "Mapa 3D del rock nacional argentino"));
@@ -205,7 +200,6 @@ function renderOnboardingStep1() {
   );
   hero.appendChild(progressLabel);
 
-  // Búsqueda
   const searchBlock = obEl("section", "ob-search-block");
   searchBlock.appendChild(obEl("h2", "ob-question", "¿Cuál es tu banda o artista nacional favorito?"));
 
@@ -284,11 +278,11 @@ function renderOnboardingStep1() {
       const row = obEl("div", "ob-result-row", name);
       row.addEventListener("click", () => renderOnboardingStep2(name));
       results.appendChild(row);
-    });
 
-    const searching = query !== "";
-    presets.hidden = searching;
-    footer.hidden = searching;
+      const searching = query !== "";
+      presets.hidden = searching;
+      footer.hidden = searching;
+    });
   });
 
   frame.appendChild(aboutBtn);
@@ -297,6 +291,7 @@ function renderOnboardingStep1() {
   frame.appendChild(searchBlock);
   frame.appendChild(presets);
   frame.appendChild(footer);
+  frame.appendChild(overlay);
   onboardingOverlay.appendChild(frame);
 
   onboardingProgressFillEl = dividerFill;
@@ -332,7 +327,7 @@ function renderOnboardingStep2(artist) {
   const list = obEl("div", "ob-disco-list");
   discog.forEach(a => {
     const row = obEl("div", "ob-disco-row");
-    row.appendChild(createCoverThumb(a, 48));
+    row.appendChild(createCoverThumb(a, 96));
     row.appendChild(obEl("span", "", `${a.album} (${a.year})`));
     row.addEventListener("click", () => finishOnboarding(a.idx));
     list.appendChild(row);
@@ -381,7 +376,11 @@ function createInfoButton() {
   `;
   btn.addEventListener("mouseenter", () => { btn.style.background = "#f5f5f5"; });
   btn.addEventListener("mouseleave", () => { btn.style.background = "#fff"; });
-  btn.addEventListener("click", reopenOnboarding);
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    resetInteractionState();
+    reopenOnboarding();
+  });
   document.body.appendChild(btn);
   return btn;
 }
@@ -391,7 +390,6 @@ function reopenOnboarding() {
   onboardingOverlay = createOnboardingOverlay();
   renderOnboardingStep1();
 }
-
 
 function ensureArtistPanelEl(artist) {
   if (artistPanelEls.has(artist)) return artistPanelEls.get(artist);
@@ -515,7 +513,7 @@ function selectArtistLine(artist) {
 }
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xFFFFFF);
+scene.background = new THREE.Color(0x000000);
 
 const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 1000);
 camera.position.set(0, 0, 90);
@@ -781,7 +779,7 @@ function buildHoverPanelHTML(i) {
   const mainGenre = a.genres.primary[0] ?? "";
   return `
     <div style="display:flex;gap:10px;align-items:flex-start;">
-      ${coverThumbHTML(a, 48)}
+      ${coverThumbHTML(a, 72)}
       <div>
         <strong>${a.album}</strong>
         <div class="artist">${a.artist} · ${a.year}</div>
@@ -2211,18 +2209,26 @@ function setNetworkInsightMode(mode) {
 }
 
 function createNetworkInsightsToggle() {
+  const panel = document.querySelector("#sidePanel");
+  if (!panel) return null;
+
+  const section = document.createElement("div");
+  section.className = "panel-section";
+  section.id = "networkInsightsSection";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Insights de red";
+  section.appendChild(heading);
+
   const container = document.createElement("div");
   container.id = "networkInsights";
-  container.style.cssText = `
-    position: fixed; bottom: 20px; left: 20px; z-index: 900;
-    display: flex; flex-direction: row; gap: 8px; flex-wrap: no-wrap;
-  `;
+  container.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;";
 
   const modes = [
     { mode: "hubs", label: "HUBS" },
     { mode: "bridges", label: "BRIDGES" },
     { mode: "outliers", label: "OUTLIERS" },
-    { mode: "convergence", label: "CONVERGENCE" },
+    { mode: "convergence", label: "CONVERGENCE" },  
     { mode: "divergence", label: "DIVERGENCE" }
   ];
 
@@ -2238,13 +2244,21 @@ function createNetworkInsightsToggle() {
       padding: 8px 14px; border-radius: 18px;
       border: 1px solid #ccc; background: #fff; color: #555;
       font-size: 12px; font-weight: 600; letter-spacing: .5px;
-      cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      cursor: pointer;
     `;
     btn.addEventListener("click", () => setNetworkInsightMode(mode));
     container.appendChild(btn);
   });
 
-  document.body.appendChild(container);
+  section.appendChild(container);
+
+  const genresSection = ui.genreLegend?.closest(".panel-section");
+  if (genresSection && genresSection.parentElement === panel) {
+    panel.insertBefore(section, genresSection);
+  } else {
+    panel.appendChild(section);
+  }
+
   return container;
 }
 
