@@ -14,51 +14,13 @@ let artistPanelEls = new Map();
 let onboardingOverlay = null;
 let onboardingProgressFillEl = null;
 let onboardingProgressLabelEl = null;
+let onboardingSearchInputEl = null;
 let onboardingStartCta = null;
-let onboardingStartCta2 = null;
-let loadingProgress = 0;
-let onboardingHistory = [];
 let onboardingPresetCardEls = [];
+let loadingProgress = 0;
 
-function createOnboardingOverlay() {
-  const overlay = document.createElement("div");
-  overlay.id = "onboardingOverlay";
-  overlay.style.cssText = `
-    position: fixed; inset: 0; background: rgba(255,255,255,0.97); width: 100vw; height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 1000;
-  `;
-  document.body.appendChild(overlay);
-  return overlay;
-}
 
-function addOnboardingChrome(box, { showBack = false, showClose = false } = {}) {
-  box.style.position = "relative";
 
-  if (showClose) {
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "×";
-    closeBtn.setAttribute("aria-label", "Cerrar");
-    closeBtn.style.cssText = "position:absolute;top:8px;left:8px;border:none;background:none;font-size:20px;line-height:1;cursor:pointer;color:#888; display: flex; justify-content: end;";
-    closeBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      closeOnboarding();
-    });
-    box.appendChild(closeBtn);
-  }
-
-  if (showBack) {
-    const backBtn = document.createElement("button");
-    backBtn.textContent = "←";
-    backBtn.setAttribute("aria-label", "Volver");
-    backBtn.style.cssText = "position:absolute;top:8px;right:8px;border:none;background:none;font-size:18px;line-height:1;cursor:pointer;color:#888; display: flex; justify-content: start;";
-    backBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      goOnboardingBack();
-    });
-    box.appendChild(backBtn);
-  }
-}
 
 function resetInteractionState() {
   clearHighlight();
@@ -101,289 +63,308 @@ function applyInsightPreset(mode) {
   setNetworkInsightMode(mode);
 }
 
-function closeOnboarding() {
-  if (!onboardingOverlay) return;
-  onboardingOverlay.remove();
-  onboardingOverlay = null;
-  onboardingHistory = [];
+/* ---------- Constantes ---------- */
+const ONBOARDING_ABOUT_TEXT =
+  "Una constelación que representa la evolución del rock y la música nacional a través de sus discos: cada punto es un álbum, cada cercanía una afinidad de género, cada línea una historia de influencias.";
+
+const OB_SEARCH_ICON_SVG =
+  '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>';
+
+const OB_CHEVRON_SVG =
+  '<svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 3 14 13 26 3"/></svg>';
+
+const ONBOARDING_SECTIONS = [
+  { key: "hallazgos", title: "HALLAZGOS", subtitle: "Patrones, trayectorias, historia" },
+  { key: "explorar",  title: "EXPLORAR",  subtitle: "Corrientes, estilos, géneros" }
+];
+
+const ONBOARDING_PRESETS = [
+  {
+    title: "La Cueva",
+    section: "hallazgos",
+    apply: () => applyArtistsPreset(
+      ['Manal', 'Almendra', 'Los Gatos', 'Vox Dei', 'Vivencia', 'Pedro y Pablo'],
+      { timeMode: true }
+    )
+  },
+  {
+    title: "No tan distintos",
+    section: "hallazgos",
+    apply: () => applyArtistsPreset(
+      ['Soda Stereo', 'Patricio Rey y sus Redonditos de Ricota'],
+      { timeMode: false }
+    )
+  },
+  {
+    title: "Fuera de serie",
+    section: "hallazgos",
+    apply: () => applyInsightPreset('outliers')
+  },
+  {
+    title: "Primavera democrática",
+    section: "explorar",
+    apply: () => applyGenreGroupPreset('New Wave', { timeMode: true })
+  }
+];
+
+
+/* ---------- Helpers ---------- */
+function obEl(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
 }
 
-function goOnboardingBack() {
-  const prev = onboardingHistory.pop();
-  if (prev) prev();
+function createOnboardingOverlay() {
+  const overlay = document.createElement("div");
+  overlay.id = "onboardingOverlay";
+  document.body.appendChild(overlay);
+  return overlay;
 }
 
 function clearOverlayContent() {
   onboardingOverlay.textContent = "";
 }
 
+function removeOnboardingOverlay() {
+  if (onboardingOverlay) onboardingOverlay.remove();
+  onboardingOverlay = null;
+  onboardingProgressFillEl = null;
+  onboardingProgressLabelEl = null;
+  onboardingSearchInputEl = null;
+  onboardingStartCta = null;
+  onboardingPresetCardEls = [];
+}
+
+function closeOnboarding() {
+  removeOnboardingOverlay();
+}
+
 function setLoadingProgress(pct) {
   loadingProgress = Math.max(0, Math.min(100, pct));
+  const ready = loadingProgress >= 100;
+
   if (onboardingProgressFillEl) onboardingProgressFillEl.style.width = `${loadingProgress}%`;
   if (onboardingProgressLabelEl) {
-    onboardingProgressLabelEl.textContent = loadingProgress >= 100 ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`;
+    onboardingProgressLabelEl.textContent = ready ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`;
   }
-  if (onboardingStartCta) {
-    const ready = loadingProgress >= 100;
-    onboardingStartCta.disabled = !ready;
-    onboardingStartCta.style.cursor = ready ? "pointer" : "default";
-    onboardingStartCta.style.opacity = ready ? "1" : "0.4";
+
+  if (onboardingSearchInputEl) {
+    const wasDisabled = onboardingSearchInputEl.disabled;
+    onboardingSearchInputEl.disabled = !ready;
+    if (ready && wasDisabled) onboardingSearchInputEl.focus();
   }
-  if (onboardingStartCta2) {
-    const ready = loadingProgress >= 100;
-    onboardingStartCta2.disabled = !ready;
-    onboardingStartCta2.style.cursor = ready ? "pointer" : "default";
-    onboardingStartCta2.style.opacity = ready ? "1" : "0.4";
-  }
-    const ready = loadingProgress >= 100;
-  onboardingPresetCardEls.forEach(card => {
-    card.disabled = !ready;
-    card.style.cursor = ready ? "pointer" : "default";
-    card.style.opacity = ready ? "1" : "0.4";
+
+  [onboardingStartCta, ...onboardingPresetCardEls].forEach(el => {
+    if (el) el.disabled = !ready;
   });
 }
 
+
+/* ==========================================================
+   PASO 1 — Búsqueda de artista + presets + explorar libremente
+   ========================================================== */
 function renderOnboardingStep1() {
   clearOverlayContent();
-  const box = document.createElement("div");
-  box.style.cssText = "max-width:480px;width:90%;text-align:center;padding:32px;";
+  const ready = loadingProgress >= 100;
 
-  const title = document.createElement("h1");
-  title.textContent = "ConstelaRock";
-  title.style.cssText = "font-size:32px;margin-bottom:16px;";
+  const frame = obEl("div", "ob-frame");
 
-  const desc = document.createElement("p");
-  desc.textContent = "Una constelación que representa la evolución del rock y la música nacional a través de sus discos: cada punto es un álbum, cada cercanía una afinidad de género, cada línea una historia de influencias.";
-  desc.style.cssText = "font-size:15px;color:#555;line-height:1.5;margin-bottom:24px;";
+  // Acerca del proyecto (arriba a la derecha)
+  const aboutBtn = obEl("button", "ob-about");
+  aboutBtn.type = "button";
+  aboutBtn.setAttribute("aria-expanded", "false");
+  aboutBtn.appendChild(document.createTextNode("Acerca del proyecto"));
+  aboutBtn.appendChild(obEl("span", "ob-about-icon", "i"));
 
-  const progressTrack = document.createElement("div");
-  progressTrack.style.cssText = "width:100%;height:6px;background:#eee;border-radius:3px;overflow:hidden;margin-bottom:8px;";
+  const aboutPanel = obEl("div", "ob-about-panel", ONBOARDING_ABOUT_TEXT);
+  aboutPanel.hidden = true;
 
-  const progressFill = document.createElement("div");
-  progressFill.style.cssText = `width:${loadingProgress}%;height:100%;background:#111;transition:width 0.2s ease;`;
-  progressTrack.appendChild(progressFill);
-
-  const progressLabel = document.createElement("div");
-  progressLabel.textContent = loadingProgress >= 100 ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`;
-  progressLabel.style.cssText = "font-size:12px;color:#999;margin-bottom:24px;";
-
-  const cta = document.createElement("button");
-  cta.textContent = "Seleccionar un artista";
-  cta.disabled = loadingProgress < 100;
-  cta.style.cssText = `padding:10px 28px;font-size:15px;border:none;border-radius:24px;background:#111;color:#fff;cursor:${cta.disabled ? "default" : "pointer"};opacity:${cta.disabled ? 0.35 : 1};`;
-  cta.addEventListener("click", () => {
-      if (cta.disabled) return;
-      onboardingHistory.push(() => renderOnboardingStep1());
-      renderOnboardingStep2();
+  aboutBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    aboutPanel.hidden = !aboutPanel.hidden;
+    aboutBtn.setAttribute("aria-expanded", String(!aboutPanel.hidden));
   });
 
-  const cta2 = document.createElement("button");
-  cta2.textContent = "Explorar libremente";
-  cta2.disabled = loadingProgress < 100;
-  cta2.style.cssText = `padding:10px 28px;font-size:15px;border: solid 1px #111;border-radius:24px;background:#fff;color:#111;cursor:${cta2.disabled ? "default" : "pointer"};opacity:${cta2.disabled ? 0.35 : 1};`;
-  cta2.addEventListener("click", e => {
+  // Hero: título, subtítulo, divisor (hace de barra de carga)
+  const hero = obEl("header", "ob-hero");
+  hero.appendChild(obEl("h1", "ob-title", "ConstelaRock"));
+  hero.appendChild(obEl("p", "ob-subtitle", "Mapa 3D del rock nacional argentino"));
+
+  const divider = obEl("div", "ob-divider");
+  const dividerFill = obEl("div", "ob-divider-fill");
+  dividerFill.style.width = `${loadingProgress}%`;
+  divider.appendChild(dividerFill);
+  hero.appendChild(divider);
+
+  const progressLabel = obEl(
+    "div",
+    "ob-progress-label",
+    ready ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`
+  );
+  hero.appendChild(progressLabel);
+
+  // Búsqueda
+  const searchBlock = obEl("section", "ob-search-block");
+  searchBlock.appendChild(obEl("h2", "ob-question", "¿Cuál es tu banda o artista nacional favorito?"));
+
+  const search = obEl("div", "ob-search");
+  const field = obEl("div", "ob-search-field");
+
+  const searchIcon = obEl("span", "ob-search-icon");
+  searchIcon.innerHTML = OB_SEARCH_ICON_SVG;
+
+  const input = obEl("input", "ob-search-input");
+  input.type = "text";
+  input.placeholder = "Busca artistas de Rock Nacional Argentino";
+  input.setAttribute("aria-label", "Buscar artista");
+  input.autocomplete = "off";
+  input.disabled = !ready;
+
+  field.appendChild(searchIcon);
+  field.appendChild(input);
+
+  const results = obEl("div", "ob-results");
+  search.appendChild(field);
+  search.appendChild(results);
+  searchBlock.appendChild(search);
+
+  // Presets (HALLAZGOS / EXPLORAR)
+  onboardingPresetCardEls = [];
+  const presets = obEl("section", "ob-presets");
+
+  ONBOARDING_SECTIONS.forEach(section => {
+    const group = obEl("div", "ob-preset-group");
+    group.appendChild(obEl("h2", "ob-preset-title", section.title));
+    group.appendChild(obEl("p", "ob-preset-subtitle", section.subtitle));
+
+    const row = obEl("div", "ob-card-row");
+    ONBOARDING_PRESETS
+      .filter(preset => preset.section === section.key)
+      .forEach(preset => {
+        const card = obEl("button", "ob-card", preset.title);
+        card.type = "button";
+        card.disabled = !ready;
+        card.addEventListener("click", e => {
+          e.stopPropagation();
+          if (card.disabled) return;
+          removeOnboardingOverlay();
+          preset.apply();
+        });
+        onboardingPresetCardEls.push(card);
+        row.appendChild(card);
+      });
+
+    group.appendChild(row);
+    presets.appendChild(group);
+  });
+
+  // Footer: explorar libremente
+  const footer = obEl("footer", "ob-footer");
+  const exploreBtn = obEl("button", "ob-explore", "Quiero explorar libremente");
+  exploreBtn.type = "button";
+  exploreBtn.disabled = !ready;
+  exploreBtn.addEventListener("click", e => {
     e.stopPropagation();
     closeOnboarding();
   });
-  box.appendChild(title);
-  box.appendChild(desc);
-  box.appendChild(progressTrack);
-  box.appendChild(progressLabel);
-  box.appendChild(cta);
-  box.appendChild(cta2);
-  box.appendChild(buildOnboardingPresetCards());
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0, showClose: onboardingHistory.length = 0 });
-  onboardingOverlay.appendChild(box);
+  const chevron = obEl("span", "ob-chevron");
+  chevron.innerHTML = OB_CHEVRON_SVG;
+  footer.appendChild(exploreBtn);
+  footer.appendChild(chevron);
 
-  onboardingProgressFillEl = progressFill;
-  onboardingProgressLabelEl = progressLabel;
-  onboardingStartCta = cta;
-  onboardingStartCta2 = cta2;
-
-  function buildOnboardingPresetCards() {
-    onboardingPresetCardEls = [];
-    const wrap = document.createElement("div");
-    wrap.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px;";
-
-    const ready = loadingProgress >= 100;
-
-    ONBOARDING_PRESETS.forEach(preset => {
-      const card = document.createElement("button");
-      card.textContent = preset.title;
-      card.disabled = !ready;
-      card.style.cssText = `padding:8px 14px;font-size:13px;border:1px solid #ddd;border-radius:16px;background:#fafafa;color:#333;cursor:${ready ? "pointer" : "default"};opacity:${ready ? "1" : "0.4"};`;
-      card.addEventListener("mouseenter", () => { if (!card.disabled) card.style.background = "#f0f0f0"; });
-      card.addEventListener("mouseleave", () => { card.style.background = "#fafafa"; });
-      card.addEventListener("click", e => {
-        e.stopPropagation();
-        if (card.disabled) return;
-        onboardingOverlay.remove();
-        onboardingOverlay = null;
-        preset.apply();
-      });
-      onboardingPresetCardEls.push(card);
-      wrap.appendChild(card);
-    });
-
-    return wrap;
-  }
-
-  
-}
-
-function renderOnboardingStep2() {
-  clearOverlayContent();
-  const box = document.createElement("div");
-  box.style.cssText = "max-width:420px;width:90%;text-align:center;padding:32px;";
-
-  const question = document.createElement("h2");
-  question.textContent = "¿Cuál es tu banda o artista nacional favorito?";
-  question.style.cssText = "font-size:20px;margin-bottom:20px;";
-
-  const input = document.createElement("input");
-  input.type = "text";
-  input.placeholder = "Escribí un artista…";
-  input.style.cssText = "width:100%;padding:10px 14px;font-size:15px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;";
-
-  const results = document.createElement("div");
-  results.style.cssText = "margin-top:8px;text-align:left;max-height:240px;overflow-y:auto;";
-
+  // Al buscar: se ocultan presets y CTA de explorar. Al vaciar el campo, vuelven.
   input.addEventListener("input", () => {
-    const matches = computeArtistMatches(input.value);
+    const query = input.value.trim();
+    const matches = computeArtistMatches(query);
+
     results.textContent = "";
     matches.forEach(name => {
-      const row = document.createElement("div");
-      row.textContent = name;
-      row.style.cssText = "padding:8px 10px;cursor:pointer;border-radius:6px;font-size:14px;";
-      row.addEventListener("mouseenter", () => row.style.background = "#f0f0f0");
-      row.addEventListener("mouseleave", () => row.style.background = "transparent");
-      row.addEventListener("click", () => {
-          onboardingHistory.push(() => renderOnboardingStep2());
-          renderOnboardingStep3(name);
-      });
+      const row = obEl("div", "ob-result-row", name);
+      row.addEventListener("click", () => renderOnboardingStep2(name));
       results.appendChild(row);
     });
+
+    const searching = query !== "";
+    presets.hidden = searching;
+    footer.hidden = searching;
   });
 
-  box.appendChild(question);
-  box.appendChild(input);
-  box.appendChild(results);
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });
-  onboardingOverlay.appendChild(box);
-  input.focus();
+  frame.appendChild(aboutBtn);
+  frame.appendChild(aboutPanel);
+  frame.appendChild(hero);
+  frame.appendChild(searchBlock);
+  frame.appendChild(presets);
+  frame.appendChild(footer);
+  onboardingOverlay.appendChild(frame);
+
+  onboardingProgressFillEl = dividerFill;
+  onboardingProgressLabelEl = progressLabel;
+  onboardingStartCta = exploreBtn;
+  onboardingSearchInputEl = input;
+
+  if (ready) input.focus();
 }
 
-function renderOnboardingStep3(artist) {
+
+/* ==========================================================
+   PASO 2 — Discos del artista elegido (solo si hubo búsqueda)
+   ========================================================== */
+function renderOnboardingStep2(artist) {
   clearOverlayContent();
-  const stats = computeArtistStats(artist);
-  if (!stats) { renderOnboardingStep2(); return; }
+  const discog = getArtistDiscography(artist);
+  if (!discog.length) { renderOnboardingStep1(); return; }
 
-  const box = document.createElement("div");
-  box.style.cssText = "max-width:420px;width:90%;text-align:center;padding:32px;";
+  const box = obEl("div", "ob-box");
 
-  const title = document.createElement("h2");
-  title.textContent = stats.artist;
-  title.style.cssText = "font-size:24px;margin-bottom:8px;";
-
-  const trajectory = document.createElement("div");
-  trajectory.textContent = stats.firstYear === stats.lastYear
-    ? `${stats.firstYear}`
-    : `${stats.firstYear} – ${stats.lastYear}`;
-  trajectory.style.cssText = "color:#888;font-size:13px;margin-bottom:12px;";
-
-  const genresDiv = document.createElement("div");
-  genresDiv.style.cssText = "margin-bottom:28px;";
-  stats.primaryGenres.forEach(g => {
-    const span = document.createElement("span");
-    span.textContent = g;
-    span.style.cssText = "display:inline-block;margin:2px;padding:4px 10px;border-radius:12px;background:#111;color:#fff;font-size:12px;";
-    genresDiv.appendChild(span);
-  });
-  stats.secondaryGenres.forEach(g => {
-    const span = document.createElement("span");
-    span.textContent = g;
-    span.style.cssText = "display:inline-block;margin:2px;padding:4px 10px;border-radius:12px;background:#eee;color:#555;font-size:12px;";
-    genresDiv.appendChild(span);
+  const backBtn = obEl("button", "ob-chrome-btn", "←");
+  backBtn.type = "button";
+  backBtn.setAttribute("aria-label", "Volver");
+  backBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    renderOnboardingStep1();
   });
 
-  const buttonsWrap = document.createElement("div");
-  buttonsWrap.style.cssText = "display:flex;flex-direction:column;gap:10px;align-items:center;";
+  const artistName = obEl("p", "ob-box-artist", artist);
+  const question = obEl("h2", "ob-box-question", "¿Con qué disco te gustaría comenzar el recorrido?");
 
-  const ctaLocate = document.createElement("button");
-  ctaLocate.textContent = "Ubicar artista en la constelación";
-  ctaLocate.style.cssText = "padding:10px 24px;font-size:14px;border:none;border-radius:24px;background:#111;color:#fff;cursor:pointer;width:100%;max-width:300px;";
-  ctaLocate.addEventListener("click", () => {
+  const list = obEl("div", "ob-disco-list");
+  discog.forEach(a => {
+    const row = obEl("div", "ob-disco-row");
+    row.appendChild(createCoverThumb(a, 48));
+    row.appendChild(obEl("span", "", `${a.album} (${a.year})`));
+    row.addEventListener("click", () => finishOnboarding(a.idx));
+    list.appendChild(row);
+  });
+
+  // Acción que existía en el flujo anterior: ubicar al artista sin elegir disco
+  const locateBtn = obEl("button", "ob-link", "Ubicar artista en la constelación");
+  locateBtn.type = "button";
+  locateBtn.addEventListener("click", () => {
     addArtistFilter(artist);
     refreshFilterOptions();
     selectArtistLine(artist);
     finishOnboardingToArtist();
   });
 
-  const ctaBrowse = document.createElement("button");
-  ctaBrowse.textContent = "Buscar un disco del artista";
-  ctaBrowse.style.cssText = "padding:10px 24px;font-size:14px;border:1px solid #111;border-radius:24px;background:#fff;color:#111;cursor:pointer;width:100%;max-width:300px;";
-  ctaBrowse.addEventListener("click", () => {
-      onboardingHistory.push(() => renderOnboardingStep3(artist));
-      renderOnboardingStep4(artist);
-  });
-
-  buttonsWrap.appendChild(ctaLocate);
-  buttonsWrap.appendChild(ctaBrowse);
-
-  box.appendChild(title);
-  box.appendChild(trajectory);
-  box.appendChild(genresDiv);
-  box.appendChild(buttonsWrap);
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });
-  onboardingOverlay.appendChild(box);}
-
-function renderOnboardingStep4(artist) {
-  clearOverlayContent();
-  const discog = getArtistDiscography(artist);
-
-  const box = document.createElement("div");
-  box.style.cssText = "max-width:420px;width:90%;text-align:center;padding:32px;";
-
-  const question = document.createElement("h2");
-  question.textContent = "¿Con qué disco te gustaría comenzar el recorrido?";
-  question.style.cssText = "font-size:20px;margin-bottom:20px;";
-
-  const list = document.createElement("div");
-  list.style.cssText = "text-align:left;max-height:320px;overflow-y:auto;";
-
-  discog.forEach(a => {
-    const row = document.createElement("div");
-    row.style.cssText = "display:flex;align-items:center;gap:10px;padding:8px 10px;cursor:pointer;border-radius:6px;";
-    row.addEventListener("mouseenter", () => row.style.background = "#f0f0f0");
-    row.addEventListener("mouseleave", () => row.style.background = "transparent");
-
-    const cover = createCoverThumb(a, 48);   // <-- antes: dot de color (const dot = document.createElement("i"); ...)
-
-    const text = document.createElement("span");
-    text.textContent = `${a.album} (${a.year})`;
-    text.style.fontSize = "14px";
-
-    row.appendChild(cover);
-    row.appendChild(text);
-    row.addEventListener("click", () => finishOnboarding(a.idx));
-    list.appendChild(row);
-  });
-
+  box.appendChild(backBtn);
+  box.appendChild(artistName);
   box.appendChild(question);
   box.appendChild(list);
-  addOnboardingChrome(box, { showBack: onboardingHistory.length > 0 });
+  box.appendChild(locateBtn);
   onboardingOverlay.appendChild(box);
 }
 
+
+/* ---------- Salidas del onboarding ---------- */
 function finishOnboarding(idx) {
-  onboardingOverlay.remove();
-  onboardingOverlay = null;
+  removeOnboardingOverlay();
   selectAlbum(idx);
 }
 
 function finishOnboardingToArtist() {
-  onboardingOverlay.remove();
-  onboardingOverlay = null;
+  removeOnboardingOverlay();
 }
 
 function createInfoButton() {
@@ -406,11 +387,11 @@ function createInfoButton() {
 }
 
 function reopenOnboarding() {
-  if (onboardingOverlay) return;
-  onboardingHistory = [];
+  removeOnboardingOverlay();
   onboardingOverlay = createOnboardingOverlay();
   renderOnboardingStep1();
 }
+
 
 function ensureArtistPanelEl(artist) {
   if (artistPanelEls.has(artist)) return artistPanelEls.get(artist);
@@ -1137,31 +1118,6 @@ const CONNECTION_CONFIG = {
   descendantOpacity: 0.8,
   secondLevelOpacity: 0.65,
 };
-
-const ONBOARDING_PRESETS = [
-  {
-    title: "La Cueva",
-    apply: () => applyArtistsPreset(
-      ['Manal', 'Almendra', 'Los Gatos', 'Vox Dei', 'Vivencia', 'Pedro y Pablo'],
-      { timeMode: true }
-    )
-  },
-  {
-    title: "No tan distintos",
-    apply: () => applyArtistsPreset(
-      ['Soda Stereo', 'Patricio Rey y sus Redonditos de Ricota'],
-      { timeMode: false }
-    )
-  },
-  {
-    title: "Primavera democrática",
-    apply: () => applyGenreGroupPreset('New Wave', { timeMode: true })
-  },
-  {
-    title: "Fuera de serie",
-    apply: () => applyInsightPreset('outliers')
-  }
-];
 
 const NETWORK_INSIGHTS_CONFIG = {
   topCount: 30,

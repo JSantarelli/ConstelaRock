@@ -93,3 +93,435 @@
 .suggestion-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .row-highlight { animation: flash 1.2s ease; }
 @keyframes flash { 0% { background: #fff3b0; } 100% { background: transparent; } }
+
+/* ==========================================================
+   Onboarding — pantalla inicial (búsqueda + presets + explorar)
+   Cargar DESPUÉS de style.css:
+   <link rel="stylesheet" href="./onboarding.css">
+   ========================================================== */
+
+#onboardingOverlay {
+  --ob-bg: #2d2d2d;
+  --ob-fg: #ffffff;
+  --ob-muted: rgba(255, 255, 255, 0.6);
+  --ob-line: rgba(255, 255, 255, 0.9);
+  --ob-hover: rgba(255, 255, 255, 0.1);
+  --ob-accent: #6b3fe0;
+
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  overflow-y: auto;
+  background: var(--ob-bg);
+  color: var(--ob-fg);
+}
+
+#onboardingOverlay button {
+  font-family: inherit;
+}
+
+#onboardingOverlay [hidden] {
+  display: none !important;
+}
+
+/* ---------- Pantalla 1 ---------- */
+
+.ob-frame {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 28px 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Acerca del proyecto */
+.ob-about {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--ob-fg);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ob-about-icon {
+  width: 26px;
+  height: 26px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ob-accent);
+  color: var(--ob-accent);
+  font: italic 700 15px/1 serif;
+}
+
+.ob-about-panel {
+  position: absolute;
+  top: 68px;
+  right: 48px;
+  z-index: 2;
+  width: min(320px, calc(100% - 96px));
+  padding: 16px 18px;
+  box-sizing: border-box;
+  border: 1px solid var(--ob-line);
+  border-radius: 8px;
+  background: var(--ob-bg);
+  color: var(--ob-fg);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Hero */
+.ob-hero {
+  margin-top: 72px;
+  text-align: center;
+}
+
+.ob-title {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.ob-subtitle {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* La línea divisoria hace de barra de carga */
+.ob-divider {
+  width: 44px;
+  height: 2px;
+  margin: 28px auto 0;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+
+.ob-divider-fill {
+  width: 0;
+  height: 100%;
+  background: var(--ob-fg);
+  transition: width 0.2s ease;
+}
+
+.ob-progress-label {
+  min-height: 16px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ob-muted);
+}
+
+/* Búsqueda */
+.ob-search-block {
+  margin-top: 28px;
+  width: 100%;
+  text-align: center;
+}
+
+.ob-question {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ob-search {
+  width: min(480px, 100%);
+  margin: 16px auto 0;
+  text-align: left;
+}
+
+.ob-search-field {
+  height: 52px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  border: 1px solid var(--ob-line);
+  border-radius: 28px;
+}
+
+.ob-search-field:focus-within {
+  border-color: var(--ob-accent);
+}
+
+.ob-search-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--ob-accent);
+}
+
+.ob-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ob-fg);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ob-search-input::placeholder {
+  color: var(--ob-fg);
+  opacity: 1;
+}
+
+.ob-search-input:disabled,
+.ob-search-field:has(.ob-search-input:disabled) {
+  opacity: 0.4;
+}
+
+.ob-results {
+  max-height: 240px;
+  margin-top: 8px;
+  overflow-y: auto;
+}
+
+.ob-result-row {
+  padding: 9px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ob-result-row:hover {
+  background: var(--ob-hover);
+}
+
+/* Presets */
+.ob-presets {
+  width: min(1100px, 100%);
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+}
+
+.ob-preset-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.ob-preset-subtitle {
+  margin: 4px 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ob-card-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.ob-card {
+  min-height: 140px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  border: 1px solid var(--ob-line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ob-fg);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ob-card:hover:not(:disabled) {
+  background: var(--ob-hover);
+}
+
+.ob-card:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Footer: explorar libremente */
+.ob-footer {
+  margin-top: auto;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ob-explore {
+  padding: 10px 22px;
+  border: 1px solid var(--ob-line);
+  border-radius: 24px;
+  background: transparent;
+  color: var(--ob-fg);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ob-explore:hover:not(:disabled) {
+  background: var(--ob-hover);
+}
+
+.ob-explore:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ob-chevron {
+  display: flex;
+  color: var(--ob-fg);
+}
+
+/* ---------- Pantallas 3 y 4 (artista / discos) ---------- */
+
+.ob-box {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  margin: auto;
+  padding: 32px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.ob-chrome-btn {
+  position: absolute;
+  top: 8px;
+  border: none;
+  background: none;
+  color: var(--ob-muted);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ob-chrome-btn:hover {
+  color: var(--ob-fg);
+}
+
+.ob-chrome-btn--close { left: 8px; font-size: 20px; }
+.ob-chrome-btn--back  { right: 8px; font-size: 18px; }
+
+.ob-box-title {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.ob-box-question {
+  margin: 0 0 20px;
+  font-size: 20px;
+}
+
+.ob-meta {
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--ob-muted);
+}
+
+.ob-pills {
+  margin-bottom: 28px;
+}
+
+.ob-pill {
+  display: inline-block;
+  margin: 2px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.ob-pill--primary {
+  background: var(--ob-fg);
+  color: #111;
+}
+
+.ob-pill--secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--ob-fg);
+}
+
+.ob-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.ob-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ob-btn--primary {
+  border: 1px solid var(--ob-fg);
+  background: var(--ob-fg);
+  color: #111;
+}
+
+.ob-btn--secondary {
+  border: 1px solid var(--ob-line);
+  background: transparent;
+  color: var(--ob-fg);
+}
+
+.ob-btn--secondary:hover {
+  background: var(--ob-hover);
+}
+
+.ob-disco-list {
+  max-height: 320px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.ob-disco-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ob-disco-row:hover {
+  background: var(--ob-hover);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+  .ob-frame { padding: 20px 20px 28px; }
+  .ob-about { top: 20px; right: 20px; }
+  .ob-about-panel { top: 58px; right: 20px; width: calc(100% - 40px); }
+  .ob-hero { margin-top: 64px; }
+  .ob-presets { grid-template-columns: 1fr; gap: 32px; }
+  .ob-card-row { grid-template-columns: repeat(2, 1fr); }
+}
