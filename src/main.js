@@ -318,6 +318,7 @@ function renderOnboardingStep2(artist) {
   const locateBtn = obEl("button", "ob-btn--link", "Navegar trayectoria del artista");
   locateBtn.type = "button";
   locateBtn.addEventListener("click", () => {
+    resetNetworkInsightMode();
     addArtistFilter(artist);
     refreshFilterOptions();
     selectArtistLine(artist);
@@ -520,6 +521,7 @@ function buildArtistHoverHTML(artist) {
 }
 
 function selectArtistLine(artist) {
+  resetNetworkInsightMode();
   selectedIndices.clear();
   clearSelectionOutlines();
   clearMultiSelectPanels();
@@ -838,11 +840,11 @@ function renderDetailPanel(i, x, y) {
   artistName.style.textDecoration = "underline";
   artistName.addEventListener("click", e => {
     e.stopPropagation();
+    resetNetworkInsightMode();
     clearHighlight();
     addArtistFilter(a.artist);
     selectArtistLine(a.artist);
   });
-
   artistLine.appendChild(artistName);
   artistLine.appendChild(document.createTextNode(` · ${a.year}`));
 
@@ -961,7 +963,7 @@ function selectAlbum(idx, additive = false) {
   const mesh = pointMeshes[idx];
   const point = points[idx];
   if (!mesh || !point) return;
-
+  resetNetworkInsightMode();
   if (additive) {
     if (selectedIndices.has(idx)) {
       selectedIndices.delete(idx);
@@ -1064,8 +1066,26 @@ function animate() {
 }
 
 function getInteractivePointMeshes() {
-  if (activeFilters.artists.size === 0) return pointMeshes;
-  return pointMeshes.filter(m => activeFilters.artists.has(points[m.userData.index].artist));
+  return pointMeshes.filter(m => isPointInteractive(m.userData.index));
+}
+
+function currentInsightTopSet() {
+  return {
+    bridges: bridgeTopIndices,
+    hubs: hubTopIndices,
+    outliers: outlierTopIndices,
+    convergence: convergenceTopIndices,
+    divergence: divergenceTopIndices
+  }[networkInsightMode] ?? null;
+}
+
+function isPointInteractive(i) {
+  const insightSet = currentInsightTopSet();
+  const passesFilters = filteredIndices === null || filteredIndices.has(i);
+  const passesInsight = insightSet === null || insightSet.has(i);
+  if (passesFilters && passesInsight) return true;
+
+  return selectedIndices.has(i) || activeGraphIndices.has(i);
 }
 
 const WEIGHTS = {
@@ -1140,7 +1160,11 @@ const NETWORK_INSIGHTS_CONFIG = {
   topCount: 30,
   dimOpacity: 0.15,
   outlierK: 5,
-  minGenreSpread: 3
+  minGenreSpread: 3,
+  convergenceMinSpread: 2,     
+  convergenceMinContributors: 3,
+  divergenceMinSpread: 2,
+  divergenceDescendants: 6
 };
 
 let networkInsightMode = null;
@@ -2240,11 +2264,11 @@ function createNetworkInsightsToggle() {
   container.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;";
 
   const modes = [
-    { mode: "hubs", label: "HUBS" },
-    { mode: "bridges", label: "BRIDGES" },
-    { mode: "outliers", label: "OUTLIERS" },
-    { mode: "convergence", label: "CONVERGENCE" },  
-    { mode: "divergence", label: "DIVERGENCE" }
+    { mode: "hubs", label: "Hubs" },
+    { mode: "bridges", label: "Puentes entre géneros" },
+    { mode: "outliers", label: "Fueras de serie" },
+    { mode: "convergence", label: "Discos más influyentes" },  
+    { mode: "divergence", label: "Influencia más diversa" }
   ];
 
   modes.forEach(({ mode, label }) => {
@@ -2795,14 +2819,14 @@ function computeNetworkMetrics() {
 
   convergenceTopIndices = new Set(
     points.map((_, i) => i)
-      .filter(i => convergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.minGenreSpread)
+      .filter(i => convergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.convergenceMinSpread)
       .sort((a, b) => convergenceScore.get(b) - convergenceScore.get(a))
       .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
   );
 
   divergenceTopIndices = new Set(
     points.map((_, i) => i)
-      .filter(i => divergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.minGenreSpread)
+      .filter(i => divergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.divergenceMinSpread)
       .sort((a, b) => divergenceScore.get(b) - divergenceScore.get(a))
       .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
   );
@@ -2817,7 +2841,7 @@ function computeOutlierScores() {
   const scores = new Map();
   points.forEach((p, i) => {
     const dists = points
-      .filter(q => q.artist !== p.artist)
+      .filter((_, j) => j !== i)
       .map(q => p.umapVec.distanceTo(q.umapVec))
       .sort((a, b) => a - b)
       .slice(0, NETWORK_INSIGHTS_CONFIG.outlierK);
@@ -2827,27 +2851,68 @@ function computeOutlierScores() {
 }
 
 function computeConvergenceDivergence() {
-  const convergenceGenres = new Map();
-  const divergenceGenres = new Map();
+  const convergenceCounts = new Map();
+  const divergenceCounts = new Map();
   points.forEach((_, i) => {
-    convergenceGenres.set(i, new Set());
-    divergenceGenres.set(i, new Set());
+    convergenceCounts.set(i, new Map());
+    divergenceCounts.set(i, new Map());
   });
 
   points.forEach((p, idx) => {
-    const { ancestor, descendants } = computeAncestorDescendants(idx);
-    if (ancestor) convergenceGenres.get(ancestor.idx).add(genreGroupOf(p));
-    descendants.forEach(d => divergenceGenres.get(idx).add(genreGroupOf(d)));
+    const { ancestor } = computeAncestorDescendants(idx);
+    if (ancestor) bumpCount(convergenceCounts.get(ancestor.idx), primaryGenreOf(p));
+
+    computeDescendantsOnly(idx, NETWORK_INSIGHTS_CONFIG.divergenceDescendants)
+      .forEach(d => bumpCount(divergenceCounts.get(idx), primaryGenreOf(d)));
   });
 
   const convergence = new Map();
   const divergence = new Map();
   points.forEach((_, i) => {
-    convergence.set(i, convergenceGenres.get(i).size);
-    divergence.set(i, divergenceGenres.get(i).size);
+    const cc = convergenceCounts.get(i);
+    const contributors = [...cc.values()].reduce((s, n) => s + n, 0);
+    convergence.set(
+      i,
+      contributors >= NETWORK_INSIGHTS_CONFIG.convergenceMinContributors ? effectiveGenres(cc) : 0
+    );
+    divergence.set(i, effectiveGenres(divergenceCounts.get(i)));
   });
 
   return { convergence, divergence };
+}
+
+function primaryGenreOf(p) {
+  return p.genres.primary[0] ?? "Sin género";
+}
+
+function effectiveGenres(counts) {
+  const total = [...counts.values()].reduce((s, n) => s + n, 0);
+  if (!total) return 0;
+  let h = 0;
+  counts.forEach(n => {
+    const p = n / total;
+    h -= p * Math.log(p);
+  });
+  return Math.exp(h);
+}
+
+function bumpCount(map, key) {
+  map.set(key, (map.get(key) ?? 0) + 1);
+}
+
+function computeDescendantsOnly(idx, k) {
+  const origin = points[idx];
+  const seenArtists = new Set();
+  return points
+    .filter(p => p.idx !== idx && p.artist !== origin.artist && p.year > origin.year)
+    .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
+    .sort((a, b) => a.d - b.d)
+    .reduce((acc, { p }) => {
+      if (acc.length >= k || seenArtists.has(p.artist)) return acc;
+      seenArtists.add(p.artist);
+      acc.push(p);
+      return acc;
+    }, []);
 }
 
 function buildSectionHeader(text) {
