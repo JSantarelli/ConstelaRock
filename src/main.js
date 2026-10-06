@@ -147,8 +147,11 @@ function setLoadingProgress(pct) {
 
   if (onboardingProgressFillEl) onboardingProgressFillEl.style.width = `${loadingProgress}%`;
   if (onboardingProgressLabelEl) {
-    onboardingProgressLabelEl.textContent = ready ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`;
+    onboardingProgressLabelEl.textContent = ready ? "" : `Cargando… ${Math.round(loadingProgress)}%`;
   }
+
+  const frame = onboardingOverlay?.querySelector(".ob-frame");
+  if (frame) frame.classList.toggle("is-loading", !ready);
 
   if (onboardingSearchInputEl) {
     const wasDisabled = onboardingSearchInputEl.disabled;
@@ -167,6 +170,7 @@ function renderOnboardingStep1() {
 
   const frame = obEl("div", "ob-frame");
   const overlay = obEl("span", "ob-frame-overlay");
+  if (frame) frame.classList.toggle("is-loading", !ready);
 
   const aboutBtn = obEl("button", "ob-about");
   aboutBtn.type = "button";
@@ -184,20 +188,19 @@ function renderOnboardingStep1() {
   });
 
   const hero = obEl("header", "ob-hero");
-  hero.appendChild(obEl("h1", "ob-title", "ConstelaRock"));
-  hero.appendChild(obEl("p", "ob-subtitle", "Mapa 3D del rock nacional argentino"));
-
+  hero.appendChild(obEl("span", "ob-header-logo"));
+  const logo = obEl("span", "ob-header-logo");
   const divider = obEl("div", "ob-divider");
   const dividerFill = obEl("div", "ob-divider-fill");
   dividerFill.style.width = `${loadingProgress}%`;
-  divider.appendChild(dividerFill);
   hero.appendChild(divider);
 
   const progressLabel = obEl(
     "div",
     "ob-progress-label",
-    ready ? "Listo" : `Cargando… ${Math.round(loadingProgress)}%`
+    ready ? "" : `Cargando… ${Math.round(loadingProgress)}%`
   );
+
   hero.appendChild(progressLabel);
 
   const searchBlock = obEl("section", "ob-search-block");
@@ -224,7 +227,6 @@ function renderOnboardingStep1() {
   search.appendChild(results);
   searchBlock.appendChild(search);
 
-  // Presets (HALLAZGOS / EXPLORAR)
   onboardingPresetCardEls = [];
   const presets = obEl("section", "ob-presets");
 
@@ -268,7 +270,6 @@ function renderOnboardingStep1() {
   footer.appendChild(exploreBtn);
   footer.appendChild(chevron);
 
-  // Al buscar: se ocultan presets y CTA de explorar. Al vaciar el campo, vuelven.
   input.addEventListener("input", () => {
     const query = input.value.trim();
     const matches = computeArtistMatches(query);
@@ -284,8 +285,9 @@ function renderOnboardingStep1() {
       footer.hidden = searching;
     });
   });
-
+  
   frame.appendChild(aboutBtn);
+  frame.appendChild(logo);
   frame.appendChild(aboutPanel);
   frame.appendChild(hero);
   frame.appendChild(searchBlock);
@@ -302,39 +304,18 @@ function renderOnboardingStep1() {
   if (ready) input.focus();
 }
 
-
-/* ==========================================================
-   PASO 2 — Discos del artista elegido (solo si hubo búsqueda)
-   ========================================================== */
 function renderOnboardingStep2(artist) {
   clearOverlayContent();
   const discog = getArtistDiscography(artist);
-  if (!discog.length) { renderOnboardingStep1(); return; }
+  const stats = computeArtistStats(artist);
+  if (!discog.length || !stats) { renderOnboardingStep1(); return; }
 
-  const box = obEl("div", "ob-box");
+  const box = obEl("div", "ob-box artist");
+  const overlay = obEl("span", "ob-frame-overlay");
 
-  const backBtn = obEl("button", "ob-chrome-btn", "←");
-  backBtn.type = "button";
-  backBtn.setAttribute("aria-label", "Volver");
-  backBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    renderOnboardingStep1();
-  });
+  const header = obEl("div", "ob-box-header");
 
-  const artistName = obEl("p", "ob-box-artist", artist);
-  const question = obEl("h2", "ob-box-question", "¿Con qué disco te gustaría comenzar el recorrido?");
-
-  const list = obEl("div", "ob-disco-list");
-  discog.forEach(a => {
-    const row = obEl("div", "ob-disco-row");
-    row.appendChild(createCoverThumb(a, 96));
-    row.appendChild(obEl("span", "", `${a.album} (${a.year})`));
-    row.addEventListener("click", () => finishOnboarding(a.idx));
-    list.appendChild(row);
-  });
-
-  // Acción que existía en el flujo anterior: ubicar al artista sin elegir disco
-  const locateBtn = obEl("button", "ob-link", "Ubicar artista en la constelación");
+  const locateBtn = obEl("button", "ob-btn--link", "Navegar trayectoria del artista");
   locateBtn.type = "button";
   locateBtn.addEventListener("click", () => {
     addArtistFilter(artist);
@@ -343,11 +324,49 @@ function renderOnboardingStep2(artist) {
     finishOnboardingToArtist();
   });
 
+  header.appendChild(obEl("p", "ob-box-artist", artist));
+  
+  if (stats.primaryGenres.length) {
+    const tags = obEl("div", "ob-tags");
+    stats.primaryGenres.forEach(g => tags.appendChild(obEl("span", "ob-tag", g)));
+    header.appendChild(tags);
+  }
+  header.appendChild(obEl("p", "ob-box-meta", `${stats.firstYear} - ${stats.lastYear}`));
+  header.appendChild(locateBtn);
+
+  const list = obEl("div", "ob-disco-list");
+  discog.forEach(a => {
+    const row = obEl("div", "ob-disco-row");
+    row.appendChild(createCoverThumb(a, 124));
+
+    const info = obEl("div", "ob-disco-info");
+    info.appendChild(obEl("span", "ob-disco-title", `${a.album} (${a.year})`));
+
+    if (a.genres.primary.length) {
+      const tags = obEl("div", "ob-tags");
+      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-tag", g)));
+      info.appendChild(tags);
+    }
+
+    row.appendChild(info);
+    row.addEventListener("click", () => finishOnboarding(a.idx));
+    list.appendChild(row);
+  });
+
+  header.appendChild(list);
+  const logo2 = obEl("span", "ob-header-logo");
+  const backBtn = obEl("button", "ob-chrome-btn", "← Volver atrás");
+  backBtn.type = "button";
+  backBtn.setAttribute("aria-label", "Volver");
+  backBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    renderOnboardingStep1();
+  });
+
+  box.appendChild(logo2);
+  box.appendChild(header);
+  box.appendChild(overlay);
   box.appendChild(backBtn);
-  box.appendChild(artistName);
-  box.appendChild(question);
-  box.appendChild(list);
-  box.appendChild(locateBtn);
   onboardingOverlay.appendChild(box);
 }
 
@@ -506,7 +525,7 @@ function selectArtistLine(artist) {
   clearMultiSelectPanels();
   unpinTooltip();
   renderSelectedChips();
-  updateFilterGenreVisuals(); // reaplica opacidad según filtros activos, sin tocar conexiones
+  updateFilterGenreVisuals();
 
   pinnedArtists.add(artist);
   updateArtistPanels();
@@ -1832,7 +1851,7 @@ function colorForGroupLabel(group) {
   const c = new THREE.Color();
 
   if (!families.length) {
-    c.setHSL(0, 0, 0.35); // "Otros": gris oscuro neutro, sin familia de la que tomar hue
+    c.setHSL(0, 0, 0.35);
     groupLabelColorCache.set(group, c);
     return c;
   }
@@ -1862,11 +1881,7 @@ function makeGenreLabelSprite(genre, color) {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = "rgba(255,255,255,0.9)";
-  ctx.strokeText(label, canvas.width/2, canvas.height/2);
-
-  ctx.fillStyle = color.getStyle(); // <-- antes: "#a2a1a1"
+  ctx.fillStyle = color.getStyle();
   ctx.fillText(label, canvas.width/2, canvas.height/2);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -1891,7 +1906,7 @@ function computeGenreLabelData() {
   const cz = average(points.map(p => p.umapVec.z));
   const globalCentroid = new THREE.Vector3(cx, cy, cz);
 
-  const acc = new Map(); // group -> { sum: Vector3, count }
+  const acc = new Map();
 
   points.forEach(p => {
     const genres = new Set([...p.genres.primary, ...p.genres.secondary]);
@@ -1929,7 +1944,7 @@ function computeGenreLabelData() {
 }
 function createGenreLabels() {
   computeGenreLabelData().forEach(d => {
-    const sprite = makeGenreLabelSprite(d.genre, colorForGroupLabel(d.genre)); // <-- agregado el color
+    const sprite = makeGenreLabelSprite(d.genre, colorForGroupLabel(d.genre));
     sprite.position.copy(d.position);
     sprite.material.opacity = 0;
     labelGroup.add(sprite);
@@ -2802,7 +2817,7 @@ function computeOutlierScores() {
   const scores = new Map();
   points.forEach((p, i) => {
     const dists = points
-      .filter((_, j) => j !== i)
+      .filter(q => q.artist !== p.artist)
       .map(q => p.umapVec.distanceTo(q.umapVec))
       .sort((a, b) => a - b)
       .slice(0, NETWORK_INSIGHTS_CONFIG.outlierK);
@@ -3957,7 +3972,7 @@ ui.search.addEventListener("blur", () => {
 
 ui.timeToggle?.addEventListener("change", e => {
   setTimeMode(e.target.checked);
-  if (!e.target.checked) clearYearHighlight(); // salir de modo temporal limpia la selección de año
+  if (!e.target.checked) clearYearHighlight();
 });
 ui.genreLabelToggle?.addEventListener("change", e => setGenreLabelsVisible(e.target.checked));
 

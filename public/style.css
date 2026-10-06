@@ -1,6 +1,6 @@
 *{
     box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#08090c;color:#adadad;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}#map{position:fixed;inset:0}.title{position:fixed;top:28px;left:32px;z-index:5;pointer-events:none}.title span{font-size:10px;letter-spacing:.22em;opacity:.55}.title h1{font-size:28px;font-weight:500;margin:5px 0}.title p{font-size:12px;opacity:.55;margin:0}.panel{position:fixed;right:22px;top:22px;width:300px;max-height:calc(100vh - 44px);overflow:auto;padding:16px;background:rgba(10,11,15,.78);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(18px);z-index:10}.panel-section{padding:0 0 16px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08)}.panel-section:last-child{border:0;margin:0}.panel h2{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}.panel h2 small{font-weight:400;opacity:.5}.control{display:grid;grid-template-columns:1fr 90px 42px;gap:8px;align-items:center;font-size:11px;margin:9px 0}.control input{width:90px}.control output{font-variant-numeric:tabular-nums;text-align:right;opacity:.6}button,input{font:inherit}button{width:100%;border:1px solid rgba(255,255,255,.18);background:#fff;color:#111;padding:8px 10px;cursor:pointer;margin-top:8px}button:hover{background:#ddd}#search{width:100%;padding:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;outline:none}.album{display:grid;grid-template-columns:40px 1fr;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer}.album:hover{background:rgba(255,255,255,.04)}.dot{width:8px;height:8px;border-radius:50%;margin-top:4px}.album strong{display:block;font-size:11px;font-weight:600}.album span{display:block;font-size:10px;opacity:.55;margin-top:2px}.legend p{font-size:10px;line-height:1.45;opacity:.62;margin:7px 0}.tooltip{position:fixed;z-index:20;display:none;pointer-events:none;min-width:210px;max-width:300px;padding:12px;background:rgba(0, 0, 0, 0.5);border:1px solid rgba(255,255,255,.16);box-shadow:0 12px 30px rgba(0,0,0,.35); transform: scale(.9);}.tooltip strong{font-size:13px}.tooltip .artist{font-size:11px;opacity:.55;margin-top:3px}.tooltip .genres{font-size:10px;line-height:1.5;margin-top:8px}.tooltip .primary{font-weight:700}.tooltip .secondary{opacity:.6}.status{position:fixed;left:32px;bottom:24px;z-index:5;font-size:10px;letter-spacing:.05em;opacity:.45}@media(max-width:800px){.panel{width:260px;right:10px;top:10px;max-height:70vh}.title{left:16px;top:16px}.title h1{font-size:22px}.status{left:16px;bottom:12px}
-}
+  }
 
 .genres-primary {
   margin-top: 2px;
@@ -94,19 +94,16 @@
 .row-highlight { animation: flash 1.2s ease; }
 @keyframes flash { 0% { background: #fff3b0; } 100% { background: transparent; } }
 
-/* ==========================================================
-   Onboarding — pantalla inicial (búsqueda + presets + explorar)
-   Cargar DESPUÉS de style.css:
-   <link rel="stylesheet" href="./onboarding.css">
-   ========================================================== */
-
 #onboardingOverlay {
   --ob-bg: #2d2d2d;
   --ob-fg: #ffffff;
   --ob-muted: rgba(255, 255, 255, 0.6);
   --ob-line: rgba(255, 255, 255, 0.9);
   --ob-hover: rgba(255, 255, 255, 0.1);
-  --ob-accent: #6b3fe0;
+  --ob-accent: white;
+  --secondary: #56CCF2;
+  --tertiary: #F2C94C;
+
 
   position: fixed;
   inset: 0;
@@ -132,36 +129,69 @@
   width: 100%;
   min-height: 100%;
   box-sizing: border-box;
-  padding: 28px 48px 32px;
+  padding: 4rem 12vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  background-image: url(./img/home.jpg);
-  background-size: cover;
-  background-position: center;
 }
 
 .ob-frame-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: #0C2F4D;
+  background-blend-mode: multiply;
   pointer-events: none;
   width: 100vw;
   height: 100vh;
+  background-image: url(./img/home.jpg);
+  background-size: cover;
+  background-position: center;
 }
 
 [class^="ob-"]:not(.ob-frame-overlay):not(.ob-frame) {
   z-index: 1;
 }
 
+.ob-header-logo {
+  background: url(./img/constelaLogo.png) no-repeat center;
+  background-size: contain;
+  width: 270px;
+  height: 90px;
+}
+
+.ob-box.artist {
+  padding: 4rem 12vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start!important;
+  gap: 2rem;
+}
+
+.ob-box-artist {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bolder;
+  margin: 0!important;
+}
+
+.ob-tag {
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+.ob-box-meta {
+  font-size: 10px;
+  color: white;
+}
+
 /* Acerca del proyecto */
 .ob-about {
-  position: absolute;
-  top: 28px;
-  right: 48px;
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: end;
   gap: 10px;
   padding: 0;
   border: none;
@@ -180,6 +210,7 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--ob-accent);
+  border-radius: 50%;
   color: var(--ob-accent);
   font: italic 700 15px/1 serif;
 }
@@ -229,13 +260,6 @@
   overflow: hidden;
 }
 
-.ob-divider-fill {
-  width: 0;
-  height: 100%;
-  background: var(--ob-fg);
-  transition: width 0.2s ease;
-}
-
 .ob-progress-label {
   min-height: 16px;
   margin-top: 8px;
@@ -254,6 +278,8 @@
   margin: 0;
   font-size: 18px;
   font-weight: 600;
+  text-align: center;
+  width: 100%;
 }
 
 .ob-search {
@@ -351,7 +377,8 @@
 }
 
 .ob-card {
-  min-height: 140px;
+  height: 160px;
+  width: 120px;
   box-sizing: border-box;
   display: flex;
   align-items: flex-end;
@@ -388,10 +415,10 @@
 
 .ob-explore {
   padding: 10px 22px;
-  border: 1px solid var(--ob-line);
+  /* border: 1px solid var(--ob-line); */
   border-radius: 24px;
   background: transparent;
-  color: var(--ob-fg);
+  color: var(--secondary);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -415,13 +442,15 @@
 
 
 .ob-chrome-btn {
-  position: absolute;
-  top: 8px;
+  position: relative;
   border: none;
   background: none;
   color: var(--ob-muted);
   line-height: 1;
   cursor: pointer;
+  width: fit-content!important;
+  padding: 0!important;
+  margin: 0!important;
 }
 
 .ob-chrome-btn:hover {
@@ -431,14 +460,14 @@
 .ob-chrome-btn--close { left: 8px; font-size: 20px; }
 .ob-chrome-btn--back  { right: 8px; font-size: 18px; }
 
+
+.ob-box-header {
+  width: 100%;
+}
+
 .ob-box-title {
   margin: 0 0 8px;
   font-size: 24px;
-}
-
-.ob-box-question {
-  margin: 0 0 20px;
-  font-size: 20px;
 }
 
 .ob-meta {
@@ -501,13 +530,25 @@
   background: var(--ob-hover);
 }
 
+.ob-btn--link {
+  border: none;
+  background: none;
+  color: var(--secondary);
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+  width: fit-content!important;
+  padding: 2rem 0;
+  margin: 0!important;
+}
+
 .ob-disco-list {
   height: fit-content;
   overflow-y: auto;
   text-align: left;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 18px;
   width: 100%;
   overflow-x: scroll;
 }
@@ -516,15 +557,22 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 10px;
+  gap: 12px;
   border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  width: 96px;
+  width: fit-content;
 }
 
 .ob-disco-row:hover {
   background: var(--ob-hover);
+}
+.ob-frame:not(.is-loading) .ob-divider,
+.ob-frame:not(.is-loading) .ob-progress-label,
+.ob-frame.is-loading .ob-search-block,
+.ob-frame.is-loading .ob-presets,
+.ob-frame.is-loading .ob-footer {
+  display: none;
 }
 
 /* ---------- Responsive ---------- */
