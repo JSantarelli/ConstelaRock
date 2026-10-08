@@ -32,7 +32,7 @@ function resetInteractionState() {
 }
 
 function applyArtistsPreset(artistNames, opts = {}) {
-  if (!points.length) return; // datos aún no cargados
+  if (!points.length) return;
   resetInteractionState();
 
   artistNames.forEach(name => activeFilters.artists.add(name));
@@ -91,7 +91,7 @@ const ONBOARDING_PRESETS = [
     title: "No tan distintos",
     section: "hallazgos",
     apply: () => applyArtistsPreset(
-      ['Soda Stereo', 'Patricio Rey y sus Redonditos de Ricota'],
+      ['Soda Stereo', 'Patricio Rey y Sus Redonditos de Ricota'],
       { timeMode: false }
     )
   },
@@ -427,6 +427,7 @@ function renderArtistDetailPanelInto(el, artist) {
   if (!stats) return;
 
   el.textContent = "";
+  setPanelBorder(el, artistColor(artist));
   el.style.display = "block";
 
   const closeBtn = document.createElement("button");
@@ -468,15 +469,45 @@ function renderArtistDetailPanelInto(el, artist) {
   el.appendChild(genresDiv);
 }
 
+const artistMidpoint = new THREE.Vector3();
+
+function artistTrajectoryMidpoint(artist, out) {
+  const meshes = getArtistDiscography(artist)
+    .map(d => pointMeshes[d.idx])
+    .filter(Boolean);
+
+  if (!meshes.length) return null;
+  if (meshes.length === 1) return out.copy(meshes[0].position);
+
+  const segLengths = [];
+  let total = 0;
+  for (let i = 0; i < meshes.length - 1; i++) {
+    const len = meshes[i].position.distanceTo(meshes[i + 1].position);
+    segLengths.push(len);
+    total += len;
+  }
+  if (total < 1e-6) return out.copy(meshes[0].position);
+
+  let remaining = total / 2;
+  for (let i = 0; i < segLengths.length; i++) {
+    if (remaining <= segLengths[i] || i === segLengths.length - 1) {
+      const t = segLengths[i] > 1e-6 ? Math.min(remaining / segLengths[i], 1) : 0;
+      return out.lerpVectors(meshes[i].position, meshes[i + 1].position, t);
+    }
+    remaining -= segLengths[i];
+  }
+  return out.copy(meshes[0].position);
+}
+
 function updateArtistPanels() {
   const keep = new Set();
 
   pinnedArtists.forEach(artist => {
     keep.add(artist);
-    const discog = getArtistDiscography(artist);
-    const anchorMesh = discog.length ? pointMeshes[discog[0].idx] : null;
-    const { x, y } = anchorMesh
-      ? projectToScreen(anchorMesh.position)
+
+    const anchor = artistTrajectoryMidpoint(artist, artistMidpoint);
+    const { x, y } = anchor
+      ? projectToScreen(anchor)
       : { x: innerWidth / 2, y: innerHeight / 2 };
 
     const el = ensureArtistPanelEl(artist);
@@ -819,6 +850,7 @@ function renderDetailPanel(i, x, y) {
 
   const closeBtn = document.createElement("button");
   closeBtn.textContent = "×";
+  setPanelBorder(ui.tooltip, a.color);
   closeBtn.setAttribute("aria-label", "Cerrar");
   closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
   closeBtn.addEventListener("click", e => {
@@ -899,8 +931,17 @@ function renderDetailPanel(i, x, y) {
   }
 }
 
+function artistColor(artist) {
+  return getArtistDiscography(artist)[0]?.color ?? null;
+}
+
+function setPanelBorder(el, color) {
+  el.style.border = color ? `1px solid ${color.getStyle()}` : "";
+}
+
 function showTooltipForPoint(i, x, y) {
   ui.tooltip.innerHTML = buildHoverPanelHTML(i);
+  setPanelBorder(ui.tooltip, points[i].color);
   ui.tooltip.style.pointerEvents = "none";
   ui.tooltip.style.right = "auto";
   ui.tooltip.style.display = "block";
@@ -936,6 +977,7 @@ function updateMultiSelectPanels() {
 
     const el = ensureMultiSelectPanel(idx);
     el.innerHTML = buildHoverPanelHTML(idx);
+    setPanelBorder(el, points[idx].color);
 
     const { x, y } = projectToScreen(mesh.position);
     el.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
@@ -1054,6 +1096,7 @@ function jumpToAlbum(a) {
 function animate() {
   requestAnimationFrame(animate);
   tickAnimation();
+  tickYearOpacity();
   tickCameraFocus();
   updateSelectionOutlines();
   updateGenreLabels();
@@ -1135,7 +1178,7 @@ const EVENT_LABEL_CONFIG = {
 const YEAR_LABEL_DEFAULT_TINT = 0xffffff;
 const YEAR_LABEL_SELECTED_TINT = 0x000000;
 const ORBIT_RING_DEFAULT_COLOR = 0xc4c4c4;
-const ORBIT_RING_SELECTED_COLOR = 0x000000;
+const ORBIT_RING_SELECTED_COLOR = 0xffffff;
 const CONNECTION_CONFIG = {
   sameArtistLineOpacity: 0.9,
   level1LineOpacity: 0.65,
@@ -1144,12 +1187,12 @@ const CONNECTION_CONFIG = {
   level2NodeOpacity: 0.5,
   level1Count: 2,
   level2Count: 2,
-  stageDelay: 220,      // ms antes de que empiece a "encender" cada etapa
-  siblingStagger: 90,   // ms extra entre hermanos dentro de la misma etapa
+  stageDelay: 220,      
+  siblingStagger: 90,  
   fadeSpeed: 0.09,
-  lineWidth: 3.2, // px, mismo grosor para la cadena sólida y las líneas punteadas
-  dashSize: 0.35,  // trazo corto...
-  gapSize: 0.18,    // ...y gap corto = punteado fino y denso
+  lineWidth: 3.2,
+  dashSize: 0.35, 
+  gapSize: 0.18,  
   originNodeOpacity: 1,
   ancestorOpacity: 0.8,
   descendantOpacity: 0.8,
@@ -1848,7 +1891,7 @@ function createYearOrbits() {
 
     const radius = Math.max(average(radii), 6);
 
-    const geo = new THREE.TorusGeometry(radius, 0.18, 8, 64);
+    const geo = new THREE.TorusGeometry(radius, 0.1, 8, 64);
     const mat = new THREE.MeshBasicMaterial({
       color: ORBIT_RING_DEFAULT_COLOR,
       transparent: true,
@@ -1857,8 +1900,8 @@ function createYearOrbits() {
     });
 
     const ring = new THREE.Mesh(geo, mat);
-    ring.userData.radius = radius; // <-- agregar esta línea
-    ring.rotation.x = Math.PI / 2; // acostar el anillo en el plano X/Z
+    ring.userData.radius = radius;
+    ring.rotation.x = Math.PI / 2;
     ring.position.set(timeCentroid.x, group[0].timeVec.y, timeCentroid.z);
     ring.userData.targetOpacity = 0;
     ring.userData.year = year;
@@ -2058,17 +2101,18 @@ function tickAnimation() {
     m.position.lerpVectors(animFrom[i], animTo[i], eased);
   });
 
+  if (t >= 1) animating = false;
+}
+
+function tickYearOpacity() {
   yearSprites.forEach(s => {
     const target = s.userData.targetOpacity ?? 0;
     s.material.opacity += (target - s.material.opacity) * 0.15;
   });
-
   orbitRings.forEach(r => {
     const target = r.userData.targetOpacity ?? 0;
     r.material.opacity += (target - r.material.opacity) * 0.15;
   });
-
-  if (t >= 1) animating = false;
 }
 
 function highlightPoint(mesh) {
@@ -3791,6 +3835,7 @@ function renderYearStatsPanel(year, x, y) {
   const stats = computeYearGenreStats(year);
  
   ui.tooltip.textContent = "";
+  setPanelBorder(ui.tooltip, null);
   ui.tooltip.style.pointerEvents = "auto";
  
   const closeBtn = document.createElement("button");
@@ -3888,10 +3933,19 @@ function setYearHighlight(year) {
     m.material.opacity = points[i].year === year ? 1 : 0.25;
   });
 
+  const dominantGroup = computeYearGenreStats(year).groups[0] ?? null;
+  const selectedRingColor = dominantGroup
+    ? colorForGroup(dominantGroup.genre)
+    : new THREE.Color(ORBIT_RING_SELECTED_COLOR); // respaldo si el año no tuviera géneros
+
   orbitRings.forEach(r => {
     const isSelected = r.userData.year === year;
     r.userData.targetOpacity = isSelected ? 1 : 0.25;
-    r.material.color.setHex(isSelected ? ORBIT_RING_SELECTED_COLOR : ORBIT_RING_DEFAULT_COLOR);
+    if (isSelected) {
+      r.material.color.copy(selectedRingColor);
+    } else {
+      r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
+    }
   });
 
   yearSprites.forEach(s => {
@@ -3952,6 +4006,7 @@ function pointerMove(e) {
 
   if (lineHit && pinnedIndex === null) {
     ui.tooltip.innerHTML = buildArtistHoverHTML(lineHit.object.userData.artist);
+    setPanelBorder(ui.tooltip, artistColor(lineHit.object.userData.artist));
     ui.tooltip.style.pointerEvents = "none";
     ui.tooltip.style.right = "auto";
     ui.tooltip.style.display = "block";
