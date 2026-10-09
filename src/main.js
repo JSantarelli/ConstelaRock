@@ -634,7 +634,6 @@ function clearScene() {
 
   selectedIndices.clear();
   selectedGenres.clear();
-  selectedYear = null;
   activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptor: null, query: "" };
   filteredIndices = null;
   if (ui.search) ui.search.value = "";
@@ -660,7 +659,6 @@ function clearScene() {
 
   selectedIndices.clear();
   selectedGenres.clear();
-  selectedYear = null;
 }
 
 function updateSelectionVisuals() {
@@ -1076,7 +1074,7 @@ function pointerClick(e) {
   if (timeMode) {
     const yearHit = raycaster.intersectObjects([...orbitRings, ...yearSprites])[0];
     if (yearHit) {
-      toggleYearHighlight(yearHit.object.userData.year);
+      toggleYearHighlight(yearHit.object.userData.year, e.ctrlKey || e.metaKey);
       return;
     }
   }
@@ -1105,6 +1103,7 @@ function animate() {
   if (selectedIndices.size > 1) updateMultiSelectPanels();
   if (pinnedArtists.size > 0) updateArtistPanels();
   controls.update();
+  updateYearPanels();
   renderer.render(scene,camera);
 }
 
@@ -1175,7 +1174,7 @@ const EVENT_LABEL_CONFIG = {
   dimmedOpacity: 0.25   
 };
 
-const YEAR_LABEL_DEFAULT_TINT = 0xffffff;
+const YEAR_LABEL_DEFAULT_TINT = 0x848484;
 const YEAR_LABEL_SELECTED_TINT = 0x000000;
 const ORBIT_RING_DEFAULT_COLOR = 0xc4c4c4;
 const ORBIT_RING_SELECTED_COLOR = 0xffffff;
@@ -1234,7 +1233,8 @@ let animTo = [];
 let timeCentroid = new THREE.Vector3(); // mismo centro usado por el plegado radial, reutilizado por las órbitas
 let genreLabelsVisible = true;
 let eventsByYear = new Map();
-let selectedYear = null;
+let selectedYears = new Set();
+const yearPanelEls = new Map();
 let cameraAnimating = false;
 let cameraAnimStart = 0;
 const cameraFromPos = new THREE.Vector3();
@@ -1828,7 +1828,7 @@ function makeYearSprite(text) {
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
   ctx.font = "regular 96px sans-serif";
-  ctx.fillStyle = "#848484";
+  ctx.fillStyle = "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(text, canvas.width / 2, canvas.height / 2);
@@ -3830,52 +3830,173 @@ function buildGenreStatRow(entry, color) {
   row.appendChild(pctLabel);
   return row;
 }
+function dominantGroupColor(year) {
+  const top = computeYearGenreStats(year).groups[0]; // mismo ítem que encabeza el panel
+  return top ? colorForGroup(top.genre) : new THREE.Color(ORBIT_RING_SELECTED_COLOR);
+}
 
-function renderYearStatsPanel(year, x, y) {
+function toggleYearHighlight(year, additive = false) {
+  let next;
+  if (additive) {
+    next = new Set(selectedYears);
+    if (next.has(year)) next.delete(year); else next.add(year);
+  } else {
+    next = (selectedYears.size === 1 && selectedYears.has(year))
+      ? new Set()
+      : new Set([year]);
+  }
+  setYearSelection(next);
+}
+
+function setYearSelection(years) {
+  if (years.size === 0) { clearYearHighlight(); return; }
+
+  // Se vacía antes de limpiar para que los clear* de abajo no borren la selección nueva
+  selectedYears = new Set();
+  clearHighlight();
+  clearGenreSelection();
+
+  selectedYears = years;
+  applyYearVisuals();
+  syncYearPanels();
+}
+
+function applyYearVisuals() {
+  pointMeshes.forEach((m, i) => {
+    m.material.opacity = selectedYears.has(points[i].year) ? 1 : 0.25;
+  });
+
+  orbitRings.forEach(r => {
+    const isSelected = selectedYears.has(r.userData.year);
+    r.userData.targetOpacity = isSelected ? 1 : 0.25;
+    if (isSelected) {
+      r.material.color.copy(dominantGroupColor(r.userData.year));
+    } else {
+      r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
+    }
+  });
+
+  yearSprites.forEach(s => {
+    const year = s.userData.year;
+    const isSelected = selectedYears.has(year);
+    s.userData.targetOpacity = isSelected ? 1 : EVENT_LABEL_CONFIG.dimmedOpacity;
+    if (isSelected) {
+      s.material.color.copy(dominantGroupColor(year));
+    } else {
+      s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
+    }
+  });
+}
+
+function clearYearPanels() {
+  yearPanelEls.forEach(el => el.remove());
+  yearPanelEls.clear();
+}
+
+function clearYearHighlight() {
+  if (selectedYears.size === 0) return;
+  selectedYears = new Set();
+  clearYearPanels();
+
+  pointMeshes.forEach(m => { m.material.opacity = 1; });
+
+  orbitRings.forEach(r => {
+    r.userData.targetOpacity = timeMode ? 0.4 : 0;
+    r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
+  });
+
+  yearSprites.forEach(s => {
+    s.userData.targetOpacity = timeMode ? 1 : 0;
+    s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
+  });
+}
+
+const yearAnchorVec = new THREE.Vector3();
+const cameraRightVec = new THREE.Vector3();
+
+function ringScreenAnchor(ring) {
+  cameraRightVec.setFromMatrixColumn(camera.matrixWorld, 0);
+  cameraRightVec.y = 0; // el aro está en el plano X/Z
+  if (cameraRightVec.lengthSq() < 1e-6) cameraRightVec.set(1, 0, 0);
+  cameraRightVec.normalize();
+
+  yearAnchorVec.copy(ring.position).addScaledVector(cameraRightVec, ring.userData.radius);
+  return projectToScreen(yearAnchorVec);
+}
+
+function updateYearPanels() {
+  if (!yearPanelEls.size) return;
+  camera.updateMatrixWorld();
+
+  yearPanelEls.forEach((el, year) => {
+    const ring = orbitRings.find(r => r.userData.year === year);
+    if (!ring) return;
+    const { x, y } = ringScreenAnchor(ring);
+    el.style.left = `${Math.max(0, Math.min(x + 16, innerWidth - 320))}px`;
+    el.style.top = `${Math.max(0, Math.min(y + 16, innerHeight - 360))}px`;
+  });
+}
+
+function syncYearPanels() {
+  [...yearPanelEls.keys()].forEach(year => {
+    if (!selectedYears.has(year)) {
+      yearPanelEls.get(year).remove();
+      yearPanelEls.delete(year);
+    }
+  });
+
+  selectedYears.forEach(year => {
+    if (yearPanelEls.has(year)) return;
+
+    const el = document.createElement("div");
+    el.className = ui.tooltip.className;
+    el.style.position = "absolute";
+    el.style.pointerEvents = "auto";
+    el.style.right = "auto";
+    el.style.maxHeight = "320px";
+    el.style.overflowY = "auto";
+    document.body.appendChild(el);
+
+    renderYearStatsPanelInto(el, year);
+    el.style.display = "block";
+    yearPanelEls.set(year, el);
+  });
+
+    updateYearPanels();
+}
+
+function renderYearStatsPanelInto(el, year) {
   const stats = computeYearGenreStats(year);
- 
-  ui.tooltip.textContent = "";
-  setPanelBorder(ui.tooltip, null);
-  ui.tooltip.style.pointerEvents = "auto";
- 
+  el.textContent = "";
+
   const closeBtn = document.createElement("button");
   closeBtn.textContent = "×";
   closeBtn.setAttribute("aria-label", "Cerrar");
   closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
   closeBtn.addEventListener("click", e => {
     e.stopPropagation();
-    clearYearHighlight();
+    toggleYearHighlight(year, true); // quita solo este año
   });
- 
+
   const title = document.createElement("strong");
   title.textContent = `${year}`;
- 
+
   const meta = document.createElement("div");
   meta.className = "artist";
   meta.textContent = `${stats.total} álbum${stats.total === 1 ? "" : "es"}`;
- 
-  ui.tooltip.appendChild(closeBtn);
-  ui.tooltip.appendChild(title);
-  ui.tooltip.appendChild(meta);
- 
-  /*
-  const eventText = eventsByYear.get(year);
-  if (eventText) {
-    const eventLine = document.createElement("div");
-    eventLine.style.cssText = "margin-top:6px;font-size:12px;font-style:italic;color:#888;";
-    eventLine.textContent = eventText;
-    ui.tooltip.appendChild(eventLine);
-  }
-  */
- 
+
+  el.appendChild(closeBtn);
+  el.appendChild(title);
+  el.appendChild(meta);
+
   if (stats.groups.length) {
     const groupsTitle = document.createElement("div");
     groupsTitle.textContent = "Géneros principales";
     groupsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
-    ui.tooltip.appendChild(groupsTitle);
-    stats.groups.forEach(entry => ui.tooltip.appendChild(buildGenreStatRow(entry, colorForGroup(entry.genre))));
+    el.appendChild(groupsTitle);
+    stats.groups.slice(0, 3).forEach(entry => el.appendChild(buildGenreStatRow(entry, colorForGroup(entry.genre))));
   }
- 
+
   if (stats.albums.length) {
     const albumsSection = document.createElement("div");
     albumsSection.style.display = "none";
@@ -3896,84 +4017,9 @@ function renderYearStatsPanel(year, x, y) {
       showBtn.textContent = showing ? `Ver álbumes (${stats.albums.length})` : "Ocultar álbumes";
     });
 
-    ui.tooltip.appendChild(showBtn);
-    ui.tooltip.appendChild(albumsSection);
+    el.appendChild(showBtn);
+    el.appendChild(albumsSection);
   }
- 
-  ui.tooltip.style.right = "auto";
-  ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
-  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-360)}px`;
-  ui.tooltip.style.display = "block";
-}
- 
-
-function showYearStatsPanel(year) {
-  const ring = orbitRings.find(r => r.userData.year === year);
-  const { x, y } = ring
-    ? projectToScreen(ring.position)
-    : { x: innerWidth / 2, y: innerHeight / 2 };
-  renderYearStatsPanel(year, x, y);
-}
-
-function toggleYearHighlight(year) {
-  if (selectedYear === year) {
-    clearYearHighlight();
-  } else {
-    setYearHighlight(year);
-  }
-}
-
-function setYearHighlight(year) {
-  clearHighlight();
-  clearGenreSelection();
-
-  selectedYear = year;
-
-  pointMeshes.forEach((m, i) => {
-    m.material.opacity = points[i].year === year ? 1 : 0.25;
-  });
-
-  const dominantGroup = computeYearGenreStats(year).groups[0] ?? null;
-  const selectedRingColor = dominantGroup
-    ? colorForGroup(dominantGroup.genre)
-    : new THREE.Color(ORBIT_RING_SELECTED_COLOR); // respaldo si el año no tuviera géneros
-
-  orbitRings.forEach(r => {
-    const isSelected = r.userData.year === year;
-    r.userData.targetOpacity = isSelected ? 1 : 0.25;
-    if (isSelected) {
-      r.material.color.copy(selectedRingColor);
-    } else {
-      r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
-    }
-  });
-
-  yearSprites.forEach(s => {
-    const isSelected = s.userData.year === year;
-    s.userData.targetOpacity = isSelected ? 1 : EVENT_LABEL_CONFIG.dimmedOpacity;
-    s.material.color.setHex(isSelected ? YEAR_LABEL_SELECTED_TINT : YEAR_LABEL_DEFAULT_TINT);
-  });
-
-  showYearStatsPanel(year);
-}
-
-function clearYearHighlight() {
-  if (selectedYear === null) return;
-  selectedYear = null;
-
-  pointMeshes.forEach(m => { m.material.opacity = 1; });
-
-  orbitRings.forEach(r => {
-    r.userData.targetOpacity = timeMode ? 0.4 : 0;
-    r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
-  });
-
-  yearSprites.forEach(s => {
-    s.userData.targetOpacity = timeMode ? 1 : 0;
-    s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
-  });
-
-  hideTooltip();
 }
 
 function pointerMove(e) {
@@ -4030,8 +4076,7 @@ function pointerMove(e) {
     return;
   }
 
-  if (selectedYear !== null) return;
-
+  if (selectedYears.size > 0) return;
   const hitIdx = hit?.object.userData.index;
   const compareMode = (e.ctrlKey || e.metaKey) && selectedIndices.size > 0;
 
