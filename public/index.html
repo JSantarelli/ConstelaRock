@@ -16,19 +16,17 @@
     <div id="map"></div>
 
     <header class="title">
-      <img src="./img/constelaLogo.png" width="160" height="56"></i>
+      <img src="./img/constelaLogo.png" width="160" height="48"></i>
     </header>
     <nav class="topbar" aria-label="Navegación del mapa">
 
-      <!-- Switcher de modo -->
-      <div class="topbar_switch" role="group" aria-label="Modo de visualización">
+       <div class="topbar_switch" role="group" aria-label="Modo de visualización">
         <button type="button" class="topbar_btn" data-mode="exploratorio" aria-pressed="true">
           <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
             <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>
           </svg>
           <span class="topbar_label">Exploratorio</span>
         </button>
-
         <button type="button" class="topbar_btn" data-mode="cronologico" aria-pressed="false">
           <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
             <path d="M3 7h3c4 0 6 10 11 10h4M3 17h3c1.5 0 2.7-.9 3.7-2.2M14.3 9.2C15.3 7.9 16 7 17 7h4"/><path d="M18 4l3 3-3 3M18 14l3 3-3 3"/>
@@ -58,33 +56,35 @@
   </main>
   <aside class="sidebar" id="sidebar">
     <header class="sidebar_header">
-      <h2 class="sidebar_title">Buscar/Filtrar</h2>
       <div class="sidebar_header-actions">
-        <button id="filtersClear" type="button" class="sidebar_btn">
-          <span>Reset filters</span>
-        </button>
-        <button id="sidebarClose" type="button" class="sidebar_close" aria-label="Cerrar panel">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
-        </button>
+        <span class="sidebar_subheader">
+          <h2 class="sidebar_title">Filtrar</h2>
+          <p class="sidebar_count"><span id="count"></span></p>
+        </span>
+        <span class="sidebar_subheader">
+          <button id="filtersClear" type="button" class="sidebar_btn">
+            <span>Resetear</span>
+          </button>
+          <button id="sidebarClose" type="button" class="sidebar_close" aria-label="Cerrar panel">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
+          </button>
+        </span>
       </div>
+      <div class="sidebar_search">
+        <div class="sidebar_input">
+          <svg class="sidebar_search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>
+          <input id="search" class="sidebar_input-field" type="search" placeholder="Buscar artista y/o album" autocomplete="off">
+        </div>
+        <div id="searchResults" class="search-results"></div>
+      </div>  
+      <template id="albumList"></template>  
+      <div id="selectedChips" class="sidebar_chips-container" hidden></div>
     </header>
-    <div class="sidebar_search">
-      <div class="sidebar_input">
-        <svg class="sidebar_search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>
-        <input id="search" class="sidebar_input-field" type="search" placeholder="Buscar artista y/o album" autocomplete="off">
-      </div>
-      <div id="searchResults" class="search-results"></div>
-    </div>
-
-    <p class="sidebar_count">Discos <span id="count"></span></p>
-    <template id="albumList"></template>
-
-    <div id="selectedChips" class="sidebar_chips-container" hidden></div>
 
     <details class="sidebar_section" open>
       <summary class="sidebar_accordion-header">
         <span class="sidebar_caret" aria-hidden="true"></span>
-        Fecha de publicación
+        Filtros avanzados
       </summary>
       <div class="sidebar_accordion-content">
         <div class="sidebar_form">
@@ -97,17 +97,18 @@
             <select id="filterYearTo" class="sidebar_select"></select>
           </label>
         </div>
-      </div>
-      <div class="sidebar_field-group">
-        <label class="sidebar_input-label" for="filterDescriptor">Descriptores</label>
-        <select id="filterDescriptor" class="sidebar_select"></select>
-        <div id="descriptorChips" class="sidebar_chips-container" hidden></div>
+        <div class="sidebar_field-group">
+          <label class="sidebar_input-label" for="filterDescriptor">Descriptores</label>
+          <select id="filterDescriptor" class="sidebar_select"></select>
+          <div id="descriptorChips" class="sidebar_chips-container" hidden></div>
+        </div>
       </div>
     </details>
     <details class="sidebar_section" open>
       <summary class="sidebar_accordion-header">
         <span class="sidebar_caret" aria-hidden="true"></span>
         Géneros
+        <button id="genreLegendToggleAll" type="button" class="sidebar_btn">Expandir todo</button>
       </summary>
       <div class="sidebar_accordion-content">
         <div id="genreLegend" class="sidebar_tree"></div>

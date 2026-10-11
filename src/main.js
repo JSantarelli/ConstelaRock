@@ -658,7 +658,8 @@ const ui = {
   filterYearFrom: document.querySelector('#filterYearFrom'),
   filterYearTo: document.querySelector('#filterYearTo'),
   filterDescriptor: document.querySelector('#filterDescriptor'),
-  filtersClear: document.querySelector('#filtersClear')
+  filtersClear: document.querySelector('#filtersClear'),
+  genreLegendToggleAll: document.querySelector('#genreLegendToggleAll')
 };
 
 function clearScene() {
@@ -2208,16 +2209,10 @@ function updateFilterGenreVisuals() {
   const filtersActive = filteredIndices !== null;
   const genresActive = selectedGenres.size > 0;
   const insightActive = networkInsightMode !== null;
+  const yearsActive = selectedYears.size > 0;
+  const insightTopSet = insightActive ? currentInsightTopSet() : null;
 
-  const insightTopSet = {
-    bridges: bridgeTopIndices,
-    hubs: hubTopIndices,
-    outliers: outlierTopIndices,
-    convergence: convergenceTopIndices,
-    divergence: divergenceTopIndices
-  }[networkInsightMode] ?? null;
-
-  if (!filtersActive && !genresActive && !insightActive) {
+  if (!filtersActive && !genresActive && !insightActive && !yearsActive) {
     pointMeshes.forEach(m => { m.material.opacity = 1; });
     return;
   }
@@ -2231,22 +2226,22 @@ function updateFilterGenreVisuals() {
       p.genres.primary.some(g => selectedGenres.has(g)) ||
       p.genres.secondary.some(g => selectedGenres.has(g));
     const passesInsight = !insightActive || insightTopSet.has(i);
+    const passesYear = !yearsActive || selectedYears.has(p.year);
 
-    m.material.opacity = (passesFilter && passesGenre && passesInsight) ? 1 : dimOpacity;
+    m.material.opacity = (passesFilter && passesGenre && passesInsight && passesYear) ? 1 : dimOpacity;
   });
 }
 
 function ensureGenreLegendToggleAllBtn() {
-  if (ui.genreLegendToggleAll) return ui.genreLegendToggleAll;
- 
-  const btn = document.createElement("button");
-  btn.id = "genreLegendToggleAll";
-  btn.type = "button";
-  btn.className = "sidebar_link";
-  btn.addEventListener("click", () => toggleAllGenreGroups());
- 
-  ui.genreLegend.insertAdjacentElement("beforebegin", btn);
-  ui.genreLegendToggleAll = btn;
+  const btn = ui.genreLegendToggleAll;
+  if (!btn || btn.dataset.bound) return btn;
+
+  btn.dataset.bound = "1";
+  btn.addEventListener("click", e => {
+    e.preventDefault();   // evita que el click también pliegue el acordeón
+    e.stopPropagation();
+    toggleAllGenreGroups();
+  });
   return btn;
 }
 
@@ -2766,7 +2761,7 @@ function renderList() {
   toRender.forEach(a => frag.appendChild(buildAlbumRow(a)));
   ui.list.textContent = "";
   ui.list.appendChild(frag);
-  document.querySelector("#count").textContent = `(${toRender.length})`;
+  document.querySelector("#count").textContent = `(${toRender.length} discos)`;
 }
 
 const MAX_SUGGESTIONS_PER_GROUP = 6;
@@ -4042,29 +4037,21 @@ function renderYearStatsPanelInto(el, years) {
 }
 
 function applyYearVisuals() {
-  pointMeshes.forEach((m, i) => {
-    m.material.opacity = selectedYears.has(points[i].year) ? 1 : 0.25;
-  });
+  updateFilterGenreVisuals();
 
   orbitRings.forEach(r => {
     const isSelected = selectedYears.has(r.userData.year);
     r.userData.targetOpacity = isSelected ? 1 : 0.25;
-    if (isSelected) {
-      r.material.color.copy(dominantGroupColor(r.userData.year));
-    } else {
-      r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
-    }
+    if (isSelected) r.material.color.copy(dominantGroupColor(r.userData.year));
+    else r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
   });
 
   yearSprites.forEach(s => {
     const year = s.userData.year;
     const isSelected = selectedYears.has(year);
     s.userData.targetOpacity = isSelected ? 1 : EVENT_LABEL_CONFIG.dimmedOpacity;
-    if (isSelected) {
-      s.material.color.copy(dominantGroupColor(year));
-    } else {
-      s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
-    }
+    if (isSelected) s.material.color.copy(dominantGroupColor(year));
+    else s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
   });
 }
 
