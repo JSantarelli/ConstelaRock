@@ -6,9 +6,9 @@ import { Line2 } from "three/examples/jsm/lines/Line2.js";
 import { UMAP } from "umap-js";
 
 let selectedGenres = new Set();
-let genreLegendItemsByGenre = new Map(); // genre -> elemento DOM de la leyenda
-let genreLegendGroups = new Map(); // group -> { titleEl, arrowEl, selectAreaEl, itemsContainerEl, genres }
-let tooltipExpanded = false; // persiste entre navegaciones de disco, se resetea sólo manualmente vía el toggle
+let genreLegendItemsByGenre = new Map(); 
+let genreLegendGroups = new Map(); 
+let tooltipExpanded = false; 
 let pinnedArtists = new Set();
 let artistPanelEls = new Map();
 let onboardingOverlay = null;
@@ -18,7 +18,6 @@ let onboardingSearchInputEl = null;
 let onboardingStartCta = null;
 let onboardingPresetCardEls = [];
 let loadingProgress = 0;
-
 
 function resetInteractionState() {
   clearHighlight();
@@ -36,10 +35,8 @@ function applyArtistsPreset(artistNames, opts = {}) {
   artistNames.forEach(name => activeFilters.artists.add(name));
   refreshFilterOptions();
 
-  if (opts.timeMode) {
-    if (ui.timeToggle) ui.timeToggle.checked = true;
-    setTimeMode(true);
-  }
+  if (opts.timeMode) setTimeMode(true);
+
   applyPresetYears(opts.years);
 }
 
@@ -128,7 +125,10 @@ const ONBOARDING_PRESETS = [
     subtitle: "Algunos siguen la misma línea, otros van hacia nuevos rumbos. ",    
     section: "explorar",
     img:"./img/constelaDiversidad.jpg",
-    apply: () => applyGenreGroupPreset('New Wave', { timeMode: true })
+    apply: () => applyArtistsPreset(
+      ['Él Mató a Un Policía Motorizado','Santiago Motorizado', 'Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Almendra', 'Luis Alberto Spinetta', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado', 'Los Piojos', 'Ciro y los Persas'],
+      { timeMode: true }
+    )
   },
   {
     title: "Fuera de serie",
@@ -171,6 +171,7 @@ function createOnboardingOverlay() {
   const overlay = document.createElement("div");
   overlay.id = "onboardingOverlay";
   document.body.appendChild(overlay);
+  document.body.classList.add("is-onboarding");
   return overlay;
 }
 
@@ -179,6 +180,7 @@ function clearOverlayContent() {
 }
 
 function removeOnboardingOverlay() {
+  document.body.classList.remove("is-onboarding");
   if (onboardingOverlay) onboardingOverlay.remove();
   onboardingOverlay = null;
   onboardingProgressFillEl = null;
@@ -191,7 +193,7 @@ function removeOnboardingOverlay() {
 function closeOnboarding() {
   removeOnboardingOverlay();
 }
-
+  
 function setLoadingProgress(pct) {
   loadingProgress = Math.max(0, Math.min(100, pct));
   const ready = loadingProgress >= 100;
@@ -438,29 +440,6 @@ function finishOnboarding(idx) {
 
 function finishOnboardingToArtist() {
   removeOnboardingOverlay();
-}
-
-function createInfoButton() {
-  const btn = document.createElement("button");
-  btn.setAttribute("aria-label", "Ver información del proyecto");
-  btn.textContent = "i";
-  btn.style.cssText = `
-    position: fixed; bottom: 20px; right: 20px; z-index: 900;
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 1px solid #ccc; background: #fff; color: #555;
-    font-size: 15px; font-style: italic; font-family: serif;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-  `;
-  btn.addEventListener("mouseenter", () => { btn.style.background = "#f5f5f5"; });
-  btn.addEventListener("mouseleave", () => { btn.style.background = "#fff"; });
-  btn.addEventListener("click", e => {
-    e.stopPropagation();
-    resetInteractionState();
-    reopenOnboarding();
-  });
-  document.body.appendChild(btn);
-  return btn;
 }
 
 function reopenOnboarding() {
@@ -1183,7 +1162,8 @@ function isPointInteractive(i) {
   const insightSet = currentInsightTopSet();
   const passesFilters = filteredIndices === null || filteredIndices.has(i);
   const passesInsight = insightSet === null || insightSet.has(i);
-  if (passesFilters && passesInsight) return true;
+  const passesYear = selectedYears.size === 0 || selectedYears.has(points[i].year);
+  if (passesFilters && passesInsight && passesYear) return true;
 
   return selectedIndices.has(i) || activeGraphIndices.has(i);
 }
@@ -1279,7 +1259,7 @@ let convergenceTopIndices = new Set();
 let divergenceScore = null;
 let divergenceTopIndices = new Set();
 
-const ARROW_POSITION_T = 0.6; // fracción sobre la línea donde se ubica la flecha
+const ARROW_POSITION_T = 0.6; 
 const connectionArrowDir = new THREE.Vector3();
 const connectionArrowUp = new THREE.Vector3(0, 1, 0);
 
@@ -1288,12 +1268,12 @@ let animating = false;
 let animStart = 0;
 let animFrom = [];
 let animTo = [];
-let timeCentroid = new THREE.Vector3(); // mismo centro usado por el plegado radial, reutilizado por las órbitas
+let timeCentroid = new THREE.Vector3(); 
 let genreLabelsVisible = true;
 let eventsByYear = new Map();
 let selectedYears = new Set();
-// let yearPanelYears = new Set()
-// const yearPanelEls = new Map();
+
+
 let yearPanelEl = null;
 let cameraAnimating = false;
 let cameraAnimStart = 0;
@@ -1301,19 +1281,20 @@ const cameraFromPos = new THREE.Vector3();
 const cameraToPos = new THREE.Vector3();
 const cameraFromTarget = new THREE.Vector3();
 const cameraToTarget = new THREE.Vector3();
-const YEAR_PANEL_TOP_GENRES = 3;    // un solo año
-const PERIOD_PANEL_TOP_GENRES = 5;  // varios años
+const YEAR_PANEL_TOP_GENRES = 3;    
+const PERIOD_PANEL_TOP_GENRES = 5;  
 
-let outlineRing = null;   // aro (RingGeometry) que siempre mira a cámara
+let outlineRing = null;   
 let outlineTarget = null; 
 let pinnedIndex = null;
 
-let connectionLines = [];     // [{ line, fromMesh, toMesh }]
-let connectionNodeFades = []; // [{ mesh, targetOpacity, appearAt }]
-let activeGraphIndices = new Set(); // idx de todos los discos involucrados en el grafo actual
-let hoverPreviewIndex = null;       // idx sobre el que se está mostrando un preview de hover (con panel fijo activo)
+let connectionLines = [];     
+let connectionNodeFades = []; 
+let activeGraphIndices = new Set(); 
+let hoverPreviewIndex = null;       
 
 const UMAP_SEED = 12345;
+
 
 function mulberry32(seed) {
   return function () {
@@ -2108,9 +2089,10 @@ function setGenreLabelsVisible(on) {
 }
 
 function setTimeMode(on) {
-  if (!pointMeshes.length) { timeMode = on; return; }
-
   timeMode = on;
+  syncModeButtons(on ? "cronologico" : "exploratorio");
+  if (!pointMeshes.length) return;
+
   animFrom = pointMeshes.map(m => m.position.clone());
   animTo = points.map(p => timeMode ? p.timeVec : p.umapVec);
   animStart = performance.now();
@@ -2119,7 +2101,13 @@ function setTimeMode(on) {
   yearSprites.forEach(s => { s.userData.targetOpacity = timeMode ? 1 : 0; });
   orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? 0.25 : 0; });
 
+  if (timeMode) syncRingsToRange();
+  else clearYearHighlight();
 }
+
+document.addEventListener("modechange", (e) => {
+  setTimeMode(e.detail.mode === "cronologico");
+});
 
 function tickAnimation() {
   if (!animating) return;
@@ -2250,12 +2238,13 @@ function updateFilterGenreVisuals() {
 
 function ensureGenreLegendToggleAllBtn() {
   if (ui.genreLegendToggleAll) return ui.genreLegendToggleAll;
-
+ 
   const btn = document.createElement("button");
   btn.id = "genreLegendToggleAll";
-  btn.style.cssText = "border:none;background:none;color:#556;font-size:11px;text-decoration:underline;cursor:pointer;padding:4px 0;display:block;";
+  btn.type = "button";
+  btn.className = "sidebar_link";
   btn.addEventListener("click", () => toggleAllGenreGroups());
-
+ 
   ui.genreLegend.insertAdjacentElement("beforebegin", btn);
   ui.genreLegendToggleAll = btn;
   return btn;
@@ -2268,20 +2257,20 @@ function getVisibleGenreGroups() {
 function toggleAllGenreGroups() {
   const visible = getVisibleGenreGroups();
   if (!visible.length) return;
-
+ 
   const allExpanded = visible.every(([group]) => expandedGenreGroups.has(group));
   const shouldExpand = !allExpanded;
-
+ 
   visible.forEach(([group, data]) => {
     if (shouldExpand) {
       expandedGenreGroups.add(group);
     } else {
       expandedGenreGroups.delete(group);
     }
-    data.arrowEl.textContent = shouldExpand ? "▾" : "▸";
+    data.titleEl.classList.toggle("is-expanded", shouldExpand);
     data.itemsContainerEl.style.display = shouldExpand ? "block" : "none";
   });
-
+ 
   updateGenreLegendToggleAllLabel();
 }
 
@@ -2329,68 +2318,47 @@ function setNetworkInsightMode(mode) {
 }
 
 function createNetworkInsightsToggle() {
-  const panel = document.querySelector("#sidePanel");
-  if (!panel) return null;
-
-  const section = document.createElement("div");
-  section.className = "panel-section";
-  section.id = "networkInsightsSection";
-
-  const heading = document.createElement("h2");
-  heading.textContent = "Insights de red";
-  section.appendChild(heading);
-
-  const container = document.createElement("div");
-  container.id = "networkInsights";
-  container.style.cssText = "display:flex;flex-wrap:wrap;gap:8px;";
-
+  const container = document.querySelector("#networkInsights");
+  if (!container) return null;
+  container.textContent = "";
+ 
   const modes = [
     { mode: "hubs", label: "Hubs" },
-    { mode: "bridges", label: "Puentes entre géneros" },
-    { mode: "outliers", label: "Fueras de serie" },
-    { mode: "convergence", label: "Discos más influyentes" },  
-    { mode: "divergence", label: "Influencia más diversa" }
+    { mode: "bridges", label: "Bridges" },
+    { mode: "outliers", label: "Outliers" },
+    { mode: "convergence", label: "Convergentes" },
+    { mode: "divergence", label: "Divergentes" }
   ];
-
+ 
   modes.forEach(({ mode, label }) => {
     const btn = document.createElement("button");
+    btn.type = "button";
     btn.id = `${mode}Toggle`;
-    btn.textContent = label;
+    btn.className = "sidebar_radio";
     btn.dataset.mode = mode;
     btn.setAttribute("aria-pressed", "false");
-    btn.style.cssText = `
-      display: flex;
-      width: fit-content;
-      padding: 8px 14px; border-radius: 18px;
-      border: 1px solid #ccc; background: #fff; color: #555;
-      font-size: 12px; font-weight: 600; letter-spacing: .5px;
-      cursor: pointer;
-    `;
+ 
+    const mark = document.createElement("span");
+    mark.className = "sidebar_radio-mark";
+    mark.setAttribute("aria-hidden", "true");
+ 
+    const text = document.createElement("span");
+    text.textContent = label;
+ 
+    btn.appendChild(mark);
+    btn.appendChild(text);
     btn.addEventListener("click", () => setNetworkInsightMode(mode));
     container.appendChild(btn);
   });
-
-  section.appendChild(container);
-
-  const genresSection = ui.genreLegend?.closest(".panel-section");
-  if (genresSection && genresSection.parentElement === panel) {
-    panel.insertBefore(section, genresSection);
-  } else {
-    panel.appendChild(section);
-  }
-
+ 
   return container;
 }
-
+ 
 function updateNetworkInsightButtons() {
   ["hubs", "bridges", "outliers", "convergence", "divergence"].forEach(mode => {
     const btn = document.querySelector(`#${mode}Toggle`);
     if (!btn) return;
-    const active = networkInsightMode === mode;
-    btn.setAttribute("aria-pressed", String(active));
-    btn.style.background = active ? "#111" : "#fff";
-    btn.style.color = active ? "#fff" : "#555";
-    btn.style.borderColor = active ? "#111" : "#ccc";
+    btn.setAttribute("aria-pressed", String(networkInsightMode === mode));
   });
 }
 
@@ -2406,7 +2374,7 @@ function updateFilterArtistConnections() {
 }
 
 function applyFilterMapVisuals() {
-  if (selectedIndices.size > 0) return; // selección manual activa: los filtros de búsqueda no la pisan
+  if (selectedIndices.size > 0) return; 
 
   if (filteredIndices !== null) {
     clearHighlight();
@@ -2421,7 +2389,7 @@ function renderGenreLegend() {
   albums.forEach(a =>
     a.genres.primary.forEach(g => genres.add(g))
   );
-
+ 
   const byGroup = new Map();
   genres.forEach(g => {
     const group = cachedFamilyForGenre(g)?.group ?? "Otros";
@@ -2429,104 +2397,117 @@ function renderGenreLegend() {
     byGroup.get(group).push(g);
   });
   byGroup.forEach(list => list.sort());
-
+ 
   const orderedGroups = [
     ...GROUP_ORDER.filter(group => byGroup.has(group)),
     ...[...byGroup.keys()].filter(group => !GROUP_ORDER.includes(group))
   ];
-
+ 
   const frag = document.createDocumentFragment();
   genreLegendItemsByGenre = new Map();
   genreLegendGroups = new Map();
-
+ 
   orderedGroups.forEach(group => {
     const isExpanded = expandedGenreGroups.has(group);
     const groupGenres = byGroup.get(group);
-
+ 
     const title = document.createElement("div");
-    title.className = "legend-group-title";
-    title.style.cssText = "display:flex;align-items:center;gap:6px;";
-
-    const arrow = document.createElement("span");
-    arrow.textContent = isExpanded ? "▾" : "▸";
-    arrow.style.cssText = "font-size:10px;width:10px;flex-shrink:0;cursor:pointer;";
-
+    title.className = "sidebar_tree-item" + (isExpanded ? " is-expanded" : "");
+ 
     const selectArea = document.createElement("span");
-    selectArea.style.cssText = "display:flex;align-items:center;gap:6px;cursor:pointer;flex:1;";
-
+    selectArea.className = "sidebar_tree-select";
+ 
+    const groupBox = document.createElement("input");
+    groupBox.type = "checkbox";
+    groupBox.className = "sidebar_checkbox";
+    groupBox.setAttribute("aria-label", `Seleccionar todos los géneros de ${group}`);
+    groupBox.addEventListener("click", e => {
+      e.stopPropagation(); // la fila expande; el checkbox solo selecciona
+      toggleGenreGroupSelection(groupGenres);
+    });
+ 
     const swatch = document.createElement("i");
-    swatch.style.cssText = `display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:${colorForGroup(group).getStyle()};`;
-
+    swatch.className = "sidebar_dot";
+    swatch.style.background = colorForGroup(group).getStyle();
+ 
     const label = document.createElement("span");
+    label.className = "sidebar_tree-label";
     label.textContent = group;
-
+ 
+    selectArea.appendChild(groupBox);
     selectArea.appendChild(swatch);
     selectArea.appendChild(label);
-
-    title.appendChild(arrow);
+ 
+    const arrow = document.createElement("span");
+    arrow.className = "sidebar_tree-caret";
+    arrow.setAttribute("aria-hidden", "true");
+ 
     title.appendChild(selectArea);
-
+    title.appendChild(arrow);
+ 
     const itemsContainer = document.createElement("div");
-    itemsContainer.className = "legend-group-items";
     itemsContainer.style.display = isExpanded ? "block" : "none";
-
-    arrow.addEventListener("click", e => {
-      e.stopPropagation();
+ 
+    const list = document.createElement("div");
+    list.className = "sidebar_checkbox-list";
+    itemsContainer.appendChild(list);
+ 
+    title.addEventListener("click", () => {
       const nowExpanded = !expandedGenreGroups.has(group);
       if (nowExpanded) {
         expandedGenreGroups.add(group);
       } else {
         expandedGenreGroups.delete(group);
       }
-      arrow.textContent = nowExpanded ? "▾" : "▸";
+      title.classList.toggle("is-expanded", nowExpanded);
       itemsContainer.style.display = nowExpanded ? "block" : "none";
       updateGenreLegendToggleAllLabel();
     });
-
-    selectArea.addEventListener("click", e => {
-      e.stopPropagation();
-      toggleGenreGroupSelection(groupGenres);
-    });
-
+ 
     frag.appendChild(title);
-
+ 
     groupGenres.forEach(g => {
       const item = document.createElement("div");
-      item.className = "legend-item";
+      item.className = "sidebar_checkbox-item";
       item.dataset.genre = g;
-      item.style.cursor = "pointer";
-
+ 
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.className = "sidebar_checkbox";
+      box.setAttribute("aria-label", g);
+ 
       const dot = document.createElement("i");
-      dot.className = "legend-dot";
+      dot.className = "sidebar_dot";
       dot.style.background = legendDotColor(g).getStyle();
-
+ 
       const itemLabel = document.createElement("span");
+      itemLabel.className = "sidebar_checkbox-text";
       itemLabel.textContent = g;
-
+ 
+      item.appendChild(box);
       item.appendChild(dot);
       item.appendChild(itemLabel);
-
+ 
       item.addEventListener("click", () => toggleGenreHighlight(g));
-
+ 
       genreLegendItemsByGenre.set(g, item);
-
-      itemsContainer.appendChild(item);
+      list.appendChild(item);
     });
-
+ 
     frag.appendChild(itemsContainer);
-
+ 
     genreLegendGroups.set(group, {
       titleEl: title,
       arrowEl: arrow,
-      selectAreaEl: selectArea,
+      checkboxEl: groupBox,
       itemsContainerEl: itemsContainer,
       genres: groupGenres
     });
   });
-
+ 
   ui.genreLegend.textContent = "";
   ui.genreLegend.appendChild(frag);
-
+ 
   updateGenreLegendActiveState();
   updateGenreTreeVisibility();
   ensureGenreLegendToggleAllBtn();
@@ -2534,24 +2515,28 @@ function renderGenreLegend() {
 }
  
 function updateGenreLegendActiveState() {
+  const anySelected = selectedGenres.size > 0;
+ 
   genreLegendItemsByGenre.forEach((el, g) => {
     const active = selectedGenres.has(g);
     el.classList.toggle("active", active);
-    el.style.fontWeight = active ? "700" : "400";
-    el.style.backgroundColor = active ? "rgba(0,0,0,0.06)" : "transparent";
-    el.style.borderRadius = active ? "4px" : "0";
+ 
+    const box = el.querySelector(".sidebar_checkbox");
+    if (box) box.checked = active;
+ 
+    // Los no seleccionados se atenúan solo si ya hay alguna selección
+    const text = el.querySelector(".sidebar_checkbox-text");
+    if (text) text.classList.toggle("sidebar_checkbox-unchecked", anySelected && !active);
   });
-
+ 
   genreLegendGroups.forEach(data => {
     const visible = data.genres.filter(isGenreVisibleInLegend);
     const selectedCount = visible.filter(g => selectedGenres.has(g)).length;
     const allSelected = selectedCount > 0 && selectedCount === visible.length;
     const partial = selectedCount > 0 && !allSelected;
-
-    data.selectAreaEl.classList.toggle("active", allSelected);
-    data.selectAreaEl.classList.toggle("partial", partial);
-    data.selectAreaEl.style.fontWeight = allSelected ? "700" : "400";
-    data.selectAreaEl.style.opacity = partial ? "0.25" : "1";
+ 
+    data.checkboxEl.checked = allSelected;
+    data.checkboxEl.indeterminate = partial;
   });
 }
 
@@ -2784,9 +2769,8 @@ function renderList() {
   document.querySelector("#count").textContent = `(${toRender.length})`;
 }
 
-// --- Buscador unificado (artistas + discos) ------------------------------
 const MAX_SUGGESTIONS_PER_GROUP = 6;
-let currentSuggestions = []; // [{ type: 'artist'|'album', value }]
+let currentSuggestions = []; 
 let activeSuggestionIndex = -1;
 
 function computeArtistMatches(query) {
@@ -2852,8 +2836,6 @@ function buildNetworkGraphAdjacency() {
     }
   });
 
-  // Fuente 2: red ancestro/descendiente (idéntica a buildAncestorDescendantGraph),
-  // calculada para CADA disco, no solo el seleccionado
   points.forEach((p, idx) => {
     const { ancestor, descendants, secondLevel } = computeAncestorDescendants(idx);
     if (ancestor) addEdge(ancestor.idx, idx);
@@ -2906,7 +2888,6 @@ function brandesBetweenness(adjacency, n) {
     }
   }
 
-  // No dirigido: cada par (s,t) se contabiliza dos veces (desde s y desde t)
   for (let i = 0; i < n; i++) betweenness.set(i, betweenness.get(i) / 2);
 
   return betweenness;
@@ -2959,11 +2940,6 @@ function computeNetworkMetrics() {
       .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
   );
 }
-
-// function genreGroupOf(p) {
-//   const primary = p.genres.primary[0];
-//   return primary ? (cachedFamilyForGenre(primary)?.group ?? "Otros") : "Otros";
-// }
 
 function isGenreVisibleInLegend(g) {
   const el = genreLegendItemsByGenre.get(g);
@@ -3117,7 +3093,7 @@ function renderTypeahead(query) {
   ];
   activeSuggestionIndex = -1;
 
-  if (!ui.searchResults) return; // sin markup del dropdown en el HTML, no-op
+  if (!ui.searchResults) return; 
 
   ui.searchResults.textContent = "";
 
@@ -3166,12 +3142,12 @@ function selectSuggestion(i) {
   activeFilters.query = "";
 
 if (entry.type === "artist") {
-    clearHighlight();               // por si había un álbum seleccionado antes
+    clearHighlight();               
     addArtistFilter(entry.value);
     ui.search.value = "";
     closeTypeahead();
     refreshFilterOptions();
-    selectArtistLine(entry.value);  // pinea el panel al final, sin que nadie lo tape después
+    selectArtistLine(entry.value);  
 } else {
     const a = entry.value;
     ui.search.value = a.album;
@@ -3226,14 +3202,7 @@ const ancestor = others
 
   const usedDescendantArtists = new Set();
   const descendants = others
-    // PARA REPETIR ARTISTAS A NIVEL 2
-    // .filter(p => p.year > origin.year)
-    // .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
-    // .sort((a, b) => a.d - b.d)
-    // .slice(0, 2)
-    // .map(e => e.p);
 
-    // PARA NO REPETIR ARTISTAS A NIVEL 2
     .filter(p => p.year > origin.year)
     .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
     .sort((a, b) => a.d - b.d)
@@ -3245,9 +3214,6 @@ const ancestor = others
       return acc;
     }, []);
 
-
-
-  // Artistas ya usados en el grafo hasta este punto (para el filtro de nivel 2)
   const usedArtists = new Set([
     origin.artist,
     ancestor?.artist,
@@ -3264,7 +3230,7 @@ const secondLevel = descendants.map(d => {
       .map(p => ({ p, dist: p.umapVec.distanceTo(d.umapVec) }))
       .sort((a, b) => a.dist - b.dist)[0]?.p ?? null;
 
-    if (nearest) usedArtists.add(nearest.artist); // evita duplicar artista entre las ramas de nivel 2
+    if (nearest) usedArtists.add(nearest.artist);
     return nearest;
 });
 
@@ -3325,7 +3291,7 @@ function createConnectionLine(colorHex, dashed, lineWidth) {
     color: colorHex,
     transparent: true,
     opacity: 0,
-    linewidth: lineWidth, // px de pantalla (worldUnits: false por defecto)
+    linewidth: lineWidth,
     depthWrite: false,
     dashed,
     dashSize: dashed ? CONNECTION_CONFIG.dashSize : 0,
@@ -3343,9 +3309,9 @@ function createArrowHead(colorHex) {
   const shape = new THREE.Shape();
   const halfWidth = 0.12;
   const height = 0.55;
-  shape.moveTo(0, height / 2);            // punta
-  shape.lineTo(-halfWidth, -height / 2);  // base izquierda
-  shape.lineTo(halfWidth, -height / 2);   // base derecha
+  shape.moveTo(0, height / 2);            
+  shape.lineTo(-halfWidth, -height / 2);  
+  shape.lineTo(halfWidth, -height / 2);  
   shape.closePath();
 
   const geometry = new THREE.ShapeGeometry(shape);
@@ -3354,7 +3320,7 @@ function createArrowHead(colorHex) {
     transparent: true,
     opacity: 0,
     depthWrite: false,
-    side: THREE.DoubleSide // plano: sin esto no se ve desde el lado "de atrás"
+    side: THREE.DoubleSide
   });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.frustumCulled = false;
@@ -3477,97 +3443,100 @@ function buildDiscoveryGraph(originIdx) {
 }
 
 function ensureSelectedChipsContainer() {
-  if (ui.selectedChips) return ui.selectedChips;
+  if (!ui.selectedChips) ui.selectedChips = document.querySelector("#selectedChips");
+  return ui.selectedChips;
+}
 
-  const container = document.createElement("div");
-  container.id = "selectedChips";
-  container.style.cssText = "display:none;flex-wrap:wrap;gap:6px;margin-top:8px;";
-  ui.search.insertAdjacentElement("afterend", container);
-  ui.selectedChips = container;
-  return container;
+function buildChip({ color = null, text, ariaLabel, onRemove }) {
+  const chip = document.createElement("span");
+  chip.className = "sidebar_chips";
+ 
+  if (color) {
+    const dot = document.createElement("i");
+    dot.className = "sidebar_dot sidebar_dot--lg";
+    dot.style.background = color;
+    chip.appendChild(dot);
+  }
+ 
+  const label = document.createElement("span");
+  label.className = "sidebar_chips-label";
+  label.textContent = text;
+ 
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "sidebar_chips-close";
+  closeBtn.textContent = "×";
+  closeBtn.setAttribute("aria-label", ariaLabel);
+  closeBtn.addEventListener("click", e => {
+    e.stopPropagation();
+    onRemove();
+  });
+ 
+  chip.appendChild(label);
+  chip.appendChild(closeBtn);
+  return chip;
 }
 
 function renderSelectedChips() {
   const container = ensureSelectedChipsContainer();
   container.textContent = "";
-
+ 
   renderFilterChipsInto(container);
-
+ 
   [...selectedIndices].forEach(idx => {
     const point = points[idx];
     if (!point) return;
-
-    const chip = document.createElement("span");
-    chip.className = "chip chip-album";
-    chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#f0f0f0;font-size:12px;";
-
-    const dot = document.createElement("i");
-    dot.style.cssText = `display:inline-block;width:7px;height:7px;border-radius:50%;background:${point.color.getStyle()};`;
-
-    const label = document.createElement("span");
-    label.textContent = point.album;
-
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "×";
-    closeBtn.setAttribute("aria-label", `Quitar ${point.album}`);
-    closeBtn.style.cssText = "border:none;background:none;cursor:pointer;font-size:14px;line-height:1;color:#888;padding:0;";
-    closeBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      selectedIndices.delete(idx);
-      applySelection();
-    });
-
-    chip.appendChild(dot);
-    chip.appendChild(label);
-    chip.appendChild(closeBtn);
-    container.appendChild(chip);
+    container.appendChild(buildChip({
+      color: point.color.getStyle(),
+      text: point.album,
+      ariaLabel: `Quitar ${point.album}`,
+      onRemove: () => {
+        selectedIndices.delete(idx);
+        applySelection();
+      }
+    }));
   });
-
-  container.style.display = (selectedIndices.size || hasActiveFilters()) ? "flex" : "none";
+ 
+  container.hidden = container.childElementCount === 0;
+ 
+  const descContainer = document.querySelector("#descriptorChips");
+  if (descContainer) {
+    descContainer.textContent = "";
+    activeFilters.descriptors.forEach(d => {
+      descContainer.appendChild(buildChip({
+        text: d,
+        ariaLabel: `Quitar descriptor ${d}`,
+        onRemove: () => {
+          activeFilters.descriptors.delete(d);
+          refreshFilterOptions();
+          updateGenreLegendActiveState();
+        }
+      }));
+    });
+    descContainer.hidden = descContainer.childElementCount === 0;
+  }
 }
 
 function renderFilterChipsInto(container) {
-    activeFilters.artists.forEach(artist => {
-    const chip = document.createElement("span");
-    chip.className = "chip chip-filter";
-    chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#e8edff;font-size:12px;";
-
+  activeFilters.artists.forEach(artist => {
     const discog = getArtistDiscography(artist);
-    const refColor = discog.length ? discog[0].color.getStyle() : "#ccc";
-
-    const dot = document.createElement("i");
-    dot.style.cssText = `display:inline-block;width:9px;height:9px;border-radius:50%;flex-shrink:0;background:${refColor};`;
-
-    const label = document.createElement("span");
-    label.textContent = `Artista: ${artist}`;
-
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "×";
-    closeBtn.setAttribute("aria-label", `Quitar filtro de artista ${artist}`);
-    closeBtn.style.cssText = "border:none;background:none;cursor:pointer;font-size:14px;line-height:1;color:#556;padding:0;";
-    closeBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      activeFilters.artists.delete(artist);
-      unpinArtist(artist);
-      refreshFilterOptions();
-      updateGenreLegendActiveState();
-    });
-
-    chip.appendChild(dot);
-    chip.appendChild(label);
-    chip.appendChild(closeBtn);
-    container.appendChild(chip);
+    container.appendChild(buildChip({
+      color: discog.length ? discog[0].color.getStyle() : "#ccc",
+      text: artist,
+      ariaLabel: `Quitar filtro de artista ${artist}`,
+      onRemove: () => {
+        activeFilters.artists.delete(artist);
+        unpinArtist(artist);
+        refreshFilterOptions();
+        updateGenreLegendActiveState();
+      }
+    }));
   });
-
+ 
   const defs = [
     { active: () => activeFilters.yearFrom !== null || activeFilters.yearTo !== null,
       label: () => `Año: ${activeFilters.yearFrom ?? "…"}–${activeFilters.yearTo ?? "…"}`,
       clear: () => { activeFilters.yearFrom = null; activeFilters.yearTo = null; } },
-    ...[...activeFilters.descriptors].map(d => ({
-      active: () => true,
-      label: () => `Descriptor: ${d}`,
-      clear: () => { activeFilters.descriptors.delete(d); }
-    })),
     { active: () => Boolean(activeFilters.query && activeFilters.query.trim() !== ""),
       label: () => `Búsqueda: "${activeFilters.query}"`,
       clear: () => { activeFilters.query = ""; ui.search.value = ""; } },
@@ -3575,31 +3544,18 @@ function renderFilterChipsInto(container) {
       label: () => `Géneros: ${selectedGenres.size}`,
       clear: () => { selectedGenres.clear(); } }
   ];
-
+ 
   defs.forEach(def => {
     if (!def.active()) return;
-
-    const chip = document.createElement("span");
-    chip.className = "chip chip-filter";
-    chip.style.cssText = "display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:12px;background:#e8edff;font-size:12px;";
-
-    const label = document.createElement("span");
-    label.textContent = def.label();
-
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "×";
-    closeBtn.setAttribute("aria-label", "Quitar filtro");
-    closeBtn.style.cssText = "border:none;background:none;cursor:pointer;font-size:14px;line-height:1;color:#556;padding:0;";
-    closeBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      def.clear();
-      refreshFilterOptions();
-      updateGenreLegendActiveState();
-    });
-
-    chip.appendChild(label);
-    chip.appendChild(closeBtn);
-    container.appendChild(chip);
+    container.appendChild(buildChip({
+      text: def.label(),
+      ariaLabel: "Quitar filtro",
+      onRemove: () => {
+        def.clear();
+        refreshFilterOptions();
+        updateGenreLegendActiveState();
+      }
+    }));
   });
 }
 
@@ -3622,7 +3578,7 @@ function applySelection() {
 
   if (selectedIndices.size === 1) {
     const idx = [...selectedIndices][0];
-    buildAncestorDescendantGraph(idx); // <-- antes: buildDiscoveryGraph(idx)
+    buildAncestorDescendantGraph(idx);
     pinTooltip(idx);
   } else {
     buildMultiSelectionChains();
@@ -3719,10 +3675,10 @@ function ensureOutlineMeshes() {
       color: 0xffffff,
       side: THREE.DoubleSide,
       depthTest: true,
-      depthWrite: false // decorativo: no debe tapar objetos detrás suyo
+      depthWrite: false
     })
   );
-  outlineRing.renderOrder = 10; // se dibuja después de los puntos, ya está resuelto por geometría igual
+  outlineRing.renderOrder = 10;
   outlineRing.visible = false;
   root.add(outlineRing);
 }
@@ -3843,33 +3799,6 @@ function updatePinnedTooltipPosition() {
   ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 300)}px`;
 }
 
-// function computeYearGenreStats(year) {
-//   const albumsThatYear = points.filter(p => p.year === year);
-//   const total = albumsThatYear.length;
- 
-//   const groupCounts = new Map();
- 
-//   albumsThatYear.forEach(a => {
-//     const groupsForAlbum = new Set(
-//       a.genres.primary.map(g => cachedFamilyForGenre(g)?.group ?? "Otros")
-//     );
-//     groupsForAlbum.forEach(group => {
-//       groupCounts.set(group, (groupCounts.get(group) ?? 0) + 1);
-//     });
-//   });
- 
-//   const groups = [...groupCounts.entries()]
-//     .map(([group, count]) => ({ genre: group, count, pct: total ? (count / total * 100) : 0 }))
-//     .sort((a, b) => b.count - a.count);
- 
-//   return {
-//     year,
-//     total,
-//     albums: albumsThatYear,
-//     groups
-//   };
-// }
-
 function computeArtistStats(artist) {
   const discog = getArtistDiscography(artist);
   if (!discog.length) return null;
@@ -3926,32 +3855,6 @@ function dominantGroupColor(year) {
   return top ? colorForGroup(top.genre) : new THREE.Color(ORBIT_RING_SELECTED_COLOR);
 }
 
-// function toggleYearHighlight(year, additive = false) {
-//   let next;
-//   if (additive) {
-//     next = new Set(selectedYears);
-//     if (next.has(year)) next.delete(year); else next.add(year);
-//   } else {
-//     next = (selectedYears.size === 1 && selectedYears.has(year))
-//       ? new Set()
-//       : new Set([year]);
-//   }
-//   setYearSelection(next);
-// }
-
-// function setYearSelection(years) {
-//   if (years.size === 0) { clearYearHighlight(); return; }
-
-//   // Se vacía antes de limpiar para que los clear* de abajo no borren la selección nueva
-//   selectedYears = new Set();
-//   clearHighlight();
-//   clearGenreSelection();
-
-//   selectedYears = years;
-//   applyYearVisuals();
-//   syncYearPanels();
-// }
-
  function computePeriodGenreStats(years) {
   const albumsInPeriod = points.filter(p => years.has(p.year));
   const total = albumsInPeriod.length;
@@ -3973,7 +3876,6 @@ function dominantGroupColor(year) {
   return { total, albums: albumsInPeriod, groups };
 }
  
-// Se mantiene porque dominantGroupColor(year) la usa
 function computeYearGenreStats(year) {
   return { year, ...computePeriodGenreStats(new Set([year])) };
 }
@@ -3985,11 +3887,6 @@ function periodLabel(years) {
   return min === max ? `${min}` : `${min} - ${max}`;
 }
  
- 
-/* ---------- Selección ---------- */
- 
-// Click: selecciona solo ese aro (y deselecciona el período). Click sobre el único
-// aro seleccionado lo deselecciona. Ctrl/Cmd+click suma o quita aros.
 function toggleYearHighlight(year, additive = false) {
   let next;
   if (additive) {
@@ -4000,7 +3897,7 @@ function toggleYearHighlight(year, additive = false) {
       ? new Set()
       : new Set([year]);
   }
-  // Si ya había años seleccionados o hay rango Desde/Hasta, se conservan los géneros
+
   setYearSelection(next, {
     keepFilters: selectedYears.size > 0 || getRangeYears() !== null
   });
@@ -4009,7 +3906,6 @@ function toggleYearHighlight(year, additive = false) {
 function setYearSelection(years, { keepFilters = false, showPanel = true } = {}) {
   if (years.size === 0) { clearYearHighlight(); return; }
  
-  // Se vacía antes de limpiar para que los clear* de abajo no borren la selección nueva
   selectedYears = new Set();
   clearHighlight();
   if (!keepFilters) clearGenreSelection();
@@ -4036,9 +3932,6 @@ function clearYearHighlight() {
   });
 }
  
- 
-/* ---------- Panel ---------- */
- 
 function clearYearPanels() {
   if (yearPanelEl) yearPanelEl.remove();
   yearPanelEl = null;
@@ -4063,9 +3956,7 @@ function syncYearPanels() {
   yearPanelEl.style.display = "block";
   updateYearPanels();
 }
- 
-// Anclaje: punto medio entre el primer y el último aro seleccionados
-// (con un solo aro, el panel queda en su borde derecho, como antes)
+
 function updateYearPanels() {
   if (!yearPanelEl || selectedYears.size === 0) return;
  
@@ -4097,7 +3988,7 @@ function renderYearStatsPanelInto(el, years) {
   closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
   closeBtn.addEventListener("click", e => {
     e.stopPropagation();
-    clearYearHighlight(); // deselecciona el aro (o todos los del período)
+    clearYearHighlight();
   });
  
   const title = document.createElement("strong");
@@ -4125,7 +4016,6 @@ function renderYearStatsPanelInto(el, years) {
     );
   }
  
-  // La lista de álbumes solo existe para un año suelto, no para el período
   if (!isPeriod && stats.albums.length) {
     const albumsSection = document.createElement("div");
     albumsSection.style.display = "none";
@@ -4178,29 +4068,6 @@ function applyYearVisuals() {
   });
 }
 
-// function clearYearPanels() {
-//   yearPanelEls.forEach(el => el.remove());
-//   yearPanelEls.clear();
-// }
-
-// function clearYearHighlight() {
-//   if (selectedYears.size === 0) return;
-//   selectedYears = new Set();
-//   yearPanelYears = new Set();
-//   clearYearPanels();
-
-//   updateFilterGenreVisuals(); // respeta rango, géneros e insights
-
-//   orbitRings.forEach(r => {
-//     r.userData.targetOpacity = timeMode ? 0.25 : 0;
-//     r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
-//   });
-//   yearSprites.forEach(s => {
-//     s.userData.targetOpacity = timeMode ? 1 : 0;
-//     s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
-//   });
-// }
-
 const yearAnchorVec = new THREE.Vector3();
 const cameraRightVec = new THREE.Vector3();
 
@@ -4213,104 +4080,6 @@ function ringScreenAnchor(ring) {
   yearAnchorVec.copy(ring.position).addScaledVector(cameraRightVec, ring.userData.radius);
   return projectToScreen(yearAnchorVec);
 }
-
-// function updateYearPanels() {
-//   if (!yearPanelEls.size) return;
-//   camera.updateMatrixWorld();
-
-//   yearPanelEls.forEach((el, year) => {
-//     const ring = orbitRings.find(r => r.userData.year === year);
-//     if (!ring) return;
-//     const { x, y } = ringScreenAnchor(ring);
-//     el.style.left = `${Math.max(0, Math.min(x + 16, innerWidth - 320))}px`;
-//     el.style.top = `${Math.max(0, Math.min(y + 16, innerHeight - 360))}px`;
-//   });
-// }
-
-// function syncYearPanels() {
-//   [...yearPanelEls.keys()].forEach(year => {
-//     if (!selectedYears.has(year)) {
-//       yearPanelEls.get(year).remove();
-//       yearPanelEls.delete(year);
-//     }
-//   });
-
-//   selectedYears.forEach(year => {
-//     if (yearPanelEls.has(year)) return;
-
-//     const el = document.createElement("div");
-//     el.className = ui.tooltip.className;
-//     el.style.position = "absolute";
-//     el.style.pointerEvents = "auto";
-//     el.style.right = "auto";
-//     el.style.maxHeight = "320px";
-//     el.style.overflowY = "auto";
-//     document.body.appendChild(el);
-
-//     renderYearStatsPanelInto(el, year);
-//     el.style.display = "block";
-//     yearPanelEls.set(year, el);
-//   });
-
-//     updateYearPanels();
-// }
-
-// function renderYearStatsPanelInto(el, year) {
-//   const stats = computeYearGenreStats(year);
-//   el.textContent = "";
-
-//   const closeBtn = document.createElement("button");
-//   closeBtn.textContent = "×";
-//   closeBtn.setAttribute("aria-label", "Cerrar");
-//   closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
-//   closeBtn.addEventListener("click", e => {
-//     e.stopPropagation();
-//     toggleYearHighlight(year, true); // quita solo este año
-//   });
-
-//   const title = document.createElement("strong");
-//   title.textContent = `${year}`;
-
-//   const meta = document.createElement("div");
-//   meta.className = "artist";
-//   meta.textContent = `${stats.total} álbum${stats.total === 1 ? "" : "es"}`;
-
-//   el.appendChild(closeBtn);
-//   el.appendChild(title);
-//   el.appendChild(meta);
-
-//   if (stats.groups.length) {
-//     const groupsTitle = document.createElement("div");
-//     groupsTitle.textContent = "Géneros principales";
-//     groupsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
-//     el.appendChild(groupsTitle);
-//     stats.groups.slice(0, 3).forEach(entry => el.appendChild(buildGenreStatRow(entry, colorForGroup(entry.genre))));
-//   }
-
-//   if (stats.albums.length) {
-//     const albumsSection = document.createElement("div");
-//     albumsSection.style.display = "none";
-
-//     const albumsTitle = document.createElement("div");
-//     albumsTitle.textContent = "Álbumes de este año";
-//     albumsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
-//     albumsSection.appendChild(albumsTitle);
-//     stats.albums.forEach(p => albumsSection.appendChild(buildNearestRow(p)));
-
-//     const showBtn = document.createElement("button");
-//     showBtn.textContent = `Ver álbumes (${stats.albums.length})`;
-//     showBtn.style.cssText = "margin-top:10px;border:none;background:none;color:#556;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;";
-//     showBtn.addEventListener("click", e => {
-//       e.stopPropagation();
-//       const showing = albumsSection.style.display !== "none";
-//       albumsSection.style.display = showing ? "none" : "block";
-//       showBtn.textContent = showing ? `Ver álbumes (${stats.albums.length})` : "Ocultar álbumes";
-//     });
-
-//     el.appendChild(showBtn);
-//     el.appendChild(albumsSection);
-//   }
-// }
 
 function pointerMove(e) {
   mouse.x = e.clientX / innerWidth * 2 - 1;
@@ -4366,7 +4135,6 @@ function pointerMove(e) {
     return;
   }
 
-  if (selectedYears.size > 0) return;
   const hitIdx = hit?.object.userData.index;
   const compareMode = (e.ctrlKey || e.metaKey) && selectedIndices.size > 0;
 
@@ -4449,10 +4217,68 @@ function buildEventsByYear(events) {
   });
   return map;
 }
+/* ---------- Menú superior + sidebar ---------- */
+const body = document.getElementById("wrapper");
+const sidebarEl = document.querySelector(".sidebar");
+const sidebarOpenBtn = document.getElementById("sidebarOpen");
+const sidebarCloseBtn = document.getElementById("sidebarClose");
+const homeBtn = document.getElementById("homeBtn");
+const modeBtns = document.querySelectorAll(".topbar_switch [data-mode]");
+
+const isSidebarClosed = () => body.classList.contains("is-closed");
+
+function syncFilterBtn() {
+  sidebarOpenBtn.setAttribute("aria-expanded", String(!isSidebarClosed()));
+}
+
+function openSidebar() {
+  body.classList.remove("is-closed");
+  sidebarEl.removeAttribute("aria-hidden");
+  syncFilterBtn();
+  sidebarCloseBtn.focus();
+}
+
+function closeSidebar({ restoreFocus = false } = {}) {
+  body.classList.add("is-closed");
+  sidebarEl.setAttribute("aria-hidden", "true");
+  syncFilterBtn();
+  if (restoreFocus) sidebarOpenBtn.focus();
+}
+
+function syncModeButtons(mode) {
+  modeBtns.forEach(btn => {
+    btn.setAttribute("aria-pressed", String(btn.dataset.mode === mode));
+  });
+}
+
+sidebarOpenBtn.addEventListener("click", () => {
+  isSidebarClosed() ? openSidebar() : closeSidebar();
+});
+sidebarCloseBtn.addEventListener("click", () => closeSidebar({ restoreFocus: true }));
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !isSidebarClosed()) closeSidebar({ restoreFocus: true });
+});
+
+modeBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.getAttribute("aria-pressed") === "true") return;
+    setTimeMode(btn.dataset.mode === "cronologico");
+  });
+});
+
+homeBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  resetInteractionState();
+  reopenOnboarding();
+});
+
+// Estado inicial
+syncFilterBtn();
+syncModeButtons(timeMode ? "cronologico" : "exploratorio");
 
 onboardingOverlay = createOnboardingOverlay();
 renderOnboardingStep1();
-createInfoButton(); 
 createNetworkInsightsToggle();
 
 Promise.all([

@@ -8186,9 +8186,11 @@
 		"year": 1995,
 		"genres": {
 			"primary": [
-				"Latin Alternative"
+				"Alternative Metal"
 			],
-			"secondary": []
+			"secondary": [
+        "Alternative Rock"
+      ]
 		},
 		"cover": "https://cdn.sonemic.net/i/150/w/b01060880ecfed3659b64dc1fe904bda/1501374",
     "descriptors": []
@@ -8288,9 +8290,11 @@
 		"year": 2010,
 		"genres": {
 			"primary": [
-				"Alternative Metal", "Alternative Rock"
+				"Alternative Metal"
 			],
-			"secondary": []
+			"secondary": [
+        "Alternative Rock"
+      ]
 		},
 		"cover": "https://cdn.sonemic.net/i/150/w/8031f6c09ed763e562edca07496d88b5/3728467",
     "descriptors": []
