@@ -20495,6 +20495,135 @@
     "descriptors": []
   },
   {
+    "id": "la-kulebra",
+    "album": "La kulebra",
+    "artist": "Karamelo Santo",
+    "year": 1993,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Third Wave Ska"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/013fa5cf5ef1d261e67b7ebf608719ec/1510121",
+    "descriptors": []
+  },
+  {
+    "id": "perfectos-idiotas",
+    "album": "Perfectos idiotas",
+    "artist": "Karamelo Santo",
+    "year": 1997,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Third Wave Ska"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/3e99680cdf2f2894465456c160bd0693/1510118",
+    "descriptors": [
+      "playful",
+      "energetic",
+      "bouncy",
+      "warm",
+      "male vocalist"
+    ]
+  },
+  {
+    "id": "los-guachos",
+    "album": "Los guachos",
+    "artist": "Karamelo Santo",
+    "year": 2002,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Third Wave Ska"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/5907be84ae11e1bffbc598bfab15b63a/1510116",
+    "descriptors": []
+  },
+  {
+    "id": "haciendo-bulla",
+    "album": "Haciendo bulla",
+    "artist": "Karamelo Santo",
+    "year": 2004,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Ska"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/7c9e5079701a5fe95bdf75a928b05077/1510122",
+    "descriptors": []
+  },
+  {
+    "id": "la-gente-arriba",
+    "album": "La gente arriba",
+    "artist": "Karamelo Santo",
+    "year": 2006,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Ska"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/5ef7d9ef25513f052fb252e315e24dab/1685483",
+    "descriptors": []
+  },
+  {
+    "id": "antena-pachamama",
+    "album": "Antena Pachamama",
+    "artist": "Karamelo Santo",
+    "year": 2007,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Ska"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/0ec2dbfd58125738a95a2b29d3ca9e2f/2108707",
+    "descriptors": []
+  },
+  {
+    "id": "karamelo-santo",
+    "album": "Karamelo Santo",
+    "artist": "Karamelo Santo",
+    "year": 2011,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Ska",
+        "Cumbia argentina"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/192dabec51e137db7b059be65367069e/3962500",
+    "descriptors": []
+  },
+  {
+    "id": "venceremos",
+    "album": "Venceremos",
+    "artist": "Karamelo Santo",
+    "year": 2022,
+    "genres": {
+      "primary": [
+        "Latin Alternative",
+        "Ska"
+      ],
+      "secondary": [
+        "Third Wave Ska"
+      ]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/bb55f799b572a64346c12d9438397c39/14309735",
+    "descriptors": []
+  },
+  {
     "id": "emporio-bizarro",
     "album": "Emporio bizarro",
     "artist": "Santos Inocentes",
@@ -23346,6 +23475,57 @@
     "descriptors": [
       "male vocalist"
     ]
+  },
+  {
+    "id": "club-camionero",
+    "album": "Club Camionero",
+    "artist": "Camionero",
+    "year": 2021,
+    "genres": {
+      "primary": [
+        "Indie Rock",
+        "Pop Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Alternative Rock"
+      ]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/39bc44134b65c28cb520ddde4c69c669/9556773",
+    "descriptors": []
+  },
+  {
+    "id": "todo-lo-solido-se-desvanece-en-el-aire",
+    "album": "Todo lo sólido se desvanece en el aire",
+    "artist": "Camionero",
+    "year": 2023,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock"
+      ]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/cda456904d9165ced24408bb86413c8e/11752839",
+    "descriptors": []
+  },
+  {
+    "id": "pruebas-de-contacto",
+    "album": "Pruebas de contacto",
+    "artist": "Camionero",
+    "year": 2026,
+    "genres": {
+      "primary": [
+        "Hard Rock"
+      ],
+      "secondary": [
+        "Blues Rock",
+        "Rock & Roll"
+      ]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/4ea1e423ff16140bfc401ab3415ba13c/14607760",
+    "descriptors": []
   },
   {
     "id": "bestia-bebe",

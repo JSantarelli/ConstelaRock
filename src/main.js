@@ -77,7 +77,9 @@ function applyPresetYears(years) {
   }
 }
 
-/* ---------- Constantes ---------- */
+const ONBOARDING_LOADING_TEXT =
+  "Una constelación que representa la evolución del rock y la música nacional a través de la interrelación de sus discos.";
+
 const ONBOARDING_ABOUT_TEXT =
   "Una constelación que representa la evolución del rock y la música nacional a través de sus discos: cada punto es un álbum, cada cercanía una afinidad de género, cada línea una historia de influencias.";
 
@@ -170,8 +172,8 @@ function obEl(tag, className, text) {
 function createOnboardingOverlay() {
   const overlay = document.createElement("div");
   overlay.id = "onboardingOverlay";
-  document.body.appendChild(overlay);
-  document.body.classList.add("is-onboarding");
+  (document.querySelector("#app") ?? document.body).appendChild(overlay);
+  setSidebarOpen(false); 
   return overlay;
 }
 
@@ -180,7 +182,6 @@ function clearOverlayContent() {
 }
 
 function removeOnboardingOverlay() {
-  document.body.classList.remove("is-onboarding");
   if (onboardingOverlay) onboardingOverlay.remove();
   onboardingOverlay = null;
   onboardingProgressFillEl = null;
@@ -200,8 +201,11 @@ function setLoadingProgress(pct) {
 
   if (onboardingProgressFillEl) onboardingProgressFillEl.style.width = `${loadingProgress}%`;
   if (onboardingProgressLabelEl) {
-    onboardingProgressLabelEl.textContent = ready ? "" : `Cargando… ${Math.round(loadingProgress)}%`;
+    onboardingProgressLabelEl.textContent = `${Math.round(loadingProgress)}%`;
   }
+
+  // El FAB "Acerca del proyecto" solo existe cuando terminó de cargar
+  if (aboutFabEl) aboutFabEl.hidden = !ready;
 
   const frame = onboardingOverlay?.querySelector(".ob-frame");
   if (frame) frame.classList.toggle("is-loading", !ready);
@@ -225,36 +229,23 @@ function renderOnboardingStep1() {
   const overlay = obEl("span", "ob-frame-overlay");
   if (frame) frame.classList.toggle("is-loading", !ready);
 
-  const aboutBtn = obEl("button", "ob-about");
-  aboutBtn.type = "button";
-  aboutBtn.setAttribute("aria-expanded", "false");
-  aboutBtn.appendChild(document.createTextNode("Acerca del proyecto"));
-  aboutBtn.appendChild(obEl("span", "ob-about-icon", "i"));
-
-  const aboutPanel = obEl("div", "ob-about-panel", ONBOARDING_ABOUT_TEXT);
-  aboutPanel.hidden = true;
-
-  aboutBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    aboutPanel.hidden = !aboutPanel.hidden;
-    aboutBtn.setAttribute("aria-expanded", String(!aboutPanel.hidden));
-  });
-
   const hero = obEl("header", "ob-hero");
   hero.appendChild(obEl("span", "ob-header-logo"));
+
+  const loading = obEl("section", "ob-loading");
+  loading.appendChild(obEl("h2", "ob-loading-title", "¿Qué es ConstelaRock?"));
+  loading.appendChild(obEl("p", "ob-loading-text", ONBOARDING_LOADING_TEXT));
+
+  const track = obEl("div", "ob-loading-track");
+  const fill = obEl("div", "ob-loading-fill");
+  fill.style.width = `${loadingProgress}%`;
+  track.appendChild(fill);
+  loading.appendChild(track);
+
+  const progressLabel = obEl("div", "ob-loading-label", `${Math.round(loadingProgress)}%`);
+  loading.appendChild(progressLabel);
+
   const logo = obEl("span", "ob-header-logo");
-  const divider = obEl("div", "ob-divider");
-  const dividerFill = obEl("div", "ob-divider-fill");
-  dividerFill.style.width = `${loadingProgress}%`;
-  hero.appendChild(divider);
-
-  const progressLabel = obEl(
-    "div",
-    "ob-progress-label",
-    ready ? "" : `Cargando… ${Math.round(loadingProgress)}%`
-  );
-
-  hero.appendChild(progressLabel);
 
   const searchBlock = obEl("section", "ob-search-block");
   searchBlock.appendChild(obEl("h2", "ob-question", "¿Cuál es tu banda o artista nacional favorito?"));
@@ -316,7 +307,6 @@ function renderOnboardingStep1() {
     presets.appendChild(group);
   });
 
-  // Footer: explorar libremente
   const footer = obEl("footer", "ob-footer");
   const exploreBtn = obEl("button", "ob-explore", "Quiero explorar libremente");
   exploreBtn.type = "button";
@@ -339,16 +329,11 @@ function renderOnboardingStep1() {
       const row = obEl("div", "ob-result-row", name);
       row.addEventListener("click", () => renderOnboardingStep2(name));
       results.appendChild(row);
-
-      const searching = query !== "";
-      presets.hidden = searching;
-      footer.hidden = searching;
     });
   });
   
-  frame.appendChild(aboutBtn);
   frame.appendChild(logo);
-  frame.appendChild(aboutPanel);
+  frame.appendChild(loading);
   frame.appendChild(hero);
   frame.appendChild(searchBlock);
   frame.appendChild(presets);
@@ -356,7 +341,7 @@ function renderOnboardingStep1() {
   frame.appendChild(overlay);
   onboardingOverlay.appendChild(frame);
 
-  onboardingProgressFillEl = dividerFill;
+  onboardingProgressFillEl = fill;
   onboardingProgressLabelEl = progressLabel;
   onboardingStartCta = exploreBtn;
   onboardingSearchInputEl = input;
@@ -431,8 +416,6 @@ function renderOnboardingStep2(artist) {
   onboardingOverlay.appendChild(box);
 }
 
-
-/* ---------- Salidas del onboarding ---------- */
 function finishOnboarding(idx) {
   removeOnboardingOverlay();
   selectAlbum(idx);
@@ -507,6 +490,7 @@ function renderArtistDetailPanelInto(el, artist) {
 }
 
 const artistMidpoint = new THREE.Vector3();
+
 
 function artistTrajectoryMidpoint(artist, out) {
   const meshes = getArtistDiscography(artist)
@@ -632,6 +616,7 @@ let albums = [];
 let points = [];
 let pointMeshes = [];
 let yearSprites = [];
+let eventLabelSprites = [];
 let orbitRings = [];
 let genreLabelSprites = [];
 
@@ -682,7 +667,8 @@ function clearScene() {
     root.remove(s);
   });
   yearSprites = [];
-
+  clearEventLabels();
+  
   orbitRings.forEach(r => {
     r.geometry.dispose();
     r.material.dispose();
@@ -1142,6 +1128,7 @@ function animate() {
   if (pinnedArtists.size > 0) updateArtistPanels();
   controls.update();
   updateYearPanels();
+  updateEventLabels(); 
   renderer.render(scene,camera);
 }
 
@@ -1205,16 +1192,17 @@ const GENRE_LABEL_CONFIG = {
 
 const EVENT_LABEL_CONFIG = {
   offsetX: 1, 
-  fontSize: 24, 
+  fontSize: 16, 
   color: "#676767",
-  maxCharsPerLine: 18,  
+  maxCharsPerLine: 37,  
   maxLines: 1,
   lineHeight: 36,
-  dimmedOpacity: 0.25   
+  dimmedOpacity: 0.5,
+  worldPerPixel: 0.05,
+  canvasPadding: 8 
 };
 
 const YEAR_LABEL_DEFAULT_TINT = 0x848484;
-const YEAR_LABEL_SELECTED_TINT = 0x000000;
 const ORBIT_RING_DEFAULT_COLOR = 0xc4c4c4;
 const ORBIT_RING_SELECTED_COLOR = 0xffffff;
 const CONNECTION_CONFIG = {
@@ -1284,6 +1272,8 @@ const cameraFromTarget = new THREE.Vector3();
 const cameraToTarget = new THREE.Vector3();
 const YEAR_PANEL_TOP_GENRES = 3;    
 const PERIOD_PANEL_TOP_GENRES = 5;  
+const sidebarPanelEl = document.querySelector("#sidebar");
+const aboutFabEl = document.querySelector("#aboutFab");
 
 let outlineRing = null;   
 let outlineTarget = null; 
@@ -1730,7 +1720,6 @@ function computeTimeLayout() {
 }
 
 async function calculateModel() {
-  ui.status.textContent = "Calculando espacio latente…";
   clearScene();
   setLoadingProgress(20);
 
@@ -1750,8 +1739,8 @@ async function calculateModel() {
   for (let i = 0; i < nEpochs; i++) {
     umap.step();
     if (i % 5 === 0 || i === nEpochs - 1) {
-      setLoadingProgress(25 + ((i + 1) / nEpochs) * 55); // 25% -> 80%
-      await new Promise(resolve => setTimeout(resolve, 0)); // cede el hilo para que la barra pinte
+      setLoadingProgress(25 + ((i + 1) / nEpochs) * 55);
+      await new Promise(resolve => setTimeout(resolve, 0));
     }
   }
   const embedding = umap.getEmbedding();
@@ -1771,6 +1760,7 @@ async function calculateModel() {
   createPoints();
   createYearOrbits();
   createYearSprites();
+  createEventLabels();
   createGenreLabels();
   computeNetworkMetrics();
   setLoadingProgress(92);
@@ -1791,8 +1781,6 @@ async function calculateModel() {
   renderGenreLegend();
   refreshFilterOptions();
   fitCamera();
-  ui.status.textContent =
-    `${albums.length} álbumes · ${vocab.genres.length} géneros · ${vocab.descriptors.length} descriptores · UMAP 3D`;
   setLoadingProgress(100);
 }
 
@@ -1866,6 +1854,131 @@ function makeYearSprite(text) {
   const sprite = new THREE.Sprite(material);
   sprite.scale.set(16, 6, 1);
   return sprite;
+}
+
+function wrapEventText(text, maxChars, maxLines) {
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines = [];
+  let cur = "";
+  words.forEach(w => {
+    const next = cur ? `${cur} ${w}` : w;
+    if (next.length <= maxChars || !cur) cur = next;
+    else { lines.push(cur); cur = w; }
+  });
+  if (cur) lines.push(cur);
+
+  const out = lines.slice(0, maxLines);
+  if (lines.length > maxLines) {
+    out[maxLines - 1] = out[maxLines - 1].replace(/[\s·.,;]+$/, "") + "…";
+  }
+  return out.map(l => l.length > maxChars + 1 ? l.slice(0, maxChars) + "…" : l);
+}
+
+function makeEventLabelSprite(text) {
+  const cfg = EVENT_LABEL_CONFIG;
+  const lines = wrapEventText(text, cfg.maxCharsPerLine, cfg.maxLines);
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const font = `${cfg.fontSize}px sans-serif`;
+  ctx.font = font;
+  const textWidth = Math.max(...lines.map(l => ctx.measureText(l).width));
+
+  canvas.width = Math.ceil(textWidth) + cfg.canvasPadding * 2;
+  canvas.height = lines.length * cfg.lineHeight;
+  text.toUpperCase(),
+  ctx.font = font;
+  ctx.fillStyle = "#ffffff";
+  ctx.textAlign = "right"; 
+  ctx.textBaseline = "middle";
+  lines.forEach((line, i) => {
+    ctx.fillText(line, canvas.width - cfg.canvasPadding, cfg.lineHeight * (i + 0.5));
+  });
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.minFilter = THREE.LinearFilter;
+
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthWrite: false,
+    depthTest: false
+  });
+  material.color.set(cfg.color);
+  material.opacity = 0;
+
+  const sprite = new THREE.Sprite(material);
+  const w = canvas.width * cfg.worldPerPixel;
+  const h = canvas.height * cfg.worldPerPixel;
+  sprite.scale.set(w, h, 1);
+  sprite.renderOrder = 5;
+  sprite.visible = false;
+  sprite.userData.halfWidth = w / 2;
+  return sprite;
+}
+
+function createEventLabels() {
+  eventsByYear.forEach((text, year) => {
+    const ring = orbitRings.find(r => r.userData.year === year);
+    if (!ring || !text) return;
+
+    const sprite = makeEventLabelSprite(text);
+    sprite.userData.year = year;
+    sprite.userData.ring = ring;
+    root.add(sprite);
+    eventLabelSprites.push(sprite);
+  });
+}
+
+function clearEventLabels() {
+  eventLabelSprites.forEach(s => {
+    s.material.map?.dispose();
+    s.material.dispose();
+    root.remove(s);
+  });
+  eventLabelSprites = [];
+}
+
+const eventLabelRightVec = new THREE.Vector3();
+
+// Lado izquierdo del aro (opuesto a ringScreenAnchor, donde va el panel de año)
+function updateEventLabels() {
+  if (!eventLabelSprites.length) return;
+
+  camera.updateMatrixWorld();
+  eventLabelRightVec.setFromMatrixColumn(camera.matrixWorld, 0);
+  eventLabelRightVec.y = 0;
+  if (eventLabelRightVec.lengthSq() < 1e-6) eventLabelRightVec.set(1, 0, 0);
+  eventLabelRightVec.normalize();
+
+  const yearsSelected = selectedYears.size > 0;
+
+  eventLabelSprites.forEach(s => {
+    const { ring, year, halfWidth } = s.userData;
+
+    // Texto hacia afuera del borde izquierdo, terminando en el aro
+    const distance = ring.userData.radius + EVENT_LABEL_CONFIG.offsetX + halfWidth;
+    s.position.copy(ring.position).addScaledVector(eventLabelRightVec, -distance);
+
+    let target = 0;
+    if (timeMode) {
+      target = (yearsSelected && !selectedYears.has(year))
+        ? EVENT_LABEL_CONFIG.dimmedOpacity
+        : 1;
+    }
+    s.material.opacity += (target - s.material.opacity) * 0.15;
+    s.visible = s.material.opacity > 0.01;
+  });
+}
+
+function updateEventLabelTints() {
+  eventLabelSprites.forEach(s => {
+    if (selectedYears.has(s.userData.year)) {
+      s.material.color.copy(dominantGroupColor(s.userData.year));
+    } else {
+      s.material.color.set(EVENT_LABEL_CONFIG.color);
+    }
+  });
 }
 
 function createYearOrbits() {
@@ -1994,7 +2107,7 @@ function computeGenreLabelData() {
     );
 
     groupsForPoint.forEach(group => {
-      if (group === "Otros") return; // <-- nuevo: no generar etiqueta flotante para "Otros"
+      if (group === "Otros") return; 
       if (!acc.has(group)) acc.set(group, { sum: new THREE.Vector3(), count: 0 });
       const entry = acc.get(group);
       entry.sum.add(p.umapVec);
@@ -3637,7 +3750,7 @@ function focusCameraOnPoint(mesh) {
   );
 
   const dir = camera.position.clone().sub(controls.target);
-  if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1); // fallback si estaban superpuestos
+  if (dir.lengthSq() < 1e-6) dir.set(0, 0, 1);
   dir.normalize();
 
   cameraFromPos.copy(camera.position);
@@ -3846,7 +3959,7 @@ function buildGenreStatRow(entry, color) {
   return row;
 }
 function dominantGroupColor(year) {
-  const top = computeYearGenreStats(year).groups[0]; // mismo ítem que encabeza el panel
+  const top = computeYearGenreStats(year).groups[0];
   return top ? colorForGroup(top.genre) : new THREE.Color(ORBIT_RING_SELECTED_COLOR);
 }
 
@@ -3915,7 +4028,7 @@ function clearYearHighlight() {
   selectedYears = new Set();
   clearYearPanels();
  
-  updateFilterGenreVisuals(); // respeta rango, géneros e insights
+  updateFilterGenreVisuals();
  
   orbitRings.forEach(r => {
     r.userData.targetOpacity = timeMode ? 0.25 : 0;
@@ -3925,6 +4038,7 @@ function clearYearHighlight() {
     s.userData.targetOpacity = timeMode ? 1 : 0;
     s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
   });
+   updateEventLabelTints();
 }
  
 function clearYearPanels() {
@@ -4053,6 +4167,7 @@ function applyYearVisuals() {
     if (isSelected) s.material.color.copy(dominantGroupColor(year));
     else s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
   });
+  updateEventLabelTints();
 }
 
 const yearAnchorVec = new THREE.Vector3();
@@ -4204,26 +4319,9 @@ function buildEventsByYear(events) {
   });
   return map;
 }
-/* ---------- Menú superior + sidebar ---------- */
-const body = document.getElementById("wrapper");
-const sidebarEl = document.querySelector(".sidebar");
-const sidebarOpenBtn = document.getElementById("sidebarOpen");
-const sidebarCloseBtn = document.getElementById("sidebarClose");
+
 const homeBtn = document.getElementById("homeBtn");
 const modeBtns = document.querySelectorAll(".topbar_switch [data-mode]");
-
-const isSidebarClosed = () => body.classList.contains("is-closed");
-
-function syncFilterBtn() {
-  sidebarOpenBtn.setAttribute("aria-expanded", String(!isSidebarClosed()));
-}
-
-function openSidebar() {
-  body.classList.remove("is-closed");
-  sidebarEl.removeAttribute("aria-hidden");
-  syncFilterBtn();
-  sidebarCloseBtn.focus();
-}
 
 function closeSidebar({ restoreFocus = false } = {}) {
   body.classList.add("is-closed");
@@ -4238,15 +4336,6 @@ function syncModeButtons(mode) {
   });
 }
 
-sidebarOpenBtn.addEventListener("click", () => {
-  isSidebarClosed() ? openSidebar() : closeSidebar();
-});
-sidebarCloseBtn.addEventListener("click", () => closeSidebar({ restoreFocus: true }));
-
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape" && !isSidebarClosed()) closeSidebar({ restoreFocus: true });
-});
-
 modeBtns.forEach(btn => {
   btn.addEventListener("click", () => {
     if (btn.getAttribute("aria-pressed") === "true") return;
@@ -4260,8 +4349,6 @@ homeBtn.addEventListener("click", e => {
   reopenOnboarding();
 });
 
-// Estado inicial
-syncFilterBtn();
 syncModeButtons(timeMode ? "cronologico" : "exploratorio");
 
 onboardingOverlay = createOnboardingOverlay();
@@ -4285,7 +4372,70 @@ Promise.all([
   })
   .catch(err => {
     console.error(err);
-    ui.status.textContent = "No se pudo cargar data/albums.json";
+    if (onboardingProgressLabelEl) {
+      onboardingProgressLabelEl.textContent = "No se pudo cargar data/albums.json";
+    }
   });
 
+function setSidebarOpen(open, view) {
+  if (!sidebarPanelEl) return;
+  sidebarPanelEl.classList.toggle("is-closed", !open);
+  if (view === "about") sidebarPanelEl.dataset.view = "about";
+  else if (view === "filters") delete sidebarPanelEl.dataset.view;
+}
+
+function isSidebarOpen() {
+  return Boolean(sidebarPanelEl) && !sidebarPanelEl.classList.contains("is-closed");
+}
+
+function isAboutVisible() {
+  return isSidebarOpen() && sidebarPanelEl.dataset.view === "about";
+}
+
+function syncSidebarButtons() {
+  const about = isAboutVisible();
+  aboutFabEl?.setAttribute("aria-expanded", String(about));
+  document.querySelector("#sidebarOpen")
+    ?.setAttribute("aria-expanded", String(isSidebarOpen() && !about));
+}
+
+function toggleAboutPanel() {
+  if (isAboutVisible()) setSidebarOpen(false);
+  else setSidebarOpen(true, "about");
+}
+
+function initSidebar() {
+  const text = document.querySelector("#aboutText");
+  if (text) text.textContent = ONBOARDING_ABOUT_TEXT;
+
+  aboutFabEl?.addEventListener("click", toggleAboutPanel);
+
+  document.querySelector("#aboutBack")?.addEventListener("click", () => {
+    setSidebarOpen(true, "filters");
+  });
+
+  document.querySelector("#sidebarOpen")?.addEventListener("click", () => {
+    const inFilters = isSidebarOpen() && sidebarPanelEl.dataset.view !== "about";
+    setSidebarOpen(!inFilters, "filters");
+  });
+
+  document.querySelector("#sidebarClose")?.addEventListener("click", () => {
+    setSidebarOpen(false);
+  });
+
+  // NUEVO: reemplaza al Escape del bloque viejo
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && isSidebarOpen()) setSidebarOpen(false);
+  });
+
+  if (sidebarPanelEl) {
+    new MutationObserver(syncSidebarButtons).observe(sidebarPanelEl, {
+      attributes: true,
+      attributeFilter: ["class", "data-view"]
+    });
+  }
+  syncSidebarButtons();
+}
+  
+initSidebar();
 animate();

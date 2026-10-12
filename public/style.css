@@ -2,6 +2,33 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "Bitcount Single";
+  src:  url("/fonts/BitcountSingle-ExtraLight.woff") format("woff"),
+        url("/fonts/BitcountSingle-Light.woff") format("woff"),
+        url("/fonts/BitcountSingle-Thin.woff") format("woff"),
+        url("/fonts/BitcountSingle-Regular.woff") format("woff"),
+        url("/fonts/BitcountSingle-Medium.woff") format("woff"),
+        url("/fonts/BitcountSingle-Regular.woff") format("woff"),
+        url("/fonts/BitcountSingle-SemiBold.woff") format("woff"),
+        url("/fonts/BitcountSingle-Bold.woff") format("woff"),
+        url("/fonts/BitcountSingle-ExtraBold.woff") format("woff"),
+        url("/fonts/BitcountSingle-Black.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src:  
+        url("/fonts/Roboto-Light.woff") format("woff"),
+        url("/fonts/Roboto-Bold.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --ob-gray: #2d2d2d;
   --ob-white: #ffffff;
@@ -29,12 +56,14 @@
   --color-text-dark: #111;
   --color-divider: #c4c4c4;
  
-  --font-sans: "Anuphan", sans-serif;
+  --font-sans: "Roboto", sans-serif;
   --blue-deep: #2e6db4;
   --blue-ice: #cbd9e6;
   --topbar-bg: rgba(24, 24, 24, 0.92);
   --sidebar-width: 380px;
   --global-gap: 24px;
+  --font-display: 'Bitcount Single', sans-serif;
+  --border-radius: 4px;
 }
 
 html,
@@ -48,12 +77,13 @@ body {
   overflow: hidden;
   background: #08090c;
   color: #adadad;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 #app {
   position: relative;
+  min-width: 0;
+  height: 100vh;
   width: 100%;
 }
 
@@ -62,8 +92,9 @@ body {
   inset: 0;
 }
 
-body.is-onboarding .sidebar {
-  display: none;
+h1, h2, h3, .ob-loading-label  {
+  font-family: var(--font-display);
+  font-weight: 400;
 }
 
 body:not(.is-onboarding) .title {
@@ -101,8 +132,8 @@ button {
   color: #111;
   padding: 8px 10px;
   cursor: pointer;
-  margin-top: 8px;
-}
+  border-radius: var(--border-radius);
+  }
 
 button:hover {
   background: none;
@@ -164,7 +195,7 @@ button:hover {
 .tooltip .artist {
   font-size: 11px;
   opacity: 0.55;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .tooltip .genres {
@@ -200,7 +231,7 @@ button:hover {
 .album img.cover {
   width: 40px;
   height: 40px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   object-fit: cover;
   flex-shrink: 0;
 }
@@ -248,9 +279,9 @@ button:hover {
 @keyframes flash { 0% { background: #fff3b0; } 100% { background: transparent; } }
 
 #onboardingOverlay {
-  position: fixed;
+  position: relative;
   inset: 0;
-  z-index: 3;
+  z-index: 20;
   display: flex;
   overflow-y: auto;
   background: var(--ob-gray);
@@ -265,14 +296,13 @@ button:hover {
   display: none !important;
 }
 
-/* ---------- Pantalla 1 ---------- */
-
 .ob-frame, .ob-box {
   position: relative;
   width: 100%;
+  height: 100vh;
   min-height: 100%;
   box-sizing: border-box;
-  padding: 4rem 12vw;
+  padding: 4rem 4vw;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -329,49 +359,79 @@ button:hover {
   color: white;
 }
 
-.ob-about {
-  position: relative;
+.about_fab {
+  position: fixed;
+  left: 32px;
+  bottom: 48px;
+  z-index: 1001;
   display: flex;
   align-items: center;
-  justify-content: end;
   gap: 10px;
-  padding: 0;
+  width: auto;
+  margin: 0;
+  padding: 6px 8px 6px 14px;
   border: none;
-  background: none;
-  color: var(--ob-white);
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--color-white);
+  font: 600 14px/1 var(--font-sans);
   cursor: pointer;
 }
 
-.ob-about-icon {
+.about_fab:hover,
+.about_fab[aria-expanded="true"] {
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--blue-3);
+}
+
+.about_fab-icon {
   width: 26px;
   height: 26px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--ob-accent);
+  border: 2px solid currentColor;
   border-radius: 50%;
-  color: var(--ob-accent);
-  font: italic 700 15px/1 serif;
+  font: italic 600 12px/1 serif;
 }
 
-.ob-about-panel {
-  position: absolute;
-  top: 68px;
-  right: 48px;
-  z-index: 2;
-  width: min(320px, calc(100% - 96px));
-  padding: 16px 18px;
-  box-sizing: border-box;
-  border: 1px solid var(--ob-line);
-  border-radius: 8px;
-  background: var(--ob-gray);
-  color: var(--ob-white);
+/* ---------- Vista "Acerca del proyecto" dentro del sidebar ---------- */
+
+.sidebar_title--about {
+  display: none;
+}
+
+.sidebar_about {
+  display: none;
+  flex-direction: column;
+  align-self: stretch;
+  gap: 16px;
+}
+
+.sidebar_about-text {
+  margin: 0;
+  color: var(--gray-5);
   font-size: 14px;
   line-height: 1.5;
-  text-align: left;
+}
+
+/* En la vista about: solo cabezal (con su título) y la sección about */
+.sidebar[data-view="about"] .sidebar_title:not(.sidebar_title--about),
+.sidebar[data-view="about"] #filtersClear {
+  display: none;
+}
+
+.sidebar[data-view="about"] .sidebar_title--about {
+  display: block;
+}
+
+.sidebar[data-view="about"] > :not(.sidebar_header):not(.sidebar_about) {
+  display: none;
+}
+
+.sidebar[data-view="about"] > .sidebar_about {
+  display: flex;
 }
 
 /* Hero */
@@ -393,19 +453,76 @@ button:hover {
   font-weight: 600;
 }
 
-.ob-divider {
-  width: 44px;
-  height: 2px;
-  margin: 28px auto 0;
-  background: rgba(255, 255, 255, 0.25);
-  overflow: hidden;
+
+
+.ob-loading {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: min(360px, 100%);
+  text-align: center;
 }
 
-.ob-progress-label {
-  min-height: 16px;
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--ob-muted);
+.ob-frame.is-loading {
+  justify-content: center;
+}
+
+.ob-frame.is-loading .ob-loading {
+  display: flex;
+}
+
+/* Mientras carga solo se ve el bloque de carga */
+.ob-frame.is-loading .ob-header-logo,
+.ob-frame.is-loading .ob-hero,
+.ob-frame.is-loading .ob-search-block,
+.ob-frame.is-loading .ob-presets,
+.ob-frame.is-loading .ob-footer {
+  display: none;
+}
+
+.ob-loading-title {
+  margin: 0;
+  color: var(--secondary);
+  font-family: var(--font-display, inherit); 
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ob-loading-text {
+  margin: 0 0 28px;
+  max-width: 300px;
+  color: var(--ob-white);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ob-loading-track {
+  width: 100%;
+  height: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 6px;
+  background: #5a5a5a;
+}
+
+.ob-loading-fill {
+  height: 100%;
+  background: var(--secondary);
+  transition: width 0.2s ease;
+}
+
+.ob-loading-label {
+  color: var(--ob-white);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.about_fab[hidden] {
+  display: none;
 }
 
 .ob-search-block {
@@ -607,7 +724,6 @@ button:hover {
 }
 
 .ob-footer {
-  margin-top: auto;
   padding-top: 40px;
   display: flex;
   flex-direction: column;
@@ -618,11 +734,11 @@ button:hover {
 .ob-explore {
   padding: 10px 22px;
   border-radius: var(--global-gap);
-  background: transparent;
-  color: var(--secondary);
+  background: var(--blue-2);
+  color: white;
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -768,13 +884,6 @@ button:hover {
 .ob-disco-row:hover {
   background: var(--ob-hover);
 }
-.ob-frame:not(.is-loading) .ob-divider,
-.ob-frame:not(.is-loading) .ob-progress-label,
-.ob-frame.is-loading .ob-search-block,
-.ob-frame.is-loading .ob-presets,
-.ob-frame.is-loading .ob-footer {
-  display: none;
-}
 
 /* ---------- Responsive ---------- */
 
@@ -844,6 +953,9 @@ button:hover {
 }
 
 .sidebar {
+  position: relative;
+  flex: 0 0 auto;
+  transition: margin-right 0.25s ease;
   top: 0;
   right: 0;
   bottom: 0;
@@ -863,15 +975,31 @@ button:hover {
   color: var(--color-white);
 }
 
-@media (max-width: 800px) {
-  .sidebar {
-    width: 100vw;
-    padding: 12px;
-  }
+.sidebar.is-closed {
+  margin-right: calc(-1 * var(--sidebar-width));
+  visibility: hidden;
+  box-shadow: none;
+  transform: none;
+  transition:
+    margin-right 0.25s ease,
+    visibility 0s linear 0.25s;
 }
 
-.is-closed .sidebar{
-  display: none;
+@media (max-width: 800px) {
+  .sidebar.is-closed {
+    margin-right: 0;
+    transform: translateX(100%);
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 30;
+    width: 100vw;
+    padding: 12px;
+    transition: transform 0.25s ease, visibility 0s linear;
+  }
 }
 
 .sidebar_header {
@@ -914,13 +1042,6 @@ button:hover {
   color: var(--color-white);
 }
 
-.sidebar.is-closed {
-  transform: translateX(100%);
-  visibility: hidden;
-  box-shadow: none;
-  transition: transform 0.25s ease, visibility 0s linear 0.25s;
-}
-
 .sidebar_form {
   display: flex;
   align-items: flex-start;
@@ -938,13 +1059,13 @@ button:hover {
   padding: 0 8px;
   background: var(--color-white);
   border: 0.25px solid var(--color-white);
-  border-radius: 4px;
+  border-radius: var(--border-radius);
 }
 
 .sidebar_input-date {
   gap: 10px;
   padding: 0 10px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
 }
 
 .sidebar_input-label {
@@ -1072,6 +1193,7 @@ button:hover {
   margin: 0;
   padding: 0;
   border: 0;
+  border-radius: var(--border-radius);
   background: none;
   color: inherit;
   font-family: inherit;
@@ -1095,7 +1217,7 @@ button:hover {
   gap: 6px;
   padding: 6px 4px;
   border: 2px solid var(--blue-3);
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   background: transparent;
   color: var(--blue-3);
   font-size: 10px;
@@ -1311,7 +1433,7 @@ summary.sidebar_accordion-header::-webkit-details-marker {
   box-sizing: border-box;
   padding: 0 30px 0 10px;
   border: 0.25px solid var(--color-white);
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   background-color: var(--gray-6);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23828282' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;

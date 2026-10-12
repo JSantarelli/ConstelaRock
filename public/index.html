@@ -52,13 +52,13 @@
       </button>
     </nav>
     <div id="tooltip" class="tooltip"></div>
-    <div class="status" id="status">Cargando datos…</div>
   </main>
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar is-closed" id="sidebar">
     <header class="sidebar_header">
       <div class="sidebar_header-actions">
         <span class="sidebar_subheader">
           <h2 class="sidebar_title">Filtrar</h2>
+          <h2 class="sidebar_title sidebar_title--about">Acerca del proyecto</h2>
           <p class="sidebar_count"><span id="count"></span></p>
         </span>
         <span class="sidebar_subheader">
@@ -80,7 +80,6 @@
       <template id="albumList"></template>  
       <div id="selectedChips" class="sidebar_chips-container" hidden></div>
     </header>
-
     <details class="sidebar_section" open>
       <summary class="sidebar_accordion-header">
         <span class="sidebar_caret" aria-hidden="true"></span>
@@ -124,7 +123,15 @@
         <div id="networkInsights" class="sidebar_radio-grid"></div>
       </div>
     </details>
+    <section class="sidebar_about" aria-label="Acerca del proyecto">
+      <p id="aboutText" class="sidebar_about-text"></p>
+      <button id="aboutBack" type="button" class="sidebar_link">← Volver a filtros</button>
+    </section>
   </aside>
+  <button id="aboutFab" type="button" class="about_fab" aria-controls="sidebar" aria-expanded="false" hidden>
+    <span class="about_fab-icon" aria-hidden="true">i</span>
+    <span>Acerca del proyecto</span>
+  </button>
   <script src="./bundle.js" type="module"></script>
 </body>
 </html>

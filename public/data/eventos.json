@@ -1,7 +1,7 @@
 [
   {
     "year": 1964,
-    "event": "Beatlemanía e invasión británica"
+    "event": "Beatlemanía"
   },
   {
     "year": 1965,
@@ -9,19 +9,19 @@
   },
   {
     "year": 1966,
-    "event": "La Cueva y consolidación de la escena underground porteña"
+    "event": "Onaganía y La Cueva"
   },
   {
     "year": 1967,
-    "event": "La Balsa y La Cofradía de la Flor Solar"
+    "event": "La Balsa y La Cofradía"
   },
   {
     "year": 1968,
-    "event": "Sello Mandioca e Instituto Di Tella"
+    "event": "Sello Mandioca y el Di Tella"
   },
   {
     "year": 1969,
-    "event": "Música Beat, Pinap y Cordobazo"
+    "event": "Música Beat y Cordobazo"
   },
   {
     "year": 1970,
@@ -33,59 +33,55 @@
   },
   {
     "year": 1973,
-    "event": "Regreso de Perón y Masacre de Ezeiza"
+    "event": "Regreso de Perón"
   },
   {
     "year": 1976,
-    "event": "Dictadura, Expreso Imaginario y contracultura"
+    "event": "Golpe y Expreso Imaginario"
   },
   {
     "year": 1978,
-    "event": "Mundial e inauguración del Estadio Obras Sanitarias"
-  },
-  {
-    "year": 1979,
-    "event": "Llegada del punk a la escena argentina"
+    "event": "Mundial y apertura Obras"
   },
   {
     "year": 1982,
-    "event": "Malvinas y Festival de la Solidaridad Latinoamericana"
+    "event": "Malvinas y Festival Solidaridad"
   },
   {
     "year": 1982,
-    "event": "B.A. Rock IV y choque entre la vieja escena y las nuevas corrientes"
+    "event": "B.A. Rock IV"
   },
   {
     "year": 1983,
-    "event": "Democracia, Café Einstein y escena under "
+    "event": "Democracia y Café Einstein"
   },
   {
     "year": 1984,
-    "event": "Festival de La Falda y consolidación del circuito federal"
+    "event": "Festival de La Falda"
   },
   {
     "year": 1985,
-    "event": "Cemento se convierte en centro del underground porteño"
+    "event": "Consolidación de Cemento"
   },
   {
     "year": 1987,
-    "event": "Festival de La Falda 87 y Muerte de Luca"
+    "event": "La Falda 87 y Muerte de Luca"
   },
   {
     "year": 1988,
-    "event": "Muere Miguel Abuelo y Federico Moura - Amnistía Internacional"
+    "event": "Mueren Miguel Abuelo y Moura"
   },
   {
     "year": 1989,
-    "event": "Hiperinflación y crisis económica"
+    "event": "Hiperinflación"
   },
   {
     "year": 1991,
-    "event": "Caso Bulacio, Convertibilidad y Liberalismo"
+    "event": "Caso Bulacio y Convertibilidad"
   },
   {
     "year": 1992,
-    "event": "Festival Argentino de Música Contemporánea de La Falda"
+    "event": "Festival de La Falda"
   },
   {
     "year": 1994,
@@ -97,11 +93,11 @@
   },
   {
     "year": 2000,
-    "event": "Argentina en Vivo y Primavera Alternativa"
+    "event": "Arg en Vivo y Primavera Alternativa"
   },
   {
     "year": 2001,
-    "event": "Cosquín Rock y crisis socio-económica del 2001"
+    "event": "Crisis del 2001 y Cosquín Rock"
   },
   {
     "year": 2003,
@@ -109,7 +105,7 @@
   },
   {
     "year": 2004,
-    "event": "Tragedia de Cromañón y Personal Fest"
+    "event": "Cromañón y Personal Fest"
   },
   {
     "year": 2005,
@@ -117,42 +113,42 @@
   },
   {
     "year": 2009,
-    "event": "Clausura de grandes estadios"
+    "event": "Clausura de estadios"
   },
   {
     "year": 2011,
-    "event": "Nacimiento del Movistar Free Music"
+    "event": "Movistar Free Music"
   },
   {
     "year": 2012,
-    "event": "Muerte de Luis Alberto Spinetta"
+    "event": "Muere Spinetta"
   },
   {
     "year": 2014,
-    "event": "Llegada de Lollapalooza Argentina"
+    "event": "Lollapalooza Argentina"
   },
   {
     "year": 2014,
-    "event": "Muerte de Gustavo Cerati"
+    "event": "Muere Gustavo Cerati"
   },
   {
     "year": 2015,
-    "event": "Ni Una Menos y transformación de la escena musical"
+    "event": "Ni Una Menos"
   },
   {
     "year": 2019,
-    "event": "Ley de Cupo Femenino en la Música en Vivo"
+    "event": "Ley de Cupo Femenino"
   },
   {
     "year": 2020,
-    "event": "Pandemia de COVID-19 y ruptura del circuito de música en vivo"
+    "event": "Pandemia COVID-19"
   },
   {
     "year": 2022,
-    "event": "Regreso de los festivales masivos tras la pandemia"
+    "event": "Regreso de eventos"
   },
   {
     "year": 2023,
-    "event": "Nuevo contexto político-cultural"
+    "event": "Liberalismo económico"
   }
 ]
