@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Mapa Musical 3D — prueba UMAP</title>
+  <title>Mapa Musical 3D del Rock Nacional</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,60 +15,59 @@
   <main id="app">
     <div id="map"></div>
 
-    <header class="title">
-      <img src="./img/constelaLogo.png" width="160" height="48"></i>
-    </header>
-    <nav class="topbar" aria-label="Navegación del mapa">
-
-       <div class="topbar_switch" role="group" aria-label="Modo de visualización">
-        <button type="button" class="topbar_btn" data-mode="exploratorio" aria-pressed="true">
-          <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-            <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>
-          </svg>
-          <span class="topbar_label">Exploratorio</span>
-        </button>
-        <button type="button" class="topbar_btn" data-mode="cronologico" aria-pressed="false">
-          <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-            <path d="M3 7h3c4 0 6 10 11 10h4M3 17h3c1.5 0 2.7-.9 3.7-2.2M14.3 9.2C15.3 7.9 16 7 17 7h4"/><path d="M18 4l3 3-3 3M18 14l3 3-3 3"/>
-          </svg>
-          <span class="topbar_label">Cronológico</span>
-        </button>
-      </div>
-
-      <!-- Reabre el onboarding -->
-      <button id="homeBtn" type="button" class="topbar_btn">
+  <header class="header">
+   <img src="./img/constelaLogo.png" width="160" height="48"></i>
+  <nav  class="topbar" aria-label="Navegación del mapa">
+      <div class="topbar_switch" role="group" aria-label="Modo de visualización">
+      <button type="button" class="topbar_btn" data-mode="exploratorio" aria-pressed="true">
         <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-          <path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>
+          <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>
         </svg>
-        <span class="topbar_label">Inicio</span>
+        <span class="topbar_label">Exploratorio</span>
       </button>
+      <button type="button" class="topbar_btn" data-mode="cronologico" aria-pressed="false">
+        <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 7h3c4 0 6 10 11 10h4M3 17h3c1.5 0 2.7-.9 3.7-2.2M14.3 9.2C15.3 7.9 16 7 17 7h4"/><path d="M18 4l3 3-3 3M18 14l3 3-3 3"/>
+        </svg>
+        <span class="topbar_label">Cronológico</span>
+      </button>
+    </div>
 
-      <!-- Abre / cierra el sidebar de filtros -->
-      <button id="sidebarOpen" type="button" class="topbar_btn" aria-controls="sidebar" aria-expanded="false">
-        <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="18" r="2" fill="currentColor"/>
-        </svg>
-        <span class="topbar_label">Filtrar</span>
-      </button>
-    </nav>
+    <!-- Reabre el onboarding -->
+    <button id="homeBtn" type="button" class="topbar_btn">
+      <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+        <path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>
+      </svg>
+      <span class="topbar_label">Inicio</span>
+    </button>
+
+    <!-- Abre / cierra el sidebar de filtros -->
+    <button id="sidebarOpen" type="button" class="topbar_btn" aria-controls="sidebar" aria-expanded="false">
+      <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="18" r="2" fill="currentColor"/>
+      </svg>
+      <span class="topbar_label">Filtrar</span>
+    </button>
+  </nav>
+  </header>
     <div id="tooltip" class="tooltip"></div>
   </main>
   <aside class="sidebar is-closed" id="sidebar">
     <header class="sidebar_header">
       <div class="sidebar_header-actions">
-        <span class="sidebar_subheader">
-          <h2 class="sidebar_title">Filtrar</h2>
-          <h2 class="sidebar_title sidebar_title--about">Acerca del proyecto</h2>
-          <p class="sidebar_count"><span id="count"></span></p>
-        </span>
-        <span class="sidebar_subheader">
+        <span class="sidebar_subheader-row">
+          <span class="sidebar_subheader-col">
+            <h2 class="sidebar_title">Filtrar</h2>
+            <h2 class="sidebar_title sidebar_title--about">Acerca del proyecto</h2>
+            <p class="sidebar_count"><span id="count"></span></p>
+          </span>
           <button id="filtersClear" type="button" class="sidebar_btn">
             <span>Resetear</span>
           </button>
+        </button>
+      </span>
           <button id="sidebarClose" type="button" class="sidebar_close" aria-label="Cerrar panel">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg>
-          </button>
-        </span>
       </div>
       <div class="sidebar_search">
         <div class="sidebar_input">
@@ -80,7 +79,7 @@
       <template id="albumList"></template>  
       <div id="selectedChips" class="sidebar_chips-container" hidden></div>
     </header>
-    <details class="sidebar_section" open>
+    <details class="sidebar_section">
       <summary class="sidebar_accordion-header">
         <span class="sidebar_caret" aria-hidden="true"></span>
         Filtros avanzados
@@ -114,7 +113,7 @@
       </div>
     </details>
 
-    <details class="sidebar_section" open>
+    <details class="sidebar_section">
       <summary class="sidebar_accordion-header">
         <span class="sidebar_caret" aria-hidden="true"></span>
         Explorar
@@ -125,7 +124,7 @@
     </details>
     <section class="sidebar_about" aria-label="Acerca del proyecto">
       <p id="aboutText" class="sidebar_about-text"></p>
-      <button id="aboutBack" type="button" class="sidebar_link">← Volver a filtros</button>
+      <button id="aboutBack" type="button" class="sidebar_btn">← Volver a filtros</button>
     </section>
   </aside>
   <button id="aboutFab" type="button" class="about_fab" aria-controls="sidebar" aria-expanded="false" hidden>

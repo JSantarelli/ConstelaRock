@@ -28,6 +28,12 @@ function resetInteractionState() {
   resetNetworkInsightMode();
 }
 
+function resetView() {
+  if (timeMode) setTimeMode(false);
+  if (ui.timeToggle) ui.timeToggle.checked = false;
+  fitCamera(false);
+}
+
 function applyArtistsPreset(artistNames, opts = {}) {
   if (!points.length) return;
   resetInteractionState();
@@ -86,9 +92,6 @@ const ONBOARDING_ABOUT_TEXT =
 const OB_SEARCH_ICON_SVG =
   '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>';
 
-const OB_CHEVRON_SVG =
-  '<svg width="28" height="16" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 3 14 13 26 3"/></svg>';
-
 const ONBOARDING_SECTIONS = [
   { key: "hallazgos", title: "HALLAZGOS", subtitle: "Patrones, trayectorias, historia" },
   { key: "explorar",  title: "EXPLORAR",  subtitle: "Corrientes, estilos, géneros" }
@@ -112,23 +115,23 @@ const ONBOARDING_PRESETS = [
     img:"./img/constelaSerie.jpg",
     apply: () => applyGenreGroupPreset(['New Wave', 'Pop'], { timeMode: true, years: [1983, 1989] })
   },
-  {
-    title: "No tan distintos",
-    subtitle: "Lejos del imaginario popular, bandas con trayectorias similares.",
-    section: "explorar",
-    img:"./img/constelaSerie.jpg",
-    apply: () => applyArtistsPreset(
-      ['Soda Stereo', 'Patricio Rey y Sus Redonditos de Ricota'],
-      { timeMode: false }
-    )
-  },
+  // {
+  //   title: "No tan distintos",
+  //   subtitle: "Lejos del imaginario popular, bandas con trayectorias similares.",
+  //   section: "explorar",
+  //   img:"./img/constelaSerie.jpg",
+  //   apply: () => applyArtistsPreset(
+  //     ['Soda Stereo', 'Patricio Rey y Sus Redonditos de Ricota'],
+  //     { timeMode: false }
+  //   )
+  // },
   {
     title: "Artistas post-bandas",
     subtitle: "Algunos siguen la misma línea, otros van hacia nuevos rumbos. ",    
     section: "explorar",
     img:"./img/constelaDiversidad.jpg",
     apply: () => applyArtistsPreset(
-      ['Él Mató a Un Policía Motorizado','Santiago Motorizado', 'Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Almendra', 'Luis Alberto Spinetta', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado', 'Los Piojos', 'Ciro y los Persas'],
+      ['Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado'],
       { timeMode: true }
     )
   },
@@ -139,13 +142,13 @@ const ONBOARDING_PRESETS = [
     img:"./img/constelaSerie.jpg",
     apply: () => applyInsightPreset('outliers')
   },
-  {
-    title: "Hubs",
-    subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
-    section: "hallazgos",
-    img:"./img/constelaHub.jpg",
-    apply: () => applyInsightPreset('outliers')
-  },
+  // {
+  //   title: "Hubs",
+  //   subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
+  //   section: "hallazgos",
+  //   img:"./img/constelaHub.jpg",
+  //   apply: () => applyInsightPreset('outliers')
+  // },
   {
     title: "Adorables puentes",
     subtitle: "Discos que conectan géneros, sin los cuales estos serían islas.",
@@ -173,8 +176,14 @@ function createOnboardingOverlay() {
   const overlay = document.createElement("div");
   overlay.id = "onboardingOverlay";
   (document.querySelector("#app") ?? document.body).appendChild(overlay);
+  document.body.classList.add("is-onboarding"); 
   setSidebarOpen(false); 
   return overlay;
+}
+
+function exitOnboarding() {
+  removeOnboardingOverlay();
+  if (innerWidth > 800) setSidebarOpen(true, "filters");
 }
 
 function clearOverlayContent() {
@@ -184,6 +193,8 @@ function clearOverlayContent() {
 function removeOnboardingOverlay() {
   if (onboardingOverlay) onboardingOverlay.remove();
   onboardingOverlay = null;
+  if (aboutFabEl) aboutFabEl.hidden = loadingProgress < 100;
+  document.body.classList.remove("is-onboarding");
   onboardingProgressFillEl = null;
   onboardingProgressLabelEl = null;
   onboardingSearchInputEl = null;
@@ -192,8 +203,9 @@ function removeOnboardingOverlay() {
 }
 
 function closeOnboarding() {
-  removeOnboardingOverlay();
+  exitOnboarding();
 }
+
   
 function setLoadingProgress(pct) {
   loadingProgress = Math.max(0, Math.min(100, pct));
@@ -204,7 +216,6 @@ function setLoadingProgress(pct) {
     onboardingProgressLabelEl.textContent = `${Math.round(loadingProgress)}%`;
   }
 
-  // El FAB "Acerca del proyecto" solo existe cuando terminó de cargar
   if (aboutFabEl) aboutFabEl.hidden = !ready;
 
   const frame = onboardingOverlay?.querySelector(".ob-frame");
@@ -219,6 +230,11 @@ function setLoadingProgress(pct) {
   [onboardingStartCta, ...onboardingPresetCardEls].forEach(el => {
     if (el) el.disabled = !ready;
   });
+}
+
+function setOnboardingSearching(on) {
+  onboardingOverlay?.querySelector(".ob-frame")?.classList.toggle("is-searching", on);
+  if (aboutFabEl) aboutFabEl.hidden = on || loadingProgress < 100;
 }
 
 function renderOnboardingStep1() {
@@ -293,7 +309,7 @@ function renderOnboardingStep1() {
         card.addEventListener("click", e => {
           e.stopPropagation();
           if (card.disabled) return;
-          removeOnboardingOverlay();
+          exitOnboarding();
           preset.apply();
         });
         onboardingPresetCardEls.push(card);
@@ -315,14 +331,14 @@ function renderOnboardingStep1() {
     e.stopPropagation();
     closeOnboarding();
   });
-  const chevron = obEl("span", "ob-chevron");
-  chevron.innerHTML = OB_CHEVRON_SVG;
+
   footer.appendChild(exploreBtn);
-  footer.appendChild(chevron);
 
   input.addEventListener("input", () => {
     const query = input.value.trim();
     const matches = computeArtistMatches(query);
+
+    setOnboardingSearching(query.length > 0);   // NUEVO
 
     results.textContent = "";
     matches.forEach(name => {
@@ -331,7 +347,7 @@ function renderOnboardingStep1() {
       results.appendChild(row);
     });
   });
-  
+
   frame.appendChild(logo);
   frame.appendChild(loading);
   frame.appendChild(hero);
@@ -346,6 +362,7 @@ function renderOnboardingStep1() {
   onboardingStartCta = exploreBtn;
   onboardingSearchInputEl = input;
 
+  setOnboardingSearching(false);
   if (ready) input.focus();
 }
 
@@ -390,7 +407,7 @@ function renderOnboardingStep2(artist) {
 
     if (a.genres.primary.length) {
       const tags = obEl("div", "ob-tags");
-      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-tag", g)));
+      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-subtitle", g)));
       info.appendChild(tags);
     }
 
@@ -401,7 +418,7 @@ function renderOnboardingStep2(artist) {
 
   header.appendChild(list);
   const logo2 = obEl("span", "ob-header-logo");
-  const backBtn = obEl("button", "ob-chrome-btn", "← Volver atrás");
+  const backBtn = obEl("button", "sidebar_btn", "← Volver atrás");
   backBtn.type = "button";
   backBtn.setAttribute("aria-label", "Volver");
   backBtn.addEventListener("click", e => {
@@ -422,7 +439,7 @@ function finishOnboarding(idx) {
 }
 
 function finishOnboardingToArtist() {
-  removeOnboardingOverlay();
+  exitOnboarding();
 }
 
 function reopenOnboarding() {
@@ -583,6 +600,20 @@ function selectArtistLine(artist) {
 
   pinnedArtists.add(artist);
   updateArtistPanels();
+  focusCameraOnArtist(artist);  
+}
+
+function focusCameraOnArtist(artist) {
+  const discog = getArtistDiscography(artist);
+  if (!discog.length) return;
+
+  const box = new THREE.Box3();
+  discog.forEach(d => box.expandByPoint(timeMode ? d.timeVec : d.umapVec));
+
+  const center = box.getCenter(new THREE.Vector3());
+  const radius = box.getSize(new THREE.Vector3()).length() / 2;
+
+  focusCameraOn(center, radius);
 }
 
 const scene = new THREE.Scene();
@@ -3741,10 +3772,20 @@ function updateConnections() {
 }
 
 function focusCameraOnPoint(mesh) {
-  const targetPos = mesh.position.clone();
+  focusCameraOn(mesh.position);
+}
+
+function focusCameraOn(targetPos, fitRadius = 0) {
   const currentDistance = camera.position.distanceTo(controls.target);
+
+  const vFov = camera.fov * Math.PI / 180;
+  const hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
+  const fitDistance = fitRadius > 0
+    ? (fitRadius * 1.3) / Math.sin(Math.min(vFov, hFov) / 2)
+    : 0;
+
   const desiredDistance = THREE.MathUtils.clamp(
-    currentDistance * FOCUS_ZOOM_FACTOR,
+    Math.max(currentDistance * FOCUS_ZOOM_FACTOR, fitDistance),
     controls.minDistance + 2,
     controls.maxDistance
   );
@@ -3834,12 +3875,29 @@ function updateSelectionOutline() {
   outlineRing.geometry = new THREE.RingGeometry(innerRadius, outerRadius, OUTLINE_SEGMENTS);
 }
 
-function fitCamera() {
-  const box = new THREE.Box3().setFromObject(root);
+const INITIAL_CAMERA = {
+  offsetX: 0.2,
+  offsetY: 0.35,
+  distanceFactor: 0.75,   // antes: 1.25 (menor = más cerca)
+  minDistance: 60         // antes: 80
+};
+
+function fitCamera(useTimeLayout = timeMode) {
+  if (!points.length) return;
+  const box = new THREE.Box3();
+  points.forEach(p => box.expandByPoint(useTimeLayout ? p.timeVec : p.umapVec));
   const center = box.getCenter(new THREE.Vector3());
   const size = box.getSize(new THREE.Vector3());
+
+  const distance = Math.max(size.length() * INITIAL_CAMERA.distanceFactor, INITIAL_CAMERA.minDistance);
+
+  cameraAnimating = false;   // corta cualquier animación de foco en curso
   controls.target.copy(center);
-  camera.position.set(center.x + size.x*.2, center.y + size.y*.35, center.z + Math.max(size.length()*1.25, 80));
+  camera.position.set(
+    center.x + size.x * INITIAL_CAMERA.offsetX,
+    center.y + size.y * INITIAL_CAMERA.offsetY,
+    center.z + distance
+  );
   controls.update();
 }
 
@@ -4346,6 +4404,7 @@ modeBtns.forEach(btn => {
 homeBtn.addEventListener("click", e => {
   e.stopPropagation();
   resetInteractionState();
+  resetView(); 
   reopenOnboarding();
 });
 
