@@ -18,6 +18,12 @@
   <header class="header">
    <img src="./img/constelaLogo.png" width="160" height="48"></i>
   <nav  class="topbar" aria-label="Navegación del mapa">
+      <button id="homeBtn" type="button" class="topbar_btn">
+        <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+          <path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>
+        </svg>
+        <span class="topbar_label">Inicio</span>
+      </button>
       <div class="topbar_switch" role="group" aria-label="Modo de visualización">
       <button type="button" class="topbar_btn" data-mode="exploratorio" aria-pressed="true">
         <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
@@ -32,16 +38,6 @@
         <span class="topbar_label">Cronológico</span>
       </button>
     </div>
-
-    <!-- Reabre el onboarding -->
-    <button id="homeBtn" type="button" class="topbar_btn">
-      <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-        <path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>
-      </svg>
-      <span class="topbar_label">Inicio</span>
-    </button>
-
-    <!-- Abre / cierra el sidebar de filtros -->
     <button id="sidebarOpen" type="button" class="topbar_btn" aria-controls="sidebar" aria-expanded="false">
       <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="18" r="2" fill="currentColor"/>

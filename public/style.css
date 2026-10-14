@@ -756,12 +756,20 @@ body.is-onboarding  {
   filter: brightness(.75);
 }
 
+.ob-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
 .ob-disco-title {
   font-size: 14px;
 }
 
 .ob-disco-subtitle {
-  font-size: 10px;
+  font-size: 11px;
+  color: var(--secondary);
 }
 
 /* ---------- 5. Topbar ---------- */

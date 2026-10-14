@@ -249,7 +249,7 @@ function renderOnboardingStep1() {
   hero.appendChild(obEl("span", "ob-header-logo"));
 
   const loading = obEl("section", "ob-loading");
-  loading.appendChild(obEl("h2", "ob-loading-title", "¿Qué es ConstelaRock?"));
+  loading.appendChild(obEl("h2", "ob-loading-title", "Bienvenidos a ConstelaRock"));
   loading.appendChild(obEl("p", "ob-loading-text", ONBOARDING_LOADING_TEXT));
 
   const track = obEl("div", "ob-loading-track");
@@ -407,7 +407,7 @@ function renderOnboardingStep2(artist) {
 
     if (a.genres.primary.length) {
       const tags = obEl("div", "ob-tags");
-      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-subtitle", g)));
+      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-disco-subtitle", g)));
       info.appendChild(tags);
     }
 
@@ -612,6 +612,23 @@ function focusCameraOnArtist(artist) {
 
   const center = box.getCenter(new THREE.Vector3());
   const radius = box.getSize(new THREE.Vector3()).length() / 2;
+
+  focusCameraOn(center, radius);
+}
+
+function focusCameraOnYears(years) {
+  const rings = orbitRings.filter(r => years.has(r.userData.year));
+  if (!rings.length) return;
+
+  let minY = Infinity, maxY = -Infinity, maxRadius = 0;
+  rings.forEach(r => {
+    minY = Math.min(minY, r.position.y);
+    maxY = Math.max(maxY, r.position.y);
+    maxRadius = Math.max(maxRadius, r.userData.radius);
+  });
+
+  const center = new THREE.Vector3(timeCentroid.x, (minY + maxY) / 2, timeCentroid.z);
+  const radius = Math.hypot(maxRadius, (maxY - minY) / 2);
 
   focusCameraOn(center, radius);
 }
@@ -1201,7 +1218,7 @@ const MODEL_CONFIG = {
 
 const TIME_LAYOUT = {
   foldWeight: 0.35,
-  totalHeight: 100
+  totalHeight: 250
 };
 
 const ANIM_DURATION = 1400;
@@ -1212,7 +1229,7 @@ const FOCUS_ZOOM_FACTOR = 0.4;
 const OUTLINE_OFFSET_PX = 2;
 const OUTLINE_THICKNESS_PX = 2;
 const OUTLINE_SEGMENTS = 40;
-
+const ORBIT_RING_IDLE_OPACITY = 0;
 const GENRE_LABEL_CONFIG = {
   minAlbumsForLabel: 2,
   radiusPadding: 8,
@@ -1222,20 +1239,26 @@ const GENRE_LABEL_CONFIG = {
 };
 
 const EVENT_LABEL_CONFIG = {
-  offsetX: 1, 
-  fontSize: 16, 
-  color: "#676767",
-  maxCharsPerLine: 37,  
+  gapBelowYear: 0.3, 
+  fontSize: 20,      
+  color: "#c4c4c4",
+  maxCharsPerLine: 37,
   maxLines: 1,
-  lineHeight: 36,
-  dimmedOpacity: 0.5,
+  lineHeight: 24,    
+  dimmedOpacity: 0.25,
   worldPerPixel: 0.05,
-  canvasPadding: 8 
+  canvasPadding: 8
 };
 
-const YEAR_LABEL_DEFAULT_TINT = 0x848484;
+const YEAR_LABEL_DEFAULT_TINT = 0xc4c4c4;
+const YEAR_LABEL_FONT_PX = 26;
 const ORBIT_RING_DEFAULT_COLOR = 0xc4c4c4;
 const ORBIT_RING_SELECTED_COLOR = 0xffffff;
+const ORBIT_RING_CONFIG = {
+  coverage: 1,
+  padding: 1.5,
+  minRadius: 6
+};
 const CONNECTION_CONFIG = {
   sameArtistLineOpacity: 0.9,
   level1LineOpacity: 0.65,
@@ -1254,6 +1277,7 @@ const CONNECTION_CONFIG = {
   ancestorOpacity: 0.8,
   descendantOpacity: 0.8,
   secondLevelOpacity: 0.65,
+  showSecondLevel: false,
 };
 
 const NETWORK_INSIGHTS_CONFIG = {
@@ -1636,7 +1660,6 @@ function hueForGenre(name) {
       const hue = span === 0 ? min : min + (hash % 1000) / 1000 * span;
       genreHue.set(name, hue);
     } else {
-      // Sin familia (ej: "Beat"): hash libre, como respaldo
       genreHue.set(name, hash % 360);
     }
   }
@@ -1797,14 +1820,18 @@ async function calculateModel() {
   setLoadingProgress(92);
 
   if (timeMode) {
+    orbitRings.forEach(r => {
+      r.material.opacity = ORBIT_RING_IDLE_OPACITY;
+      r.userData.targetOpacity = ORBIT_RING_IDLE_OPACITY;
+    });
     pointMeshes.forEach((m,i) => m.position.copy(points[i].timeVec));
     yearSprites.forEach(s => {
       s.material.opacity = 1;
       s.userData.targetOpacity = 1;
     });
     orbitRings.forEach(r => {
-      r.material.opacity = 0.25;
-      r.userData.targetOpacity = 0.25;
+      r.material.opacity = 0.05;
+      r.userData.targetOpacity = 0.05;
     });
   }
 
@@ -1870,7 +1897,7 @@ function makeYearSprite(text) {
   canvas.width = 256;
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
-  ctx.font = "regular 96px sans-serif";
+  ctx.font = `600 ${YEAR_LABEL_FONT_PX}px 'Bitcount Single'`;
   ctx.fillStyle = "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
@@ -1911,7 +1938,7 @@ function makeEventLabelSprite(text) {
 
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-  const font = `${cfg.fontSize}px sans-serif`;
+  const font = `${cfg.fontSize}px 'Oxanium'`;
   ctx.font = font;
   const textWidth = Math.max(...lines.map(l => ctx.measureText(l).width));
 
@@ -1920,10 +1947,10 @@ function makeEventLabelSprite(text) {
   text.toUpperCase(),
   ctx.font = font;
   ctx.fillStyle = "#ffffff";
-  ctx.textAlign = "right"; 
+  ctx.textAlign = "center"; 
   ctx.textBaseline = "middle";
   lines.forEach((line, i) => {
-    ctx.fillText(line, canvas.width - cfg.canvasPadding, cfg.lineHeight * (i + 0.5));
+    ctx.fillText(line, canvas.width / 2, cfg.lineHeight * (i + 0.5)); 
   });
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -1970,26 +1997,20 @@ function clearEventLabels() {
   eventLabelSprites = [];
 }
 
-const eventLabelRightVec = new THREE.Vector3();
-
-// Lado izquierdo del aro (opuesto a ringScreenAnchor, donde va el panel de año)
 function updateEventLabels() {
   if (!eventLabelSprites.length) return;
 
-  camera.updateMatrixWorld();
-  eventLabelRightVec.setFromMatrixColumn(camera.matrixWorld, 0);
-  eventLabelRightVec.y = 0;
-  if (eventLabelRightVec.lengthSq() < 1e-6) eventLabelRightVec.set(1, 0, 0);
-  eventLabelRightVec.normalize();
-
   const yearsSelected = selectedYears.size > 0;
+  const yearHalfHeight = YEAR_LABEL_FONT_PX * 0.0225;
 
   eventLabelSprites.forEach(s => {
-    const { ring, year, halfWidth } = s.userData;
+    const { ring, year } = s.userData;
 
-    // Texto hacia afuera del borde izquierdo, terminando en el aro
-    const distance = ring.userData.radius + EVENT_LABEL_CONFIG.offsetX + halfWidth;
-    s.position.copy(ring.position).addScaledVector(eventLabelRightVec, -distance);
+    s.position.set(
+      ring.position.x,
+      ring.position.y - yearHalfHeight - EVENT_LABEL_CONFIG.gapBelowYear - s.scale.y / 2,
+      ring.position.z
+    );
 
     let target = 0;
     if (timeMode) {
@@ -2001,7 +2022,6 @@ function updateEventLabels() {
     s.visible = s.material.opacity > 0.01;
   });
 }
-
 function updateEventLabelTints() {
   eventLabelSprites.forEach(s => {
     if (selectedYears.has(s.userData.year)) {
@@ -2019,12 +2039,13 @@ function createYearOrbits() {
     byYear.get(p.year).push(p);
   });
 
-  byYear.forEach((group, year) => {
-    const radii = group.map(p =>
-      Math.hypot(p.timeVec.x - timeCentroid.x, p.timeVec.z - timeCentroid.z)
-    );
+byYear.forEach((group, year) => {
+  const radii = group
+    .map(p => Math.hypot(p.timeVec.x - timeCentroid.x, p.timeVec.z - timeCentroid.z))
+    .sort((a, b) => a - b);
 
-    const radius = Math.max(average(radii), 6);
+    const idx = Math.min(radii.length - 1, Math.ceil(radii.length * ORBIT_RING_CONFIG.coverage) - 1);
+    const radius = Math.max(radii[idx] + ORBIT_RING_CONFIG.padding, ORBIT_RING_CONFIG.minRadius);
 
     const geo = new THREE.TorusGeometry(radius, 0.1, 8, 64);
     const mat = new THREE.MeshBasicMaterial({
@@ -2033,8 +2054,9 @@ function createYearOrbits() {
       opacity: 0,
       depthWrite: false
     });
-
     const ring = new THREE.Mesh(geo, mat);
+    // ring.visible = false;
+    ring.raycast = () => {};  
     ring.userData.radius = radius;
     ring.rotation.x = Math.PI / 2;
     ring.position.set(timeCentroid.x, group[0].timeVec.y, timeCentroid.z);
@@ -2055,7 +2077,6 @@ function getRangeYears() {
   );
 }
 
-// Los inputs Desde/Hasta son la fuente de verdad: si hay rango, se seleccionan los aros
 function syncRingsToRange() {
   if (!timeMode) return;
   const years = getRangeYears();
@@ -2244,7 +2265,7 @@ function setTimeMode(on) {
   animating = true;
 
   yearSprites.forEach(s => { s.userData.targetOpacity = timeMode ? 1 : 0; });
-  orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? 0.25 : 0; });
+  orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? ORBIT_RING_IDLE_OPACITY : 0; });
 
   if (timeMode) syncRingsToRange();
   else clearYearHighlight();
@@ -3408,7 +3429,7 @@ function buildAncestorDescendantGraph(idx) {
     fadeNodeIn(pointMeshes[d.idx], CONNECTION_CONFIG.descendantOpacity, appearAt);
 
     const level2 = secondLevel[i];
-    if (level2) {
+    if (level2 && CONNECTION_CONFIG.showSecondLevel) { 
       activeGraphIndices.add(level2.idx);
       const level2AppearAt = appearAt + CONNECTION_CONFIG.stageDelay;
 
@@ -4065,22 +4086,25 @@ function toggleYearHighlight(year, additive = false) {
   }
 
   setYearSelection(next, {
-    keepFilters: selectedYears.size > 0 || getRangeYears() !== null
+    keepFilters: selectedYears.size > 0 || getRangeYears() !== null,
+    focus: true   
   });
 }
  
-function setYearSelection(years, { keepFilters = false, showPanel = true } = {}) {
+function setYearSelection(years, { keepFilters = false, showPanel = true, focus = false } = {}) {
   if (years.size === 0) { clearYearHighlight(); return; }
- 
+
   selectedYears = new Set();
   clearHighlight();
   if (!keepFilters) clearGenreSelection();
- 
+
   selectedYears = years;
   applyYearVisuals();
   if (showPanel) syncYearPanels(); else clearYearPanels();
+
+  if (focus) focusCameraOnYears(years);
 }
- 
+
 function clearYearHighlight() {
   if (selectedYears.size === 0) return;
   selectedYears = new Set();
@@ -4089,9 +4113,10 @@ function clearYearHighlight() {
   updateFilterGenreVisuals();
  
   orbitRings.forEach(r => {
-    r.userData.targetOpacity = timeMode ? 0.25 : 0;
+    r.userData.targetOpacity = timeMode ? ORBIT_RING_IDLE_OPACITY : 0;
     r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
   });
+
   yearSprites.forEach(s => {
     s.userData.targetOpacity = timeMode ? 1 : 0;
     s.material.color.setHex(YEAR_LABEL_DEFAULT_TINT);
@@ -4213,7 +4238,7 @@ function applyYearVisuals() {
 
   orbitRings.forEach(r => {
     const isSelected = selectedYears.has(r.userData.year);
-    r.userData.targetOpacity = isSelected ? 1 : 0.25;
+    r.userData.targetOpacity = isSelected ? 1 : ORBIT_RING_IDLE_OPACITY;
     if (isSelected) r.material.color.copy(dominantGroupColor(r.userData.year));
     else r.material.color.setHex(ORBIT_RING_DEFAULT_COLOR);
   });
