@@ -835,7 +835,7 @@ function buildAncestorDescendantSection(idx) {
   if (ancestor) {
     const t = document.createElement("div");
     t.textContent = "Disco ancestro";
-    t.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    t.style.cssText = "margin-top:16px;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:white;line-height:1;";
     wrap.appendChild(t);
     wrap.appendChild(buildNearestRow(ancestor, { showYear: true }));
   }
@@ -843,7 +843,7 @@ function buildAncestorDescendantSection(idx) {
   if (descendants.length) {
     const t = document.createElement("div");
     t.textContent = "Discos descendientes";
-    t.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    t.style.cssText = "margin-top:16px;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:white;line-height:1;";
     wrap.appendChild(t);
     descendants.forEach(p => wrap.appendChild(buildNearestRow(p, { showYear: true })));
   }
@@ -856,13 +856,13 @@ function buildNavChevrons(a) {
   const pos = discog.findIndex(p => p.idx === a.idx);
 
   const wrap = document.createElement("div");
-  wrap.style.cssText = "display:flex;align-items:center;gap:8px;position:absolute;top:6px;right:32px;";
+  wrap.style.cssText = "display:flex;align-items:center;gap:8px;position:absolute;bottom:12px;right:12px;";
 
   const prevBtn = document.createElement("button");
   prevBtn.textContent = "‹";
   prevBtn.setAttribute("aria-label", "Disco anterior del artista");
   prevBtn.disabled = pos <= 0;
-  prevBtn.style.cssText = `border:none;background:none;font-size:18px;line-height:1;cursor:${prevBtn.disabled ? "default" : "pointer"};color:${prevBtn.disabled ? "#ccc" : "#888"};padding:0;`;
+  prevBtn.style.cssText = `border:none;background:none;font-size:24px;line-height:1;cursor:${prevBtn.disabled ? "default" : "pointer"};color:${prevBtn.disabled ? "#888" : "#56CCF2"};padding:0;`;
   prevBtn.addEventListener("click", e => {
     e.stopPropagation();
     if (pos > 0) selectAlbum(discog[pos - 1].idx);
@@ -872,7 +872,7 @@ function buildNavChevrons(a) {
   nextBtn.textContent = "›";
   nextBtn.setAttribute("aria-label", "Disco siguiente del artista");
   nextBtn.disabled = pos === -1 || pos >= discog.length - 1;
-  nextBtn.style.cssText = `border:none;background:none;font-size:18px;line-height:1;cursor:${nextBtn.disabled ? "default" : "pointer"};color:${nextBtn.disabled ? "#ccc" : "#888"};padding:0;`;
+  nextBtn.style.cssText = `border:none;background:none;font-size:24px;line-height:1;cursor:${nextBtn.disabled ? "default" : "pointer"};color:${nextBtn.disabled ? "#888" : "#56CCF2"};padding:0;`;
   nextBtn.addEventListener("click", e => {
     e.stopPropagation();
     if (pos < discog.length - 1) selectAlbum(discog[pos + 1].idx);
@@ -886,7 +886,7 @@ function buildNavChevrons(a) {
 function buildExpandToggle(section) {
   const btn = document.createElement("button");
   btn.textContent = tooltipExpanded ? "Saber menos" : "Saber más";
-  btn.style.cssText = "margin-top:10px;border:none;background:none;color:#556;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;";
+  btn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:12px;text-transform:uppercase;cursor:pointer;padding:8px 6px;width:fit-content;line-height:1; ";
   btn.addEventListener("click", e => {
     e.stopPropagation();
     tooltipExpanded = !tooltipExpanded;
@@ -922,7 +922,7 @@ function renderDetailPanel(i, x, y) {
   closeBtn.textContent = "×";
   setPanelBorder(ui.tooltip, a.color);
   closeBtn.setAttribute("aria-label", "Cerrar");
-  closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
+  closeBtn.style.cssText = "position:absolute;top:12px;right:12px;border:none;background:none;font-size:24px;line-height:1;cursor:pointer;color:white;width:min-content;padding:0;";
   closeBtn.addEventListener("click", e => {
     e.stopPropagation();
     clearHighlight();
@@ -967,7 +967,7 @@ function renderDetailPanel(i, x, y) {
 
   const headerRow = document.createElement("div");
   headerRow.style.cssText = "display:flex;gap:10px;align-items:flex-start;";
-  headerRow.appendChild(createCoverThumb(a, 64));
+  headerRow.appendChild(createCoverThumb(a, 84));
 
   const headerText = document.createElement("div");
   headerText.appendChild(title);
@@ -979,26 +979,28 @@ function renderDetailPanel(i, x, y) {
   ui.tooltip.appendChild(navChevrons);
   ui.tooltip.appendChild(headerRow);
 
+  // Discos más cercanos (ahora antes del "saber más")
+  const nearest = computeNearestAlbums(i, 3);
+  if (nearest.length) {
+    const nearestTitle = document.createElement("div");
+    nearestTitle.textContent = "Discos más cercanos";
+    nearestTitle.style.cssText = "margin-top:16px;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:white;line-height:1;";
+    ui.tooltip.appendChild(nearestTitle);
+    nearest.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
+  }
+  
+  // "Saber más" al final del todo
   const extendedSection = document.createElement("div");
   extendedSection.style.display = tooltipExpanded ? "block" : "none";
   extendedSection.appendChild(buildAncestorDescendantSection(i));
-
-  ui.tooltip.appendChild(buildExpandToggle(extendedSection));
-  ui.tooltip.appendChild(extendedSection);
+  
+    ui.tooltip.appendChild(buildExpandToggle(extendedSection));
+    ui.tooltip.appendChild(extendedSection);
 
   ui.tooltip.style.right = "auto";
   ui.tooltip.style.left = `${Math.min(x + 16, innerWidth - 320)}px`;
   ui.tooltip.style.top = `${Math.min(y + 16, innerHeight - 380)}px`;
   ui.tooltip.style.display = "block";
-
-  const nearest = computeNearestAlbums(i, 3);
-  if (nearest.length) {
-    const nearestTitle = document.createElement("div");
-    nearestTitle.textContent = "Discos más cercanos";
-    nearestTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
-    ui.tooltip.appendChild(nearestTitle);
-    nearest.forEach(p => ui.tooltip.appendChild(buildNearestRow(p)));
-  }
 }
 
 function artistColor(artist) {
@@ -3930,7 +3932,7 @@ function buildNearestRow(p, opts = {}) {
   const { showYear = false } = opts;
   const row = document.createElement("div");
   row.className = "nearest-row";
-  row.style.cssText = "display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;";
+  row.style.cssText = "display:flex;align-items:center;gap:6px;padding:6px 0;cursor:pointer;font-weight:bolder;letter-spacing:.1px;line-height:1;";
 
   const dot = document.createElement("i");
   dot.style.cssText = `display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;background:${p.color.getStyle()};`
@@ -3943,8 +3945,8 @@ function buildNearestRow(p, opts = {}) {
 
   row.appendChild(dot);
   row.appendChild(text);
-  row.addEventListener("mouseenter", () => { row.style.opacity = "0.7"; });
-  row.addEventListener("mouseleave", () => { row.style.opacity = "1"; });
+  row.addEventListener("mouseenter", () => { row.style.color = "#56CCF2"; });
+  row.addEventListener("mouseleave", () => { row.style.color = "#d3d3d3"; });
   row.addEventListener("click", e => {
     e.stopPropagation();
     selectAlbum(p.idx);
@@ -4169,65 +4171,79 @@ function updateYearPanels() {
   yearPanelEl.style.top = `${Math.max(0, Math.min(y + 16, innerHeight - 340))}px`;
 }
  
+const SECTION_TITLE_STYLE =
+  "margin-top:16px;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:white;line-height:1;";
+
+const CLOSE_BTN_STYLE =
+  "position:absolute;top:12px;right:12px;border:none;background:none;font-size:24px;line-height:1;cursor:pointer;color:white;width:min-content;padding:0;";
+
+const TOGGLE_BTN_STYLE =
+  "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:12px;text-transform:uppercase;cursor:pointer;padding:8px 6px;width:fit-content;line-height:1;";
+
+
 function renderYearStatsPanelInto(el, years) {
   const isPeriod = years.size > 1;
   const stats = computePeriodGenreStats(years);
   el.textContent = "";
- 
+  const dominantGroup = stats.groups[0];
+  const borderColor = dominantGroup ? colorForGroup(dominantGroup.genre) : "#888";
+  setPanelBorder(el, borderColor);
+
   const closeBtn = document.createElement("button");
   closeBtn.textContent = "×";
   closeBtn.setAttribute("aria-label", "Cerrar");
-  closeBtn.style.cssText = "position:absolute;top:6px;right:8px;border:none;background:none;font-size:16px;line-height:1;cursor:pointer;color:#888;";
+  closeBtn.style.cssText = CLOSE_BTN_STYLE;
   closeBtn.addEventListener("click", e => {
     e.stopPropagation();
     clearYearHighlight();
   });
- 
+
   const title = document.createElement("strong");
   title.textContent = periodLabel(years);
- 
+
   const meta = document.createElement("div");
   meta.className = "artist";
   meta.textContent =
     `${stats.total} álbum${stats.total === 1 ? "" : "es"}` +
     (isPeriod ? ` · ${years.size} años` : "");
- 
+
   el.appendChild(closeBtn);
   el.appendChild(title);
   el.appendChild(meta);
- 
+
   if (stats.groups.length) {
     const groupsTitle = document.createElement("div");
     groupsTitle.textContent = "Géneros principales";
-    groupsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    groupsTitle.style.cssText = SECTION_TITLE_STYLE;
     el.appendChild(groupsTitle);
- 
+
     const limit = isPeriod ? PERIOD_PANEL_TOP_GENRES : YEAR_PANEL_TOP_GENRES;
     stats.groups.slice(0, limit).forEach(entry =>
       el.appendChild(buildGenreStatRow(entry, colorForGroup(entry.genre)))
     );
   }
- 
+
   if (!isPeriod && stats.albums.length) {
     const albumsSection = document.createElement("div");
     albumsSection.style.display = "none";
- 
+
     const albumsTitle = document.createElement("div");
     albumsTitle.textContent = "Álbumes de este año";
-    albumsTitle.style.cssText = "margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#999;";
+    albumsTitle.style.cssText = SECTION_TITLE_STYLE;
     albumsSection.appendChild(albumsTitle);
     stats.albums.forEach(p => albumsSection.appendChild(buildNearestRow(p)));
- 
+
+    const showLabel = `Ver álbumes (${stats.albums.length})`;
     const showBtn = document.createElement("button");
-    showBtn.textContent = `Ver álbumes (${stats.albums.length})`;
-    showBtn.style.cssText = "margin-top:10px;border:none;background:none;color:#556;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;";
+    showBtn.textContent = showLabel;
+    showBtn.style.cssText = TOGGLE_BTN_STYLE;
     showBtn.addEventListener("click", e => {
       e.stopPropagation();
       const showing = albumsSection.style.display !== "none";
       albumsSection.style.display = showing ? "none" : "block";
-      showBtn.textContent = showing ? `Ver álbumes (${stats.albums.length})` : "Ocultar álbumes";
+      showBtn.textContent = showing ? showLabel : "Ocultar álbumes";
     });
- 
+
     el.appendChild(showBtn);
     el.appendChild(albumsSection);
   }

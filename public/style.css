@@ -190,40 +190,55 @@ body.is-onboarding  {
 .tooltip {
   position: fixed;
   z-index: 20;
-  display: none;
-  pointer-events: none;
   min-width: 210px;
   max-width: 300px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.75);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   transform: scale(0.9);
 }
 
+.tooltip > div button:nth-last-of-type(1):hover {
+    background: var(--blue-deep);
+    cursor: pointer;
+}
+
 .tooltip strong {
-  font-size: 13px;
+  display: block;
+  width: 140px;
+  font-size: 15px;
 }
 
 .tooltip .artist {
-  font-size: 11px;
-  opacity: 0.55;
+  font-size: 12.25px;
   margin-top: 4px;
+  color: var(--secondary);
 }
 
 .tooltip .genres {
-  font-size: 10px;
-  line-height: 1.5;
+  font-size: 10.5px;
+  letter-spacing: 1.5%;
+  line-height: 1;
   margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .tooltip .primary {
-  font-weight: 700;
+  font-weight: bolder;
+  color: var(--gray-6);
 }
 
 .tooltip .secondary {
-  opacity: 0.6;
+  font-weight: 600;
+  color: var(--gray-4);
 }
+/* 
+.nearest-row > span:hover {
+  color: var(--blue-2)!important;
+} */
 
 /* Status */
 .status {
@@ -1409,6 +1424,10 @@ body.is-onboarding  {
   .sidebar.is-closed {
     margin-right: 0;
     transform: translateX(100%);
+  }
+
+  .topbar > span {
+    display: none!important;
   }
 
   .ob-frame   { padding: 20px 20px 28px; }
