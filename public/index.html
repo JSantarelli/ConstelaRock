@@ -16,7 +16,7 @@
     <div id="map"></div>
 
   <header class="header">
-   <img src="./img/constelaLogo.png" width="160" height="48"></i>
+   <img src="./img/constelaLogo-sm.png" width="90" height="24"></i>
   <nav  class="topbar" aria-label="Navegación del mapa">
       <button id="homeBtn" type="button" class="topbar_btn">
         <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
@@ -68,7 +68,7 @@
       <div class="sidebar_search">
         <div class="sidebar_input">
           <svg class="sidebar_search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>
-          <input id="search" class="sidebar_input-field" type="search" placeholder="Buscar artista y/o album" autocomplete="off">
+          <input autofocus id="search" class="sidebar_input-field" type="search" placeholder="Buscar artista y/o album" autocomplete="off">
         </div>
         <div id="searchResults" class="search-results"></div>
       </div>  
@@ -165,13 +165,25 @@
           <dd>Discos cuyos descendientes abarcan géneros diversos.</dd>
         </dl>
       </div>
-
-      <!-- <button id="aboutBack" type="button" class="sidebar_btn">← Volver a filtros</button> -->
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">Datos y metodología</h4>
+        <dl class="sidebar_about-list">
+          <dt>Fuente</dt>
+          <dd>Rate Your Music (RYM).</dd>
+          <dt>Obtención</dt>
+          <dd>Procesamiento asistido por IA del HTML de las páginas de álbumes.</dd>
+          <dt>Estructuración</dt>
+          <dd>Esquema predefinido y generación de registros JSON mediante Claude.</dd>
+        </dl>
+      </div>
     </section>
   </aside>
   <button id="aboutFab" type="button" class="about_fab" aria-controls="sidebar" aria-expanded="false" hidden>
     <span class="about_fab-icon" aria-hidden="true">i</span>
-    <span>Acerca del proyecto</span>
+    <span class="sidebar_subheader-col">
+      <p class="about-fab-title">Acerca del proyecto</p>
+      <small class="about-fab-subtitle">Fuente:<a href="https://rateyourmusic.com/"> RYM - Rate Your Music</a></small>
+    </span>
   </button>
   <script src="./bundle.js" type="module"></script>
 </body>

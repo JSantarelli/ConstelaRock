@@ -303,7 +303,7 @@ function renderOnboardingStep1() {
         const title = obEl("h3", "ob-card-title", preset.title);
         const subtitle = obEl("p", "ob-card-subtitle", preset.subtitle);
         const img = obEl("i", "img");
-        img.style.backgroundImage = `url(${preset.img})`;
+        // img.style.backgroundImage = `url(${preset.img})`;
         card.type = "button";
         card.disabled = !ready;
         card.addEventListener("click", e => {
@@ -1018,7 +1018,7 @@ function showTooltipForPoint(i, x, y) {
   ui.tooltip.style.right = "auto";
   ui.tooltip.style.display = "block";
   ui.tooltip.style.left = `${Math.min(x+16, innerWidth-320)}px`;
-  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-150)}px`;
+  ui.tooltip.style.top = `${Math.min(y+16, innerHeight-320)}px`;
 }
 
 function ensureMultiSelectPanel(idx) {
@@ -1213,7 +1213,7 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.35,
+  descriptorWeight: 0.37,
   nNeighbors: 4.3,
   minDist: 0.65
 };
