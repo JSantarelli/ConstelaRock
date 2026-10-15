@@ -120,7 +120,53 @@
     </details>
     <section class="sidebar_about" aria-label="Acerca del proyecto">
       <p id="aboutText" class="sidebar_about-text"></p>
-      <button id="aboutBack" type="button" class="sidebar_btn">← Volver a filtros</button>
+
+      <h3 class="sidebar_about-group">Guía rápida del mapa</h3>
+
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">UMAP</h4>
+        <p class="sidebar_about-text">Ubica los discos según su afinidad estilística, a partir de géneros y descriptores. No considera artistas ni años. Los puntos cercanos representan similitudes estilísticas.</p>
+      </div>
+
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">Modo cronológico</h4>
+        <p class="sidebar_about-text">Reemplaza la altura por el año de publicación, conservando parcialmente la estructura original del mapa.</p>
+      </div>
+
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">Colores</h4>
+        <p class="sidebar_about-text">Identifican familias musicales según el género primario de cada disco.</p>
+      </div>
+
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">Relaciones</h4>
+        <dl class="sidebar_about-list">
+          <dt>Ancestro</dt>
+          <dd>Disco cercano, de otro artista, anterior o contemporáneo.</dd>
+          <dt>Descendientes</dt>
+          <dd>Los tres discos posteriores más cercanos, de artistas distintos.</dd>
+          <dt>Cadena</dt>
+          <dd>Conecta cronológicamente la discografía de cada artista.</dd>
+        </dl>
+      </div>
+
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">Hallazgos</h4>
+        <dl class="sidebar_about-list">
+          <dt>Hubs</dt>
+          <dd>Discos con más conexiones.</dd>
+          <dt>Puentes</dt>
+          <dd>Discos que conectan distintas zonas del grafo.</dd>
+          <dt>Fuera de serie</dt>
+          <dd>Discos estilísticamente más alejados de sus vecinos.</dd>
+          <dt>Convergentes</dt>
+          <dd>Discos asociados a obras de géneros diversos.</dd>
+          <dt>Divergentes</dt>
+          <dd>Discos cuyos descendientes abarcan géneros diversos.</dd>
+        </dl>
+      </div>
+
+      <!-- <button id="aboutBack" type="button" class="sidebar_btn">← Volver a filtros</button> -->
     </section>
   </aside>
   <button id="aboutFab" type="button" class="about_fab" aria-controls="sidebar" aria-expanded="false" hidden>

@@ -869,6 +869,61 @@ body.is-onboarding  {
   cursor: pointer;
 }
 
+/* Vista "Acerca del proyecto" */
+.sidebar_title--about {
+  display: none;
+}
+
+.sidebar_about {
+  display: none;
+  flex-direction: column;
+  align-self: stretch;
+  gap: 0;
+}
+
+/* Texto base de la guía */
+.sidebar_about-text,
+.sidebar_about-list dd {
+  margin: 0;
+  color: var(--gray-5);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Intro (hijo directo): un poco más grande */
+.sidebar_about > .sidebar_about-text {
+  font-size: 14px;
+}
+
+.sidebar_about-group {
+  margin: 24px 0 0;
+  font-size: 14px;
+  color: var(--color-white);
+}
+
+.sidebar_about-heading {
+  margin: 16px 0 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  line-height: 1;
+  color: var(--color-white);
+}
+
+.sidebar_about-list { margin: 0; }
+
+.sidebar_about-list dt {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.sidebar_about-list dd { margin-left: 0; }
+
+.sidebar_about .sidebar_btn { margin-top: 24px; }
+
+
 /* Cabezal */
 .sidebar_header {
   position: sticky;
@@ -927,6 +982,12 @@ body.is-onboarding  {
 }
 
 /* Vista "Acerca del proyecto" */
+.sidebar[data-view="about"] .sidebar_count,
+.sidebar[data-view="about"] .sidebar_search,
+.sidebar[data-view="about"] #selectedChips {
+  display: none;
+}
+
 .sidebar_title--about {
   display: none;
 }
