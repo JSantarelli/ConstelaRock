@@ -41,6 +41,13 @@ function applyArtistsPreset(artistNames, opts = {}) {
   artistNames.forEach(name => activeFilters.artists.add(name));
   refreshFilterOptions();
 
+  if (opts.pinPanels !== false) {
+    artistNames
+      .filter(name => getArtistDiscography(name).length)
+      .forEach(name => pinnedArtists.add(name));
+    updateArtistPanels();
+  }
+
   if (opts.timeMode) setTimeMode(true);
 
   applyPresetYears(opts.years);
@@ -79,7 +86,8 @@ function applyPresetYears(years) {
 
   if (timeMode) {
     const selected = new Set(points.map(p => p.year).filter(y => y >= from && y <= to));
-    setYearSelection(selected, { keepFilters: true, panelYears: new Set() });
+    setYearSelection(selected, { keepFilters: true, showPanel: true });  
+    syncYearPanels();   
   }
 }
 
@@ -102,66 +110,58 @@ const ONBOARDING_PRESETS = [
     title: "Secuencia inicial",
     subtitle: "La Nueva Ola y aquellos primeros años desde La Cueva.",    
     section: "explorar",
-    img:"./img/constelaSerie.jpg",
     apply: () => applyArtistsPreset(
       ['Manal', 'Almendra', 'Los Gatos', 'Vox Dei', 'Vivencia', 'Pedro y Pablo'],
       { timeMode: true }
     )
   },
   {
-    title: "Primavera democrática",
+    title: "No soy un extraño",
     subtitle: "Del inicio en los 90’s, al auge post-2001, y su declive pos-Cromañon.",
     section: "explorar",
-    img:"./img/constelaSerie.jpg",
     apply: () => applyGenreGroupPreset(['New Wave', 'Pop'], { timeMode: true, years: [1983, 1989] })
   },
-  // {
-  //   title: "No tan distintos",
-  //   subtitle: "Lejos del imaginario popular, bandas con trayectorias similares.",
-  //   section: "explorar",
-  //   img:"./img/constelaSerie.jpg",
-  //   apply: () => applyArtistsPreset(
-  //     ['Soda Stereo', 'Patricio Rey y Sus Redonditos de Ricota'],
-  //     { timeMode: false }
-  //   )
-  // },
   {
-    title: "Artistas post-bandas",
-    subtitle: "Algunos siguen la misma línea, otros van hacia nuevos rumbos. ",    
+    title: "No tan distintos",
+    subtitle: "Lejos del imaginario popular, bandas con trayectorias similares.",
     section: "explorar",
-    img:"./img/constelaDiversidad.jpg",
     apply: () => applyArtistsPreset(
-      ['Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado'],
-      { timeMode: true }
+      ['Soda Stereo', 'Patricio Rey y Sus Redonditos de Ricota'],
+      { timeMode: false }
     )
   },
+  // {
+  //   title: "Artistas post-bandas",
+  //   subtitle: "Algunos siguen la misma línea, otros van hacia nuevos rumbos. ",    
+  //   section: "explorar",
+  //   apply: () => applyArtistsPreset(
+  //     ['Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado'],
+  //     { timeMode: true }
+  //   )
+  // },
   {
     title: "Fueras de sektor",
     subtitle: "Discos más distantes a a los vecindarios a los que pertenecen.",
     section: "hallazgos",
-    img:"./img/constelaSerie.jpg",
     apply: () => applyInsightPreset('outliers')
   },
-  // {
-  //   title: "Hubs",
-  //   subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
-  //   section: "hallazgos",
-  //   img:"./img/constelaHub.jpg",
-  //   apply: () => applyInsightPreset('outliers')
-  // },
+  {
+    title: "Sistema central",
+    subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
+    section: "hallazgos",
+    apply: () => applyInsightPreset('hubs')
+  },
   {
     title: "Adorables puentes",
     subtitle: "Discos que conectan géneros, sin los cuales estos serían islas.",
     section: "hallazgos",
-    img:"./img/constelaPuente.jpg",
-    apply: () => applyInsightPreset('outliers')
+    apply: () => applyInsightPreset('bridges')
   },
   {
     title: "Tu influyencia",
     subtitle: "Discos ancestros de una gran cantidad de obras de otros artistas.",
     section: "hallazgos",
-    img:"./img/constelaInfluencia.jpg",
-    apply: () => applyInsightPreset('outliers')
+    apply: () => applyInsightPreset('convergence')
   }
 ];
 
@@ -193,7 +193,7 @@ function clearOverlayContent() {
 function removeOnboardingOverlay() {
   if (onboardingOverlay) onboardingOverlay.remove();
   onboardingOverlay = null;
-  if (aboutFabEl) aboutFabEl.hidden = loadingProgress < 100;
+  if (aboutGroupEl) aboutGroupEl.hidden = loadingProgress < 100;
   document.body.classList.remove("is-onboarding");
   onboardingProgressFillEl = null;
   onboardingProgressLabelEl = null;
@@ -216,7 +216,7 @@ function setLoadingProgress(pct) {
     onboardingProgressLabelEl.textContent = `${Math.round(loadingProgress)}%`;
   }
 
-  if (aboutFabEl) aboutFabEl.hidden = !ready;
+  if (aboutGroupEl) aboutGroupEl.hidden = !ready;
 
   const frame = onboardingOverlay?.querySelector(".ob-frame");
   if (frame) frame.classList.toggle("is-loading", !ready);
@@ -261,10 +261,8 @@ function renderOnboardingStep1() {
   const progressLabel = obEl("div", "ob-loading-label", `${Math.round(loadingProgress)}%`);
   loading.appendChild(progressLabel);
 
-  const logo = obEl("span", "ob-header-logo");
-
   const searchBlock = obEl("section", "ob-search-block");
-  searchBlock.appendChild(obEl("h2", "ob-question", "¿Cuál es tu banda o artista nacional favorito?"));
+  searchBlock.appendChild(obEl("h2", "ob-question", "¿Cuál es tu artista de Rock Nacional favorito?"));
 
   const search = obEl("div", "ob-search");
   const field = obEl("div", "ob-search-field");
@@ -703,7 +701,8 @@ const ui = {
   filterYearTo: document.querySelector('#filterYearTo'),
   filterDescriptor: document.querySelector('#filterDescriptor'),
   filtersClear: document.querySelector('#filtersClear'),
-  genreLegendToggleAll: document.querySelector('#genreLegendToggleAll')
+  genreLegendToggleAll: document.querySelector('#genreLegendToggleAll'),
+  descriptorResults: document.querySelector('#descriptorResults')
 };
 
 function clearScene() {
@@ -1133,6 +1132,7 @@ function resetNetworkInsightMode() {
   networkInsightMode = null;
   setFilterControlsEnabled(true);
   updateNetworkInsightButtons();
+  syncResetButton();
   updateFilterGenreVisuals();
 }
 
@@ -1276,12 +1276,12 @@ const genreTagProjection = new THREE.Vector3();
 
 const EVENT_LABEL_CONFIG = {
   gapBelowYear: 0.3, 
-  fontSize: 20,      
+  fontSize: 12,      
   color: "#c4c4c4",
   maxCharsPerLine: 37,
   maxLines: 1,
   lineHeight: 24,    
-  dimmedOpacity: 0.25,
+  dimmedOpacity: 0,
   worldPerPixel: 0.05,
   canvasPadding: 8
 };
@@ -1396,6 +1396,270 @@ function easeInOutCubic(t) {
   return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3) / 2;
 }
 
+// TRADUCTOR
+const DESCRIPTOR_ES = {
+  "Atmospheric": "atmosférico",
+  "Biblical": "bíblico",
+  "Christian": "cristiana",
+  "Dark": "oscuro",
+  "Electro Pop": "electropop",
+  "Experimental": "experimental",
+  "Guitar-Driven": "guitarrero",
+  "LGBTQ": "LGBTQ",
+  "Underground": "underground",
+  "Wall of Sound": "muro de sonido",
+  "about music": "sobre la música",
+  "abstract": "abstracto",
+  "acoustic": "acústico",
+  "adolescence": "adolescencia",
+  "afterlife": "más allá",
+  "ageing": "vejez",
+  "aggressive": "agresivo",
+  "alcohol": "alcohol",
+  "alienation": "alienación",
+  "altruistic": "altruista",
+  "anarchism": "anarquismo",
+  "androgynous vocals": "voces andróginas",
+  "angry": "enojado",
+  "angular": "angular",
+  "animals": "animales",
+  "anthemic": "himnario",
+  "anti-authoritarian": "antiautoritario",
+  "anticolonialism": "anticolonialismo",
+  "antireligious": "antirreligioso",
+  "anxious": "ansioso",
+  "apathetic": "apático",
+  "apocalyptic": "apocalíptico",
+  "aquatic": "acuático",
+  "atmospheric": "atmosférico",
+  "autumn": "otoño",
+  "avant-garde": "vanguardista",
+  "ballad": "balada",
+  "bassy": "graves marcados",
+  "betrayal": "traición",
+  "bittersweet": "agridulce",
+  "boastful": "jactancioso",
+  "bouncy": "saltarín",
+  "breakup": "ruptura",
+  "bright": "luminoso",
+  "calm": "calmo",
+  "cavernous": "cavernoso",
+  "chaotic": "caótico",
+  "cocaine": "cocaína",
+  "cold": "frío",
+  "colorful": "colorido",
+  "community": "comunidad",
+  "compassionate": "compasivo",
+  "complex": "complejo",
+  "concept album": "álbum conceptual",
+  "conscious": "consciente",
+  "cosmetics": "cosmética",
+  "cozy": "acogedor",
+  "crime": "crimen",
+  "cryptic": "críptico",
+  "cynical": "cínico",
+  "danceable": "bailable",
+  "dancing": "baile",
+  "dark": "oscuro",
+  "dark humor": "humor negro",
+  "daytime": "diurno",
+  "deadpan": "impasible",
+  "death": "muerte",
+  "decay": "decadencia",
+  "dense": "denso",
+  "depressive": "depresivo",
+  "desert": "desierto",
+  "dissonant": "disonante",
+  "distorted": "distorsionado",
+  "disturbing": "perturbador",
+  "domestic": "doméstico",
+  "dreams": "sueños",
+  "drugs": "drogas",
+  "eclectic": "ecléctico",
+  "electric": "eléctrico",
+  "energetic": "enérgico",
+  "entertainment industry": "industria del entretenimiento",
+  "epic": "épico",
+  "escapism": "escapismo",
+  "ethereal": "etéreo",
+  "evening": "vespertino",
+  "existential": "existencial",
+  "failure": "fracaso",
+  "fairy tale": "cuento de hadas",
+  "fame": "fama",
+  "family": "familia",
+  "fantasy": "fantasía",
+  "fashion": "moda",
+  "female vocalist": "voz femenina",
+  "feminine": "femenino",
+  "film": "cine",
+  "flirting": "coqueteo",
+  "folklore": "folklore",
+  "forest": "bosque",
+  "friendship": "amistad",
+  "funereal": "fúnebre",
+  "futuristic": "futurista",
+  "fuzzy": "fuzz",
+  "gay": "gay",
+  "grief": "duelo",
+  "happy": "alegre",
+  "harsh vocals": "voces ásperas",
+  "hateful": "cargado de odio",
+  "hazy": "brumoso",
+  "heavy": "pesado",
+  "hedonism": "hedonismo",
+  "hedonistic": "hedonista",
+  "history": "historia",
+  "homicide": "homicidio",
+  "horror": "terror",
+  "humorous": "humorístico",
+  "hypnotic": "hipnótico",
+  "ideology": "ideología",
+  "improvisation": "improvisación",
+  "indigeneity": "identidad indígena",
+  "infernal": "infernal",
+  "infidelity": "infidelidad",
+  "insecure": "inseguro",
+  "instrumental": "instrumental",
+  "introspective": "introspectivo",
+  "ironic": "irónico",
+  "joyful": "jubiloso",
+  "leitmotif": "leitmotiv",
+  "lesbian": "lésbico",
+  "lethargic": "letárgico",
+  "literature": "literatura",
+  "lo-fi": "lo-fi",
+  "lonely": "solitario",
+  "longing": "anhelo",
+  "love": "amor",
+  "loyalty": "lealtad",
+  "lush": "exuberante",
+  "lyrical dissonance": "disonancia lírica",
+  "macabre": "macabro",
+  "male vocalist": "voz masculina",
+  "manic": "maníaco",
+  "marriage": "matrimonio",
+  "maximalist": "maximalista",
+  "mechanical": "mecánico",
+  "medieval": "medieval",
+  "meditative": "meditativo",
+  "medley": "popurrí",
+  "melancholic": "melancólico",
+  "mellow": "relajado",
+  "melodic": "melódico",
+  "memory": "memoria",
+  "menacing": "amenazante",
+  "mental health": "salud mental",
+  "minimalistic": "minimalista",
+  "misanthropic": "misántropo",
+  "money": "dinero",
+  "mountains": "montañas",
+  "mysterious": "misterioso",
+  "mythology": "mitología",
+  "narrative": "narrativo",
+  "nationalism": "nacionalismo",
+  "natural": "natural",
+  "nature": "naturaleza",
+  "nightlife": "vida nocturna",
+  "nihilistic": "nihilista",
+  "nocturnal": "nocturno",
+  "noisy": "ruidoso",
+  "nostalgia": "nostalgia",
+  "nostalgic": "nostálgico",
+  "obsession": "obsesión",
+  "occult": "ocultismo",
+  "ominous": "ominoso",
+  "optimistic": "optimista",
+  "orchestral": "orquestal",
+  "pacifism": "pacifismo",
+  "pagan": "pagano",
+  "paranoia": "paranoia",
+  "paranormal": "paranormal",
+  "parody": "parodia",
+  "party": "fiesta",
+  "passionate": "apasionado",
+  "pastiche": "pastiche",
+  "pastoral": "pastoral",
+  "patriotic": "patriótico",
+  "peaceful": "apacible",
+  "personal": "personal",
+  "pessimistic": "pesimista",
+  "philosophical": "filosófico",
+  "playful": "juguetón",
+  "poetic": "poético",
+  "political": "político",
+  "postmodern": "posmoderno",
+  "poverty": "pobreza",
+  "progressive": "progresivo",
+  "protest": "protesta",
+  "provocative": "provocador",
+  "psychedelic": "psicodélico",
+  "psychological": "psicológico",
+  "punchy": "contundente",
+  "quirky": "excéntrico",
+  "rain": "lluvia",
+  "raw": "crudo",
+  "rebellious": "rebelde",
+  "regret": "arrepentimiento",
+  "religious": "religioso",
+  "repetitive": "repetitivo",
+  "revolution": "revolución",
+  "rhythmic": "rítmico",
+  "ritualistic": "ritual",
+  "romantic": "romántico",
+  "sad": "triste",
+  "sampling": "sampleo",
+  "sarcastic": "sarcástico",
+  "sassy": "descarado",
+  "satanism": "satanismo",
+  "satirical": "satírico",
+  "scary": "aterrador",
+  "science fiction": "ciencia ficción",
+  "self-hatred": "autodesprecio",
+  "sensual": "sensual",
+  "sentimental": "sentimental",
+  "serious": "serio",
+  "sexual": "sexual",
+  "skateboarding": "skate",
+  "sleep": "dormir",
+  "smooth": "fluido",
+  "socialism": "socialismo",
+  "soft": "suave",
+  "sombre": "sombrío",
+  "soothing": "calmante",
+  "space": "espacio",
+  "sparse": "despojado",
+  "spiritual": "espiritual",
+  "sports": "deportes",
+  "spring": "primavera",
+  "stream of consciousness": "flujo de conciencia",
+  "suicide": "suicidio",
+  "suite": "suite",
+  "summer": "verano",
+  "surreal": "surrealista",
+  "suspenseful": "suspenso",
+  "technical": "técnico",
+  "theatrical": "teatral",
+  "through-composed": "composición continua",
+  "trauma": "trauma",
+  "travel": "viajes",
+  "tribal": "tribal",
+  "triumphant": "triunfal",
+  "tropical": "tropical",
+  "twinkling": "centelleante",
+  "uncommon time signatures": "compases inusuales",
+  "uplifting": "edificante",
+  "urban": "urbano",
+  "violence": "violencia",
+  "vocal group": "grupo vocal",
+  "vulgar": "vulgar",
+  "war": "guerra",
+  "warm": "cálido",
+  "winter": "invierno"
+};
+
+const descriptorLabel = d => DESCRIPTOR_ES[d] ?? d;
+
 function buildVocabulary(items) {
   const genres = new Set(), descriptors = new Set();
   items.forEach(a => {
@@ -1426,6 +1690,104 @@ function vectorize(album, vocab, descriptorWeight) {
 
   return v;
 }
+
+let descriptorOptions = [];
+let descriptorMatches = [];
+let descriptorActiveIdx = -1;
+
+const normText = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+function computeDescriptorMatches(query) {
+  const q = normText(query.trim());
+  return descriptorOptions
+    .map(d => {
+      const label = normText(descriptorLabel(d));
+      let rank = 2;
+      if (q) {
+        if (label.startsWith(q)) rank = 0;
+        else if (label.includes(q)) rank = 1;
+        else return null;
+      }
+      return { d, rank };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.rank - b.rank || descriptorLabel(a.d).localeCompare(descriptorLabel(b.d), "es"))
+    .map(x => x.d);
+}
+
+function closeDescriptorResults() {
+  descriptorActiveIdx = -1;
+  ui.descriptorResults?.classList.remove("open");
+}
+
+function setActiveDescriptor(i, scroll = false) {
+  descriptorActiveIdx = i;
+  [...ui.descriptorResults.children].forEach((el, idx) => el.classList.toggle("active", idx === i));
+  if (scroll) ui.descriptorResults.children[i]?.scrollIntoView({ block: "nearest" });
+}
+
+function pickDescriptor(d) {
+  activeFilters.descriptors.add(d);
+  ui.filterDescriptor.value = "";
+  closeDescriptorResults();
+  refreshFilterOptions();
+}
+
+function renderDescriptorResults() {
+  const box = ui.descriptorResults;
+  if (!box) return;
+
+  descriptorMatches = computeDescriptorMatches(ui.filterDescriptor.value);
+  descriptorActiveIdx = -1;
+  box.textContent = "";
+
+  if (!descriptorMatches.length) {
+    if (!ui.filterDescriptor.value.trim()) { closeDescriptorResults(); return; }
+    const empty = document.createElement("div");
+    empty.className = "search-suggestion";
+    empty.style.cssText = "pointer-events:none;opacity:.6;";
+    empty.textContent = "Sin resultados";
+    box.appendChild(empty);
+    box.classList.add("open");
+    return;
+  }
+
+  descriptorMatches.forEach((d, i) => {
+    const row = document.createElement("div");
+    row.className = "search-suggestion";
+    row.textContent = descriptorLabel(d);
+    row.addEventListener("mousedown", e => { e.preventDefault(); pickDescriptor(d); });
+    row.addEventListener("mouseenter", () => setActiveDescriptor(i));
+    box.appendChild(row);
+  });
+  box.classList.add("open");
+}
+
+ui.filterDescriptor.addEventListener("input", renderDescriptorResults);
+ui.filterDescriptor.addEventListener("focus", renderDescriptorResults);
+ui.filterDescriptor.addEventListener("blur", () => setTimeout(closeDescriptorResults, 100));
+
+ui.filterDescriptor.addEventListener("keydown", e => {
+  const open = ui.descriptorResults.classList.contains("open");
+  if (!open) {
+    if (e.key === "ArrowDown") renderDescriptorResults();
+    return;
+  }
+  if (e.key === "ArrowDown" && descriptorMatches.length) {
+    e.preventDefault();
+    setActiveDescriptor((descriptorActiveIdx + 1) % descriptorMatches.length, true);
+  } else if (e.key === "ArrowUp" && descriptorMatches.length) {
+    e.preventDefault();
+    setActiveDescriptor((descriptorActiveIdx - 1 + descriptorMatches.length) % descriptorMatches.length, true);
+  } else if (e.key === "Enter") {
+    e.preventDefault();
+    const d = descriptorMatches[descriptorActiveIdx >= 0 ? descriptorActiveIdx : 0];
+    if (d) pickDescriptor(d);
+  } else if (e.key === "Escape") {
+    e.stopPropagation(); 
+    closeDescriptorResults();
+  }
+});
 
 const GENRE_FAMILIES = [
 
@@ -1617,7 +1979,7 @@ const GENRE_FAMILIES = [
   { match: /contemporary r&b/i,       group: "Raíces", hueRange: [50, 56], satRange: [50, 75], lightRange: [40, 55] },
 
   // ---------- CHRISTIAN ----------
-  { match: /christian rock/i,         group: "Christian", hueRange: [150, 160], satRange: [40, 70], lightRange: [40, 55] }
+  { match: /christian rock/i,         group: "Religiosa", hueRange: [150, 160], satRange: [40, 70], lightRange: [40, 55] }
 
 ];
 
@@ -1637,7 +1999,7 @@ const GROUP_ORDER = [
   "Latina",
   "Jazz",
   "Raíces",
-  "Christian",
+  "Religiosa",
   "Otros"
 ];
 
@@ -1844,7 +2206,8 @@ async function calculateModel() {
     position: p,
     color: colorForAlbum(albums[i]),
     idx: i, 
-    searchText: `${albums[i].album} ${albums[i].artist}`.toLowerCase()
+    // searchText: `${albums[i].album} ${albums[i].artist}`.toLowerCase()
+    searchText: normText(`${albums[i].album} ${albums[i].artist}`)
   }));
 
   computeTimeLayout();
@@ -2286,7 +2649,6 @@ function updateGenreLabels() {
   });
 }
 
-// ¿Hay algo aplicado? Un filtro que no restringe nada (ej. solo texto en la búsqueda) no cuenta
 function hasTagContext() {
   return selectedIndices.size > 0
     || (filteredIndices !== null && filteredIndices.size < points.length)
@@ -2294,7 +2656,6 @@ function hasTagContext() {
     || selectedYears.size > 0;
 }
 
-// Mismo criterio que updateFilterGenreVisuals; la selección de discos tiene prioridad
 function isPointTagged(i) {
   if (selectedIndices.size > 0) return selectedIndices.has(i);
   const insightSet = currentInsightTopSet();
@@ -2314,7 +2675,7 @@ function getGenreTagEntry(genre) {
 
   const sprite = makeGenreLabelSprite(genre, color);
   sprite.scale.multiplyScalar(GENRE_TAG_CONFIG.scale);
-  sprite.material.depthTest = false;   // se lee por encima de los nodos
+  sprite.material.depthTest = false;  
   sprite.material.opacity = 0;
   sprite.renderOrder = 6;
   sprite.visible = false;
@@ -2536,7 +2897,7 @@ function ensureGenreLegendToggleAllBtn() {
 
   btn.dataset.bound = "1";
   btn.addEventListener("click", e => {
-    e.preventDefault();   // evita que el click también pliegue el acordeón
+    e.preventDefault();   
     e.stopPropagation();
     toggleAllGenreGroups();
   });
@@ -2607,6 +2968,7 @@ function setNetworkInsightMode(mode) {
 
   setFilterControlsEnabled(networkInsightMode === null);
   updateNetworkInsightButtons();
+  syncResetButton();
   if (selectedIndices.size === 0) updateFilterGenreVisuals();
 }
 
@@ -2617,12 +2979,12 @@ function createNetworkInsightsToggle() {
  
   const modes = [
     { mode: "hubs", label: "Hubs" },
-    { mode: "bridges", label: "Bridges" },
-    { mode: "outliers", label: "Outliers" },
-    { mode: "convergence", label: "Convergentes" },
-    { mode: "divergence", label: "Divergentes" }
+    { mode: "bridges", label: "Puentes" },
+    { mode: "outliers", label: "Fueras de serie" },
+    { mode: "convergence", label: "Más influyentes" },
+    // { mode: "divergence", label: "Divergentes" }
   ];
- 
+
   modes.forEach(({ mode, label }) => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -2932,7 +3294,7 @@ function getFilteredPoints(excludeKey) {
   return points.filter(p => pointMatchesFilters(p, filters));
 }
 
-function populateSelectOptions(selectEl, values, placeholder, currentValue) {
+function populateSelectOptions(selectEl, values, placeholder, currentValue, labelFn = String) {
   const finalValues = currentValue && !values.includes(String(currentValue))
     ? [String(currentValue), ...values]
     : values;
@@ -2946,7 +3308,7 @@ function populateSelectOptions(selectEl, values, placeholder, currentValue) {
   finalValues.forEach(v => {
     const opt = document.createElement("option");
     opt.value = v;
-    opt.textContent = v;
+    opt.textContent = labelFn(v);
     selectEl.appendChild(opt);
   });
 
@@ -2991,6 +3353,16 @@ function pruneInvalidSelections() {
   }
 }
 
+function syncResetButton() {
+  ui.filtersClear.style.display =
+  (hasActiveFilters() || networkInsightMode !== null) ? "inline-block" : "none";
+}
+
+ui.filtersClear.addEventListener("click", () => {
+  resetNetworkInsightMode();
+  resetAllFilters();
+});
+
 function refreshFilterOptions() {
   pruneInvalidSelections();
 
@@ -2999,14 +3371,14 @@ function refreshFilterOptions() {
 
   const availableDescriptors = [...new Set(descriptorPool.flatMap(p => p.descriptors))]
     .filter(d => !activeFilters.descriptors.has(d))
-    .sort();
+    .sort((a, b) => descriptorLabel(a).localeCompare(descriptorLabel(b), "es"));
 
-  populateSelectOptions(
-    ui.filterDescriptor,
-    availableDescriptors,
-    activeFilters.descriptors.size ? "Agregar otro descriptor…" : "Descriptor (todos)",
-    null
-  );
+  descriptorOptions = availableDescriptors;
+  syncResetButton();
+  ui.filterDescriptor.placeholder = activeFilters.descriptors.size
+    ? "Agregar otro descriptor…"
+    : "Buscar descriptor";
+  if (ui.descriptorResults?.classList.contains("open")) renderDescriptorResults();
 
   const years = [...new Set(yearPool.map(p => p.year))].sort((a, b) => a - b);
   const { yearFrom, yearTo } = activeFilters;
@@ -3039,10 +3411,6 @@ ui.filterYearTo.addEventListener("change", e => {
   activeFilters.yearTo = e.target.value ? Number(e.target.value) : null;
   refreshFilterOptions();
 });
-ui.filterDescriptor.addEventListener("change", e => {
-  if (e.target.value) activeFilters.descriptors.add(e.target.value);
-  refreshFilterOptions(); // vuelve el select al placeholder y regenera las opciones
-});
 
 ui.filtersClear.addEventListener("click", () => resetAllFilters());
 
@@ -3060,21 +3428,21 @@ let currentSuggestions = [];
 let activeSuggestionIndex = -1;
 
 function computeArtistMatches(query) {
-  const q = query.toLowerCase().trim();
+  const q = normText(query.trim());
   if (!q) return [];
 
   const seen = new Set();
   const matches = [];
   for (const p of points) {
     if (seen.has(p.artist)) continue;
-    if (p.artist.toLowerCase().includes(q)) {
+    if (normText(p.artist).includes(q)) {
       seen.add(p.artist);
       matches.push(p.artist);
     }
   }
 
   matches.sort((a,b) => {
-    const aStarts = a.toLowerCase().startsWith(q) ? 0 : 1;
+    const aStarts = normText(a).startsWith(q) ? 0 : 1;
     const bStarts = b.toLowerCase().startsWith(q) ? 0 : 1;
     if (aStarts !== bStarts) return aStarts - bStarts;
     return a.localeCompare(b);
@@ -3084,7 +3452,7 @@ function computeArtistMatches(query) {
 }
 
 function computeAlbumMatches(query) {
-  const q = query.toLowerCase().trim();
+  const q = normText(query.trim());
   if (!q) return [];
 
   const matches = [];
@@ -3443,18 +3811,6 @@ if (entry.type === "artist") {
   }
 }
 
-function computeNearestAlbums(idx, k = 3) {
-  const origin = points[idx];
-  if (!origin) return [];
-
-  return points
-    .filter((p, i) => i !== idx && p.artist)
-    .map(p => ({ p, d: p.umapVec.distanceTo(origin.umapVec) }))
-    .sort((a, b) => a.d - b.d)
-    .slice(0, k)
-    .map(entry => entry.p);
-}
-
 function nearestOtherArtist(originVec, excludeArtists, minYear, k) {
   return points
     .filter(p => !excludeArtists.has(p.artist) && p.year >= minYear)
@@ -3682,8 +4038,6 @@ for (let i = 0; i < sameArtistChain.length - 1; i++) {
 }
 
 function buildDiscoveryGraph(originIdx) {
-  // clearConnections(); 
-
   const origin = points[originIdx];
   if (!origin) return;
 
@@ -3790,8 +4144,8 @@ function renderSelectedChips() {
     descContainer.textContent = "";
     activeFilters.descriptors.forEach(d => {
       descContainer.appendChild(buildChip({
-        text: d,
-        ariaLabel: `Quitar descriptor ${d}`,
+        text: descriptorLabel(d), 
+        ariaLabel: `Quitar descriptor ${descriptorLabel(d)}`,
         onRemove: () => {
           activeFilters.descriptors.delete(d);
           refreshFilterOptions();

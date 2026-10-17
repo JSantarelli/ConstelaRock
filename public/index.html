@@ -101,7 +101,13 @@
         </div>
         <div class="sidebar_field-group">
           <label class="sidebar_input-label" for="filterDescriptor">Descriptores</label>
-          <select id="filterDescriptor" class="sidebar_select"></select>
+          <div class="sidebar_search">
+            <div class="sidebar_input">
+              <svg class="sidebar_search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>
+              <input id="filterDescriptor" class="sidebar_input-field" type="text" placeholder="Buscar descriptor" autocomplete="off">
+            </div>
+            <div id="descriptorResults" class="search-results"></div>
+          </div>
           <div id="descriptorChips" class="sidebar_chips-container" hidden></div>
         </div>
       </div>

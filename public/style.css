@@ -476,7 +476,7 @@ footer.footer > * {
   padding-bottom: calc(var(--global-padding) + var(--footer-height));
   padding-left: 2rem;
   padding-right: 2rem;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .ob-box.artist {
@@ -666,8 +666,8 @@ footer.footer > * {
   width: fit-content;
   display: flex;
   flex-wrap: wrap;
-  gap: 48px;
-  width: 90%;
+  gap: 36px;
+  width: 84%;
 }
 
 .ob-preset-group {
