@@ -53,6 +53,18 @@ function applyArtistsPreset(artistNames, opts = {}) {
   applyPresetYears(opts.years);
 }
 
+function applyDescriptorsPreset(descriptors, opts = {}) {
+  if (!points.length) return;
+  resetInteractionState();
+
+  descriptors.forEach(d => activeFilters.descriptors.add(d));
+  refreshFilterOptions();
+
+  if (opts.timeMode) setTimeMode(true);
+
+  applyPresetYears(opts.years);
+}
+
 function applyGenreGroupPreset(groupNames, opts = {}) {
   if (!points.length) return;
   resetInteractionState();
@@ -107,24 +119,21 @@ const ONBOARDING_SECTIONS = [
 
 const ONBOARDING_PRESETS = [
   {
-    title: "Secuencia inicial",
-    subtitle: "La Nueva Ola y aquellos primeros años desde La Cueva.",    
-    section: "explorar",
-    apply: () => applyArtistsPreset(
-      ['Manal', 'Almendra', 'Los Gatos', 'Vox Dei', 'Vivencia', 'Pedro y Pablo'],
-      { timeMode: true }
-    )
+    title: "No soy un extraño",
+    subtitle: "La resistencia y la protesta antes, durante y después de la dictadura",
+    section: "hallazgos",
+    apply: () => applyDescriptorsPreset(['protest', 'political'], { timeMode: true, years: [1971, 1986] })
   },
   {
-    title: "No soy un extraño",
-    subtitle: "Del inicio en los 90’s, al auge post-2001, y su declive pos-Cromañon.",
-    section: "explorar",
+    title: "Raros peinados nuevos",
+    subtitle: "Excéntricos, estéticos y melódicos con sintetizadores de los 80's",
+    section: "hallazgos",
     apply: () => applyGenreGroupPreset(['New Wave', 'Pop'], { timeMode: true, years: [1983, 1989] })
   },
   {
     title: "No tan distintos",
     subtitle: "Lejos del imaginario popular, bandas con trayectorias similares.",
-    section: "explorar",
+    section: "hallazgos",
     apply: () => applyArtistsPreset(
       ['Soda Stereo', 'Patricio Rey y Sus Redonditos de Ricota'],
       { timeMode: false }
@@ -133,7 +142,7 @@ const ONBOARDING_PRESETS = [
   // {
   //   title: "Artistas post-bandas",
   //   subtitle: "Algunos siguen la misma línea, otros van hacia nuevos rumbos. ",    
-  //   section: "explorar",
+  //   section: "hallazgos",
   //   apply: () => applyArtistsPreset(
   //     ['Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado'],
   //     { timeMode: true }
@@ -142,25 +151,25 @@ const ONBOARDING_PRESETS = [
   {
     title: "Fueras de sektor",
     subtitle: "Discos más distantes a a los vecindarios a los que pertenecen.",
-    section: "hallazgos",
+    section: "explorar",
     apply: () => applyInsightPreset('outliers')
   },
-  {
-    title: "Sistema central",
-    subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
-    section: "hallazgos",
-    apply: () => applyInsightPreset('hubs')
-  },
+  // {
+  //   title: "Sistema nervioso central",
+  //   subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
+  //   section: "explorar",
+  //   apply: () => applyInsightPreset('hubs')
+  // },
   {
     title: "Adorables puentes",
     subtitle: "Discos que conectan géneros, sin los cuales estos serían islas.",
-    section: "hallazgos",
+    section: "explorar",
     apply: () => applyInsightPreset('bridges')
   },
   {
-    title: "Tu influyencia",
+    title: "Tu influencia",
     subtitle: "Discos ancestros de una gran cantidad de obras de otros artistas.",
-    section: "hallazgos",
+    section: "explorar",
     apply: () => applyInsightPreset('convergence')
   }
 ];
@@ -392,7 +401,7 @@ function renderOnboardingStep2(artist) {
   
   if (stats.primaryGenres.length) {
     const tags = obEl("div", "ob-tags");
-    stats.primaryGenres.forEach(g => tags.appendChild(obEl("span", "ob-tag", g)));
+    stats.primaryGenres.forEach(g => tags.appendChild(obEl("span", "ob-tag", genreLabel(g))));
     header.appendChild(tags);
   }
   header.appendChild(obEl("p", "ob-box-meta", `${stats.firstYear} - ${stats.lastYear}`));
@@ -408,7 +417,7 @@ function renderOnboardingStep2(artist) {
 
     if (a.genres.primary.length) {
       const tags = obEl("div", "ob-tags");
-      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-disco-subtitle", g)));
+      a.genres.primary.forEach(g => tags.appendChild(obEl("span", "ob-disco-subtitle", genreLabel(g))));
       info.appendChild(tags);
     }
 
@@ -501,13 +510,13 @@ function renderArtistDetailPanelInto(el, artist) {
   stats.primaryGenres.forEach(g => {
     const span = document.createElement("span");
     span.className = "primary";
-    span.textContent = g;
+    span.textContent = genreLabel(g);
     genresDiv.appendChild(span);
   });
   stats.secondaryGenres.forEach(g => {
     const span = document.createElement("span");
     span.className = "secondary";
-    span.textContent = g;
+    span.textContent = genreLabel(g);
     genresDiv.appendChild(span);
   });
 
@@ -587,7 +596,7 @@ function clearArtistPanels() {
 function buildArtistHoverHTML(artist) {
   const stats = computeArtistStats(artist);
   if (!stats) return "";
-  const primary = stats.primaryGenres[0] ?? "";
+  const primary = genreLabel(stats.primaryGenres[0] ?? "");
   const range = stats.firstYear === stats.lastYear
     ? `${stats.firstYear}`
     : `${stats.firstYear}–${stats.lastYear}`;
@@ -992,13 +1001,13 @@ function renderDetailPanel(i, x, y) {
   a.genres.primary.forEach(g => {
     const span = document.createElement("span");
     span.className = "primary";
-    span.textContent = g;
+    span.textContent = genreLabel(g);
     genresDiv.appendChild(span);
   });
   a.genres.secondary.forEach(g => {
     const span = document.createElement("span");
     span.className = "secondary";
-    span.textContent = g;
+    span.textContent = genreLabel(g);
     genresDiv.appendChild(span);
   });
 
@@ -1397,92 +1406,108 @@ function easeInOutCubic(t) {
 }
 
 // TRADUCTOR
+const GENRE_ES = {
+  "singer-songwriter": "Cantautor",
+  "christian rock": "Música religiosa",
+  "adult contemporary": "Contemporánea",
+  "acoustic blues": "Acústico",
+  "contemporary R&B": "R&B",
+  "children's music": "Música infantil",
+  "classical music": "Música clásica",
+  "musical parody": "Parodia musical",
+  "musical theatre and entertainment": "Música teatral",
+  "television music": "Música televisiva",
+  "spoken word": "Performance poética"
+};
+
+const genreLabel = g => GENRE_ES[g.toLowerCase()] ?? g;
+
 const DESCRIPTOR_ES = {
-  "Atmospheric": "atmosférico",
-  "Biblical": "bíblico",
+  "Atmospheric": "atmosférica",
+  "Biblical": "bíblica",
   "Christian": "cristiana",
-  "Dark": "oscuro",
+  "Dark": "oscura",
   "Electro Pop": "electropop",
   "Experimental": "experimental",
-  "Guitar-Driven": "guitarrero",
+  "Guitar-Driven": "guitarrera",
   "LGBTQ": "LGBTQ",
   "Underground": "underground",
   "Wall of Sound": "muro de sonido",
   "about music": "sobre la música",
-  "abstract": "abstracto",
-  "acoustic": "acústico",
+  "abstract": "abstracta",
+  "acoustic": "acústica",
   "adolescence": "adolescencia",
   "afterlife": "más allá",
   "ageing": "vejez",
-  "aggressive": "agresivo",
+  "aggressive": "agresiva",
   "alcohol": "alcohol",
   "alienation": "alienación",
   "altruistic": "altruista",
   "anarchism": "anarquismo",
-  "androgynous vocals": "voces andróginas",
-  "angry": "enojado",
+  "androgynous vocals": "andrógina",
+  "angry": "enojada",
   "angular": "angular",
   "animals": "animales",
-  "anthemic": "himnario",
-  "anti-authoritarian": "antiautoritario",
+  "anthemic": "himnaria",
+  "anti-authoritarian": "antiautoritaria",
   "anticolonialism": "anticolonialismo",
-  "antireligious": "antirreligioso",
-  "anxious": "ansioso",
-  "apathetic": "apático",
-  "apocalyptic": "apocalíptico",
-  "aquatic": "acuático",
-  "atmospheric": "atmosférico",
+  "antireligious": "antirreligiosa",
+  "anxious": "ansiosa",
+  "apathetic": "apática",
+  "apocalyptic": "apocalíptica",
+  "aquatic": "acuática",
+  "atmospheric": "atmosférica",
   "autumn": "otoño",
   "avant-garde": "vanguardista",
   "ballad": "balada",
   "bassy": "graves marcados",
   "betrayal": "traición",
   "bittersweet": "agridulce",
-  "boastful": "jactancioso",
-  "bouncy": "saltarín",
+  "boastful": "jactanciosa",
+  "bouncy": "saltarina",
   "breakup": "ruptura",
-  "bright": "luminoso",
-  "calm": "calmo",
-  "cavernous": "cavernoso",
-  "chaotic": "caótico",
+  "bright": "luminosa",
+  "calm": "calma",
+  "cavernous": "cavernosa",
+  "chaotic": "caótica",
   "cocaine": "cocaína",
-  "cold": "frío",
-  "colorful": "colorido",
+  "cold": "fría",
+  "colorful": "colorida",
   "community": "comunidad",
-  "compassionate": "compasivo",
-  "complex": "complejo",
+  "compassionate": "compasiva",
+  "complex": "compleja",
   "concept album": "álbum conceptual",
   "conscious": "consciente",
   "cosmetics": "cosmética",
-  "cozy": "acogedor",
+  "cozy": "acogedora",
   "crime": "crimen",
-  "cryptic": "críptico",
-  "cynical": "cínico",
+  "cryptic": "críptica",
+  "cynical": "cínica",
   "danceable": "bailable",
   "dancing": "baile",
-  "dark": "oscuro",
+  "dark": "oscura",
   "dark humor": "humor negro",
-  "daytime": "diurno",
+  "daytime": "diurna",
   "deadpan": "impasible",
   "death": "muerte",
   "decay": "decadencia",
-  "dense": "denso",
-  "depressive": "depresivo",
+  "dense": "densa",
+  "depressive": "depresiva",
   "desert": "desierto",
   "dissonant": "disonante",
-  "distorted": "distorsionado",
-  "disturbing": "perturbador",
-  "domestic": "doméstico",
+  "distorted": "distorsionada",
+  "disturbing": "perturbadora",
+  "domestic": "doméstica",
   "dreams": "sueños",
   "drugs": "drogas",
-  "eclectic": "ecléctico",
-  "electric": "eléctrico",
-  "energetic": "enérgico",
-  "entertainment industry": "industria del entretenimiento",
-  "epic": "épico",
+  "eclectic": "ecléctica",
+  "electric": "eléctrica",
+  "energetic": "enérgica",
+  "entertainment industry": "entretenimiento",
+  "epic": "épica",
   "escapism": "escapismo",
-  "ethereal": "etéreo",
-  "evening": "vespertino",
+  "ethereal": "etérea",
+  "evening": "vespertina",
   "existential": "existencial",
   "failure": "fracaso",
   "fairy tale": "cuento de hadas",
@@ -1491,7 +1516,7 @@ const DESCRIPTOR_ES = {
   "fantasy": "fantasía",
   "fashion": "moda",
   "female vocalist": "voz femenina",
-  "feminine": "femenino",
+  "feminine": "femenina",
   "film": "cine",
   "flirting": "coqueteo",
   "folklore": "folklore",
@@ -1504,131 +1529,131 @@ const DESCRIPTOR_ES = {
   "grief": "duelo",
   "happy": "alegre",
   "harsh vocals": "voces ásperas",
-  "hateful": "cargado de odio",
-  "hazy": "brumoso",
-  "heavy": "pesado",
+  "hateful": "cargada de odio",
+  "hazy": "brumosa",
+  "heavy": "pesada",
   "hedonism": "hedonismo",
   "hedonistic": "hedonista",
   "history": "historia",
   "homicide": "homicidio",
   "horror": "terror",
-  "humorous": "humorístico",
-  "hypnotic": "hipnótico",
+  "humorous": "humorística",
+  "hypnotic": "hipnótica",
   "ideology": "ideología",
   "improvisation": "improvisación",
   "indigeneity": "identidad indígena",
   "infernal": "infernal",
   "infidelity": "infidelidad",
-  "insecure": "inseguro",
+  "insecure": "insegura",
   "instrumental": "instrumental",
-  "introspective": "introspectivo",
-  "ironic": "irónico",
-  "joyful": "jubiloso",
+  "introspective": "introspectiva",
+  "ironic": "irónica",
+  "joyful": "jubilosa",
   "leitmotif": "leitmotiv",
-  "lesbian": "lésbico",
-  "lethargic": "letárgico",
+  "lesbian": "lésbica",
+  "lethargic": "letárgica",
   "literature": "literatura",
   "lo-fi": "lo-fi",
-  "lonely": "solitario",
+  "lonely": "solitaria",
   "longing": "anhelo",
   "love": "amor",
   "loyalty": "lealtad",
   "lush": "exuberante",
   "lyrical dissonance": "disonancia lírica",
-  "macabre": "macabro",
+  "macabre": "macabra",
   "male vocalist": "voz masculina",
-  "manic": "maníaco",
+  "manic": "maníaca",
   "marriage": "matrimonio",
   "maximalist": "maximalista",
-  "mechanical": "mecánico",
+  "mechanical": "mecánica",
   "medieval": "medieval",
-  "meditative": "meditativo",
+  "meditative": "meditativa",
   "medley": "popurrí",
-  "melancholic": "melancólico",
-  "mellow": "relajado",
-  "melodic": "melódico",
+  "melancholic": "melancólica",
+  "mellow": "relajada",
+  "melodic": "melódica",
   "memory": "memoria",
   "menacing": "amenazante",
   "mental health": "salud mental",
   "minimalistic": "minimalista",
-  "misanthropic": "misántropo",
+  "misanthropic": "misántropa",
   "money": "dinero",
   "mountains": "montañas",
-  "mysterious": "misterioso",
+  "mysterious": "misteriosa",
   "mythology": "mitología",
-  "narrative": "narrativo",
+  "narrative": "narrativa",
   "nationalism": "nacionalismo",
   "natural": "natural",
   "nature": "naturaleza",
   "nightlife": "vida nocturna",
   "nihilistic": "nihilista",
-  "nocturnal": "nocturno",
-  "noisy": "ruidoso",
+  "nocturnal": "nocturna",
+  "noisy": "ruidosa",
   "nostalgia": "nostalgia",
-  "nostalgic": "nostálgico",
+  "nostalgic": "nostálgica",
   "obsession": "obsesión",
   "occult": "ocultismo",
-  "ominous": "ominoso",
+  "ominous": "ominosa",
   "optimistic": "optimista",
   "orchestral": "orquestal",
   "pacifism": "pacifismo",
-  "pagan": "pagano",
+  "pagan": "pagana",
   "paranoia": "paranoia",
   "paranormal": "paranormal",
   "parody": "parodia",
   "party": "fiesta",
-  "passionate": "apasionado",
+  "passionate": "apasionada",
   "pastiche": "pastiche",
   "pastoral": "pastoral",
-  "patriotic": "patriótico",
+  "patriotic": "patriótica",
   "peaceful": "apacible",
   "personal": "personal",
   "pessimistic": "pesimista",
-  "philosophical": "filosófico",
-  "playful": "juguetón",
-  "poetic": "poético",
-  "political": "político",
-  "postmodern": "posmoderno",
+  "philosophical": "filosófica",
+  "playful": "divertida",
+  "poetic": "poética",
+  "political": "política",
+  "postmodern": "posmoderna",
   "poverty": "pobreza",
-  "progressive": "progresivo",
+  "progressive": "progresiva",
   "protest": "protesta",
-  "provocative": "provocador",
-  "psychedelic": "psicodélico",
-  "psychological": "psicológico",
+  "provocative": "provocadora",
+  "psychedelic": "psicodélica",
+  "psychological": "psicológica",
   "punchy": "contundente",
-  "quirky": "excéntrico",
+  "quirky": "excéntrica",
   "rain": "lluvia",
-  "raw": "crudo",
+  "raw": "cruda",
   "rebellious": "rebelde",
   "regret": "arrepentimiento",
-  "religious": "religioso",
-  "repetitive": "repetitivo",
+  "religious": "religiosa",
+  "repetitive": "repetitiva",
   "revolution": "revolución",
-  "rhythmic": "rítmico",
+  "rhythmic": "rítmica",
   "ritualistic": "ritual",
-  "romantic": "romántico",
+  "romantic": "romántica",
   "sad": "triste",
   "sampling": "sampleo",
-  "sarcastic": "sarcástico",
-  "sassy": "descarado",
+  "sarcastic": "sarcástica",
+  "sassy": "descarada",
   "satanism": "satanismo",
-  "satirical": "satírico",
-  "scary": "aterrador",
+  "satirical": "satírica",
+  "scary": "aterradora",
   "science fiction": "ciencia ficción",
   "self-hatred": "autodesprecio",
   "sensual": "sensual",
   "sentimental": "sentimental",
-  "serious": "serio",
+  "serious": "seria",
   "sexual": "sexual",
   "skateboarding": "skate",
   "sleep": "dormir",
-  "smooth": "fluido",
+  "smooth": "fluida",
   "socialism": "socialismo",
   "soft": "suave",
-  "sombre": "sombrío",
+  "sombre": "sombría",
   "soothing": "calmante",
   "space": "espacio",
-  "sparse": "despojado",
+  "sparse": "despojada",
   "spiritual": "espiritual",
   "sports": "deportes",
   "spring": "primavera",
@@ -1637,8 +1662,8 @@ const DESCRIPTOR_ES = {
   "suite": "suite",
   "summer": "verano",
   "surreal": "surrealista",
-  "suspenseful": "suspenso",
-  "technical": "técnico",
+  "suspenseful": "de suspenso",
+  "technical": "técnica",
   "theatrical": "teatral",
   "through-composed": "composición continua",
   "trauma": "trauma",
@@ -1649,12 +1674,12 @@ const DESCRIPTOR_ES = {
   "twinkling": "centelleante",
   "uncommon time signatures": "compases inusuales",
   "uplifting": "edificante",
-  "urban": "urbano",
+  "urban": "urbana",
   "violence": "violencia",
   "vocal group": "grupo vocal",
   "vulgar": "vulgar",
   "war": "guerra",
-  "warm": "cálido",
+  "warm": "cálida",
   "winter": "invierno"
 };
 
@@ -2673,7 +2698,8 @@ function getGenreTagEntry(genre) {
   color.getHSL(hsl);
   color.setHSL(hsl.h, hsl.s, Math.max(hsl.l, GENRE_TAG_CONFIG.minLightness));
 
-  const sprite = makeGenreLabelSprite(genre, color);
+  const sprite = makeGenreLabelSprite(genreLabel(genre), color);
+  
   sprite.scale.multiplyScalar(GENRE_TAG_CONFIG.scale);
   sprite.material.depthTest = false;  
   sprite.material.opacity = 0;
@@ -2690,7 +2716,6 @@ function updateGenreTags() {
   const cfg = GENRE_TAG_CONFIG;
   const active = timeMode && points.length > 0 && hasTagContext();
 
-  // 1) Centroide en vivo (mesh.position) de los discos involucrados, por género primario
   genreTagAcc.forEach(acc => { acc.count = 0; acc.sum.set(0, 0, 0); });
   if (active) {
     for (let i = 0; i < points.length; i++) {
@@ -3051,8 +3076,9 @@ function renderGenreLegend() {
     if (!byGroup.has(group)) byGroup.set(group, []);
     byGroup.get(group).push(g);
   });
-  byGroup.forEach(list => list.sort());
- 
+  
+  byGroup.forEach(list => list.sort((a, b) => genreLabel(a).localeCompare(genreLabel(b), "es")));
+  
   const orderedGroups = [
     ...GROUP_ORDER.filter(group => byGroup.has(group)),
     ...[...byGroup.keys()].filter(group => !GROUP_ORDER.includes(group))
@@ -3129,7 +3155,7 @@ function renderGenreLegend() {
       const box = document.createElement("input");
       box.type = "checkbox";
       box.className = "sidebar_checkbox";
-      box.setAttribute("aria-label", g);
+      box.setAttribute("aria-label", genreLabel(g));
  
       const dot = document.createElement("i");
       dot.className = "sidebar_dot";
@@ -3137,7 +3163,7 @@ function renderGenreLegend() {
  
       const itemLabel = document.createElement("span");
       itemLabel.className = "sidebar_checkbox-text";
-      itemLabel.textContent = g;
+      itemLabel.textContent = genreLabel(g);
  
       item.appendChild(box);
       item.appendChild(dot);
@@ -3246,7 +3272,7 @@ function buildAlbumRow(a) {
   a.genres.primary.forEach(g => {
     const tag = document.createElement("span");
     tag.className = "genre-tag";
-    tag.textContent = g;
+    tag.textContent = genreLabel(g);
     genresDiv.appendChild(tag);
   });
 

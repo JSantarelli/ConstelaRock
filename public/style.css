@@ -201,13 +201,13 @@ body.is-onboarding .header {
 .tooltip strong {
   display: block;
   width: 140px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 900;
   color: var(--color-white);
 }
 
 .tooltip .artist {
-  font-size: 12.25px;
+  font-size: 12px;
   margin-top: 4px;
   color: var(--secondary);
 }
@@ -701,8 +701,8 @@ footer.footer > * {
 
 .ob-card {
   box-sizing: border-box;
-  min-height: fit-content;
-  height: 112px;
+  min-height: 112px;
+  height: 100%;
   width: 100%;
 
   display: flex;
