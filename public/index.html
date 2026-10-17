@@ -18,6 +18,7 @@
   <header class="header">
    <img src="./img/constelaLogo-sm.png" width="160" height="24"></i>
   <nav  class="topbar" aria-label="Navegación del mapa">
+    <section class="menu">
       <button id="homeBtn" type="button" class="topbar_btn">
         <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
           <path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>
@@ -38,6 +39,8 @@
         <span class="topbar_label">Cronológico</span>
       </button>
     </div>
+    </section>
+    <div id="topbarChips" class="topbar_chips" aria-label="Filtros activos" hidden></div>
     <button id="sidebarOpen" type="button" class="topbar_btn" aria-controls="sidebar" aria-expanded="false">
       <svg class="topbar_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
         <circle cx="10.5" cy="10.5" r="6.5"/>
@@ -132,35 +135,19 @@
         <div id="networkInsights" class="sidebar_radio-grid"></div>
       </div>
     </details>
+      
     <section class="sidebar_about" aria-label="Acerca del proyecto">
       <p id="aboutText" class="sidebar_about-text"></p>
 
-      <h3 class="sidebar_about-group">Guía rápida del mapa</h3>
-
-      <div class="sidebar_about-block">
-        <h4 class="sidebar_about-heading">UMAP</h4>
-        <p class="sidebar_about-text">Ubica los discos según su afinidad estilística, a partir de géneros y descriptores. No considera artistas ni años. Los puntos cercanos representan similitudes estilísticas.</p>
-      </div>
-
-      <div class="sidebar_about-block">
-        <h4 class="sidebar_about-heading">Modo cronológico</h4>
-        <p class="sidebar_about-text">Reemplaza la altura por el año de publicación, conservando parcialmente la estructura original del mapa.</p>
-      </div>
-
-      <div class="sidebar_about-block">
-        <h4 class="sidebar_about-heading">Colores</h4>
-        <p class="sidebar_about-text">Identifican familias musicales según el género primario de cada disco.</p>
-      </div>
+      <h3 class="sidebar_about-group">Guía rápida</h3>
 
       <div class="sidebar_about-block">
         <h4 class="sidebar_about-heading">Relaciones</h4>
         <dl class="sidebar_about-list">
-          <dt>Ancestro</dt>
-          <dd>Disco cercano, de otro artista, anterior o contemporáneo.</dd>
+          <dt>Ancestros</dt>
+          <dd>Discos cercanos de otros artistas, anteriores o contemporáneos.</dd>
           <dt>Descendientes</dt>
           <dd>Los tres discos posteriores más cercanos, de artistas distintos.</dd>
-          <dt>Cadena</dt>
-          <dd>Conecta cronológicamente la discografía de cada artista.</dd>
         </dl>
       </div>
 
@@ -168,29 +155,32 @@
         <h4 class="sidebar_about-heading">Hallazgos</h4>
         <dl class="sidebar_about-list">
           <dt>Hubs</dt>
-          <dd>Discos con más conexiones.</dd>
+          <dd>Discos por los que pasan más cantidad de conexiones.</dd>
           <dt>Puentes</dt>
-          <dd>Discos que conectan distintas zonas del grafo.</dd>
-          <dt>Fuera de serie</dt>
-          <dd>Discos estilísticamente más alejados de sus vecinos.</dd>
-          <dt>Convergentes</dt>
-          <dd>Discos asociados a obras de géneros diversos.</dd>
-          <dt>Divergentes</dt>
-          <dd>Discos cuyos descendientes abarcan géneros diversos.</dd>
+          <dd>Discos  que conectan distintas regiones musicales.</dd>
+          <dt>Fueras de serie</dt>
+          <dd>Discos distantes de la constelación a la pertenecen.</dd>
         </dl>
       </div>
+
       <div class="sidebar_about-block">
-        <h4 class="sidebar_about-heading">Datos y metodología</h4>
+        <h4 class="sidebar_about-heading">Exploración</h4>
+        <p class="sidebar_about-text">Combiná géneros y descriptores para descubrir afinidades, transiciones musicales y relaciones con el contexto sociocultural.</p>
+      </div>
+
+      <div class="sidebar_about-block">
+        <h4 class="sidebar_about-heading">Datos</h4>
         <dl class="sidebar_about-list">
           <dt>Fuente</dt>
           <dd>Rate Your Music (RYM).</dd>
-          <dt>Obtención</dt>
-          <dd>Procesamiento asistido por IA del HTML de las páginas de álbumes.</dd>
-          <dt>Estructuración</dt>
-          <dd>Esquema predefinido y generación de registros JSON mediante Claude.</dd>
+          <dt>Procesamiento</dt>
+          <dd>1. Modelado del objeto 'album' con propiedades para géneros y descriptores</dd>
+          <dd>2. Suministro de HTML a Anthropic Claude para extracción de datos</dd>
+          <dd>3. Estructuración de la información en formato JSON mediante Anthropic Claude</dd>
         </dl>
       </div>
     </section>
+
   </aside>
   <script src="./bundle.js" type="module"></script>
 </body>

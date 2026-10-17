@@ -104,10 +104,7 @@ function applyPresetYears(years) {
 }
 
 const ONBOARDING_LOADING_TEXT =
-  "Una constelación que representa la evolución del rock y la música nacional a través de la interrelación de sus discos.";
-
-const ONBOARDING_ABOUT_TEXT =
-  "Una constelación que representa la evolución del rock y la música nacional a través de sus discos: cada punto es un álbum, cada cercanía una afinidad de género, cada línea una historia de influencias.";
+  "Una representación visual del rock nacional que permite recorrer su evolución, descubrir patrones y revelar relaciones a partir de la afinidad entre discos, visibilizando a su vez, la correspondencia entre eventos socio-culturales y escenas musicales.";
 
 const OB_SEARCH_ICON_SVG =
   '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>';
@@ -118,17 +115,12 @@ const ONBOARDING_SECTIONS = [
 ];
 
 const ONBOARDING_PRESETS = [
-  {
-    title: "No soy un extraño",
-    subtitle: "La resistencia y la protesta antes, durante y después de la dictadura",
-    section: "hallazgos",
-    apply: () => applyDescriptorsPreset(['protest', 'political'], { timeMode: true, years: [1971, 1986] })
-  },
+
   {
     title: "Raros peinados nuevos",
-    subtitle: "Excéntricos, estéticos y melódicos con sintetizadores de los 80's",
+    subtitle: "Destape estético y exentricidad en la post-dictadura de los 80's.",
     section: "hallazgos",
-    apply: () => applyGenreGroupPreset(['New Wave', 'Pop'], { timeMode: true, years: [1983, 1989] })
+    apply: () => applyDescriptorsPreset(['sexual'], { timeMode: true, years: [1983, 1989] })
   },
   {
     title: "No tan distintos",
@@ -139,18 +131,18 @@ const ONBOARDING_PRESETS = [
       { timeMode: false }
     )
   },
-  // {
-  //   title: "Artistas post-bandas",
-  //   subtitle: "Algunos siguen la misma línea, otros van hacia nuevos rumbos. ",    
-  //   section: "hallazgos",
-  //   apply: () => applyArtistsPreset(
-  //     ['Soda Stereo', 'Gustavo Cerati', 'Los Fabulosos Cadillacs', 'Vicentico', 'Patricio Rey y Sus Redonditos de Ricota', 'Indio y Los Fundamentalistas del Aire Acondicionado'],
-  //     { timeMode: true }
-  //   )
-  // },
+    {
+    title: "Gracias totales",
+    subtitle: "Trayectoria de artistas luego de dejar sus bandas de orígen.",    
+    section: "hallazgos",
+    apply: () => applyArtistsPreset(
+      ['V8', 'Hermética', 'Almafuerte', 'Ricardo Iorio',],
+      { timeMode: true }
+    )
+  },
   {
     title: "Fueras de sektor",
-    subtitle: "Discos más distantes a a los vecindarios a los que pertenecen.",
+    subtitle: "Discos más distantes a las constelaciones a las que pertenecen.",
     section: "explorar",
     apply: () => applyInsightPreset('outliers')
   },
@@ -918,7 +910,7 @@ function buildExpandToggle(section) {
 
 function buildHoverPanelHTML(i) {
   const a = points[i];
-  const mainGenre = a.genres.primary[0] ?? "";
+  const mainGenre = genreLabel(a.genres.primary[0] ?? "");
   return `
     <div style="display:flex;gap:10px;align-items:flex-start;">
       ${coverThumbHTML(a, 72)}
@@ -1405,19 +1397,48 @@ function easeInOutCubic(t) {
   return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3) / 2;
 }
 
-// TRADUCTOR
 const GENRE_ES = {
   "singer-songwriter": "Cantautor",
   "christian rock": "Música religiosa",
+  "progressive rock": "Rock progresivo",
+  "progressive pop": "Pop progresivo",
+  "progressive folk": "Folk progresivo",
+  "contemporary folk": "Folk contemporáneo",
+  "alternative metal": "Metal alternativo",
+  "neoclassical metal": "Metal neoclásico",
+  "alternative rock": "Rock alternativo",
+  "industrial rock": "Rock industrial",
+  "spacial rock": "Rock espacial",
+  "experimental rock": "Rock experimental",
+  "comedy rock": "Rock comedia",
+  "garage rock": "Rock de garage",
+  "garage rock revival": "Rock revival",
+  "big music": "Rock de estadio",
   "adult contemporary": "Contemporánea",
-  "acoustic blues": "Acústico",
+  "acoustic rock": "Rock acústico",
+  "acoustic blues": "Blues acústico",
   "contemporary R&B": "R&B",
   "children's music": "Música infantil",
   "classical music": "Música clásica",
   "musical parody": "Parodia musical",
   "musical theatre and entertainment": "Música teatral",
   "television music": "Música televisiva",
-  "spoken word": "Performance poética"
+  "spoken word": "Performance poética",
+  "symphonic prog": "Sinfónico progresivo",
+  "symphonic rock": "Rock sinfónico",
+  "neoclassical new age": "New age neoclásico",
+  "Experimental hip hop": "Hip hop experimental",
+  "baroque pop": "Pop barroco",
+  "latin alternative": "Rock alternativo latino",
+  "latin rock": "Rock latino",
+  "Hispanic American Folk Music": "Folk hispanoamericano",
+  "Hispanic American Music": "Música hispanoamericana",
+  "Indigenous Andean Music": "Música indígnea",
+  "andean new age": "New Age Andino",
+  "film soundtrack": "banda sonora",
+  "psychedelic rock": "Rock psicodélico",
+  "psychedelic pop": "Pop psicodélico",
+  "psychedelic folk": "Folk psicodélico",
 };
 
 const genreLabel = g => GENRE_ES[g.toLowerCase()] ?? g;
@@ -1446,7 +1467,7 @@ const DESCRIPTOR_ES = {
   "anarchism": "anarquismo",
   "androgynous vocals": "andrógina",
   "angry": "enojada",
-  "angular": "angular",
+  "angular": "tenso",
   "animals": "animales",
   "anthemic": "himnaria",
   "anti-authoritarian": "antiautoritaria",
@@ -1651,7 +1672,7 @@ const DESCRIPTOR_ES = {
   "socialism": "socialismo",
   "soft": "suave",
   "sombre": "sombría",
-  "soothing": "calmante",
+  "soothing": "relajante",
   "space": "espacio",
   "sparse": "despojada",
   "spiritual": "espiritual",
@@ -1673,7 +1694,7 @@ const DESCRIPTOR_ES = {
   "tropical": "tropical",
   "twinkling": "centelleante",
   "uncommon time signatures": "compases inusuales",
-  "uplifting": "edificante",
+  "uplifting": "inspiradora",
   "urban": "urbana",
   "violence": "violencia",
   "vocal group": "grupo vocal",
@@ -2611,8 +2632,8 @@ function computeGenreLabelData() {
   return data;
 }
 function createGenreLabels() {
-  computeGenreLabelData().forEach(d => {
-    const sprite = makeGenreLabelSprite(d.genre, colorForGroupLabel(d.genre));
+    computeGenreLabelData().forEach(d => {
+    const sprite = makeGenreLabelSprite(genreLabel(d.genre), colorForGroupLabel(d.genre));
     sprite.position.copy(d.position);
     sprite.material.opacity = 0;
     labelGroup.add(sprite);
@@ -3113,8 +3134,8 @@ function renderGenreLegend() {
  
     const label = document.createElement("span");
     label.className = "sidebar_tree-label";
-    label.textContent = group;
- 
+    label.textContent = genreLabel(group);
+
     selectArea.appendChild(groupBox);
     selectArea.appendChild(swatch);
     selectArea.appendChild(label);
@@ -3380,8 +3401,7 @@ function pruneInvalidSelections() {
 }
 
 function syncResetButton() {
-  ui.filtersClear.style.display =
-  (hasActiveFilters() || networkInsightMode !== null) ? "inline-block" : "none";
+  ui.filtersClear.hidden = !(hasActiveFilters() || networkInsightMode !== null);
 }
 
 ui.filtersClear.addEventListener("click", () => {
@@ -3421,8 +3441,6 @@ function refreshFilterOptions() {
     yearTo
   );
 
-  ui.filtersClear.style.display = hasActiveFilters() ? "inline-block" : "none";
-
   applyFilters();
   updateGenreTreeVisibility();
   updateGenreLegendActiveState();
@@ -3437,8 +3455,6 @@ ui.filterYearTo.addEventListener("change", e => {
   activeFilters.yearTo = e.target.value ? Number(e.target.value) : null;
   refreshFilterOptions();
 });
-
-ui.filtersClear.addEventListener("click", () => resetAllFilters());
 
 function renderList() {
   const toRender = filteredIndices === null ? points : points.filter(p => filteredIndices.has(p.idx));
@@ -4502,8 +4518,8 @@ function buildGenreStatRow(entry, color) {
  
   const label = document.createElement("span");
   label.style.cssText = "flex:0 0 auto;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;";
-  label.textContent = entry.genre;
- 
+  label.textContent = genreLabel(entry.genre);
+
   const barWrap = document.createElement("div");
   barWrap.style.cssText = "flex:1 1 auto;background:#eee;border-radius:3px;height:8px;overflow:hidden;";
  
@@ -4908,11 +4924,41 @@ function buildEventsByYear(events) {
 const homeBtn = document.getElementById("homeBtn");
 const modeBtns = document.querySelectorAll(".topbar_switch [data-mode]");
 
-function closeSidebar({ restoreFocus = false } = {}) {
-  body.classList.add("is-closed");
-  sidebarEl.setAttribute("aria-hidden", "true");
-  syncFilterBtn();
-  if (restoreFocus) sidebarOpenBtn.focus();
+function initTopbarChips() {
+  const mirror = document.querySelector("#topbarChips");
+  const sources = ["#selectedChips", "#descriptorChips"]
+    .map(s => document.querySelector(s))
+    .filter(Boolean);
+  if (!mirror || !sources.length) return;
+
+  function sync() {
+    mirror.textContent = "";
+
+    sources.forEach(src => {
+      [...src.children].forEach(chip => {
+        const clone = chip.cloneNode(true);
+        const originals = chip.querySelectorAll("button");
+
+        // Cada botón del clon dispara su botón original
+        clone.querySelectorAll("button").forEach((btn, k) => {
+          btn.addEventListener("click", e => {
+            e.stopPropagation();
+            originals[k]?.click();
+          });
+        });
+
+        mirror.appendChild(clone);
+      });
+    });
+
+    mirror.hidden = mirror.children.length === 0;
+  }
+
+  const observer = new MutationObserver(sync);
+  sources.forEach(src =>
+    observer.observe(src, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden"] })
+  );
+  sync();
 }
 
 function syncModeButtons(mode) {
@@ -4976,6 +5022,7 @@ function isSidebarOpen() {
 
 function isAboutVisible() {
   return isSidebarOpen() && sidebarPanelEl.dataset.view === "about";
+  ui.filtersClear
 }
 
 function syncSidebarButtons() {
@@ -4992,7 +5039,7 @@ function toggleAboutPanel() {
 
 function initSidebar() {
   const text = document.querySelector("#aboutText");
-  if (text) text.textContent = ONBOARDING_ABOUT_TEXT;
+  if (text) text.textContent = ONBOARDING_LOADING_TEXT;
 
   aboutFabEl?.addEventListener("click", toggleAboutPanel);
 
@@ -5009,17 +5056,17 @@ function initSidebar() {
     setSidebarOpen(false);
   });
 
-  // NUEVO: reemplaza al Escape del bloque viejo
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && isSidebarOpen()) setSidebarOpen(false);
   });
-
+  
   if (sidebarPanelEl) {
     new MutationObserver(syncSidebarButtons).observe(sidebarPanelEl, {
       attributes: true,
       attributeFilter: ["class", "data-view"]
     });
   }
+  initTopbarChips();
   syncSidebarButtons();
 }
   

@@ -1,15 +1,3 @@
-/* ==========================================================================
-   ConstelaRock
-   1. Fuentes y variables
-   2. Base y tipografía
-   3. Componentes globales (título, tooltip, status, búsqueda, lista)
-   4. Onboarding
-   5. Topbar
-   6. Sidebar
-   7. Utilidades y estados
-   8. Responsive
-   ========================================================================== */
-
 * {
   box-sizing: border-box;
 }
@@ -142,7 +130,6 @@ button:hover {
   background: none;
 }
 
-/* Fuente display: va después de la regla base de button para ganarle */
 h1, h2, h3,
 .ob-loading-label,
 .sidebar_accordion-header,
@@ -151,9 +138,6 @@ h1, h2, h3,
   font-family: var(--font-display);
   font-weight: bolder;
 }
-
-
-/* ---------- 3. Componentes globales ---------- */
 
 /* Topbar */
 body:not(.is-onboarding) .header {
@@ -164,22 +148,65 @@ body:not(.is-onboarding) .header {
   flex-direction: row;
   justify-content: space-between;
   padding: 12px var(--global-padding);
-  height: 56px;
+  height: fit-content;
   width: 100%;
   background-color: rgba(20, 20, 20, 0.75);
   font-family: var(--font-sans);
   align-items: center;
+  gap: var(--global-gap);
+  z-index: 21;
 }
 
 body.is-onboarding .header {
   display: none!important;
 }
 
+section.menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: var(--global-gap);
+  width: fit-content;
+}
+
 .topbar {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
   gap: var(--global-gap);
 }
+
+.topbar_chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  align-items: center;
+  gap: var(--contextual-gap);
+  width: 100%;
+}
+
+.topbar_chips::-webkit-scrollbar { display: none; }
+.topbar_chips button {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.topbar_chips .sidebar_chips {
+  flex-shrink: 0;
+  padding: 4px 8px;
+  font-size: 11px;
+  background: var(--topbar-bg);
+}
+
+/* La regla [hidden] de la sección 7 solo cubre el sidebar */
+.topbar_chips[hidden] { display: none !important; }
+
 
 /* Tooltip */
 .tooltip {
@@ -404,7 +431,7 @@ footer.footer > * {
   padding: 0!important;
 }
 
-.about-fab:hover {
+.about_fab:hover {
   color: var(--blue-3);
 }
 
@@ -552,8 +579,8 @@ footer.footer > * {
 }
 
 .ob-loading-text {
-  margin: 0 0 28px;
-  max-width: 280px;
+  margin: 0 0 36px;
+  width: 380px;
   color: var(--ob-white);
   font-size: 14px;
   line-height: 1.4;
@@ -883,6 +910,7 @@ footer.footer > * {
   align-items: center;
   gap: var(--contextual-gap);
   height: min-content;
+  width: min-content;
   margin: 0;
   padding: 0;
   border: 0;
@@ -1550,7 +1578,7 @@ footer.footer > * {
 
 /* ---------- 8. Responsive ---------- */
 
-@media (max-width: 980px) {
+@media (max-width: 680px) {
 
   .header {
     padding: 12px 1rem;
@@ -1593,6 +1621,8 @@ footer.footer > * {
   .topbar_btn > span {
     display: none!important;
   }
+
+  .topbar_chips { display: none !important; }
 
   .ob-presets { gap: 32px; }
   .ob-preset-subtitle { display: none; }
