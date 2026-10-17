@@ -2069,6 +2069,71 @@
     "descriptors": []
   },
   {
+    "id": "azeroth",
+    "album": "Azeroth",
+    "artist": "Azeroth",
+    "year": 2000,
+    "genres": {
+      "primary": ["Power Metal"],
+      "secondary": []
+    },
+    "url": "https://cdn.sonemic.net/i/75/s/6837ae2947035cf810ec5c65279724b6/12244546",
+    "descriptors": [
+      "energetic",
+      "anthemic",
+      "melodic",
+      "epic"
+    ]
+  },
+  {
+    "id": "ii",
+    "album": "II",
+    "artist": "Azeroth",
+    "year": 2008,
+    "genres": {
+      "primary": ["Power Metal"],
+      "secondary": []
+    },
+    "url": "https://cdn.sonemic.net/i/75/s/7fab3eb1dbcb2a8eeb1967bd4ed13fca/2343694",
+    "descriptors": []
+  },
+  {
+    "id": "historias-y-leyendas",
+    "album": "Historias y leyendas",
+    "artist": "Azeroth",
+    "year": 2010,
+    "genres": {
+      "primary": ["Power Metal"],
+      "secondary": ["Symphonic Metal", "Progressive Metal"]
+    },
+    "url": "https://cdn.sonemic.net/i/75/s/74b1416ff4adef90d7865b7c9b3b46aa/3576123",
+    "descriptors": []
+  },
+  {
+    "id": "mas-alla-del-caos",
+    "album": "Más allá del caos",
+    "artist": "Azeroth",
+    "year": 2018,
+    "genres": {
+      "primary": ["Power Metal"],
+      "secondary": ["Heavy Metal"]
+    },
+    "url": "https://cdn.sonemic.net/i/75/s/0f24dab283d4f2987e246f40928627e3/6985689",
+    "descriptors": []
+  },
+  {
+    "id": "senderos-del-destino",
+    "album": "Senderos del destino",
+    "artist": "Azeroth",
+    "year": 2022,
+    "genres": {
+      "primary": ["Power Metal"],
+      "secondary": []
+    },
+    "url": "https://cdn.sonemic.net/i/75/s/7b4cd8565f1caf3aac02cb6a113be2ec/10343502",
+    "descriptors": []
+  },
+  {
     "id": "utopia",
     "album": "Utopía",
     "artist": "Lörihen",
@@ -2098,7 +2163,7 @@
     "artist": "Lörihen",
     "year": 2015,
     "genres": {
-      "primary": [],
+      "primary": ["Heavy Metal", "Power Metal"],
       "secondary": []
     },
     "cover": "https://cdn.sonemic.net/i/150/w/f190acfc8f4292289920c5c87ecf1a1c/5801463",
@@ -3349,7 +3414,7 @@
         "Oi!"
       ]
     },
-    "cover": "https://cdn.sonemic.net/i/150/w/d7bc5b7fa64ff0b269b5ff244fa7549a/14033458",
+    "cover": "https://cdn.sonemic.net/i/75/s/75a5561393c82a5f19a310ef9624bf2d/12190036",
     "descriptors": [
       "alcohol",
       "urban",
@@ -28624,7 +28689,7 @@
   {
     "id": "nebbias-band",
     "album": "Nebbia's Band",
-    "artist": "Nebbia's Band",
+    "artist": "Litto Nebbia",
     "year": 1971,
     "genres": {
       "primary": [
@@ -30386,7 +30451,7 @@
   {
     "id": "cachuso-rantifuso",
     "album": "Cachuso Rantifuso",
-    "artist": "Piero, Marilina Ross & Juan Carlos Baglietto",
+    "artist": "Piero",
     "year": 1991,
     "genres": {
       "primary": [
