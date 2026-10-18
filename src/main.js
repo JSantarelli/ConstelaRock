@@ -104,7 +104,7 @@ function applyPresetYears(years) {
 }
 
 const ONBOARDING_LOADING_TEXT =
-  "Una representación visual del rock nacional que permite recorrer su evolución, descubrir patrones y revelar relaciones a partir de la afinidad entre discos, visibilizando a su vez, la correspondencia entre eventos socio-culturales y escenas musicales.";
+  "Una representación visual del rock nacional que permite recorrer su evolución, descubrir patrones y revelar relaciones a partir de la afinidad entre discos.";
 
 const OB_SEARCH_ICON_SVG =
   '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>';
@@ -159,7 +159,7 @@ const ONBOARDING_PRESETS = [
     apply: () => applyInsightPreset('bridges')
   },
   {
-    title: "Tu influencia",
+    title: "Bajo tu influencia",
     subtitle: "Discos ancestros de una gran cantidad de obras de otros artistas.",
     section: "explorar",
     apply: () => applyInsightPreset('convergence')
@@ -898,7 +898,7 @@ function buildNavChevrons(a) {
 function buildExpandToggle(section) {
   const btn = document.createElement("button");
   btn.textContent = tooltipExpanded ? "Saber menos" : "Saber más";
-  btn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:12px;text-transform:uppercase;cursor:pointer;padding:8px 6px;width:fit-content;line-height:1; ";
+  btn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:bolder;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
   btn.addEventListener("click", e => {
     e.stopPropagation();
     tooltipExpanded = !tooltipExpanded;
@@ -986,7 +986,25 @@ function renderDetailPanel(i, x, y) {
     selectArtistLine(a.artist);
   });
   artistLine.appendChild(artistName);
-  artistLine.appendChild(document.createTextNode(` · ${a.year}`));
+  artistLine.appendChild(artistName);
+  artistLine.appendChild(document.createTextNode(" · "));
+
+  const yearLink = document.createElement("span");
+  yearLink.textContent = a.year;
+  yearLink.style.cursor = "pointer";
+  yearLink.style.textDecoration = "underline";
+  yearLink.setAttribute("role", "link");
+  yearLink.setAttribute("aria-label", `Ver el año ${a.year} en modo cronológico`);
+  yearLink.addEventListener("click", e => {
+    e.stopPropagation();
+    resetNetworkInsightMode();
+    if (!timeMode) setTimeMode(true);
+    setYearSelection(new Set([a.year]), { keepFilters: true, focus: true });
+  });
+  artistLine.appendChild(yearLink);
+
+  yearLink.addEventListener("mouseenter", () => { yearLink.style.color = "#56CCF2"; });
+  yearLink.addEventListener("mouseleave", () => { yearLink.style.color = ""; });
 
   const genresDiv = document.createElement("div");
   genresDiv.className = "genres";
@@ -1020,6 +1038,14 @@ function renderDetailPanel(i, x, y) {
   const extendedSection = document.createElement("div");
   extendedSection.style.display = tooltipExpanded ? "block" : "none";
   extendedSection.appendChild(buildAncestorDescendantSection(i));
+  const nearest = computeNearestAlbum(i);
+  if (nearest) {
+    const t = document.createElement("div");
+    t.textContent = "Disco más cercano";
+    t.style.cssText = SECTION_TITLE_STYLE;
+    ui.tooltip.appendChild(t);
+    ui.tooltip.appendChild(buildNearestRow(nearest, { showYear: true }));
+  }
   ui.tooltip.appendChild(buildExpandToggle(extendedSection));
   ui.tooltip.appendChild(extendedSection);
 
@@ -1236,7 +1262,7 @@ const WEIGHTS = {
 
 const MODEL_CONFIG = {
   descriptorWeight: 0.37,
-  nNeighbors: 4.5,
+  nNeighbors: 4.49,
   minDist: 0.65
 };
 
@@ -4428,6 +4454,19 @@ function hideTooltip() {
   ui.tooltip.style.display = "none";
 }
 
+function computeNearestAlbum(idx) {
+  const origin = points[idx];
+  let best = null;
+  let bestDist = Infinity;
+
+  for (const p of points) {
+    if (p.idx === idx) continue;
+    const d = p.umapVec.distanceToSquared(origin.umapVec);
+    if (d < bestDist) { bestDist = d; best = p; }
+  }
+  return best;
+}
+
 function buildNearestRow(p, opts = {}) {
   const { showYear = false } = opts;
   const row = document.createElement("div");
@@ -4657,7 +4696,7 @@ const CLOSE_BTN_STYLE =
   "position:absolute;top:12px;right:12px;border:none;background:none;font-size:24px;line-height:1;cursor:pointer;color:white;width:min-content;padding:0;";
 
 const TOGGLE_BTN_STYLE =
-  "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:12px;text-transform:uppercase;cursor:pointer;padding:8px 6px;width:fit-content;line-height:1;";
+  "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:bolder;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
 
 
 function renderYearStatsPanelInto(el, years) {
@@ -4720,7 +4759,7 @@ function renderYearStatsPanelInto(el, years) {
     const showLabel = `Ver álbumes (${stats.albums.length})`;
     const showBtn = document.createElement("button");
     showBtn.textContent = showLabel;
-    showBtn.style.cssText = TOGGLE_BTN_STYLE;
+    showBtn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:bolder;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
     showBtn.addEventListener("click", e => {
       e.stopPropagation();
       const showing = albumsSection.style.display !== "none";
@@ -5022,7 +5061,6 @@ function isSidebarOpen() {
 
 function isAboutVisible() {
   return isSidebarOpen() && sidebarPanelEl.dataset.view === "about";
-  ui.filtersClear
 }
 
 function syncSidebarButtons() {

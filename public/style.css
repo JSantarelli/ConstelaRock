@@ -199,9 +199,15 @@ section.menu {
 
 .topbar_chips .sidebar_chips {
   flex-shrink: 0;
-  padding: 4px 8px;
-  font-size: 11px;
+  padding: 2px 6px;
+  font-size: 10px;
   background: var(--topbar-bg);
+  gap: 8px;
+}
+
+.topbar_chips .sidebar_dot--lg {
+  width: 10px;
+  height: 10px;
 }
 
 /* La regla [hidden] de la sección 7 solo cubre el sidebar */
@@ -962,7 +968,6 @@ footer.footer > * {
   transition: margin-right 0.25s ease, visibility 0s linear 0.25s;
 }
 
-/* Reset de botones dentro del sidebar (por eso no se repite border/background/cursor) */
 :where(.sidebar) button {
   width: auto;
   margin: 0;
