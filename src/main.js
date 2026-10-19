@@ -136,7 +136,7 @@ const ONBOARDING_PRESETS = [
     subtitle: "Trayectoria de artistas luego de dejar sus bandas de orígen.",    
     section: "hallazgos",
     apply: () => applyArtistsPreset(
-      ['V8', 'Hermética', 'Almafuerte', 'Ricardo Iorio',],
+      ['Rata Blanca', 'Barilari','Soda Stereo', 'Gustavo Cerati'],
       { timeMode: true }
     )
   },
@@ -146,12 +146,6 @@ const ONBOARDING_PRESETS = [
     section: "explorar",
     apply: () => applyInsightPreset('outliers')
   },
-  // {
-  //   title: "Sistema nervioso central",
-  //   subtitle: "Discos por los cuales pasa la mayor cantidad de conexiones.",
-  //   section: "explorar",
-  //   apply: () => applyInsightPreset('hubs')
-  // },
   {
     title: "Adorables puentes",
     subtitle: "Discos que conectan géneros, sin los cuales estos serían islas.",
@@ -2373,7 +2367,7 @@ function makeYearSprite(text) {
   canvas.width = 256;
   canvas.height = 96;
   const ctx = canvas.getContext("2d");
-  ctx.font = `600 ${YEAR_LABEL_FONT_PX}px 'Bitcount Single'`;
+  ctx.font = `500 ${YEAR_LABEL_FONT_PX}px 'Bitcount Single'`;
   ctx.fillStyle = "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";

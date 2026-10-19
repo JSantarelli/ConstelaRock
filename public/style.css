@@ -203,12 +203,15 @@ section.menu {
 .tooltip {
   position: fixed;
   z-index: 20;
-  min-width: min-content;
-  max-width: 300px;
+  width: max-content;
+  min-width: 0;
+  max-width: min(320px, calc(100vw - 32px));
   padding: 12px;
   background: rgba(0, 0, 0, 0.75);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
   transform: scale(0.9);
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 .tooltip > div button:nth-last-of-type(1):hover {
@@ -228,6 +231,9 @@ section.menu {
   font-size: 12px;
   margin-top: 4px;
   color: var(--secondary);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  width: fit-content;
 }
 
 .tooltip .genres {
@@ -244,11 +250,17 @@ section.menu {
 .tooltip .primary {
   font-weight: 400;
   color: var(--gray-6);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  width: fit-content;
 }
 
 .tooltip .secondary {
   font-weight: 400;
   color: var(--gray-4);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  width: fit-content;
 }
 
 .panel-scroll {
@@ -572,7 +584,7 @@ footer.footer > * {
 
 .ob-loading-text {
   margin: 0 0 36px;
-  width: 380px;
+  max-width: min(380px, calc(100vw - 32px));
   color: var(--ob-white);
   font-size: 14px;
   line-height: 1.4;
@@ -716,18 +728,17 @@ footer.footer > * {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 12px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .ob-card {
   box-sizing: border-box;
-  /* min-height: 112px; */
   height: 100%;
   width: 100%;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   gap: 6px;
   padding: 12px;
 
@@ -1574,12 +1585,17 @@ footer.footer > * {
 
 @media (max-width: 680px) {
 
-  .header {
-    padding: 12px 1rem;
+  body:not(.is-onboarding) .header {
+    padding: 12px 1rem!important;
   }
 
-  .footer {
-    padding: 0 1rem;
+  footer.footer {
+    padding: 0 1rem!important;
+  }
+
+  .ob-frame .ob-box {
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
   }
 
   .sidebar {
