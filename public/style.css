@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-/* ---------- 1. Fuentes y variables ---------- */
 @font-face {
   font-family: "Oxanium";
   src: url("./fonts/Oxanium-VariableFont_wght.ttf") format("truetype");
@@ -20,7 +19,7 @@
 }
 
 :root {
-  /* Onboarding */
+
   --ob-gray: #2d2d2d;
   --ob-white: #ffffff;
   --ob-muted: rgba(255, 255, 255, 0.6);
@@ -28,33 +27,23 @@
   --ob-hover: rgba(255, 255, 255, 0.1);
   --ob-accent: white;
    --footer-height: 56px;
-
-  /* Acentos */
   --primary: #B37BE7;
   --secondary: #56CCF2;
   --tertiary: #F2C94C;
-
-  /* Grises */
   --gray-3: #828282;
   --gray-4: #bdbdbd;
   --gray-5: #e0e0e0;
   --gray-6: #f2f2f2;
-
-  /* Azules */
   --blue-2: #2d9cdb;
   --blue-3: #56ccf2;
   --blue-deep: #2e6db4;
   --blue-ice: #cbd9e6;
-
-  /* Base */
   --color-black: #000;
   --color-white: #fff;
   --color-text-dark: #111;
   --color-divider: #c4c4c4;
   --panel-bg: rgb(48, 48, 48);
   --topbar-bg: rgba(24, 24, 24, 0.92);
-
-  /* Layout y tipografía */
   --global-padding: 2rem;
   --sidebar-width: 380px;
   --global-gap: 24px;
@@ -63,12 +52,11 @@
   --font-sans: "Oxanium", sans-serif;
   --font-display: 'Bitcount Single', sans-serif;
 
-  /* Íconos reutilizados (checkbox y radio) */
+
   --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='1.5 5 4.5 8 10.5 2'/%3E%3C/svg%3E");
   --icon-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Cline x1='2.5' y1='5' x2='9.5' y2='5'/%3E%3C/svg%3E");
 }
 
-/* ---------- 2. Base y tipografía ---------- */
 
 html,
 body {
@@ -124,7 +112,6 @@ h1, h2, h3,
   font-weight: 400;
 }
 
-/* Topbar */
 body:not(.is-onboarding) .header {
   position: relative;
   top: 0;
@@ -195,11 +182,9 @@ section.menu {
   height: 10px;
 }
 
-/* La regla [hidden] de la sección 7 solo cubre el sidebar */
 .topbar_chips[hidden] { display: none !important; }
 
 
-/* Tooltip */
 .tooltip {
   position: fixed;
   z-index: 20;
@@ -278,7 +263,6 @@ section.menu {
   border-radius: 3px;
 }
 
-/* Status */
 .status {
   position: fixed;
   left: 32px;
@@ -289,7 +273,6 @@ section.menu {
   opacity: 0.45;
 }
 
-/* Typeahead del sidebar */
 .search-results {
   display: none;
   position: absolute;
@@ -333,7 +316,6 @@ section.menu {
   flex-shrink: 0;
 }
 
-/* Lista de álbumes */
 .album {
   display: grid;
   grid-template-columns: 40px 1fr;
@@ -449,7 +431,6 @@ footer.footer > * {
   font: italic 600 11px/1 serif;
 }
 
-/* FAB */
 .about-fab-title {
     font: 500 12px/1 var(--font-sans);
     line-height: 1;
@@ -471,8 +452,6 @@ footer.footer > * {
   color: var(--secondary)!important;
   font-weight: 400!important;
 }
-
-/* ---------- 4. Onboarding ---------- */
 
 #onboardingOverlay {
   position: relative;
@@ -498,7 +477,7 @@ footer.footer > * {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100vh;
@@ -507,13 +486,11 @@ footer.footer > * {
   padding-bottom: calc(var(--global-padding) + var(--footer-height));
   padding-left: 2rem;
   padding-right: 2rem;
-  gap: 3rem;
 }
 
 .ob-box.artist {
   padding: 4rem 12vw;
   align-items: flex-start;
-  gap: 2rem;
 }
 
 .ob-frame-overlay {
@@ -538,11 +515,10 @@ footer.footer > * {
 }
 
 .ob-hero {
-  margin-top: 4rem;
+  margin-top: 2rem;
   text-align: center;
 }
 
-/* Carga */
 .ob-loading {
   display: none;
   flex-direction: column;
@@ -611,7 +587,6 @@ footer.footer > * {
   letter-spacing: 0.1em;
 }
 
-/* Búsqueda */
 .ob-search-block {
   width: 100%;
   text-align: center;
@@ -778,7 +753,6 @@ footer.footer > * {
   font-weight: 400;
 }
 
-/* Footer */
 .ob-footer {
   display: flex;
   flex-direction: column;
@@ -807,7 +781,6 @@ footer.footer > * {
   color: var(--ob-white);
 }
 
-/* Ficha de artista (paso 2) */
 .ob-box-header {
   width: 100%;
 }
@@ -830,7 +803,6 @@ footer.footer > * {
   color: white;
 }
 
-/* Botones "texto" del onboarding */
 .ob-chrome-btn,
 .ob-btn--link {
   width: fit-content;
@@ -895,7 +867,6 @@ footer.footer > * {
   color: var(--secondary);
 }
 
-/* ---------- 5. Topbar ---------- */
 
 .topbar,
 .topbar_switch {
@@ -939,9 +910,7 @@ footer.footer > * {
   flex: none;
 }
 
-/* ---------- 6. Sidebar ---------- */
 
-/* Contenedor */
 .sidebar {
   position: relative;
   flex: 0 0 auto;
@@ -977,7 +946,6 @@ footer.footer > * {
   cursor: pointer;
 }
 
-/* Vista "Acerca del proyecto" */
 .sidebar_title--about {
   display: none;
 }
@@ -989,7 +957,6 @@ footer.footer > * {
   gap: 0;
 }
 
-/* Texto base de la guía */
 .sidebar_about-text,
 .sidebar_about-list dd {
   margin: 0;
@@ -998,7 +965,6 @@ footer.footer > * {
   line-height: 1.5;
 }
 
-/* Intro (hijo directo): un poco más grande */
 .sidebar_about > .sidebar_about-text {
   font-size: 14px;
 }
@@ -1032,7 +998,6 @@ footer.footer > * {
 .sidebar_about .sidebar_btn { margin-top: 24px; }
 
 
-/* Cabezal */
 .sidebar_header {
   position: sticky;
   top: 0;
@@ -1089,7 +1054,6 @@ footer.footer > * {
   font-size: 12px;
 }
 
-/* Vista "Acerca del proyecto" */
 .sidebar[data-view="about"] .sidebar_count,
 .sidebar[data-view="about"] .sidebar_search,
 .sidebar[data-view="about"] #selectedChips {
@@ -1131,7 +1095,6 @@ footer.footer > * {
   display: flex;
 }
 
-/* Botones */
 .sidebar_btn {
   display: flex;
   align-items: center;
@@ -1193,7 +1156,6 @@ footer.footer > * {
   cursor: pointer;
 }
 
-/* Búsqueda */
 .sidebar_search {
   position: relative;
   align-self: stretch;
@@ -1205,7 +1167,6 @@ footer.footer > * {
   color: var(--gray-4);
 }
 
-/* Inputs y selects comparten alto, borde y tipografía */
 .sidebar_input,
 .sidebar_select {
   height: 32px;
@@ -1291,7 +1252,6 @@ footer.footer > * {
   cursor: pointer;
 }
 
-/* Formularios y campos */
 .sidebar_form {
   display: flex;
   align-items: flex-start;
@@ -1316,7 +1276,6 @@ footer.footer > * {
   gap: var(--contextual-gap);
 }
 
-/* Chips */
 .sidebar_chips-container {
   display: flex;
   flex-wrap: wrap;
@@ -1365,7 +1324,6 @@ footer.footer > * {
   height: 12px;
 }
 
-/* Acordeones */
 .sidebar_section {
   width: 100%;
 }
@@ -1416,7 +1374,6 @@ footer.footer > * {
   transform: rotate(180deg);
 }
 
-/* Árbol de géneros */
 .sidebar_tree {
   align-self: stretch;
   width: 100%;
@@ -1468,7 +1425,6 @@ footer.footer > * {
   font-weight: 700;
 }
 
-/* Checkboxes */
 .sidebar_checkbox-list {
   display: flex;
   flex-direction: column;
@@ -1521,7 +1477,6 @@ footer.footer > * {
 .sidebar_checkbox:checked       { background-image: var(--icon-check); }
 .sidebar_checkbox:indeterminate { background-image: var(--icon-minus); }
 
-/* Explorar (radios) */
 .sidebar_radio-grid {
   align-self: stretch;
   display: grid;
@@ -1558,7 +1513,6 @@ footer.footer > * {
   background: var(--blue-2) var(--icon-check) center / 10px no-repeat;
 }
 
-/* ---------- 7. Utilidades y estados ---------- */
 
 #onboardingOverlay [hidden],
 .sidebar [hidden],
@@ -1581,7 +1535,6 @@ footer.footer > * {
   cursor: default;
 }
 
-/* ---------- 8. Responsive ---------- */
 
 @media (max-width: 680px) {
 
@@ -1613,7 +1566,7 @@ footer.footer > * {
   }
 
   .ob-box.artist {
-    padding: 2rem;
+    padding: 4rem 2rem;
   }
 
   .ob-presets {
