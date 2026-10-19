@@ -3,33 +3,18 @@
 }
 
 /* ---------- 1. Fuentes y variables ---------- */
-
 @font-face {
-  font-family: "Bitcount Single";
-  src:  url("/fonts/BitcountSingle-ExtraLight.woff") format("woff"),
-        url("/fonts/BitcountSingle-Light.woff") format("woff"),
-        url("/fonts/BitcountSingle-Thin.woff") format("woff"),
-        url("/fonts/BitcountSingle-Regular.woff") format("woff"),
-        url("/fonts/BitcountSingle-Medium.woff") format("woff"),
-        url("/fonts/BitcountSingle-SemiBold.woff") format("woff"),
-        url("/fonts/BitcountSingle-Bold.woff") format("woff"),
-        url("/fonts/BitcountSingle-ExtraBold.woff") format("woff"),
-        url("/fonts/BitcountSingle-Black.woff") format("woff");
-  font-weight: 400;
+  font-family: "Oxanium";
+  src: url("./fonts/Oxanium-VariableFont_wght.ttf") format("truetype");
+  font-weight: 200 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Oxanium";
-  src:  url("/fonts/Oxanium-ExtraLight.woff") format("woff"),
-        url("/fonts/Oxanium-Light.woff") format("woff"),
-        url("/fonts/Oxanium-Regular.woff") format("woff"),
-        url("/fonts/Oxanium-Medium.woff") format("woff"),
-        url("/fonts/Oxanium-SemiBold.woff") format("woff"),
-        url("/fonts/Oxanium-Bold.woff") format("woff"),
-        url("/fonts/Oxanium-ExtraBold.woff") format("woff");
-  font-weight: 400;
+  font-family: "Bitcount Single";
+  src: url("./fonts/BitcountSingle-VariableFont_CRSV,ELSH,ELXP,slnt,wght.ttf") format("truetype");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -136,7 +121,7 @@ h1, h2, h3,
 .sidebar_btn,
 :where(.sidebar) button {
   font-family: var(--font-display);
-  font-weight: bolder;
+  font-weight: 400;
 }
 
 /* Topbar */
@@ -218,7 +203,7 @@ section.menu {
 .tooltip {
   position: fixed;
   z-index: 20;
-  min-width: 210px;
+  min-width: min-content;
   max-width: 300px;
   padding: 12px;
   background: rgba(0, 0, 0, 0.75);
@@ -235,7 +220,7 @@ section.menu {
   display: block;
   width: 140px;
   font-size: 15px;
-  font-weight: 900;
+  font-weight: 600;
   color: var(--color-white);
 }
 
@@ -257,12 +242,12 @@ section.menu {
 }
 
 .tooltip .primary {
-  font-weight: bolder;
+  font-weight: 400;
   color: var(--gray-6);
 }
 
 .tooltip .secondary {
-  font-weight: 600;
+  font-weight: 400;
   color: var(--gray-4);
 }
 
@@ -353,7 +338,7 @@ section.menu {
 .album strong {
   display: block;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .album span {
@@ -454,7 +439,7 @@ footer.footer > * {
 
 /* FAB */
 .about-fab-title {
-    font: 600 12px/1 var(--font-sans);
+    font: 500 12px/1 var(--font-sans);
     line-height: 1;
     margin: 0;
     text-align: left;
@@ -472,6 +457,7 @@ footer.footer > * {
 
 .about-fab-subtitle a {
   color: var(--secondary)!important;
+  font-weight: 400!important;
 }
 
 /* ---------- 4. Onboarding ---------- */
@@ -522,7 +508,7 @@ footer.footer > * {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: #0C2F4D url(./img/home.jpg) center / cover;
+  background: rgba(12, 47, 77, .9) url(./img/home.jpg) center / cover;
   background-blend-mode: multiply;
 }
 
@@ -579,7 +565,7 @@ footer.footer > * {
   margin: 0;
   color: var(--secondary);
   font-size: 22px;
-  font-weight: bolder;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -622,7 +608,7 @@ footer.footer > * {
 .ob-question {
   margin: 0;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .ob-search {
@@ -651,6 +637,7 @@ footer.footer > * {
 .ob-search-icon {
   display: flex;
   flex-shrink: 0;
+  align-items: center;
   width: 20px;
   height: 20px;
 }
@@ -663,7 +650,7 @@ footer.footer > * {
   background: transparent;
   color: var(--color-black);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .ob-search-input::placeholder {
@@ -715,14 +702,14 @@ footer.footer > * {
   margin: 0;
   color: var(--group-color);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.5px;
 }
 
 .ob-preset-subtitle {
   margin: 4px 0 12px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 400;
 }
 
 .ob-card-row {
@@ -734,7 +721,7 @@ footer.footer > * {
 
 .ob-card {
   box-sizing: border-box;
-  min-height: 112px;
+  /* min-height: 112px; */
   height: 100%;
   width: 100%;
 
@@ -769,7 +756,7 @@ footer.footer > * {
   margin: 0;
   color: var(--group-color);
   font-size: 14px;
-  font-weight: bolder;
+  font-weight: 300;
   line-height: 1;
 }
 
@@ -794,7 +781,7 @@ footer.footer > * {
   background: var(--blue-2);
   color: white;
   font-size: 14px;
-  font-weight: bolder;
+  font-weight: 400;
   letter-spacing: 0.25px;
   text-transform: uppercase;
   margin-top: 2rem;
@@ -819,11 +806,11 @@ footer.footer > * {
   font-family: var(--font-display);
   font-size: 28px;
   text-transform: uppercase;
-  font-weight: bolder;
+  font-weight: 400;
 }
 
 .ob-tag {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--secondary);
 }
 
@@ -923,7 +910,7 @@ footer.footer > * {
   border-radius: 8px;
   background: transparent;
   color: var(--color-white);
-  font: 600 12px/1 var(--font-sans);
+  font: 500 12px/1 var(--font-sans);
   text-transform: uppercase;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
@@ -1025,7 +1012,7 @@ footer.footer > * {
 .sidebar_about-list dt {
   margin-top: 8px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--color-white);
 }
 
@@ -1080,7 +1067,7 @@ footer.footer > * {
   margin: 0;
   color: var(--color-white);
   font-size: 20px;
-  font-weight: bolder;
+  font-weight: 300;
   line-height: 1.2;
   text-transform: uppercase;
 }
@@ -1144,7 +1131,7 @@ footer.footer > * {
   color: white;
   font-family: var(--font-sans);
   font-size: 10px;
-  font-weight: bold;
+  font-weight: 500;
   line-height: 12px;
   width: min-content;
   height: min-content;
@@ -1203,6 +1190,7 @@ footer.footer > * {
 
 .sidebar_search-icon {
   flex-shrink: 0;
+  align-items: center;
   color: var(--gray-4);
 }
 
@@ -1379,7 +1367,7 @@ footer.footer > * {
   list-style: none;
   color: var(--color-white);
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 300;
   line-height: 16px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1433,7 +1421,7 @@ footer.footer > * {
   border-bottom: 0.5px solid var(--color-white);
   color: var(--color-white);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 16px;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -1444,6 +1432,7 @@ footer.footer > * {
 .sidebar_tree-item:hover,
 .sidebar_tree-item.is-expanded {
   color: var(--blue-3);
+  font-weight: 600;
 }
 
 .sidebar_tree-select {
@@ -1465,7 +1454,7 @@ footer.footer > * {
 .sidebar_tree-item.is-expanded .sidebar_tree-caret {
   border-top: 0;
   border-bottom: 7px solid currentColor;
-  font-weight: 800;
+  font-weight: 700;
 }
 
 /* Checkboxes */

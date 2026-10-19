@@ -110,8 +110,8 @@ const OB_SEARCH_ICON_SVG =
   '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>';
 
 const ONBOARDING_SECTIONS = [
-  { key: "hallazgos", title: "HALLAZGOS", subtitle: "Patrones, trayectorias, historia" },
-  { key: "explorar",  title: "EXPLORAR",  subtitle: "Corrientes, estilos, géneros" }
+  { key: "hallazgos", title: "DESCUBRIR", subtitle: "Relaciones entre discos y eventos" },
+  { key: "explorar",  title: "EXPLORAR",  subtitle: "Patrones, géneros y trayectorias" }
 ];
 
 const ONBOARDING_PRESETS = [
@@ -132,7 +132,7 @@ const ONBOARDING_PRESETS = [
     )
   },
     {
-    title: "Gracias totales",
+    title: "Gracias... totales",
     subtitle: "Trayectoria de artistas luego de dejar sus bandas de orígen.",    
     section: "hallazgos",
     apply: () => applyArtistsPreset(
@@ -898,7 +898,7 @@ function buildNavChevrons(a) {
 function buildExpandToggle(section) {
   const btn = document.createElement("button");
   btn.textContent = tooltipExpanded ? "Saber menos" : "Saber más";
-  btn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:bolder;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
+  btn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:400;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
   btn.addEventListener("click", e => {
     e.stopPropagation();
     tooltipExpanded = !tooltipExpanded;
@@ -938,6 +938,9 @@ function placeTooltip(el, x, y, mode = "above") {
   if (mode === "left-center") {
     left = x - TOOLTIP_GAP - w;
     top = y - h / 2;
+  } else if (mode === "below") {
+    left = x + TOOLTIP_GAP;
+    top = y + TOOLTIP_GAP; 
   } else {
     left = x + TOOLTIP_GAP;
     top = y - TOOLTIP_GAP - h;
@@ -1049,7 +1052,8 @@ function renderDetailPanel(i, x, y) {
   ui.tooltip.appendChild(buildExpandToggle(extendedSection));
   ui.tooltip.appendChild(extendedSection);
 
-  placeTooltip(ui.tooltip, x, y, "above");
+  placeTooltip(ui.tooltip, x, y, "below");
+  
 }
 
 function artistColor(artist) {
@@ -4471,13 +4475,13 @@ function buildNearestRow(p, opts = {}) {
   const { showYear = false } = opts;
   const row = document.createElement("div");
   row.className = "nearest-row";
-  row.style.cssText = "display:flex;align-items:center;gap:6px;padding:6px 0;cursor:pointer;font-weight:bolder;letter-spacing:.1px;line-height:1;";
+  row.style.cssText = "display:flex;align-items:center;gap:6px;padding:6px 0;cursor:pointer;font-weight:400;letter-spacing:.1px;line-height:1;";
 
   const dot = document.createElement("i");
   dot.style.cssText = `display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0;background:${p.color.getStyle()};`
 
   const text = document.createElement("span");
-  text.style.fontSize = "12px";
+  text.style.fontSize = "11px";
   text.textContent = showYear
     ? `${p.album} — ${p.artist} · ${p.year}`
     : `${p.album} — ${p.artist}`;
@@ -4521,7 +4525,7 @@ function updatePinnedTooltipPosition() {
   const mesh = pointMeshes[pinnedIndex];
   if (!mesh) return;
   const { x, y } = projectToScreen(mesh.position);
-  placeTooltip(ui.tooltip, x, y, "above");
+  placeTooltip(ui.tooltip, x, y, "below");
 }
 
 function computeArtistStats(artist) {
@@ -4690,13 +4694,13 @@ function syncYearPanels() {
 }
  
 const SECTION_TITLE_STYLE =
-  "margin-top:16px;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:white;line-height:1;";
+  "margin-top:16px;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:white;line-height:1;";
 
 const CLOSE_BTN_STYLE =
   "position:absolute;top:12px;right:12px;border:none;background:none;font-size:24px;line-height:1;cursor:pointer;color:white;width:min-content;padding:0;";
 
 const TOGGLE_BTN_STYLE =
-  "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:bolder;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
+  "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:400;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
 
 
 function renderYearStatsPanelInto(el, years) {
@@ -4759,7 +4763,7 @@ function renderYearStatsPanelInto(el, years) {
     const showLabel = `Ver álbumes (${stats.albums.length})`;
     const showBtn = document.createElement("button");
     showBtn.textContent = showLabel;
-    showBtn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:bolder;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
+    showBtn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:400;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
     showBtn.addEventListener("click", e => {
       e.stopPropagation();
       const showing = albumsSection.style.display !== "none";
