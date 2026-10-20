@@ -510,6 +510,21 @@ function renderArtistDetailPanelInto(el, artist) {
   el.appendChild(title);
   el.appendChild(trajectory);
   el.appendChild(genresDiv);
+
+  const albums = getArtistDiscography(artist)
+    .filter(p => filteredIndices === null || filteredIndices.has(p.idx));
+
+  if (albums.length) {
+    const { btn, section } = buildAlbumsToggle(albums, "Discografía", {
+      expanded: artistAlbumsExpanded.has(artist),
+      onToggle: open => {
+        if (open) artistAlbumsExpanded.add(artist);
+        else artistAlbumsExpanded.delete(artist);
+      }
+    });
+    el.appendChild(btn);
+    el.appendChild(section);
+  }
 }
 
 const artistMidpoint = new THREE.Vector3();
@@ -568,6 +583,7 @@ function updateArtistPanels() {
 
 function unpinArtist(artist) {
   pinnedArtists.delete(artist);
+  artistAlbumsExpanded.delete(artist);
   const el = artistPanelEls.get(artist);
   if (el) el.remove();
   artistPanelEls.delete(artist);
@@ -577,6 +593,7 @@ function clearArtistPanels() {
   artistPanelEls.forEach(el => el.remove());
   artistPanelEls.clear();
   pinnedArtists.clear();
+  artistAlbumsExpanded.clear();
 }
 
 function buildArtistHoverHTML(artist) {
@@ -781,8 +798,29 @@ function getArtistDiscography(artist) {
     .sort((a, b) => a.year - b.year || a.album.localeCompare(b.album));
 }
 
+function hasSecondaryFilter() {
+  return activeFilters.yearFrom !== null
+    || activeFilters.yearTo !== null
+    || activeFilters.descriptors.size > 0
+    || Boolean(activeFilters.query && activeFilters.query.trim() !== "")
+    || selectedGenres.size > 0;
+}
+
+function filterOutlineSet() {
+  if (activeFilters.artists.size === 0 || !hasSecondaryFilter() || filteredIndices === null) {
+    return new Set();
+  }
+  return filteredIndices;
+}
+
+function outlineTargets() {
+  return new Set([...selectedIndices, ...filterOutlineSet()]);
+}
+
 function showSelectionOutlines() {
-  selectedIndices.forEach(idx => {
+  const targets = outlineTargets();
+
+  targets.forEach(idx => {
     const mesh = pointMeshes[idx];
     if (!mesh) return;
     const ring = ensureOutlineRing(idx);
@@ -791,7 +829,7 @@ function showSelectionOutlines() {
   });
 
   [...outlineRings.keys()].forEach(idx => {
-    if (!selectedIndices.has(idx)) {
+    if (!targets.has(idx)) {
       const ring = outlineRings.get(idx);
       ring.geometry.dispose();
       ring.material.dispose();
@@ -1352,6 +1390,8 @@ const NETWORK_INSIGHTS_CONFIG = {
   divergenceDescendants: 6
 };
 
+const ARTIST_CONTEXT_OPACITY = 1;
+
 let networkInsightMode = null;
 let bridgeBetweenness = null;
 let bridgeTopIndices = new Set();
@@ -1395,7 +1435,7 @@ const aboutGroupEl = document.getElementById("aboutGroup");
 let outlineRing = null;   
 let outlineTarget = null; 
 let pinnedIndex = null;
-
+let artistAlbumsExpanded = new Set();
 let connectionLines = [];     
 let connectionNodeFades = []; 
 let activeGraphIndices = new Set(); 
@@ -1450,14 +1490,15 @@ const GENRE_ES = {
   "spoken word": "Performance poética",
   "symphonic prog": "Sinfónico progresivo",
   "symphonic rock": "Rock sinfónico",
+  "symphonic metal": "Metal sinfónico",
   "neoclassical new age": "New age neoclásico",
-  "Experimental hip hop": "Hip hop experimental",
+  "experimental hip hop": "Hip hop experimental",
   "baroque pop": "Pop barroco",
   "latin alternative": "Rock alternativo latino",
   "latin rock": "Rock latino",
-  "Hispanic American Folk Music": "Folk hispanoamericano",
-  "Hispanic American Music": "Música hispanoamericana",
-  "Indigenous Andean Music": "Música indígnea",
+  "hispanic american folk music": "Folk hispanoamericano",
+  "hispanic american music": "Música hispanoamericana",
+  "indigenous andean music": "Música indígnea",
   "andean new age": "New Age Andino",
   "film soundtrack": "banda sonora",
   "psychedelic rock": "Rock psicodélico",
@@ -2957,8 +2998,9 @@ function updateFilterGenreVisuals() {
     const passesInsight = !insightActive || insightTopSet.has(i);
     const passesYear = !yearsActive || selectedYears.has(p.year);
 
-    m.material.opacity = (passesFilter && passesGenre && passesInsight && passesYear) ? 1 : dimOpacity;
-  });
+    const passes = passesFilter && passesGenre && passesInsight && passesYear;
+    const isArtistContext = activeFilters.artists.has(p.artist);
+    m.material.opacity = passes ? 1 : (isArtistContext ? ARTIST_CONTEXT_OPACITY : dimOpacity);  });
 }
 
 function ensureGenreLegendToggleAllBtn() {
@@ -3107,6 +3149,7 @@ function applyFilterMapVisuals() {
   }
   updateFilterGenreVisuals();
   updateFilterArtistConnections();
+  showSelectionOutlines(); 
 }
 
 function renderGenreLegend() {
@@ -3386,6 +3429,10 @@ function populateSelectOptions(selectEl, values, placeholder, currentValue, labe
   selectEl.value = currentValue !== null ? String(currentValue) : "";
 }
 
+function refreshArtistPanels() {
+  artistPanelEls.forEach((el, artist) => renderArtistDetailPanelInto(el, artist));
+}
+
 function applyFilters() {
   const filters = currentFilters();
   filteredIndices = hasActiveFilters()
@@ -3395,6 +3442,7 @@ function applyFilters() {
   renderList();
   applyFilterMapVisuals();
   syncRingsToRange();
+  refreshArtistPanels();
 }
 
 function pruneInvalidSelections() {
@@ -4277,7 +4325,7 @@ function applySelection() {
   renderSelectedChips();
 
   if (selectedIndices.size === 0) {
-    clearSelectionOutlines();
+    showSelectionOutlines();
     return;
   }
 
@@ -4301,7 +4349,7 @@ function clearHighlight() {
   pointMeshes.forEach(m => { m.material.opacity = 1; });
   selectedIndices.clear();
   clearConnections();
-  clearSelectionOutlines();
+  showSelectionOutlines();
   clearMultiSelectPanels();
   unpinTooltip();
   renderSelectedChips();
@@ -4696,6 +4744,34 @@ const CLOSE_BTN_STYLE =
 const TOGGLE_BTN_STYLE =
   "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:400;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
 
+function buildAlbumsToggle(albums, sectionTitle, { expanded = false, onToggle } = {}) {
+  const section = document.createElement("div");
+  section.style.display = expanded ? "block" : "none";
+
+  const title = document.createElement("div");
+  title.textContent = sectionTitle;
+  title.style.cssText = SECTION_TITLE_STYLE;
+  section.appendChild(title);
+
+  const list = document.createElement("div");
+  list.className = "panel-scroll";
+  albums.forEach(p => list.appendChild(buildNearestRow(p, { showYear: true })));
+  section.appendChild(list);
+
+  const showLabel = `Ver álbumes (${albums.length})`;
+  const btn = document.createElement("button");
+  btn.textContent = expanded ? "Ocultar álbumes" : showLabel;
+  btn.style.cssText = TOGGLE_BTN_STYLE;
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    const open = section.style.display === "none";
+    section.style.display = open ? "block" : "none";
+    btn.textContent = open ? "Ocultar álbumes" : showLabel;
+    onToggle?.(open);
+  });
+
+  return { btn, section };
+}
 
 function renderYearStatsPanelInto(el, years) {
   const isPeriod = years.size > 1;
@@ -4740,33 +4816,9 @@ function renderYearStatsPanelInto(el, years) {
   }
 
   if (!isPeriod && stats.albums.length) {
-    const albumsSection = document.createElement("div");
-    albumsSection.style.display = "none";
-
-    const albumsTitle = document.createElement("div");
-    albumsTitle.textContent = "Álbumes de este año";
-    albumsTitle.style.cssText = SECTION_TITLE_STYLE;
-    albumsSection.appendChild(albumsTitle);
-
-    const albumsList = document.createElement("div");
-    albumsList.className = "panel-scroll";
-    stats.albums.forEach(p => albumsList.appendChild(buildNearestRow(p)));
-    albumsSection.appendChild(albumsList);
-
-
-    const showLabel = `Ver álbumes (${stats.albums.length})`;
-    const showBtn = document.createElement("button");
-    showBtn.textContent = showLabel;
-    showBtn.style.cssText = "margin-top:16px;border:none;color:white;background:#2d9cdb;font-size:10px;font-weight:400;text-transform:uppercase;cursor:pointer;padding:6px 8px;width:fit-content;line-height:1;";
-    showBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      const showing = albumsSection.style.display !== "none";
-      albumsSection.style.display = showing ? "none" : "block";
-      showBtn.textContent = showing ? showLabel : "Ocultar álbumes";
-    });
-
-    el.appendChild(showBtn);
-    el.appendChild(albumsSection);
+    const { btn, section } = buildAlbumsToggle(stats.albums, "Álbumes de este año");
+    el.appendChild(btn);
+    el.appendChild(section);
   }
 }
 

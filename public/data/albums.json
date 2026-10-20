@@ -27814,21 +27814,6 @@
     "descriptors": []
   },
   {
-    "id": "postales-de-este-lado-del-mundo",
-    "album": "Postales de este lado del mundo",
-    "artist": "Juan Carlos Baglietto",
-    "year": 1991,
-    "genres": {
-      "primary": [
-        "Tango",
-        "Milonga"
-      ],
-      "secondary": []
-    },
-    "cover": "https://cdn.sonemic.net/i/150/w/9d6759d286a8dff45cba765f6535218b/5693199",
-    "descriptors": []
-  },
-  {
     "id": "postales-de-este-lado-del-mundo-2",
     "album": "Postales de este lado del mundo",
     "artist": "Juan Carlos Baglietto",
@@ -27840,7 +27825,7 @@
       ],
       "secondary": []
     },
-    "cover": "https://cdn.sonemic.net/i/150/w/183a854db8c7bc2e10361893828db485/3858027",
+    "cover": "https://cdn.sonemic.net/i/150/w/9d6759d286a8dff45cba765f6535218b/5693199",
     "descriptors": []
   },
   {
