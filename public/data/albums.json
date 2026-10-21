@@ -21117,7 +21117,7 @@
 {
   "id": "big-bombo-mamma",
   "album": "Big Bombo Mamma",
-  "artist": "Willy Crook",
+  "artist": "Willy Crook & Funky Torinos",
   "year": 1995,
   "genres": {
     "primary": ["Jazz-Funk"],
@@ -21141,7 +21141,7 @@
 {
   "id": "cruk",
   "album": "Crük",
-  "artist": "Willy Crook",
+  "artist": "Willy Crook & Funky Torinos",
   "year": 1999,
   "genres": {
     "primary": ["Funk Rock"],
@@ -21153,7 +21153,7 @@
 {
   "id": "versiones-music-to-live-by",
   "album": "Versiones: Music to Live By",
-  "artist": "Willy Crook",
+  "artist": "Willy Crook & Funky Torinos",
   "year": 1999,
   "genres": {
     "primary": ["Neo-Soul"],
@@ -21165,7 +21165,7 @@
 {
   "id": "fuego-amigo",
   "album": "Fuego amigo",
-  "artist": "Willy Crook",
+  "artist": "Willy Crook & Funky Torinos",
   "year": 2004,
   "genres": {
     "primary": ["Funk Rock"],
@@ -21189,7 +21189,7 @@
 {
   "id": "lotophagy",
   "album": "Lotophagy",
-  "artist": "Willy Crook",
+  "artist": "Willy Crook & Funky Torinos",
   "year": 2019,
   "genres": {
     "primary": ["Funk Rock"],
@@ -27811,6 +27811,21 @@
       "secondary": []
     },
     "cover": "https://cdn.sonemic.net/i/150/w/59df1381601e7630e213a3f793ed2870/5693679",
+    "descriptors": []
+  },
+  {
+    "id": "postales-de-este-lado-del-mundo-2",
+    "album": "Postales de este lado del mundo",
+    "artist": "Juan Carlos Baglietto",
+    "year": 1991,
+    "genres": {
+      "primary": [
+        "Tango",
+        "Milonga"
+      ],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/9d6759d286a8dff45cba765f6535218b/5693199",
     "descriptors": []
   },
   {
