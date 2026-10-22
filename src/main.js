@@ -141,7 +141,7 @@ const ONBOARDING_PRESETS = [
     )
   },
   {
-    title: "Fueras de sektor",
+    title: "Fuera de sektor",
     subtitle: "Discos más distantes a las constelaciones a las que pertenecen.",
     section: "explorar",
     apply: () => applyInsightPreset('outliers')
@@ -153,7 +153,7 @@ const ONBOARDING_PRESETS = [
     apply: () => applyInsightPreset('bridges')
   },
   {
-    title: "Bajo tu influencia",
+    title: "Extraña influencia",
     subtitle: "Discos ancestros de una gran cantidad de obras de otros artistas.",
     section: "explorar",
     apply: () => applyInsightPreset('convergence')
@@ -1297,8 +1297,8 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.379,
-  nNeighbors: 4.49,
+  descriptorWeight: 0.378,
+  nNeighbors: 4.482,
   minDist: 0.65
 };
 
@@ -1308,7 +1308,6 @@ const TIME_LAYOUT = {
 };
 
 const ANIM_DURATION = 1400;
-
 const POINT_RADIUS = .25;
 const CAMERA_FOCUS_DURATION = 900;
 const FOCUS_ZOOM_FACTOR = 0.4;

@@ -1526,6 +1526,30 @@
     "descriptors": []
   },
   {
+    "id": "fiel-a-sus-fieles",
+    "album": "Fiel a sus fieles",
+    "artist": "Saúl Blanch",
+    "year": 1990,
+    "genres": {
+      "primary": ["Heavy Metal", "Neoclassical Metal"],
+      "secondary": ["Hard Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/62a6244bcece42f24ba71d2c7a7721c4/3319471",
+    "descriptors": []
+  },
+  {
+    "id": "refugiado",
+    "album": "Refugiado",
+    "artist": "Saúl Blanch",
+    "year": 2006,
+    "genres": {
+      "primary": ["Hard Rock", "Heavy Metal"],
+      "secondary": ["Power Metal"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/d10cb99ce6053dd2648b9261c2d089da/2902766",
+    "descriptors": ["pesada", "himnaria", "melódica", "voz masculina"]
+  },
+  {
     "id": "magos-espadas-y-rosas",
     "album": "Magos, espadas y rosas",
     "artist": "Rata Blanca",
