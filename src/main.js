@@ -1297,7 +1297,7 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.378,
+  descriptorWeight: 0.37,
   nNeighbors: 4.482,
   minDist: 0.65
 };
@@ -1508,7 +1508,7 @@ const GENRE_ES = {
 const genreLabel = g => GENRE_ES[g.toLowerCase()] ?? g;
 
 const DESCRIPTOR_ES = {
-  "Atmospheric": "atmosférica",
+  "atmospheric": "atmosférica",
   "Biblical": "bíblica",
   "Christian": "cristiana",
   "Dark": "oscura",
@@ -1541,7 +1541,6 @@ const DESCRIPTOR_ES = {
   "apathetic": "apática",
   "apocalyptic": "apocalíptica",
   "aquatic": "acuática",
-  "atmospheric": "atmosférica",
   "autumn": "otoño",
   "avant-garde": "vanguardista",
   "ballad": "balada",

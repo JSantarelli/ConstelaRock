@@ -1540,14 +1540,14 @@
   {
     "id": "refugiado",
     "album": "Refugiado",
-    "artist": "Saúl Blanch",
+    "artist": "Saul Blanch Revancha",
     "year": 2006,
     "genres": {
       "primary": ["Hard Rock", "Heavy Metal"],
       "secondary": ["Power Metal"]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/d10cb99ce6053dd2648b9261c2d089da/2902766",
-    "descriptors": ["pesada", "himnaria", "melódica", "voz masculina"]
+    "descriptors": ["heavy", "anthemic", "melodic", "male vocalist"]
   },
   {
     "id": "magos-espadas-y-rosas",
@@ -2227,6 +2227,78 @@
       "secondary": []
     },
     "cover": "https://cdn.sonemic.net/i/150/w/67e903863371aa62701427df034762c9/12362881",
+    "descriptors": []
+  },
+  {
+    "id": "grita",
+    "album": "Grita",
+    "artist": "Rowek",
+    "year": 2012,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/35b185663f0a3ac1e9f649adaedb6cef/4993475",
+    "descriptors": []
+  },
+  {
+    "id": "redes",
+    "album": "Redes",
+    "artist": "Rowek",
+    "year": 2016,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "cover": "",
+    "descriptors": []
+  },
+  {
+    "id": "consumo",
+    "album": "Consumo",
+    "artist": "Nativo",
+    "year": 1999,
+    "genres": {
+      "primary": ["Alternative Metal"],
+      "secondary": ["Groove Metal", "Heavy Metal"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/06860c20a4e9d55978363a769d678b54/1486343",
+    "descriptors": []
+  },
+  {
+    "id": "futuro",
+    "album": "Futuro",
+    "artist": "Nativo",
+    "year": 2001,
+    "genres": {
+      "primary": ["Alternative Metal"],
+      "secondary": ["Heavy Metal"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/f328e6880875c2c41f8cc4a91b67e33e/1486345",
+    "descriptors": []
+  },
+  {
+    "id": "vostambien",
+    "album": "Vostambién",
+    "artist": "Nativo",
+    "year": 2003,
+    "genres": {
+      "primary": ["Alternative Metal"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/6cc4368d1f0b37d8da9be78512b06ee9/1486347",
+    "descriptors": []
+  },
+  {
+    "id": "y-que",
+    "album": "¡Y que!",
+    "artist": "Nativo",
+    "year": 2008,
+    "genres": {
+      "primary": ["Alternative Metal"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/31490415ecadfb872533b019fb157410/5673590",
     "descriptors": []
   },
   {
@@ -13156,7 +13228,7 @@
     "cover": "https://cdn.sonemic.net/i/150/w/cbfe4dd95e7163d4b7f6ded523a9c2b3/2104844",
     "descriptors": []
   },
-  {
+ {
     "id": "porsuigieco",
     "album": "PorSuiGieco",
     "artist": "PorSuiGieco",
@@ -13166,7 +13238,7 @@
       "secondary": ["Blues Rock", "Progressive Rock"]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/10154ac674b615e443fa28782dfaabdc/12555995",
-    "descriptors": ["melódica", "voz femenina", "voz masculina", "pastoral", "espiritual", "poética", "rebelde", "calmante", "melancólica", "cálida"]
+    "descriptors": ["melodic", "female vocalist", "male vocalist", "pastoral", "spiritual", "poetic", "rebellious", "soothing", "melancholic", "warm"]
   },
   {
     "id": "leon-gieco",
@@ -15678,7 +15750,7 @@
       "dreams"
     ]
   },
-  {
+    {
     "id": "el-reloj",
     "album": "El Reloj",
     "artist": "El Reloj",
@@ -15688,7 +15760,7 @@
       "secondary": ["Jazz-Rock", "Blues Rock"]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/cff3a8f45b9b4070df2a10fa9c095946/3622505",
-    "descriptors": ["pesada", "progresiva", "compleja", "ecléctica", "voz masculina"]
+    "descriptors": ["heavy", "progressive", "complex", "eclectic", "male vocalist"]
   },
   {
     "id": "el-reloj-1976",
@@ -15700,7 +15772,7 @@
       "secondary": ["Hard Rock"]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/5180e0b49cb2714353f7ad9e04ae303b/7214368",
-    "descriptors": ["voz masculina", "pesada", "progresiva"]
+    "descriptors": ["male vocalist", "heavy", "progressive"]
   },
   {
     "id": "la-esencia-es-la-misma",
@@ -15723,7 +15795,7 @@
       "primary": ["Hard Rock"],
       "secondary": []
     },
-    "cover": "https://cdn.sonemic.net/i/150/w/06157c92b969c79f7bc603e98aeadc6a/14134665",
+    "cover": "https://cdn.sonemic.net/i/150/w/06157c92b969c79f7bc603e98eaad c6a/14134665",
     "descriptors": []
   },
   {
@@ -15759,8 +15831,8 @@
       "primary": ["Psychedelic Rock", "Hard Rock"],
       "secondary": ["Heavy Psych", "Psychedelic Folk"]
     },
-    "cover": "https://cdn.sonemic.net/i/150/w/b6c037d7033762b6083758d731952b80/3853506",
-    "descriptors": ["existencial", "abstracta", "cruda", "psicodélica", "voz masculina"]
+    "cover": "",
+    "descriptors": ["existential", "abstract", "raw", "psychedelic", "male vocalist"]
   },
   {
     "id": "amaneceres",
@@ -15796,7 +15868,7 @@
       "secondary": ["Heavy Psych"]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/efd93daa68089b70138e57106321fb7e/14320299",
-    "descriptors": ["voz masculina", "política", "cargada de odio", "agresiva", "enérgica", "consciente", "desierto", "protesta", "cruda", "rebelde", "cálida", "psicodélica", "pesada", "enojada"]
+    "descriptors": ["male vocalist", "political", "hateful", "aggressive", "energetic", "conscious", "desert", "protest", "raw", "rebellious", "warm", "psychedelic", "heavy", "angry"]
   },
   {
     "id": "la-puerta-del-sol",
@@ -15820,7 +15892,7 @@
       "secondary": ["Heavy Psych"]
     },
     "cover": "https://cdn.sonemic.net/i/150/w/dbe0a5a9dbfaaa187100b01d2e0dc4e7/7283759",
-    "descriptors": ["pesada", "psicodélica", "voz masculina"]
+    "descriptors": ["heavy", "psychedelic", "male vocalist"]
   },
   {
     "id": "iii",
@@ -15832,7 +15904,7 @@
       "secondary": []
     },
     "cover": "https://cdn.sonemic.net/i/150/w/4da22a367e2834e71512353c99f9bcf5/7574247",
-    "descriptors": ["voz masculina"]
+    "descriptors": ["male vocalist"]
   },
   {
     "id": "tantor",
@@ -15844,7 +15916,7 @@
       "secondary": []
     },
     "cover": "https://cdn.sonemic.net/i/150/w/9479cb40ecb455f6d4df245470757846/6283811",
-    "descriptors": ["voz masculina", "técnica", "rítmica", "compleja", "melódica", "progresiva", "instrumental", "enérgica"]
+    "descriptors": ["male vocalist", "technical", "rhythmic", "complex", "melodic", "progressive", "instrumental", "energetic"]
   },
   {
     "id": "magico-y-natural",
