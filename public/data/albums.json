@@ -2077,7 +2077,7 @@
       "primary": ["Power Metal"],
       "secondary": []
     },
-    "url": "https://cdn.sonemic.net/i/75/s/6837ae2947035cf810ec5c65279724b6/12244546",
+    "cover": "https://cdn.sonemic.net/i/75/s/6837ae2947035cf810ec5c65279724b6/12244546",
     "descriptors": [
       "energetic",
       "anthemic",
@@ -2094,7 +2094,7 @@
       "primary": ["Power Metal"],
       "secondary": []
     },
-    "url": "https://cdn.sonemic.net/i/75/s/7fab3eb1dbcb2a8eeb1967bd4ed13fca/2343694",
+    "cover": "https://cdn.sonemic.net/i/75/s/7fab3eb1dbcb2a8eeb1967bd4ed13fca/2343694",
     "descriptors": []
   },
   {
@@ -2106,7 +2106,7 @@
       "primary": ["Power Metal"],
       "secondary": ["Symphonic Metal", "Progressive Metal"]
     },
-    "url": "https://cdn.sonemic.net/i/75/s/74b1416ff4adef90d7865b7c9b3b46aa/3576123",
+    "cover": "https://cdn.sonemic.net/i/75/s/74b1416ff4adef90d7865b7c9b3b46aa/3576123",
     "descriptors": []
   },
   {
@@ -2118,7 +2118,7 @@
       "primary": ["Power Metal"],
       "secondary": ["Heavy Metal"]
     },
-    "url": "https://cdn.sonemic.net/i/75/s/0f24dab283d4f2987e246f40928627e3/6985689",
+    "cover": "https://cdn.sonemic.net/i/75/s/0f24dab283d4f2987e246f40928627e3/6985689",
     "descriptors": []
   },
   {
@@ -2130,7 +2130,7 @@
       "primary": ["Power Metal"],
       "secondary": []
     },
-    "url": "https://cdn.sonemic.net/i/75/s/7b4cd8565f1caf3aac02cb6a113be2ec/10343502",
+    "cover": "https://cdn.sonemic.net/i/75/s/7b4cd8565f1caf3aac02cb6a113be2ec/10343502",
     "descriptors": []
   },
   {
@@ -10816,7 +10816,7 @@
       "primary": [],
       "secondary": []
     },
-    "cover": "",
+    "cover": "https://cdn.sonemic.net/i/150/w/bc542b41f8ca7e3ab9a62e07b71a3552/5186449",
     "descriptors": [
       "acoustic",
       "male vocalist"
@@ -10831,7 +10831,7 @@
       "primary": [],
       "secondary": []
     },
-    "cover": "https://cdn.sonemic.net/i/150/w/bc542b41f8ca7e3ab9a62e07b71a3552/5186449",
+    "cover": "https://cdn.sonemic.net/i/150/w/4e4bca5d86b9e54a4a67c3b33c6b2397/3357823",
     "descriptors": []
   },
   {
@@ -13131,6 +13131,18 @@
     },
     "cover": "https://cdn.sonemic.net/i/150/w/cbfe4dd95e7163d4b7f6ded523a9c2b3/2104844",
     "descriptors": []
+  },
+  {
+    "id": "porsuigieco",
+    "album": "PorSuiGieco",
+    "artist": "PorSuiGieco",
+    "year": 1976,
+    "genres": {
+      "primary": ["Folk Rock", "Contemporary Folk", "Progressive Folk"],
+      "secondary": ["Blues Rock", "Progressive Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/10154ac674b615e443fa28782dfaabdc/12555995",
+    "descriptors": ["melódica", "voz femenina", "voz masculina", "pastoral", "espiritual", "poética", "rebelde", "calmante", "melancólica", "cálida"]
   },
   {
     "id": "leon-gieco",
@@ -15641,6 +15653,186 @@
       "complex",
       "dreams"
     ]
+  },
+  {
+    "id": "el-reloj",
+    "album": "El Reloj",
+    "artist": "El Reloj",
+    "year": 1975,
+    "genres": {
+      "primary": ["Progressive Rock", "Hard Rock"],
+      "secondary": ["Jazz-Rock", "Blues Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/cff3a8f45b9b4070df2a10fa9c095946/3622505",
+    "descriptors": ["pesada", "progresiva", "compleja", "ecléctica", "voz masculina"]
+  },
+  {
+    "id": "el-reloj-1976",
+    "album": "El Reloj",
+    "artist": "El Reloj",
+    "year": 1976,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Hard Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/5180e0b49cb2714353f7ad9e04ae303b/7214368",
+    "descriptors": ["voz masculina", "pesada", "progresiva"]
+  },
+  {
+    "id": "la-esencia-es-la-misma",
+    "album": "La esencia es la misma",
+    "artist": "El Reloj",
+    "year": 1983,
+    "genres": {
+      "primary": ["Progressive Rock"],
+      "secondary": ["Hard Rock"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/eafd8b4aa73ce06a4a3259b8e889310d/4176601",
+    "descriptors": []
+  },
+  {
+    "id": "santos-y-verdugos",
+    "album": "Santos y verdugos",
+    "artist": "El Reloj",
+    "year": 1994,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/06157c92b969c79f7bc603e98aeadc6a/14134665",
+    "descriptors": []
+  },
+  {
+    "id": "hombre-de-hoy",
+    "album": "Hombre de hoy",
+    "artist": "El Reloj",
+    "year": 1999,
+    "genres": {
+      "primary": ["Hard Rock"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/7dcbe950000f77180e59c3a70fe03da2/14134678",
+    "descriptors": []
+  },
+  {
+    "id": "mercado-de-almas",
+    "album": "Mercado de almas",
+    "artist": "El Reloj",
+    "year": 2002,
+    "genres": {
+      "primary": ["Heavy Metal"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/63dceb976c82c0b4040f0dd8bdb7902e/3478478",
+    "descriptors": []
+  },
+  {
+    "id": "kubero-diaz-y-la-pesada",
+    "album": "Kubero Díaz y La Pesada",
+    "artist": "Kubero Díaz",
+    "year": 1973,
+    "genres": {
+      "primary": ["Psychedelic Rock", "Hard Rock"],
+      "secondary": ["Heavy Psych", "Psychedelic Folk"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/b6c037d7033762b6083758d731952b80/3853506",
+    "descriptors": ["existencial", "abstracta", "cruda", "psicodélica", "voz masculina"]
+  },
+  {
+    "id": "amaneceres",
+    "album": "Amaneceres",
+    "artist": "Kubero Díaz",
+    "year": 2017,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/31f391876928d14e8a29693d11d93f38/6772219",
+    "descriptors": []
+  },
+  {
+    "id": "canciones-del-ser-canciones-del-sur",
+    "album": "Canciones del ser, canciones del sur",
+    "artist": "Kubero Díaz",
+    "year": 2020,
+    "genres": {
+      "primary": [],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/7af47aa3451f04c8cb02a6851784e5c1/11308757",
+    "descriptors": []
+  },
+  {
+    "id": "salgan-del-camino",
+    "album": "Salgan del camino",
+    "artist": "Rockal y la Cría",
+    "year": 1973,
+    "genres": {
+      "primary": ["Blues Rock"],
+      "secondary": ["Heavy Psych"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/efd93daa68089b70138e57106321fb7e/14320299",
+    "descriptors": ["voz masculina", "política", "cargada de odio", "agresiva", "enérgica", "consciente", "desierto", "protesta", "cruda", "rebelde", "cálida", "psicodélica", "pesada", "enojada"]
+  },
+  {
+    "id": "la-puerta-del-sol",
+    "album": "La Puerta del Sol",
+    "artist": "KNEI",
+    "year": 2011,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Heavy Psych"]
+    },
+    "cover": "",
+    "descriptors": []
+  },
+  {
+    "id": "juventud-de-la-gran-ciudad",
+    "album": "Juventud de la gran ciudad",
+    "artist": "KNEI",
+    "year": 2017,
+    "genres": {
+      "primary": ["Stoner Rock"],
+      "secondary": ["Heavy Psych"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/dbe0a5a9dbfaaa187100b01d2e0dc4e7/7283759",
+    "descriptors": ["pesada", "psicodélica", "voz masculina"]
+  },
+  {
+    "id": "iii",
+    "album": "III",
+    "artist": "KNEI",
+    "year": 2019,
+    "genres": {
+      "primary": ["Hard Rock", "Psychedelic Rock"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/4da22a367e2834e71512353c99f9bcf5/7574247",
+    "descriptors": ["voz masculina"]
+  },
+  {
+    "id": "tantor",
+    "album": "Tantor",
+    "artist": "Tantor",
+    "year": 1979,
+    "genres": {
+      "primary": ["Jazz-Rock", "Jazz Fusion", "Progressive Rock"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/9479cb40ecb455f6d4df245470757846/6283811",
+    "descriptors": ["voz masculina", "técnica", "rítmica", "compleja", "melódica", "progresiva", "instrumental", "enérgica"]
+  },
+  {
+    "id": "magico-y-natural",
+    "album": "Mágico y natural",
+    "artist": "Tantor",
+    "year": 1982,
+    "genres": {
+      "primary": ["Jazz Fusion", "Progressive Rock", "Jazz-Rock"],
+      "secondary": []
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/4e7c9ece1b95895b49eb1cde0958070d/3939816",
+    "descriptors": []
   },
   {
   "id": "manal",
@@ -27811,21 +28003,6 @@
       "secondary": []
     },
     "cover": "https://cdn.sonemic.net/i/150/w/59df1381601e7630e213a3f793ed2870/5693679",
-    "descriptors": []
-  },
-  {
-    "id": "postales-de-este-lado-del-mundo-2",
-    "album": "Postales de este lado del mundo",
-    "artist": "Juan Carlos Baglietto",
-    "year": 1991,
-    "genres": {
-      "primary": [
-        "Tango",
-        "Milonga"
-      ],
-      "secondary": []
-    },
-    "cover": "https://cdn.sonemic.net/i/150/w/9d6759d286a8dff45cba765f6535218b/5693199",
     "descriptors": []
   },
   {

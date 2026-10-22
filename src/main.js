@@ -1297,7 +1297,7 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.37,
+  descriptorWeight: 0.379,
   nNeighbors: 4.49,
   minDist: 0.65
 };

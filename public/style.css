@@ -675,11 +675,13 @@ footer.footer > * {
   flex-wrap: wrap;
   gap: 36px;
   width: 84%;
+  height: min(100px, 120px);
 }
 
 .ob-preset-group {
   flex: 1;
   --group-color: var(--secondary);
+  height: 100%;
 }
 
 .ob-preset-group:first-child { --group-color: var(--primary); }
@@ -704,6 +706,7 @@ footer.footer > * {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 12px;
   align-items: stretch;
+  height: 100%;
 }
 
 .ob-card {
