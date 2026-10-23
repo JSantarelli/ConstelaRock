@@ -1297,7 +1297,7 @@ const WEIGHTS = {
 };
 
 const MODEL_CONFIG = {
-  descriptorWeight: 0.37,
+  descriptorWeight: 0.373,
   nNeighbors: 4.482,
   minDist: 0.65
 };
@@ -1380,6 +1380,7 @@ const CONNECTION_CONFIG = {
 
 const NETWORK_INSIGHTS_CONFIG = {
   topCount: 30,
+  maxPerArtist: 2,
   dimOpacity: 0.15,
   outlierK: 5,
   minGenreSpread: 3,
@@ -1766,6 +1767,80 @@ const DESCRIPTOR_ES = {
   "warm": "cálida",
   "winter": "invierno"
 };
+
+function groupsOfPoint(p) {
+  return new Set(
+    p.genres.primary
+      .map(g => cachedFamilyForGenre(g)?.group)
+      .filter(Boolean)
+  );
+}
+
+function stableKey(i) {
+  const p = points[i];
+  return normText(`${p.artist}|${p.album}|${p.year}`);
+}
+
+const round6 = x => Math.round(x * 1e6) / 1e6;
+
+function selectTop(candidates, criteria = []) {
+  const { topCount, maxPerArtist } = NETWORK_INSIGHTS_CONFIG;
+
+  const cmp = (a, b) => {
+    for (const c of criteria) {
+      const d = c(b) - c(a);
+      if (d !== 0 && !Number.isNaN(d)) return d;
+    }
+    const ka = stableKey(a), kb = stableKey(b);
+    return ka < kb ? -1 : ka > kb ? 1 : 0;
+  };
+
+  const perArtist = new Map();
+  const top = new Set();
+
+  for (const i of [...candidates].sort(cmp)) {
+    if (top.size >= topCount) break;
+    const artist = points[i].artist;
+    const used = perArtist.get(artist) ?? 0;
+    if (used >= maxPerArtist) continue;
+    perArtist.set(artist, used + 1);
+    top.add(i);
+  }
+  return top;
+}
+
+function computeIncomingStats() {
+  const stats = points.map(() => ({
+    ancestorArtists: new Set(),
+    allArtists: new Set(),     
+    ancestorPicks: 0,          
+    totalPicks: 0,             
+    groups: new Set()          
+  }));
+
+  points.forEach((p, idx) => {
+    const { ancestor, descendants } = computeAncestorDescendants(idx);
+    const chooserGroups = groupsOfPoint(p);
+
+    if (ancestor) {
+      const s = stats[ancestor.idx];
+      s.ancestorArtists.add(p.artist);
+      s.allArtists.add(p.artist);
+      s.ancestorPicks += 1;
+      s.totalPicks += 1;
+      chooserGroups.forEach(g => s.groups.add(g));
+    }
+
+    descendants.forEach(d => {
+      const s = stats[d.idx];
+      s.allArtists.add(p.artist);
+      s.totalPicks += 1;
+      chooserGroups.forEach(g => s.groups.add(g));
+    });
+  });
+
+  return stats;
+}
 
 const descriptorLabel = d => DESCRIPTOR_ES[d] ?? d;
 
@@ -3662,48 +3737,65 @@ function brandesBetweenness(adjacency, n) {
 function computeNetworkMetrics() {
   if (!points.length) return;
 
+  const all = points.map((_, i) => i);
   const adjacency = buildNetworkGraphAdjacency();
+  const incoming = computeIncomingStats();
 
   nodeDegree = new Map();
-  adjacency.forEach((neighbors, idx) => nodeDegree.set(idx, neighbors.size));
-  hubTopIndices = new Set(
-    points.map((_, i) => i)
-      .filter(i => (nodeDegree.get(i) ?? 0) > 0)
-      .sort((a, b) => nodeDegree.get(b) - nodeDegree.get(a))
-      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  all.forEach(i => nodeDegree.set(i, incoming[i].allArtists.size));
+
+  hubTopIndices = selectTop(
+    all.filter(i => incoming[i].allArtists.size > 0),
+    [
+      i => incoming[i].allArtists.size,
+      i => incoming[i].groups.size,
+      i => incoming[i].ancestorPicks
+    ]
   );
 
   bridgeBetweenness = brandesBetweenness(adjacency, points.length);
-  bridgeTopIndices = new Set(
-    points.map((_, i) => i)
-      .filter(i => (bridgeBetweenness.get(i) ?? 0) > 0)
-      .sort((a, b) => bridgeBetweenness.get(b) - bridgeBetweenness.get(a))
-      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+
+  const neighborGroupCount = new Map();
+  all.forEach(i => {
+    const gs = new Set();
+    adjacency.get(i).forEach(j => groupsOfPoint(points[j]).forEach(g => gs.add(g)));
+    neighborGroupCount.set(i, gs.size);
+  });
+
+  bridgeTopIndices = selectTop(
+    all.filter(i => (bridgeBetweenness.get(i) ?? 0) > 0),
+    [
+      i => round6(bridgeBetweenness.get(i)),
+      i => neighborGroupCount.get(i)
+    ]
   );
 
   outlierScore = computeOutlierScores();
-  outlierTopIndices = new Set(
-    points.map((_, i) => i)
-      .sort((a, b) => outlierScore.get(b) - outlierScore.get(a))
-      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  outlierTopIndices = selectTop(
+    all,
+    [i => round6(outlierScore.get(i))]
   );
 
-  const { convergence, divergence } = computeConvergenceDivergence();
-  convergenceScore = convergence;
+  convergenceScore = new Map();
+  all.forEach(i => {
+    const n = incoming[i].ancestorArtists.size;
+    convergenceScore.set(i, n >= NETWORK_INSIGHTS_CONFIG.convergenceMinContributors ? n : 0);
+  });
+
+  convergenceTopIndices = selectTop(
+    all.filter(i => convergenceScore.get(i) > 0),
+    [
+      i => convergenceScore.get(i),
+      i => incoming[i].ancestorPicks,
+      i => incoming[i].groups.size
+    ]
+  );
+
+  const { divergence } = computeConvergenceDivergence();
   divergenceScore = divergence;
-
-  convergenceTopIndices = new Set(
-    points.map((_, i) => i)
-      .filter(i => convergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.convergenceMinSpread)
-      .sort((a, b) => convergenceScore.get(b) - convergenceScore.get(a))
-      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
-  );
-
-  divergenceTopIndices = new Set(
-    points.map((_, i) => i)
-      .filter(i => divergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.divergenceMinSpread)
-      .sort((a, b) => divergenceScore.get(b) - divergenceScore.get(a))
-      .slice(0, NETWORK_INSIGHTS_CONFIG.topCount)
+  divergenceTopIndices = selectTop(
+    all.filter(i => divergenceScore.get(i) >= NETWORK_INSIGHTS_CONFIG.divergenceMinSpread),
+    [i => round6(divergenceScore.get(i))]
   );
 }
 

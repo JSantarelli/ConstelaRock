@@ -13661,6 +13661,30 @@
     ]
   },
   {
+    "id": "bi-polar",
+    "album": "Bi-Polar",
+    "artist": "Cirse",
+    "year": 2007,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Punk", "Post-Grunge", "Alternative Metal"]
+    },
+    "cover": "",
+    "descriptors": []
+  },
+  {
+    "id": "imaginario",
+    "album": "Imaginario",
+    "artist": "Cirse",
+    "year": 2010,
+    "genres": {
+      "primary": ["Alternative Rock"],
+      "secondary": ["Pop Punk", "Post-Grunge", "Alternative Metal"]
+    },
+    "cover": "https://cdn.sonemic.net/i/150/w/b9a4ca4a02eb282e392731312aeafa9c/4867447",
+    "descriptors": []
+  },
+  {
 		"id": "la-carne",
 		"album": "La carne",
 		"artist": "Eruca Sativa",
@@ -15831,7 +15855,7 @@
       "primary": ["Psychedelic Rock", "Hard Rock"],
       "secondary": ["Heavy Psych", "Psychedelic Folk"]
     },
-    "cover": "",
+    "cover": "https://cdn.sonemic.net/i/150/w/b6c037d7033762b6083758d731952b80/3853506",
     "descriptors": ["existential", "abstract", "raw", "psychedelic", "male vocalist"]
   },
   {
