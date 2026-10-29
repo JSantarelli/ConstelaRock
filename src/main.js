@@ -10,6 +10,7 @@ let genreLegendItemsByGenre = new Map();
 let genreLegendGroups = new Map(); 
 let tooltipExpanded = false; 
 let pinnedArtists = new Set();
+let savedPinnedArtists = new Set();
 let artistPanelEls = new Map();
 let onboardingOverlay = null;
 let onboardingProgressFillEl = null;
@@ -998,7 +999,8 @@ function renderDetailPanel(i, x, y) {
   closeBtn.style.cssText = CLOSE_BTN_STYLE;
   closeBtn.addEventListener("click", e => {
     e.stopPropagation();
-    clearHighlight();
+    selectedIndices.clear();
+    applySelection();
   });
 
   const navChevrons = buildNavChevrons(a);
@@ -1181,6 +1183,7 @@ function selectAlbum(idx, additive = false) {
 
 function resetAllFilters() {
   clearArtistPanels();      
+  savedPinnedArtists.clear();
   if (!hasActiveFilters()) return;
   activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptors: new Set(), query: "" };
   selectedGenres.clear();
@@ -4404,6 +4407,19 @@ function renderFilterChipsInto(container) {
   });
 }
 
+function restoreFilterContext() {
+  if (selectedIndices.size > 0) return;
+  applyFilterMapVisuals();
+
+  savedPinnedArtists.forEach(artist => {
+    if (activeFilters.artists.has(artist) && getArtistDiscography(artist).length) {
+      pinnedArtists.add(artist);
+    }
+  });
+  savedPinnedArtists.clear();
+  updateArtistPanels();
+}
+
 function applySelection() {
   clearArtistPanels();
   clearYearHighlight({ keepSelection: true });
@@ -4416,6 +4432,7 @@ function applySelection() {
 
   if (selectedIndices.size === 0) {
     showSelectionOutlines();
+    restoreFilterContext();
     return;
   }
 
