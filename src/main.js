@@ -700,7 +700,7 @@ let activeFilters = {
   descriptors: new Set(),
   query: ""
 };
-let filteredIndices = null; // null = sin filtros activos; Set<idx> cuando hay filtros
+let filteredIndices = null; 
 const ui = {
   list: document.querySelector("#albumList"),
   search: document.querySelector("#search"),
@@ -755,6 +755,8 @@ function clearScene() {
 
   selectedIndices.clear();
   selectedGenres.clear();
+  incomingStats = null;
+  networkAdjacency = null;  
 }
 
 function updateSelectionVisuals() {
@@ -815,7 +817,12 @@ function filterOutlineSet() {
 }
 
 function outlineTargets() {
-  return new Set([...selectedIndices, ...filterOutlineSet()]);
+  const insightTop = networkInsightMode !== null ? currentInsightTopSet() : null;
+  return new Set([
+    ...selectedIndices,
+    ...filterOutlineSet(),
+    ...(insightTop ?? [])
+  ]);
 }
 
 function showSelectionOutlines() {
@@ -1199,6 +1206,8 @@ function resetNetworkInsightMode() {
   setFilterControlsEnabled(true);
   updateNetworkInsightButtons();
   syncResetButton();
+  clearConnections();
+  showSelectionOutlines();
   updateFilterGenreVisuals();
 }
 
@@ -1392,6 +1401,31 @@ const NETWORK_INSIGHTS_CONFIG = {
   divergenceMinSpread: 2,
   divergenceDescendants: 6
 };
+
+const INSIGHT_CONNECTION_CONFIG = {
+  maxLinksPerNode: 6,   
+
+  lineWidth: 1.8,
+  lineOpacity: 0.6,
+  nodeOpacity: 0.5,     
+
+  nodeStagger: 25       
+
+};
+
+let incomingStats = null;
+let networkAdjacency = null;
+
+
+function getIncomingStats() {
+  if (!incomingStats) incomingStats = computeIncomingStats();
+  return incomingStats;
+}
+
+function getNetworkAdjacency() {
+  if (!networkAdjacency) networkAdjacency = buildNetworkGraphAdjacency();
+  return networkAdjacency;
+}
 
 const ARTIST_CONTEXT_OPACITY = 1;
 
@@ -1818,7 +1852,8 @@ function computeIncomingStats() {
     allArtists: new Set(),     
     ancestorPicks: 0,          
     totalPicks: 0,             
-    groups: new Set()          
+    groups: new Set(),
+    choosers: []  
   }));
 
   points.forEach((p, idx) => {
@@ -1832,6 +1867,7 @@ function computeIncomingStats() {
       s.ancestorPicks += 1;
       s.totalPicks += 1;
       chooserGroups.forEach(g => s.groups.add(g));
+      s.choosers.push({ idx, role: "ancestor" });
     }
 
     descendants.forEach(d => {
@@ -1839,6 +1875,7 @@ function computeIncomingStats() {
       s.allArtists.add(p.artist);
       s.totalPicks += 1;
       chooserGroups.forEach(g => s.groups.add(g));
+      s.choosers.push({ idx, role: "descendant" });
     });
   });
 
@@ -1978,7 +2015,8 @@ ui.filterDescriptor.addEventListener("keydown", e => {
 
 const GENRE_FAMILIES = [
 
-  // ---------- METAL ----------
+  
+
   { match: /heavy metal/i,        group: "Metal", hueRange: [0, 0],   satRange: [0, 5],  lightRange: [12, 22] },
   { match: /thrash metal/i,       group: "Metal", hueRange: [0, 0],   satRange: [0, 5],  lightRange: [18, 28] },
   { match: /alternative metal/i,  group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [24, 34] },
@@ -1991,7 +2029,8 @@ const GENRE_FAMILIES = [
   { match: /neoclassical metal/i, group: "Metal", hueRange: [0, 0],   satRange: [0, 5],  lightRange: [15, 25] },
   { match: /rap metal/i,          group: "Metal", hueRange: [0, 0],   satRange: [0, 8],  lightRange: [25, 35] },
 
-  // ---------- ROCK ----------
+  
+
   { match: /hard rock/i,              group: "Rock", hueRange: [205, 210], satRange: [55, 75], lightRange: [30, 42] },
   { match: /alternative rock/i,       group: "Rock", hueRange: [210, 215], satRange: [50, 75], lightRange: [35, 47] },
   { match: /blues rock/i,             group: "Rock", hueRange: [215, 220], satRange: [45, 70], lightRange: [38, 50] },
@@ -2023,7 +2062,8 @@ const GENRE_FAMILIES = [
   { match: /symphonic prog/i,         group: "Rock", hueRange: [250, 258], satRange: [45, 70], lightRange: [40, 55] },
   { match: /symphonic rock/i,         group: "Rock", hueRange: [258, 266], satRange: [50, 75], lightRange: [42, 55] },
 
-  // ---------- PUNK ----------
+  
+
   { match: /punk rock/i,             group: "Punk", hueRange: [0, 5],   satRange: [75, 95], lightRange: [35, 45] },
   { match: /melodic hardcore/i,      group: "Punk", hueRange: [5, 10],  satRange: [70, 90], lightRange: [40, 50] },
   { match: /post-punk revival/i,      group: "Punk", hueRange: [10, 15], satRange: [65, 90], lightRange: [45, 55] },
@@ -2034,7 +2074,8 @@ const GENRE_FAMILIES = [
   { match: /post-hardcore/i,         group: "Punk", hueRange: [15, 22], satRange: [65, 90], lightRange: [35, 45] },
   { match: /skate punk/i,            group: "Punk", hueRange: [22, 28], satRange: [75, 95], lightRange: [45, 55] },
 
-  // ---------- POP ----------
+  
+
   { match: /synthpop/i,              group: "Pop", hueRange: [285, 290], satRange: [55, 85], lightRange: [45, 58] },
   { match: /art pop/i,               group: "Pop", hueRange: [290, 295], satRange: [50, 80], lightRange: [50, 63] },
   { match: /chamber pop/i,           group: "Pop", hueRange: [295, 300], satRange: [40, 70], lightRange: [58, 70] },
@@ -2054,25 +2095,30 @@ const GENRE_FAMILIES = [
   { match: /electropop/i,            group: "Pop", hueRange: [280, 290], satRange: [60, 90], lightRange: [45, 60] },
   { match: /folk pop/i,              group: "Pop", hueRange: [300, 310], satRange: [40, 70], lightRange: [60, 72] },
 
-  // ---------- NEW WAVE ----------
+  
+
   { match: /new wave/i,              group: "New Wave", hueRange: [260, 270], satRange: [45, 75], lightRange: [40, 55] },
   { match: /ethereal wave/i,         group: "New Wave", hueRange: [270, 280], satRange: [35, 65], lightRange: [50, 65] },
 
-  // ---------- POST-PUNK ----------
+  
+
   { match: /post-punk/i,             group: "Post-Punk", hueRange: [330, 340], satRange: [45, 70], lightRange: [28, 42] },
   { match: /gothic rock/i,            group: "Post-Punk", hueRange: [340, 350], satRange: [35, 65], lightRange: [22, 38] },
 
-  // ---------- REGGAE ----------
+  
+
   { match: /reggae/i,                group: "Reggae", hueRange: [95, 105],  satRange: [55, 85], lightRange: [35, 50] },
   { match: /lovers rock/i,           group: "Reggae", hueRange: [105, 115], satRange: [45, 75], lightRange: [45, 60] },
   { match: /\bdub\b/i,               group: "Reggae", hueRange: [115, 130], satRange: [50, 80], lightRange: [28, 43] },
 
-  // ---------- SKA ----------
+  
+
   { match: /2 tone/i,                group: "Ska", hueRange: [45, 52], satRange: [60, 85], lightRange: [35, 50] },
   { match: /third wave ska/i,        group: "Ska", hueRange: [52, 60], satRange: [65, 90], lightRange: [40, 55] },
   { match: /\bska\b/i,               group: "Ska", hueRange: [60, 70], satRange: [60, 90], lightRange: [45, 60] },
 
-  // ---------- PSICODELIA ----------
+  
+
   { match: /psychedelic rock/i,      group: "Psicodelia", hueRange: [165, 172], satRange: [55, 85], lightRange: [40, 55] },
   { match: /neo-psychedelia/i,       group: "Psicodelia", hueRange: [172, 179], satRange: [50, 80], lightRange: [45, 60] },
   { match: /shoegaze/i,              group: "Psicodelia", hueRange: [179, 186], satRange: [35, 65], lightRange: [50, 65] },
@@ -2083,7 +2129,8 @@ const GENRE_FAMILIES = [
   { match: /acid rock/i,             group: "Psicodelia", hueRange: [184, 192], satRange: [60, 90], lightRange: [35, 50] },
   { match: /space rock/i,            group: "Psicodelia", hueRange: [192, 200], satRange: [40, 75], lightRange: [35, 52] },
 
-  // ---------- ELECTRÓNICA / DANCE ----------
+  
+
   { match: /downtempo/i,             group: "Electrónica", hueRange: [180, 188], satRange: [35, 65], lightRange: [40, 55] },
   { match: /alternative dance/i,     group: "Electrónica", hueRange: [188, 196], satRange: [50, 80], lightRange: [45, 60] },
   { match: /new rave/i,              group: "Electrónica", hueRange: [196, 204], satRange: [65, 95], lightRange: [45, 60] },
@@ -2098,7 +2145,8 @@ const GENRE_FAMILIES = [
   { match: /^disco$/i,               group: "Electrónica", hueRange: [236, 244], satRange: [65, 95], lightRange: [45, 60] },
   { match: /\bidm\b/i,               group: "Electrónica", hueRange: [244, 252], satRange: [40, 70], lightRange: [35, 50] },
 
-  // ---------- AMBIENT ----------
+  
+
   { match: /dark ambient/i,          group: "Electrónica", hueRange: [180, 190], satRange: [15, 40], lightRange: [20, 32] },
   { match: /ambient pop/i,            group: "Electrónica", hueRange: [190, 200], satRange: [25, 55], lightRange: [55, 70] },
   { match: /^ambient$/i,             group: "Electrónica", hueRange: [200, 210], satRange: [20, 50], lightRange: [45, 60] },
@@ -2106,7 +2154,8 @@ const GENRE_FAMILIES = [
   { match: /neoclassical new age/i,  group: "Electrónica", hueRange: [220, 228], satRange: [10, 30], lightRange: [50, 65] },
   { match: /^new age$/i,             group: "Electrónica", hueRange: [228, 236], satRange: [10, 30], lightRange: [50, 65] },
 
-  // ---------- HIP HOP / RAP ----------
+  
+
   { match: /rap rock/i,              group: "Hip Hop / Rap", hueRange: [15, 22], satRange: [60, 90], lightRange: [35, 50] },
   { match: /pop rap/i,               group: "Hip Hop / Rap", hueRange: [22, 29], satRange: [65, 95], lightRange: [45, 60] },
   { match: /abstract hip hop/i,      group: "Hip Hop / Rap", hueRange: [29, 36], satRange: [45, 75], lightRange: [35, 50] },
@@ -2116,7 +2165,8 @@ const GENRE_FAMILIES = [
   { match: /mid-school hip hop/i,    group: "Hip Hop / Rap", hueRange: [35, 45], satRange: [55, 85], lightRange: [40, 55] },
   { match: /^hip hop$/i,             group: "Hip Hop / Rap", hueRange: [20, 35], satRange: [60, 90], lightRange: [35, 52] },
 
-  // ---------- FOLK / CANCIÓN ----------
+  
+
   { match: /folk rock/i,              group: "Folk", hueRange: [40, 45], satRange: [45, 70], lightRange: [40, 55] },
   { match: /singer-songwriter/i,      group: "Folk", hueRange: [45, 50], satRange: [35, 60], lightRange: [50, 65] },
   { match: /\bbeat\b/i,               group: "Folk", hueRange: [50, 55], satRange: [50, 75], lightRange: [45, 60] },
@@ -2125,7 +2175,8 @@ const GENRE_FAMILIES = [
   { match: /folktronica/i,            group: "Folk", hueRange: [50, 60], satRange: [45, 75], lightRange: [50, 65] },
   { match: /indie folk/i,             group: "Folk", hueRange: [65, 70], satRange: [40, 65], lightRange: [45, 60] },
 
-  // ---------- LATINA ----------
+  
+
   { match: /latin alternative/i,       group: "Latina", hueRange: [5, 12],   satRange: [60, 90], lightRange: [40, 55] },
   { match: /andean new age/i,          group: "Latina", hueRange: [12, 19],  satRange: [45, 75], lightRange: [45, 60] },
   { match: /bossa nova/i,              group: "Latina", hueRange: [19, 26],  satRange: [50, 80], lightRange: [45, 60] },
@@ -2144,7 +2195,8 @@ const GENRE_FAMILIES = [
   { match: /milonga/i,                group: "Latina", hueRange: [340, 347], satRange: [35, 60], lightRange: [30, 45] },
   { match: /zamba/i,                  group: "Latina", hueRange: [75, 82],  satRange: [45, 70], lightRange: [40, 55] },
 
-  // ---------- JAZZ ----------
+  
+
   { match: /jazz-rock/i,              group: "Jazz", hueRange: [45, 50], satRange: [50, 75], lightRange: [35, 50] },
   { match: /acid jazz/i,              group: "Jazz", hueRange: [50, 55], satRange: [60, 85], lightRange: [40, 55] },
   { match: /free improvisation/i,     group: "Jazz", hueRange: [55, 60], satRange: [35, 65], lightRange: [35, 50] },
@@ -2153,7 +2205,8 @@ const GENRE_FAMILIES = [
   { match: /jazz pop/i,               group: "Jazz", hueRange: [70, 75], satRange: [45, 70], lightRange: [50, 65] },
   { match: /smooth jazz/i,            group: "Jazz", hueRange: [75, 80], satRange: [35, 60], lightRange: [55, 70] },
 
-  // ---------- RAÍCES ----------
+  
+
   { match: /^blues$/i,                group: "Raíces", hueRange: [25, 30], satRange: [45, 70], lightRange: [30, 45] },
   { match: /rockabilly/i,             group: "Raíces", hueRange: [30, 35], satRange: [55, 80], lightRange: [35, 50] },
   { match: /^twist$/i,                group: "Raíces", hueRange: [35, 40], satRange: [50, 75], lightRange: [45, 60] },
@@ -2165,7 +2218,8 @@ const GENRE_FAMILIES = [
   { match: /^boogie$/i,               group: "Raíces", hueRange: [46, 52], satRange: [55, 80], lightRange: [35, 50] },
   { match: /contemporary r&b/i,       group: "Raíces", hueRange: [50, 56], satRange: [50, 75], lightRange: [40, 55] },
 
-  // ---------- CHRISTIAN ----------
+  
+
   { match: /christian rock/i,         group: "Religiosa", hueRange: [150, 160], satRange: [40, 70], lightRange: [40, 55] }
 
 ];
@@ -2351,7 +2405,8 @@ function computeTimeLayout() {
     const timeX = cx + foldedRadius * Math.cos(angle);
     const timeZ = cz + foldedRadius * Math.sin(angle);
 
-    const t = (p.year - minYear) / yearSpan; // 0..1
+    const t = (p.year - minYear) / yearSpan; 
+  
     const timeY = (t - 0.5) * TIME_LAYOUT.totalHeight;
 
     p.umapVec = new THREE.Vector3(px, py, pz);
@@ -2393,7 +2448,8 @@ async function calculateModel() {
     position: p,
     color: colorForAlbum(albums[i]),
     idx: i, 
-    // searchText: `${albums[i].album} ${albums[i].artist}`.toLowerCase()
+    
+  
     searchText: normText(`${albums[i].album} ${albums[i].artist}`)
   }));
 
@@ -2896,13 +2952,15 @@ function updateGenreTags() {
     }
   }
 
-  // 2) Prioridad: los géneros con más discos involucrados
+  
+
   const ranked = [...genreTagAcc.entries()]
     .filter(([, acc]) => acc.count > 0)
     .sort((a, b) => b[1].count - a[1].count)
     .slice(0, cfg.maxTags);
 
-  // 3) Posición, proyección y descarte por solapamiento
+  
+  
   const shown = new Set();
   const kept = [];
   ranked.forEach(([genre, acc]) => {
@@ -2925,7 +2983,8 @@ function updateGenreTags() {
     }
   });
 
-  // 4) Fade
+  
+
   genreTagSprites.forEach((entry, genre) => {
     const m = entry.sprite.material;
     m.opacity += ((shown.has(genre) ? 1 : 0) - m.opacity) * cfg.fadeSpeed;
@@ -3136,7 +3195,8 @@ function setFilterControlsEnabled(enabled) {
 }
 
 function addArtistFilter(artist) {
-  if (networkInsightMode !== null) return; // insight activo: no se permiten nuevos filtros
+  if (networkInsightMode !== null) return; 
+
   activeFilters.artists.add(artist);
   refreshFilterOptions();
 }
@@ -3157,7 +3217,12 @@ function setNetworkInsightMode(mode) {
   setFilterControlsEnabled(networkInsightMode === null);
   updateNetworkInsightButtons();
   syncResetButton();
-  if (selectedIndices.size === 0) updateFilterGenreVisuals();
+  if (selectedIndices.size === 0) {
+    updateFilterGenreVisuals();
+    if (networkInsightMode === null) clearConnections();
+    else buildInsightConnections();
+  }
+  showSelectionOutlines();
 }
 
 function createNetworkInsightsToggle() {
@@ -3170,7 +3235,8 @@ function createNetworkInsightsToggle() {
     { mode: "bridges", label: "Puentes" },
     { mode: "outliers", label: "Fueras de serie" },
     { mode: "convergence", label: "Más influyentes" },
-    // { mode: "divergence", label: "Divergentes" }
+    
+  
   ];
 
   modes.forEach(({ mode, label }) => {
@@ -3369,7 +3435,8 @@ function updateGenreLegendActiveState() {
     const box = el.querySelector(".sidebar_checkbox");
     if (box) box.checked = active;
  
-    // Los no seleccionados se atenúan solo si ya hay alguna selección
+    
+  
     const text = el.querySelector(".sidebar_checkbox-text");
     if (text) text.classList.toggle("sidebar_checkbox-unchecked", anySelected && !active);
   });
@@ -3671,7 +3738,8 @@ function buildNetworkGraphAdjacency() {
     adjacency.get(b).add(a);
   };
 
-  // Fuente 1: cadena cronológica por artista (idéntica a buildArtistChainConnections)
+  
+
   const artists = new Set(points.map(p => p.artist));
   artists.forEach(artist => {
     const discog = getArtistDiscography(artist);
@@ -4285,6 +4353,100 @@ function buildDiscoveryGraph(originIdx) {
         CONNECTION_CONFIG.lineWidth
       );
       fadeNodeIn(childMesh, CONNECTION_CONFIG.level2NodeOpacity, childAppearAt);
+    });
+  });
+}
+
+
+// Closest discs, at most one per artist, deterministic order
+function closestPerArtist(originIdx, candidateIdxs, limit) {
+  const originVec = points[originIdx].umapVec;
+  const seen = new Set();
+  return candidateIdxs
+    .map(i => ({ i, d: points[i].umapVec.distanceTo(originVec) }))
+    .sort((a, b) => a.d - b.d || (stableKey(a.i) < stableKey(b.i) ? -1 : 1))
+    .filter(({ i }) => {
+      const artist = points[i].artist;
+      if (seen.has(artist)) return false;
+      seen.add(artist);
+      return true;
+    })
+    .slice(0, limit)
+    .map(({ i }) => i);
+}
+
+// Vínculos que justifican por qué `idx` está en el top del modo dado
+function insightLinksFor(mode, idx) {
+  const max = INSIGHT_CONNECTION_CONFIG.maxLinksPerNode;
+
+  // HUBS / MÁS INFLUYENTES: quién elige a este disco
+  if (mode === "hubs" || mode === "convergence") {
+    const roleByChooser = new Map(
+      (getIncomingStats()[idx]?.choosers ?? [])
+        .filter(c => mode === "hubs" || c.role === "ancestor")
+        .map(c => [c.idx, c.role])
+    );
+    return closestPerArtist(idx, [...roleByChooser.keys()], max).map(c =>
+      roleByChooser.get(c) === "descendant"
+        ? { from: c, to: idx, dashed: true, arrow: true }    // quien elige -> este disco
+        : { from: idx, to: c, dashed: true, arrow: true }    // este disco (ancestro) -> quien lo eligió
+    );
+  }
+
+  if (mode === "bridges") {
+    const own = groupsOfPoint(points[idx]);
+    const neighbors = [...(getNetworkAdjacency().get(idx) ?? [])]
+      .filter(j => points[j].artist !== points[idx].artist);
+
+    const strict = neighbors.filter(j => {
+      const other = groupsOfPoint(points[j]);
+      return own.size > 0 && other.size > 0 && ![...other].some(g => own.has(g));
+    });
+    const loose = neighbors.filter(j =>
+      [...groupsOfPoint(points[j])].some(g => !own.has(g))
+    );
+
+    const pool = strict.length ? strict : loose;
+    return closestPerArtist(idx, pool, max)
+      .map(j => ({ from: idx, to: j, dashed: true, arrow: false }));
+  }
+
+  if (mode === "outliers") {
+    const originVec = points[idx].umapVec;
+    return points
+      .map((p, j) => ({ j, d: j === idx ? Infinity : p.umapVec.distanceTo(originVec) }))
+      .sort((a, b) => a.d - b.d)
+      .slice(0, NETWORK_INSIGHTS_CONFIG.outlierK)
+      .map(({ j }) => ({ from: idx, to: j, dashed: true, arrow: false }));
+  }
+
+  return [];
+}
+
+function buildInsightConnections() {
+  clearConnections();
+  const top = currentInsightTopSet();
+  if (networkInsightMode === null || !top) return;
+
+  const cfg = INSIGHT_CONNECTION_CONFIG;
+  const now = performance.now();
+  let order = 0;
+
+  top.forEach(idx => {
+    const color = points[idx].color.getHex();
+    const appearAt = now + (order++) * cfg.nodeStagger;
+    activeGraphIndices.add(idx);
+
+    insightLinksFor(networkInsightMode, idx).forEach(link => {
+      addConnection(
+        pointMeshes[link.from], pointMeshes[link.to],
+        color, cfg.lineOpacity, link.dashed, appearAt,
+        cfg.lineWidth, link.arrow
+      );
+
+      const other = link.from === idx ? link.to : link.from;
+      activeGraphIndices.add(other);                       // makes it hoverable
+      if (!top.has(other)) fadeNodeIn(pointMeshes[other], cfg.nodeOpacity, appearAt);
     });
   });
 }
@@ -5135,7 +5297,8 @@ function initTopbarChips() {
         const clone = chip.cloneNode(true);
         const originals = chip.querySelectorAll("button");
 
-        // Cada botón del clon dispara su botón original
+        
+      
         clone.querySelectorAll("button").forEach((btn, k) => {
           btn.addEventListener("click", e => {
             e.stopPropagation();
