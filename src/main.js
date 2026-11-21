@@ -903,38 +903,41 @@ function buildAncestorDescendantSection(idx) {
   return wrap;
 }
 
+function buildChevronPair({ prevEnabled, nextEnabled, onPrev, onNext, prevLabel, nextLabel }) {
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "display:flex;align-items:center;gap:8px;position:absolute;bottom:12px;right:12px;";
+
+  const make = (text, label, enabled, handler) => {
+    const btn = document.createElement("button");
+    btn.textContent = text;
+    btn.setAttribute("aria-label", label);
+    btn.disabled = !enabled;
+    btn.style.cssText = `border:none;background:none;font-size:24px;line-height:1;cursor:${enabled ? "pointer" : "default"};color:${enabled ? "#56CCF2" : "#888"};padding:0;`;
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      if (enabled) handler();
+    });
+    return btn;
+  };
+
+  wrap.appendChild(make("‹", prevLabel, prevEnabled, onPrev));
+  wrap.appendChild(make("›", nextLabel, nextEnabled, onNext));
+  return wrap;
+}
+
 function buildNavChevrons(a) {
   const discog = getArtistDiscography(a.artist);
   const pos = discog.findIndex(p => p.idx === a.idx);
 
-  const wrap = document.createElement("div");
-  wrap.style.cssText = "display:flex;align-items:center;gap:8px;position:absolute;bottom:12px;right:12px;";
-
-  const prevBtn = document.createElement("button");
-  prevBtn.textContent = "‹";
-  prevBtn.setAttribute("aria-label", "Disco anterior del artista");
-  prevBtn.disabled = pos <= 0;
-  prevBtn.style.cssText = `border:none;background:none;font-size:24px;line-height:1;cursor:${prevBtn.disabled ? "default" : "pointer"};color:${prevBtn.disabled ? "#888" : "#56CCF2"};padding:0;`;
-  prevBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    if (pos > 0) selectAlbum(discog[pos - 1].idx);
+  return buildChevronPair({
+    prevLabel: "Disco anterior del artista",
+    nextLabel: "Disco siguiente del artista",
+    prevEnabled: pos > 0,
+    nextEnabled: pos !== -1 && pos < discog.length - 1,
+    onPrev: () => selectAlbum(discog[pos - 1].idx),
+    onNext: () => selectAlbum(discog[pos + 1].idx)
   });
-
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "›";
-  nextBtn.setAttribute("aria-label", "Disco siguiente del artista");
-  nextBtn.disabled = pos === -1 || pos >= discog.length - 1;
-  nextBtn.style.cssText = `border:none;background:none;font-size:24px;line-height:1;cursor:${nextBtn.disabled ? "default" : "pointer"};color:${nextBtn.disabled ? "#888" : "#56CCF2"};padding:0;`;
-  nextBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    if (pos < discog.length - 1) selectAlbum(discog[pos + 1].idx);
-  });
-
-  wrap.appendChild(prevBtn);
-  wrap.appendChild(nextBtn);
-  return wrap;
 }
-
 function buildExpandToggle(section) {
   const btn = document.createElement("button");
   btn.textContent = tooltipExpanded ? "Saber menos" : "Saber más";
@@ -3019,8 +3022,12 @@ function setTimeMode(on) {
   yearSprites.forEach(s => { s.userData.targetOpacity = timeMode ? 1 : 0; });
   orbitRings.forEach(r => { r.userData.targetOpacity = timeMode ? ORBIT_RING_IDLE_OPACITY : 0; });
 
-  if (timeMode) syncRingsToRange();
-  else clearYearHighlight();
+    if (timeMode) syncRingsToRange();
+    else clearYearHighlight();
+    if (networkInsightMode !== null && selectedIndices.size === 0) {
+    updateFilterGenreVisuals();
+    buildInsightConnections();
+  }
 }
 
 document.addEventListener("modechange", (e) => {
@@ -3202,7 +3209,15 @@ function addArtistFilter(artist) {
 }
 
 function setNetworkInsightMode(mode) {
-  networkInsightMode = (networkInsightMode === mode) ? null : mode;
+  const next = (networkInsightMode === mode) ? null : mode;
+
+  // Al entrar o cambiar de preset se descarta cualquier selección previa
+  if (next !== null) {
+    clearHighlight();
+    clearYearHighlight();
+    clearArtistPanels();
+  }
+  networkInsightMode = next;
 
   if (networkInsightMode !== null && hasActiveFilters()) {
     activeFilters = { artists: new Set(), yearFrom: null, yearTo: null, descriptors: new Set(), query: "" };
@@ -3217,6 +3232,7 @@ function setNetworkInsightMode(mode) {
   setFilterControlsEnabled(networkInsightMode === null);
   updateNetworkInsightButtons();
   syncResetButton();
+
   if (selectedIndices.size === 0) {
     updateFilterGenreVisuals();
     if (networkInsightMode === null) clearConnections();
@@ -3577,6 +3593,8 @@ function refreshArtistPanels() {
 }
 
 function applyFilters() {
+  if (networkInsightMode !== null && hasActiveFilters()) resetNetworkInsightMode();   // <-- nuevo
+
   const filters = currentFilters();
   filteredIndices = hasActiveFilters()
     ? new Set(points.filter(p => pointMatchesFilters(p, filters)).map(p => p.idx))
@@ -4426,7 +4444,7 @@ function insightLinksFor(mode, idx) {
 function buildInsightConnections() {
   clearConnections();
   const top = currentInsightTopSet();
-  if (networkInsightMode === null || !top) return;
+  if (networkInsightMode === null || !top || timeMode) return; 
 
   const cfg = INSIGHT_CONNECTION_CONFIG;
   const now = performance.now();
@@ -4946,7 +4964,7 @@ function toggleYearHighlight(year, additive = false) {
  
 function setYearSelection(years, { keepFilters = false, showPanel = true, focus = false } = {}) {
   if (years.size === 0) { clearYearHighlight(); return; }
-
+  resetNetworkInsightMode();
   selectedYears = new Set();
   clearHighlight();
   if (!keepFilters) clearGenreSelection();
@@ -4956,6 +4974,33 @@ function setYearSelection(years, { keepFilters = false, showPanel = true, focus 
   if (showPanel) syncYearPanels(); else clearYearPanels();
 
   if (focus) focusCameraOnYears(years);
+}
+
+function navigableYears() {
+  return [...new Set(
+    points
+      .filter(p => filteredIndices === null || filteredIndices.has(p.idx))
+      .map(p => p.year)
+  )].sort((a, b) => a - b);
+}
+
+function goToYear(year) {
+  setYearSelection(new Set([year]), { keepFilters: true, focus: true });
+}
+
+function buildYearNavChevrons(year) {
+  const years = navigableYears();
+  const prev = years.filter(y => y < year).pop();   // mayor año anterior
+  const next = years.find(y => y > year);           // menor año posterior
+
+  return buildChevronPair({
+    prevLabel: "Año anterior",
+    nextLabel: "Año siguiente",
+    prevEnabled: prev !== undefined,
+    nextEnabled: next !== undefined,
+    onPrev: () => goToYear(prev),
+    onNext: () => goToYear(next)
+  });
 }
 
 function clearYearHighlight({ keepSelection = false } = {}) {
@@ -5071,6 +5116,10 @@ function renderYearStatsPanelInto(el, years) {
   el.appendChild(closeBtn);
   el.appendChild(title);
   el.appendChild(meta);
+
+  if (!isPeriod) {
+    el.appendChild(buildYearNavChevrons([...years][0]));   // <-- nuevo
+  }
 
   if (stats.groups.length) {
     const groupsTitle = document.createElement("div");
