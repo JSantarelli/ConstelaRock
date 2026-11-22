@@ -19,6 +19,8 @@ let onboardingSearchInputEl = null;
 let onboardingStartCta = null;
 let onboardingPresetCardEls = [];
 let loadingProgress = 0;
+let precomputed = null;
+let modelRun = 0;
 
 function resetInteractionState() {
   clearHighlight();
@@ -137,7 +139,7 @@ const ONBOARDING_PRESETS = [
     subtitle: "Trayectoria de artistas luego de dejar sus bandas de orígen.",    
     section: "hallazgos",
     apply: () => applyArtistsPreset(
-      ['Rata Blanca', 'Barilari','Soda Stereo', 'Gustavo Cerati'],
+      ['Soda Stereo', 'Gustavo Cerati'],
       { timeMode: true }
     )
   },
@@ -720,11 +722,12 @@ const ui = {
 
 function clearScene() {
   pointMeshes.forEach(m => {
-    m.geometry.dispose();
-    m.material.dispose();
     root.remove(m);
+    m.geometry?.dispose();
+    m.material?.dispose();
   });
   pointMeshes = [];
+  points = [];
 
   selectedIndices.clear();
   selectedGenres.clear();
@@ -768,14 +771,6 @@ function updateSelectionVisuals() {
     m.material.opacity = selectedIndices.has(i) ? 1 : 0.25;
   });
 }
-
-  const artists = new Set([...selectedIndices].map(i => points[i].artist));
-
-  pointMeshes.forEach((m, i) => {
-    const isSelected = selectedIndices.has(i);
-    const sameArtist = artists.has(points[i].artist);
-    m.material.opacity = (isSelected || sameArtist) ? 1 : 0.35;
-  });
 
 function ensureOutlineRing(idx) {
   if (outlineRings.has(idx)) return outlineRings.get(idx);
@@ -1032,7 +1027,6 @@ function renderDetailPanel(i, x, y) {
     addArtistFilter(a.artist);
     selectArtistLine(a.artist);
   });
-  artistLine.appendChild(artistName);
   artistLine.appendChild(artistName);
   artistLine.appendChild(document.createTextNode(" · "));
 
@@ -1399,7 +1393,6 @@ const NETWORK_INSIGHTS_CONFIG = {
   dimOpacity: 0.15,
   outlierK: 5,
   minGenreSpread: 3,
-  convergenceMinSpread: 2,     
   convergenceMinContributors: 3,
   divergenceMinSpread: 2,
   divergenceDescendants: 6
@@ -2418,75 +2411,89 @@ function computeTimeLayout() {
 }
 
 async function calculateModel() {
+  const run = ++modelRun;
   clearScene();
   setLoadingProgress(20);
 
-  const vocab = buildVocabulary(albums);
-  const matrix = albums.map(a => vectorize(a, vocab, MODEL_CONFIG.descriptorWeight));
-  setLoadingProgress(25);
+  let coords;
 
-  const umap = new UMAP({
-    nComponents: 3,
-    nNeighbors: Math.min(MODEL_CONFIG.nNeighbors, albums.length - 1),
-    minDist: MODEL_CONFIG.minDist,
-    spread: 1,
-    random: mulberry32(UMAP_SEED)
-  });
+  if (precomputed?.positions?.length === albums.length) {
+    coords = precomputed.positions;
+    setLoadingProgress(80);
+  } else {
+    const vocab = buildVocabulary(albums);
+    const matrix = albums.map(a => vectorize(a, vocab, MODEL_CONFIG.descriptorWeight));
+    setLoadingProgress(25);
 
-  const nEpochs = umap.initializeFit(matrix);
-  for (let i = 0; i < nEpochs; i++) {
-    umap.step();
-    if (i % 5 === 0 || i === nEpochs - 1) {
-      setLoadingProgress(25 + ((i + 1) / nEpochs) * 55);
-      await new Promise(resolve => setTimeout(resolve, 0));
+    const umap = new UMAP({
+      nComponents: 3,
+      nNeighbors: Math.min(MODEL_CONFIG.nNeighbors, albums.length - 1),
+      minDist: MODEL_CONFIG.minDist,
+      spread: 1,
+      random: mulberry32(UMAP_SEED)
+    });
+
+    const nEpochs = umap.initializeFit(matrix);
+    for (let i = 0; i < nEpochs; i++) {
+      umap.step();
+      if (i % 5 === 0 || i === nEpochs - 1) {
+        setLoadingProgress(25 + ((i + 1) / nEpochs) * 55);
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
     }
+    const embedding = umap.getEmbedding();
+    setLoadingProgress(80);
+
+    coords = normalize3D(embedding);
   }
-  const embedding = umap.getEmbedding();
-  setLoadingProgress(80);
-
-  const coords = normalize3D(embedding);
-
-  points = coords.map((p,i) => ({
+  if (run !== modelRun) return;
+  points = coords.map((p, i) => ({
     ...albums[i],
     position: p,
     color: colorForAlbum(albums[i]),
-    idx: i, 
-    
-  
+    idx: i,
     searchText: normText(`${albums[i].album} ${albums[i].artist}`)
   }));
 
-  computeTimeLayout();
-  createPoints();
-  createYearOrbits();
-  createYearSprites();
-  createEventLabels();
-  createGenreLabels();
-  computeNetworkMetrics();
-  setLoadingProgress(92);
+    computeTimeLayout();
+    createPoints();
+    createYearOrbits();
+    createYearSprites();
+    createEventLabels();
+    createGenreLabels();
+    if (precomputed?.tops) {
+      const valid = arr => new Set((arr ?? []).filter(i => i >= 0 && i < points.length));
+      hubTopIndices = valid(precomputed.tops.hubs);
+      bridgeTopIndices = valid(precomputed.tops.bridges);
+      outlierTopIndices = valid(precomputed.tops.outliers);
+      convergenceTopIndices = valid(precomputed.tops.convergence);
+    } else {
+      computeNetworkMetrics();
+    }
+    setLoadingProgress(92);
 
-  if (timeMode) {
-    orbitRings.forEach(r => {
-      r.material.opacity = ORBIT_RING_IDLE_OPACITY;
-      r.userData.targetOpacity = ORBIT_RING_IDLE_OPACITY;
-    });
-    pointMeshes.forEach((m,i) => m.position.copy(points[i].timeVec));
-    yearSprites.forEach(s => {
-      s.material.opacity = 1;
-      s.userData.targetOpacity = 1;
-    });
-    orbitRings.forEach(r => {
-      r.material.opacity = 0.05;
-      r.userData.targetOpacity = 0.05;
-    });
+    if (timeMode) {
+      orbitRings.forEach(r => {
+        r.material.opacity = ORBIT_RING_IDLE_OPACITY;
+        r.userData.targetOpacity = ORBIT_RING_IDLE_OPACITY;
+      });
+      pointMeshes.forEach((m,i) => m.position.copy(points[i].timeVec));
+      yearSprites.forEach(s => {
+        s.material.opacity = 1;
+        s.userData.targetOpacity = 1;
+      });
+      orbitRings.forEach(r => {
+        r.material.opacity = 0.05;
+        r.userData.targetOpacity = 0.05;
+      });
+    }
+
+    renderList();
+    renderGenreLegend();
+    refreshFilterOptions();
+    fitCamera();
+    setLoadingProgress(100);
   }
-
-  renderList();
-  renderGenreLegend();
-  refreshFilterOptions();
-  fitCamera();
-  setLoadingProgress(100);
-}
 
 function createPoints() {
   points.forEach((a,i) => {
@@ -2590,7 +2597,6 @@ function makeEventLabelSprite(text) {
 
   canvas.width = Math.ceil(textWidth) + cfg.canvasPadding * 2;
   canvas.height = lines.length * cfg.lineHeight;
-  text.toUpperCase(),
   ctx.font = font;
   ctx.fillStyle = "#ffffff";
   ctx.textAlign = "center"; 
@@ -3125,8 +3131,10 @@ function updateFilterGenreVisuals() {
   const insightTopSet = insightActive ? currentInsightTopSet() : null;
 
   if (!filtersActive && !genresActive && !insightActive && !yearsActive) {
-    pointMeshes.forEach(m => { m.material.opacity = 1; });
-    return;
+    pointMeshes.forEach((m, i) => {
+    const p = points[i];
+    if (!p) return;
+    })
   }
 
   const dimOpacity = filtersActive ? 0.12 : (insightActive ? NETWORK_INSIGHTS_CONFIG.dimOpacity : 0.25);
@@ -3550,7 +3558,6 @@ function currentFilters() {
 
 function hasActiveFilters() {
 return activeFilters.artists.size > 0
-    || activeFilters.yearFrom !== null
     || activeFilters.yearFrom !== null
     || activeFilters.yearTo !== null
     || activeFilters.descriptors.size > 0
@@ -4451,11 +4458,15 @@ function buildInsightConnections() {
   let order = 0;
 
   top.forEach(idx => {
+    
     const color = points[idx].color.getHex();
     const appearAt = now + (order++) * cfg.nodeStagger;
     activeGraphIndices.add(idx);
 
-    insightLinksFor(networkInsightMode, idx).forEach(link => {
+    const links = precomputed?.links?.[networkInsightMode]?.[idx]
+  ?? insightLinksFor(networkInsightMode, idx);
+
+    links.forEach(link => {
       addConnection(
         pointMeshes[link.from], pointMeshes[link.to],
         color, cfg.lineOpacity, link.dashed, appearAt,
@@ -4463,11 +4474,51 @@ function buildInsightConnections() {
       );
 
       const other = link.from === idx ? link.to : link.from;
-      activeGraphIndices.add(other);                       // makes it hoverable
+      activeGraphIndices.add(other);
       if (!top.has(other)) fadeNodeIn(pointMeshes[other], cfg.nodeOpacity, appearAt);
     });
   });
 }
+
+function exportPrecomputed() {
+  const tops = {
+    hubs: hubTopIndices,
+    bridges: bridgeTopIndices,
+    outliers: outlierTopIndices,
+    convergence: convergenceTopIndices
+  };
+
+  console.log("export:", {
+    points: points.length,
+    hubs: hubTopIndices.size,
+    bridges: bridgeTopIndices.size,
+    outliers: outlierTopIndices.size,
+    convergence: convergenceTopIndices.size
+  });
+
+  const links = {};
+  Object.entries(tops).forEach(([mode, set]) => {
+    links[mode] = {};
+    set.forEach(idx => { links[mode][idx] = insightLinksFor(mode, idx); });
+  });
+
+  const data = {
+    positions: points.map(p => p.position.map(v => +v.toFixed(5))),
+    tops: Object.fromEntries(Object.entries(tops).map(([m, s]) => [m, [...s]])),
+    links
+  };
+
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "precomputed.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+window.exportPrecomputed = exportPrecomputed;
 
 function ensureSelectedChipsContainer() {
   if (!ui.selectedChips) ui.selectedChips = document.querySelector("#selectedChips");
@@ -4651,8 +4702,11 @@ function updateConnections() {
     const from = c.fromMesh.position;
     const to = c.toMesh.position;
     c.line.geometry.setPositions([from.x, from.y, from.z, to.x, to.y, to.z]);
-    if (c.line.userData.dashed) c.line.computeLineDistances();
 
+    if (c.line.userData.dashed && (animating || !c.line.userData.distsReady)) {
+      c.line.computeLineDistances();
+      c.line.userData.distsReady = !animating;
+    }
     const target = now >= c.line.userData.appearAt ? c.line.userData.targetOpacity : 0;
     c.line.material.opacity += (target - c.line.material.opacity) * CONNECTION_CONFIG.fadeSpeed;
 
@@ -5395,28 +5449,6 @@ onboardingOverlay = createOnboardingOverlay();
 renderOnboardingStep1();
 createNetworkInsightsToggle();
 
-Promise.all([
-  fetch("./data/albums.json").then(r => r.json()),
-  fetch("./data/eventos.json")
-    .then(r => r.json())
-    .catch(err => {
-      console.warn("No se pudo cargar data/eventos.json", err);
-      return [];
-    })
-])
-  .then(([albumsData, eventsData]) => {
-    albums = albumsData;
-    eventsByYear = buildEventsByYear(eventsData);
-    setLoadingProgress(10);
-    return calculateModel();
-  })
-  .catch(err => {
-    console.error(err);
-    if (onboardingProgressLabelEl) {
-      onboardingProgressLabelEl.textContent = "No se pudo cargar data/albums.json";
-    }
-  });
-
 function setSidebarOpen(open, view) {
   if (!sidebarPanelEl) return;
   sidebarPanelEl.classList.toggle("is-closed", !open);
@@ -5476,6 +5508,25 @@ function initSidebar() {
   initTopbarChips();
   syncSidebarButtons();
 }
+
+Promise.all([
+  fetch("./data/albums.json").then(r => r.json()),
+  fetch("./data/eventos.json").then(r => r.json()).catch(() => []),
+  fetch("./data/precomputed.json").then(r => (r.ok ? r.json() : null)).catch(() => null)
+])
+  .then(([albumsData, eventsData, pre]) => {
+    albums = albumsData;
+    precomputed = pre;
+    eventsByYear = buildEventsByYear(eventsData);
+    setLoadingProgress(10);
+    return calculateModel();
+  })
+  .catch(err => {
+    console.error(err);
+    if (onboardingProgressLabelEl) {
+      onboardingProgressLabelEl.textContent = "No se pudo cargar data/albums.json";
+    }
+  });
   
 initSidebar();
 animate();
